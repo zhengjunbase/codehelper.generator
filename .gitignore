@@ -1,5 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-MybatisGenerator.iml
-MybatisGenerator.iws
-MybatisGenerator.ips
+MybatisGenerator.*
+
 out*
