@@ -1,4 +1,14 @@
 # Created by .ignore support plugin (hsz.mobi)
-MybatisGenerator.*
 
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+/MybatisGenerator.iml
+/MybatisGenerator.ipr
+/MybatisGenerator.iws
 out*

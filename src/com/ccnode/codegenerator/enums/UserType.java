@@ -5,9 +5,9 @@ package com.ccnode.codegenerator.enums;
  * <p>
  * Created by zhengjun.du on 2016/05/21 22:32
  */
-public enum UserLevel {
+public enum UserType {
     FREE_USER(0,""),
-    YEAR_USER(1,""),
+    PAID_YEAR_USER(1,""),
     NONE(-1,"none");
 
     private Integer code;
@@ -17,7 +17,7 @@ public enum UserLevel {
         return this == FREE_USER;
     }
 
-    private UserLevel(Integer code,String desc){
+    private UserType(Integer code,String desc){
         this.code = code;
         this.desc = desc;
     }
@@ -30,31 +30,31 @@ public enum UserLevel {
         return desc;
     }
 
-    public static UserLevel fromName(String name){
-        for(UserLevel e : UserLevel.values()){
+    public static UserType fromName(String name){
+        for(UserType e : UserType.values()){
             if (e.name().equals(name)){
                 return e;
             }
         }
-        return UserLevel.NONE;
+        return UserType.NONE;
     }
 
-    public static UserLevel fromCode(Integer code){
-        for(UserLevel e : UserLevel.values()){
+    public static UserType fromCode(Integer code){
+        for(UserType e : UserType.values()){
             if (e.getCode().equals(code)){
                 return e;
             }
         }
-        return UserLevel.NONE;
+        return UserType.NONE;
     }
 
     public static String codeToName(Integer code){
-            UserLevel o = fromCode(code);
+            UserType o = fromCode(code);
             return o.name();
         }
 
     public static Integer nameToCode(String name){
-        UserLevel o = fromName(name);
+        UserType o = fromName(name);
         return o.getCode();
     }
 }

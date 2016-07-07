@@ -3,15 +3,21 @@ package com.ccnode.codegenerator.view;
 import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.storage.SettingDto;
+import com.ccnode.codegenerator.storage.SettingService;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.psi.search.FilenameIndex;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Date;
 
 /**
  * What always stop you is what you always believe.
@@ -31,68 +37,39 @@ public class TextBoxes extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
+        if(project == null){
+            return;
+        }
         @Nullable String projectPath = project.getBasePath();
-//        System.out.println(project.getName());
-//        System.out.println(project.getBaseDir());
-//        System.out.println(project.getBasePath());
-//        System.out.println(project.getName());
-//        String projectPath = project.getBasePath();
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
         }
-//        for (String s : FilenameIndex.getAllFilenames(project)) {
-//            if(s.endsWith("java")){
-//
-//                System.out.println("filename: " +s);
-//            }
-//        }
-
-//        PsiFile[] filesByName1 = FilenameIndex.getFilesByName(project, "FlightSegmentInfo.java", new EverythingGlobalScope(project));
-//        if(filesByName1.length > 0){
-//             System.out.println("dir: " +filesByName1[0].getName());
-//            System.out.println("dir: " +filesByName1[0].getFileType());
-//            System.out.println("dir: " +filesByName1[0].getContainingDirectory());
-//            System.out.println("dir: " +filesByName1[0].getClass());
-//        }
-//        PsiFile[] filesByName2= FilenameIndex.getFilesByName(project, "FlightSegmentInfo", new EverythingGlobalScope(project));
-//        if(filesByName2.length > 0){
-//             System.out.println("dir: " +filesByName2[0].getName());
-//            System.out.println("dir: " +filesByName2[0].getFileType());
-//            System.out.println("dir: " +filesByName2[0].getContainingDirectory());
-//        }
-//        PsiFile psiFile = filesByName1[0];
-//        PsiElement firstChild = psiFile.getFirstChild();
-//        while (firstChild.getNextSibling() != null){
-//            firstChild = firstChild.getNextSibling();
-//            System.out.println(firstChild.getClass());
-//            if(firstChild instanceof PsiClassImpl){
-//                PsiClassImpl imp = (PsiClassImpl) firstChild;
-//                PsiField[] allFields = imp.getAllFields();
-//                for (PsiField allField : allFields) {
-//                    System.out.println(allField.getName());
-//                    System.out.println(allField.getNameIdentifier());
-//                    System.out.println(allField.getContext());
-//                    System.out.println(allField.getClass());
-//                    System.out.println(allField.getClass().getClass());
-//                    System.out.println(allField.getClass().getName());
-//                    PsiType type = allField.getType();
-//                    System.out.println(type.getClass());
-//                    System.out.println(type.getSuperTypes());
-//                    System.out.println(type.getPresentableText());
-//                }
-//            }
-//        }
-//        ClassLoader cl = ClassLoader.getSystemClassLoader();
-//
-//        URL[] urls = ((URLClassLoader)cl).getURLs();
-//
-//        for(URL url: urls){
-//        	System.out.println(url.getFile());
-//        }
-//        System.out.println("fucks");
 
         GenCodeRequest request;
         GenCodeResponse genCodeResponse = new GenCodeResponse();
+        Date oldTime;
+        String s = StringUtils.EMPTY;
+        SettingService service = ServiceManager.getService(SettingService.class);
+        SettingDto state = service.getState();
+
+        try{
+            InetAddress ip = InetAddress.getLocalHost();
+            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
+            byte[] mac = network.getHardwareAddress();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < mac.length; i++) {
+                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+            }
+            String a = sb.toString();
+            System.out.println(a);
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+
+
         try{
             request = new GenCodeRequest(Lists.newArrayList(),projectPath,"/");
             request.setProject(project);
@@ -103,7 +80,7 @@ public class TextBoxes extends AnAction {
         }
 //        String txt= Messages
 //                .showInputDialog(project, projectPath + "Insdfsput pojos splits with comma?", "Input Pojos", Messages.getQuestionIcon());
-        Messages.showMessageDialog(project, genCodeResponse.getCode() + genCodeResponse.getMsg() + "Hello, "  + "!\n I am glad to see you.", "Information", Messages.getInformationIcon());
+        Messages.showMessageDialog(project, genCodeResponse.getCode() + genCodeResponse.getMsg() + s +"Hello, "  + "!\n I am glad to see you.", "Information", Messages.getInformationIcon());
 
     }
 }

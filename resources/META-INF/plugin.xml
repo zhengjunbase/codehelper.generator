@@ -34,6 +34,8 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
+      <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
+                          serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
   </extensions>
 
   <actions>

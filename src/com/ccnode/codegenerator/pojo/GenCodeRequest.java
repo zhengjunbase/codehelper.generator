@@ -1,6 +1,6 @@
 package com.ccnode.codegenerator.pojo;
 
-import com.ccnode.codegenerator.enums.UserLevel;
+import com.ccnode.codegenerator.enums.UserType;
 import com.intellij.openapi.project.Project;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class GenCodeRequest extends BaseRequest {
     Project project;
     List<String> pojoNames;
     String projectPath;
-    UserLevel userLevel;
+    UserType userType;
     String pathSplitter;
 
     public GenCodeRequest() {

@@ -35,15 +35,7 @@ public class GenMapperService {
 
     private static void genMapper(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean expand) {
         String pojoName = onePojoInfo.getPojoName();
-        String pojoNameDao = pojoName + "Dao";
         List<String> oldLines = fileInfo.getOldLines();
-//        if (!oldLines.isEmpty()) {
-//            fileInfo.setNewLines(oldLines);
-//            return;
-//        }
-        List<String> newLines = Lists.newArrayList();
-        StringBuilder ret = new StringBuilder();
-        String tableName = GenCodeUtil.getUnderScore(pojoName);
 
         ListInfo<String> listInfo = new ListInfo<String>();
         if(oldLines.isEmpty()){
@@ -356,8 +348,8 @@ public class GenMapperService {
         }
         retList.add(TWO_RETRACT + "</set>");
         retList.add(TWO_RETRACT + " WHERE id = #{pojo.id}");
-        retList.add(TWO_RETRACT + "<if test=\"withLastUpdate == 'true'\">");
-        retList.add(THREE_RETRACT + "AND last_update = #{pojo.lastUpdate}");
+        retList.add(TWO_RETRACT + "<if test=\"optimistic == 'true'\">");
+        retList.add(THREE_RETRACT + "AND version = #{pojo.version}");
         retList.add(TWO_RETRACT + "</if>");
         retList.add(ONE_RETRACT + "</update>");
         return retList;
