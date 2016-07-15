@@ -79,7 +79,11 @@ public class UserConfigService {
         ret.accept();
         try{
             String projectPath = request.getProjectPath();
-            String fileName = IOUtils.matchOnlyOneFile(projectPath, "generator.properties");
+            File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, "generator.properties");
+            String fileName = StringUtils.EMPTY;
+            if(propertiesFile != null){
+                fileName = propertiesFile.getAbsolutePath();
+            }
             if(StringUtils.isBlank(fileName)){
                 return ret.failure("","error, no generator.properties config file,"
                         + "please add an generator.properties in you poject path");

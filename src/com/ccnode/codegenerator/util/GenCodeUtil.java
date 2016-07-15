@@ -67,7 +67,7 @@ public class GenCodeUtil {
 
     @Nullable
     public static Class loadClassByFileName(@NotNull String dir, @NotNull String pojoName){
-        String fullPojoPath = IOUtils.matchOnlyOneFile(dir, pojoName +  ".java");
+        String fullPojoPath = IOUtils.matchOnlyOneFile(dir, pojoName +  ".java").getAbsolutePath();
         if(StringUtils.isBlank(fullPojoPath)){
             return null;
         }

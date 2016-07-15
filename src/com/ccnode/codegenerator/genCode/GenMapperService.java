@@ -28,7 +28,11 @@ public class GenMapperService {
     public static void genMapper( GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
             GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
-            Boolean expand = response.getUserConfigMap().get("mapper.expand").equals("true");
+            String mapperExpandStr = response.getUserConfigMap().get("mapper.expand");
+            Boolean expand = false;
+            if("true".equals(mapperExpandStr)){
+                expand = true;
+            }
             genMapper(pojoInfo,fileInfo,expand);
         }
     }
@@ -232,7 +236,7 @@ public class GenMapperService {
 
     private static List<String> genBaseResultMap(OnePojoInfo onePojoInfo){
         List<String> retList = Lists.newArrayList();
-        retList.add(ONE_RETRACT+ "<resultMap id=\"BaseResultMap\" type=\""+onePojoInfo.getPojoPackage()+"\">");
+        retList.add(ONE_RETRACT+ "<resultMap id=\"BaseResultMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             retList.add(String.format("%s<result column=\"%s\" property=\"%s\"/>",
@@ -269,7 +273,7 @@ public class GenMapperService {
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String s = TWO_RETRACT +  String.format("<if test=\"%s != null\"> %s, </if>"
+            String s = TWO_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
                 ,fieldName,getUnderScore(fieldName));
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
                 s = s.replace(COMMA, StringUtils.EMPTY);
@@ -281,7 +285,7 @@ public class GenMapperService {
         retList.add(TWO_RETRACT + ")VALUES(");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String s = TWO_RETRACT + String.format("<if test=\"%s != null\"> #{%s}, </if>"
+            String s = TWO_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
                 ,fieldName,fieldName);
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
                 s = s.replace(COMMA, StringUtils.EMPTY);
@@ -348,7 +352,7 @@ public class GenMapperService {
         }
         retList.add(TWO_RETRACT + "</set>");
         retList.add(TWO_RETRACT + " WHERE id = #{pojo.id}");
-        retList.add(TWO_RETRACT + "<if test=\"optimistic == 'true'\">");
+        retList.add(TWO_RETRACT + "<if test=\"option.updateOptimistic == 'true'\">");
         retList.add(THREE_RETRACT + "AND version = #{pojo.version}");
         retList.add(TWO_RETRACT + "</if>");
         retList.add(ONE_RETRACT + "</update>");
@@ -377,7 +381,7 @@ public class GenMapperService {
             }
 
         }
-        retList.add(TWO_RETRACT + "LIMIT #{withLimit}");
+        retList.add(TWO_RETRACT + "LIMIT #{option.queryLimit}");
         retList.add(ONE_RETRACT + "</select>");
         return retList;
     }
@@ -395,7 +399,7 @@ public class GenMapperService {
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             String testCondition = TWO_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
-            String updateField =  String.format("AND %s = #{pojo.%s}",getUnderScore(fieldName), fieldName);
+            String updateField =  String.format("AND %s = ${pojo.%s}",getUnderScore(fieldName), fieldName);
             if(expand){
                 retList.add(testCondition);
                 retList.add(THREE_RETRACT + updateField);

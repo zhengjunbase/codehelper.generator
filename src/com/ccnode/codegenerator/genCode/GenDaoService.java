@@ -33,6 +33,8 @@ public class GenDaoService {
         List<String> newLines = Lists.newArrayList();
         newLines.add("package "+ onePojoInfo.getDaoPackage() + ";");
         newLines.add("");
+        newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
+        newLines.add("");
         newLines.add("public interface "+pojoNameDao +" extends GenericDao<"+pojoName+"> {");
         newLines.add("");
         newLines.add("}");

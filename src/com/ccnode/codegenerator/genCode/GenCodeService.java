@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -80,7 +81,11 @@ public class GenCodeService {
             try{
                 onePojoInfo.setPojoName(pojoName);
                 onePojoInfo.setPojoClassSimpleName(pojoName);
-                String fullPojoPath = IOUtils.matchOnlyOneFile(response.getRequest().getProjectPath(), pojoName +  ".java");
+                File pojoFile = IOUtils.matchOnlyOneFile(response.getRequest().getProjectPath(), pojoName + ".java");
+                if(pojoFile == null){
+                    return response.failure("", pojoName + " file not exist");
+                }
+                String fullPojoPath = pojoFile.getAbsolutePath();
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 onePojoInfo.setPojoPackage(GenCodeUtil.getPojoPackage(fullPojoPath));
 //              Runtime.getRuntime().exec("javac "+fullPojoPath);

@@ -113,8 +113,9 @@ public class GenSqlService {
     private static boolean oldSqlContainField(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
         String keyWord = "`" + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) + "`";
         for (String s : oldList) {
-            if (s.contains(keyWord))
-            return true;
+            if (s.contains(keyWord)){
+                return true;
+            }
         }
         return false;
     }
@@ -174,7 +175,25 @@ public class GenSqlService {
         String key = fieldInfo.getFieldClass().toLowerCase();
         String value = userConfigMap.get(key);
         if (StringUtils.isBlank(value)) {
-            throw new RuntimeException("error");
+            if(StringUtils.equalsIgnoreCase(key,"String")){
+                return "VARCHAR(50) NOT NULL DEFAULT ''";
+            }else if(StringUtils.equalsIgnoreCase(key,"Integer")){
+                return "INTEGER(12) NOT NULL DEFAULT -1";
+            }else if(StringUtils.equalsIgnoreCase(key,"short")){
+                return "TINYINT NOT NULL DEFAULT -1";
+            }else if(StringUtils.equalsIgnoreCase(key,"date")){
+                return "DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00'";
+            }else if(StringUtils.equalsIgnoreCase(key,"Long")){
+                return "BIGINT NOT NULL DEFAULT -1";
+            }else if(StringUtils.equalsIgnoreCase(key,"BigDecimal")){
+                return "DECIMAL(14,4) NOT NULL DEFAULT 0";
+            }else if(StringUtils.equalsIgnoreCase(key,"double")){
+                return "DECIMAL(14,4) NOT NULL DEFAULT 0";
+            }else if(StringUtils.equalsIgnoreCase(key,"float")){
+                return "DECIMAL(14,4) NOT NULL DEFAULT 0";
+            }else {
+                throw new RuntimeException("error");
+            }
         }
         return value;
     }

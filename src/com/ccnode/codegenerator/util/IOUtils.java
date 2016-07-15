@@ -8,6 +8,7 @@ import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,7 +112,8 @@ public class IOUtils {
 
 
 
-    public static String matchOnlyOneFile(String directory, String subFileName){
+    @Nullable
+    public static File matchOnlyOneFile(String directory, String subFileName){
         List<File> allSubFiles = IOUtils.getAllSubFiles(directory);
         allSubFiles = PojoUtil.avoidEmptyList(allSubFiles);
         File configFile = null;
@@ -127,9 +129,9 @@ public class IOUtils {
             }
         }
         if(configFile == null){
-            return StringUtils.EMPTY;
+            return null;
         }
-        return configFile.getAbsolutePath();
+        return configFile;
     }
     public static List<File> getAllSubFiles(File parentFile){
         return getAllSubFiles(parentFile,DEFAULT_FILE_TYPE);

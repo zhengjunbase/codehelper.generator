@@ -38,6 +38,10 @@ public class GenServiceService {
 //        newLines.add(onePojoInfo.getServicePackage());
         newLines.add("package "+ onePojoInfo.getServicePackage() + ";");
         newLines.add("");
+        newLines.add("import org.springframework.stereotype.Service;");
+        newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
+        newLines.add("import "+ onePojoInfo.getServicePackage() + "." +onePojoInfo.getPojoName() + "Dao;");
+        newLines.add("");
         newLines.add("@Service");
         newLines.add("public class " + pojoName + "Service extends GenericService<" + pojoName + "> {");
         newLines.add("");
