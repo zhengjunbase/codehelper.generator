@@ -105,8 +105,8 @@ public class OnePojoInfoHelper {
              file.getFile().getParentFile().mkdirs();
                 try {
                     file.getFile().createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    response.failure("create file : " +file.getFile().getAbsolutePath() +" failure",e);
                 }
             }
             try{
@@ -117,7 +117,7 @@ public class OnePojoInfoHelper {
                 }
 
             }catch(Exception e){
-                response.failure("","read " + dir +" failure");
+                response.failure("read " + dir +" failure",e);
             }
             file.setNewLines(Lists.newArrayList());
             onePojoInfo.getFiles().add(file);
@@ -134,7 +134,7 @@ public class OnePojoInfoHelper {
             }
             return response;
         }catch(Exception e){
-            return response.failure("","flush file error");
+            return response.failure("flush file error",e);
         }
 
     }

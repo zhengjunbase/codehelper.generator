@@ -3,11 +3,12 @@ package com.ccnode.codegenerator.genCode;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
-import com.ccnode.codegenerator.pojo.RetStatus;
+import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,49 +30,60 @@ public class GenCodeService {
         GenCodeResponse response = new GenCodeResponse();
         try{
             response = UserConfigService.readConfigFile(request);
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             response.setRequest(request);
-            checkResponse(response);
-
+            if(response.checkFailure()){
+                return response;
+            }
             response.setPathSplitter(request.getPathSplitter());
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             response = UserConfigService.initConfig(response);
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             response = initPojos(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
-            checkResponse(response);
             GenSqlService.genSQL(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             GenDaoService.genDAO(response);
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             GenServiceService.genService(response);
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
 
             GenMapperService.genMapper(response);
-            checkResponse(response);
+            if(response.checkFailure()){
+                return response;
+            }
+
             for (OnePojoInfo onePojoInfo : response.getPojoInfos()) {
                 OnePojoInfoHelper.flushFiles(onePojoInfo,response);
             }
             response.success();
 
         }catch(Exception e){
-            e.printStackTrace();
-            response.failure(RetStatus.BOOKING_ERROR,e.getMessage());
+            response.failure("gen code failure ",e);
         }
         return response;
     }
 
-    private static void checkResponse(GenCodeResponse response) {
-        if(response.checkFailure()){
-            System.out.println(response.getMsg());
-            System.out.println(response.getCode());
-            throw new RuntimeException("check failure");
-        }
-    }
 
     private static GenCodeResponse initPojos(GenCodeResponse response) {
         List<OnePojoInfo> contextList = Lists.newArrayList();
@@ -88,31 +100,25 @@ public class GenCodeService {
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 onePojoInfo.setPojoPackage(GenCodeUtil.getPojoPackage(fullPojoPath));
-//              Runtime.getRuntime().exec("javac "+fullPojoPath);
-//              String projectPath = response.getRequest().getProjectPath();
-//              Class pojoClass = GenCodeUtil.loadClassByFileName(projectPath, pojoName);
-//              onePojoInfo.setPojoClass(pojoClass);
                 String daoPath = response.getCodeConfig().getDaoPath();
                 onePojoInfo.setDaoPackage(GenCodeUtil.pathToPackage(daoPath));
                 onePojoInfo.setServicePackage(GenCodeUtil.pathToPackage(response.getCodeConfig().getServicePath()));
 
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
-//              OnePojoInfoHelper.parsePojoFieldInfo(onePojoInfo);
+                List<PojoFieldInfo> pojoFieldInfos = onePojoInfo.getPojoFieldInfos();
+                String concat = StringUtils.EMPTY;
+                for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
+                    concat += "|"+pojoFieldInfo.getFieldName();
+                }
+                if(!concat.contains("id")){
+                    return response.failure(pojoName + " should has 'id' field");
+                }
                 OnePojoInfoHelper.parseFiles(onePojoInfo,response);
                 contextList.add(onePojoInfo);
             }catch(Exception e){
-                return response.failure("","解析Class:"+pojoName + "失败");
+                return response.failure("","parse Class:"+pojoName + "failure");
             }
         }
         return response;
-    }
-
-    public static void main(String[] args) throws IOException {
-        LOGGER.info("main");
-
-        Process ls = Runtime.getRuntime().exec("ls -lrthu");
-        InputStream stream = ls.getInputStream();
-        List<String> strings = org.apache.commons.io.IOUtils.readLines(stream);
-        LOGGER.info("s:{}",strings);
     }
 }

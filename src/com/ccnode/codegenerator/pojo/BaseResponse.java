@@ -1,7 +1,6 @@
 package com.ccnode.codegenerator.pojo;
 
-import com.ccnode.codegenerator.exception.AcceptException;
-import com.ccnode.codegenerator.exception.FailureException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -12,15 +11,15 @@ public class BaseResponse implements Serializable {
     /**
      * 0 - 只接受请求，为处理中
      */
-    public static final String STATUS_ACCEPT = "0";
+    public static final String STATUS_ACCEPT = "ACCEPT";
     /**
      * 1 - 处理成功
      */
-    public static final String STATUS_SUCCESS = "1";
+    public static final String STATUS_SUCCESS = "SUCCESS";
     /**
      * 2 - 处理失败
      */
-    public static final String STATUS_FAILURE = "2";
+    public static final String STATUS_FAILURE = "FAILURE";
 
     private static final long serialVersionUID = -3041437055079912036L;
 
@@ -38,6 +37,8 @@ public class BaseResponse implements Serializable {
      * 错误信息
      */
     private String msg;
+
+    private Throwable throwable;
 
     public BaseResponse() {
     }
@@ -91,6 +92,21 @@ public class BaseResponse implements Serializable {
         this.status = STATUS_FAILURE;
         this.code = code;
         this.msg = errMsg;
+        return (T) this;
+    }
+
+    public <T extends BaseResponse> T failure(String errMsg) {
+        this.status = STATUS_FAILURE;
+        this.code = StringUtils.EMPTY;
+        this.msg = errMsg;
+        return (T) this;
+    }
+
+    public <T extends BaseResponse> T failure(String errMsg,Throwable throwable) {
+        this.status = STATUS_FAILURE;
+        this.code = StringUtils.EMPTY;
+        this.msg = errMsg;
+        this.throwable = throwable;
         return (T) this;
     }
 

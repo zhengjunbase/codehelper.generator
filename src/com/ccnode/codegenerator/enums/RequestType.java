@@ -54,4 +54,12 @@ public enum RequestType {
         RequestType o = fromName(name);
         return o.getCode();
     }
+
+    public Boolean equalWithName(String name){
+        return this == fromName(name);
+    }
+
+    public Boolean equalWithCode(String name){
+        return this == fromName(name);
+    }
 }

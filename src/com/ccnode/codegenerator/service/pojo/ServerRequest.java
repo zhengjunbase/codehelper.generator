@@ -1,4 +1,4 @@
-package com.ccnode.codegenerator.server.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.BaseRequest;
 
@@ -17,12 +17,10 @@ public class ServerRequest extends BaseRequest {
     String requestType;
     String userType;
 
-    @Override
     public String getVersion() {
         return version;
     }
 
-    @Override
     public void setVersion(String version) {
         this.version = version;
     }

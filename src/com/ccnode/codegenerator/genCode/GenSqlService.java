@@ -150,7 +150,7 @@ public class GenSqlService {
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
             ret.append(ONE_RETRACT)
-                    .append("`create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',");
+                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '创建时间',");
             return ret.toString();
         }
 

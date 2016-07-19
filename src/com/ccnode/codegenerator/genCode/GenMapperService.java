@@ -167,24 +167,6 @@ public class GenMapperService {
             }
         });
         fileInfo.setNewLines(listInfo.getFullList());
-        //        newLines.addAll(getMapperHeader(onePojoInfo));
-//            newLines.add("<mapper namespace=\"" + onePojoInfo.getDaoPackage() + ".Dao\">");
-//            newLines.add("");
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.addAll(genBaseResultMap(onePojoInfo));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.addAll(genAllColumn(onePojoInfo));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.addAll(genAddMethod(onePojoInfo));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.add(genAddsMethod(fieldTypeMap, fieldList));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.add(genUpdateMethod(fieldTypeMap, fieldList));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.add(genQueryMethod(fieldTypeMap, fieldList));
-//            newLines.add("    <!--auto generated Code-->");
-//            newLines.add(genDeleteMethod(fieldTypeMap, fieldList));
-//            newLines.add("</mapper>");
     }
     
     public static List<String> getMapperHeader(OnePojoInfo onePojoInfo) {
@@ -296,7 +278,6 @@ public class GenMapperService {
         retList.add(TWO_RETRACT + ")");
         retList.add(ONE_RETRACT + "</insert>");
         return retList;
-
     }
 
         private static List<String> genAddsMethod(OnePojoInfo onePojoInfo) {
@@ -322,9 +303,7 @@ public class GenMapperService {
         retList.add(TWO_RETRACT + "</foreach>");
         retList.add(ONE_RETRACT + "</insert>");
         return retList;
-
     }
-
 
     private static List<String> genUpdateMethod(OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
@@ -352,7 +331,7 @@ public class GenMapperService {
         }
         retList.add(TWO_RETRACT + "</set>");
         retList.add(TWO_RETRACT + " WHERE id = #{pojo.id}");
-        retList.add(TWO_RETRACT + "<if test=\"option.updateOptimistic == 'true'\">");
+        retList.add(TWO_RETRACT + "<if test=\"option.updateOptimistic == 'TRUE'\">");
         retList.add(THREE_RETRACT + "AND version = #{pojo.version}");
         retList.add(TWO_RETRACT + "</if>");
         retList.add(ONE_RETRACT + "</update>");
@@ -364,7 +343,10 @@ public class GenMapperService {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<select id=\"query\" resultMap=\"BaseResultMap\">");
-        retList.add(TWO_RETRACT + "SELECT id, <include refid=\"all_column\"/>"  );
+        retList.add(TWO_RETRACT + "SELECT"  );
+        retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+        retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> id, <include refid=\"all_column\"/></if>" );
+
         retList.add(TWO_RETRACT + "FROM " + tableName  );
         retList.add(TWO_RETRACT + "WHERE id != -1 ");
 
@@ -381,7 +363,8 @@ public class GenMapperService {
             }
 
         }
-        retList.add(TWO_RETRACT + "LIMIT #{option.queryLimit}");
+        retList.add(TWO_RETRACT + "LIMIT #{option.limit}");
+        retList.add(TWO_RETRACT + "OFFSET #{option.offset}");
         retList.add(ONE_RETRACT + "</select>");
         return retList;
     }
@@ -391,8 +374,8 @@ public class GenMapperService {
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"BaseResultMap\">");
         retList.add(TWO_RETRACT + "SELECT"  );
-        retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'true'\"> COUNT(1) AS id </if>"  );
-        retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'true'\"> id, <include refid=\"all_column\"/></if>" );
+        retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+        retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> id, <include refid=\"all_column\"/></if>" );
         retList.add(TWO_RETRACT + "FROM " + tableName  );
         retList.add(TWO_RETRACT + "WHERE id != -1 ");
 
@@ -409,7 +392,8 @@ public class GenMapperService {
             }
         }
         retList.add(TWO_RETRACT + "${option.whereConditions}");
-        retList.add(TWO_RETRACT + "LIMIT ${option.limitCondition}");
+        retList.add(TWO_RETRACT + "LIMIT ${option.limit}");
+        retList.add(TWO_RETRACT + "OFFSET ${option.offset}");
         retList.add(ONE_RETRACT + "</select>");
         return retList;
     }

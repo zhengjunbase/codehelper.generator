@@ -51,7 +51,7 @@ public class UserConfigService {
                 directoryConfig.getDirectoryMap().put(FileType.SERVICE, bathPath + response.getPathSplitter() + config.getServicePath());
             }
         }catch(Exception e){
-            return response.failure(""," status error occurred");
+            return response.failure(" status error occurred");
         }
 
         return response;
@@ -85,7 +85,7 @@ public class UserConfigService {
                 fileName = propertiesFile.getAbsolutePath();
             }
             if(StringUtils.isBlank(fileName)){
-                return ret.failure("","error, no generator.properties config file,"
+                return ret.failure("error, no generator.properties config file,"
                         + "please add an generator.properties in you poject path");
             }
             if(Objects.equal(fileName,"NOT_ONLY")){
@@ -106,7 +106,7 @@ public class UserConfigService {
                 }
                 List<String> split = Splitter.on("=").trimResults().omitEmptyStrings().splitToList(configLine);
                 if(split.size() != 2){
-                    return ret.failure("","line: "+ lineIndex + "error, correct format : key = value");
+                    return ret.failure("","line: "+ lineIndex + "config error, correct format : key = value");
                 }
                 configMap.put(split.get(0).toLowerCase(),split.get(1));
             }

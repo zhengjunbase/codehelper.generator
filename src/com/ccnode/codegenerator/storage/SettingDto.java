@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.storage;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * What always stop you is what you always believe.
@@ -14,7 +15,7 @@ public class SettingDto {
 
     String lastRunTime;
 
-    List<String> returnKey;
+    Map<String,Date> returnKeyMap;
 
     List<Date> lastRegisterDate;
 
@@ -26,12 +27,12 @@ public class SettingDto {
         this.userType = userType;
     }
 
-    public List<String> getReturnKey() {
-        return returnKey;
+    public Map<String, Date> getReturnKeyMap() {
+        return returnKeyMap;
     }
 
-    public void setReturnKey(List<String> returnKey) {
-        this.returnKey = returnKey;
+    public void setReturnKeyMap(Map<String, Date> returnKeyMap) {
+        this.returnKeyMap = returnKeyMap;
     }
 
     public List<Date> getLastRegisterDate() {

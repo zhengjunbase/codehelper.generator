@@ -36,7 +36,7 @@ public class IOUtils {
         if (matcher.find()) {
             return matcher.group();
         }else {
-            return null;
+            return StringUtils.EMPTY;
         }
     }
     public static <T> List<T> readLines(File file, LineProcessor<T> lineProcessor) throws IOException {
@@ -118,7 +118,7 @@ public class IOUtils {
         allSubFiles = PojoUtil.avoidEmptyList(allSubFiles);
         File configFile = null;
         for (File subFile : allSubFiles) {
-            if(StringUtils.containsIgnoreCase(
+            if(StringUtils.endsWithIgnoreCase(
                     subFile.getAbsolutePath(),subFileName)){
                 if(configFile == null){
                     configFile = subFile;
@@ -149,8 +149,8 @@ public class IOUtils {
         Preconditions.checkNotNull(file);
         return getAllSubFiles(file,fileType);
     }
-    public static List<File> getAllSubFiles(File parentFile,String[] fileType) {
-        List<File> fileList = null;
+    public static List<File> getAllSubFiles(File parentFile,@Nullable String[] fileType) {
+        List<File> fileList = Lists.newArrayList();
         if(parentFile.isDirectory()){
             fileList = Lists.newArrayList(FileUtils.listFiles(parentFile, fileType, true));
         }else if(parentFile.isFile()){

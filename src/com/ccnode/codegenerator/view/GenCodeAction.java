@@ -24,11 +24,11 @@ import java.util.Date;
  * <p>
  * Created by zhengjun.du on 2016/04/16 21:30
  */
-public class TextBoxes extends AnAction {
+public class GenCodeAction extends AnAction {
     // If you register the action from Java code, this constructor is used to set the menu item name
     // (optionally, you can specify the menu description and an icon to display next to the menu item).
     // You can omit this constructor when registering the action in the plugin.xml file.
-    public TextBoxes() {
+    public GenCodeAction() {
         // Set the menu item name.
         super("Text _Boxes");
         // Set the menu item name, description and icon.
@@ -80,7 +80,7 @@ public class TextBoxes extends AnAction {
         }
 //        String txt= Messages
 //                .showInputDialog(project, projectPath + "Insdfsput pojos splits with comma?", "Input Pojos", Messages.getQuestionIcon());
-        Messages.showMessageDialog(project, genCodeResponse.getCode() + genCodeResponse.getMsg() + s +"Hello, "  + "!\n I am glad to see you.", "Information", Messages.getInformationIcon());
+        Messages.showMessageDialog(project, genCodeResponse.getMsg(), genCodeResponse.getStatus(), Messages.getInformationIcon());
 
     }
 }

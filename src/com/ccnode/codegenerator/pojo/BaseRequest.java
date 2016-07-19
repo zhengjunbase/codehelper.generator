@@ -10,10 +10,6 @@ public abstract class BaseRequest implements Serializable {
 
     private static final long serialVersionUID = 790960324431455971L;
     /**
-     * 版本号
-     */
-    private String version;
-    /**
      * 业务线id
      */
     private String busiTypeId;
@@ -36,14 +32,6 @@ public abstract class BaseRequest implements Serializable {
 
     public void setRequestNo(String requestNo) {
         this.requestNo = requestNo;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 
     public String getBusiTypeId() {

@@ -1,7 +1,8 @@
-package com.ccnode.codegenerator.server.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
-import com.ccnode.codegenerator.enums.RequestType;
 import com.ccnode.codegenerator.pojo.BaseResponse;
+
+import java.util.Date;
 
 /**
  * What always stop you is what you always believe.
@@ -12,9 +13,11 @@ public class ServerResponse extends BaseResponse {
 
     ServerRequest request;
     String returnKey;
-    RequestType requestType;
+    String requestType;
     String updateMsg;
     String recommendMsg;
+    String userType;
+    Date expiredDate;
 
     public String getUpdateMsg() {
         return updateMsg;
@@ -48,11 +51,27 @@ public class ServerResponse extends BaseResponse {
         this.returnKey = returnKey;
     }
 
-    public RequestType getRequestType() {
+    public String getRequestType() {
         return requestType;
     }
 
-    public void setRequestType(RequestType requestType) {
+    public void setRequestType(String requestType) {
         this.requestType = requestType;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
     }
 }
