@@ -9,8 +9,8 @@ import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.DateUtil;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.RegexUtil;
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
-import com.google.common.collect.MapMaker;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -104,7 +104,7 @@ public class GenSqlService {
         int oldIndex = findFirstFieldPos(oldList);
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             if (oldSqlContainField(oldList, fieldInfo)) {
-                oldList = updateSqlComment(oldList, fieldInfo);
+                oldList = updateSqlComment(oldList, fieldInfo,response);
                 oldIndex++;
                 continue;
             }
@@ -116,17 +116,19 @@ public class GenSqlService {
 
     }
 
-    private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
-        if(StringUtils.isBlank(fieldInfo.getFieldComment())){
-            return oldList;
-        }
+    private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo,
+            GenCodeResponse response) {
         String keyWord = "`" + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) + "`";
         List<String> retList = Lists.newArrayList();
         for (String s : oldList) {
             if (s.contains(keyWord)){
                 String match = RegexUtil.getMatch("COMMENT[\\s]*'(.*)',", s);
                 if(StringUtils.isNotBlank(match)){
-                    String newComment = "COMMENT '" + fieldInfo.getFieldComment() + "',";
+                    String comment = getFieldComment(response, fieldInfo);
+                    String newComment = "COMMENT '" + comment + "',";
+                    if(Objects.equal(newComment,match)){
+                        return oldList;
+                    }
                     String replaced = s.replace(match,newComment);
                     retList.add(replaced);
                 }else{
@@ -185,29 +187,43 @@ public class GenSqlService {
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(ONE_RETRACT)
-                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
+                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
             ret.append(ONE_RETRACT)
-                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
+                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equals("id")) {
-            ret.append(ONE_RETRACT).append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
+            ret.append(ONE_RETRACT).append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         String filedClassDefault = getDefaultField(fieldInfo, response);
         ret.append(ONE_RETRACT).append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ")
-                .append(filedClassDefault).append(" COMMENT '").append(getFieldComment(fieldInfo)).append("',");
+                .append(filedClassDefault).append(" COMMENT '").append(getFieldComment(response,fieldInfo)).append("',");
         return ret.toString();
     }
 
     // todo
-    private static String getFieldComment(PojoFieldInfo fieldInfo) {
+    private static String getFieldComment(GenCodeResponse response, PojoFieldInfo fieldInfo) {
+
+        String language = response.getUserConfigMap().get("language");
+        Map<String,String> commentMap = Maps.newHashMap();
+        commentMap.put("lastUpdate","最后更新时间");
+        commentMap.put("createTime","创建时间");
+        commentMap.put("id","主键");
+        if(commentMap.get(fieldInfo.getFieldName()) != null){
+            if(StringUtils.isBlank(language) || language.equals("EN")){
+                return fieldInfo.getFieldName();
+            }else{
+                return commentMap.get(fieldInfo.getFieldName());
+            }
+        }
+
         if(StringUtils.isNotBlank(fieldInfo.getFieldComment())){
             return fieldInfo.getFieldComment();
         }
