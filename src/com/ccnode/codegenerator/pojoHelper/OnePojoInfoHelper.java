@@ -3,15 +3,22 @@ package com.ccnode.codegenerator.pojoHelper;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.JSONUtil;
+import com.ccnode.codegenerator.util.RegexUtil;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiType;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassImpl;
+import com.intellij.psi.impl.source.PsiModifierListImpl;
+import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
+import com.intellij.psi.impl.source.tree.PsiCommentImpl;
+import com.intellij.psi.javadoc.PsiDocComment;
+import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
+import org.apache.commons.codec.language.Soundex;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +36,16 @@ import static org.apache.commons.io.IOUtils.writeLines;
  * Created by zhengjun.du on 2016/05/21 21:50
  */
 public class OnePojoInfoHelper {
+
+    @NotNull
+    public static Boolean containSplitKey(@NotNull OnePojoInfo onePojoInfo, String splitKey){
+        for (PojoFieldInfo pojoFieldInfo : onePojoInfo.getPojoFieldInfos()) {
+            if(pojoFieldInfo.getFieldName().equalsIgnoreCase(splitKey)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response){
         String pojoName = onePojoInfo.getPojoName();
@@ -53,15 +70,24 @@ public class OnePojoInfoHelper {
         if(elements.size() != 1){
             // todo
         }
+
         PsiClassImpl psiClass = (PsiClassImpl) elements.get(0);
+        PsiElement context = psiClass.getContext();
+        if(context == null){
+            throw new RuntimeException("parse class error");
+        }
+        String text = context.getText();
+        onePojoInfo.setPojoPackage(parsePojoPackage(text));
         PsiField[] allFields = psiClass.getAllFields();
         List<PojoFieldInfo> fieldList = Lists.newArrayList();
 
         for (PsiField field : allFields) {
-            if("serialVersionUID".equals(field.getName())){
+            if(isStaticField(field)){
                 continue;
             }
+            parseComment(field);
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
+            fieldInfo.setFieldComment(parseComment(field));
             PsiType type = field.getType();
             fieldInfo.setFieldName(field.getName());
             fieldInfo.setFieldClass(type.getPresentableText());
@@ -71,6 +97,60 @@ public class OnePojoInfoHelper {
         onePojoInfo.setPojoFieldInfos(fieldList);
     }
 
+    private static Boolean isStaticField(@NotNull PsiField field){
+        PsiElement[] children = field.getChildren();
+        for (PsiElement child : children) {
+            String text = child.getText();
+            if(text.contains(" static ")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String parsePojoPackage(String context){
+        List<String> lines = Splitter.on("\n").trimResults().omitEmptyStrings().splitToList(context);
+        for (String line : lines) {
+            String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", line);
+            if(StringUtils.isNotBlank(match)){
+                String pojoPackage = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
+                pojoPackage = pojoPackage.replace(";","");
+                pojoPackage = pojoPackage.replace(" ","");
+                return pojoPackage;
+            }
+        }
+        return StringUtils.EMPTY;
+    }
+    private static String parseComment(PsiField field) {
+        if(field == null){
+            return StringUtils.EMPTY;
+        }
+        PsiElement[] children = field.getChildren();
+        for (PsiElement child : children) {
+            String text1 = child.getText();
+            if(child instanceof PsiDocCommentImpl){
+                String text = child.getText();
+                text = text.replace("/*","");
+                text = text.replace("*/","");
+                text = text.replace("//","");
+                text = text.replace("\n","");
+                text = text.replace("*","");
+                text = text.trim();
+                return text;
+            }
+            if(child instanceof  PsiCommentImpl){
+                String text = child.getText();
+                text = text.replace("/*","");
+                text = text.replace("*/","");
+                text = text.replace("//","");
+                text = text.replace("\n","");
+                text = text.replace("*","");
+                text = text.trim();
+                return text;
+            }
+        }
+        return StringUtils.EMPTY;
+    }
 
     public static void parsePojoFieldInfo(@NotNull OnePojoInfo onePojoInfo){
         @NotNull Class pojoClass = onePojoInfo.getPojoClass();
@@ -90,7 +170,6 @@ public class OnePojoInfoHelper {
     }
 
     public static void parseFiles(OnePojoInfo onePojoInfo, GenCodeResponse response) {
-        DirectoryConfig config = response.getDirectoryConfig();
         onePojoInfo.setFiles(Lists.newArrayList());
         for (FileType fileType : FileType.values()) {
             if(fileType == FileType.NONE){
@@ -98,8 +177,22 @@ public class OnePojoInfoHelper {
             }
             GeneratedFile file = new GeneratedFile();
             file.setFileType(fileType);
-            String dir = config.getDirectoryMap().get(fileType);
-            file.setFilePath(dir + response.getPathSplitter()+ onePojoInfo.getPojoName() + fileType.getSuffix());
+            String filePath = StringUtils.EMPTY;
+            switch (fileType){
+             case SQL:
+                 filePath = onePojoInfo.getFullSqlPath();
+                break;
+            case MAPPER:
+                 filePath = onePojoInfo.getFullMapperPath();
+                break;
+            case SERVICE:
+                 filePath = onePojoInfo.getFullServicePath();
+                break;
+            case DAO:
+                 filePath = onePojoInfo.getFullDaoPath();
+                break;
+            }
+            file.setFilePath(filePath);
             file.setFile(new File(file.getFilePath()));
             if(!file.getFile().exists()){
              file.getFile().getParentFile().mkdirs();
@@ -117,7 +210,7 @@ public class OnePojoInfoHelper {
                 }
 
             }catch(Exception e){
-                response.failure("read " + dir +" failure",e);
+                response.failure("read" + file.getFile().getAbsolutePath() +" failure",e);
             }
             file.setNewLines(Lists.newArrayList());
             onePojoInfo.getFiles().add(file);
@@ -137,5 +230,14 @@ public class OnePojoInfoHelper {
             return response.failure("flush file error",e);
         }
 
+    }
+
+    public static void main(String[] args) {
+        String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", "   package cox3m.qunar.Sn_+surance.service.dto  ;  \n");
+            if(StringUtils.isNotBlank(match)){
+                String pack = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
+                pack = pack.replace(";","");
+                pack = pack.replace(" ","");
+            }
     }
 }

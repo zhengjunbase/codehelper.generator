@@ -27,29 +27,15 @@ public class PostService {
             String response = HttpUtil.postJson(URL, json);
 
         }catch(Throwable e){
+
         }finally{
+
         }
 
         ServerResponse ret = new ServerResponse();
-        ret.setRequest(request);
         ret.setRequestType(request.getRequestType());
-        ret.setReturnKey(UUID.randomUUID().toString());
         ret.success();
         return ret;
     }
 
-    public static void processRequest(ServerRequest request) {
-        try {
-            ServerResponse response = post(request);
-            if (RequestType.REGISTER.equalWithName(request.getRequestType())) {
-                if (StringUtils.isNotBlank(response.getReturnKey())) {
-                    SettingService.getInstance().getState().setUserType(response.getUserType());
-                    SettingService.getInstance().getState().getReturnKeyMap().put(response.getReturnKey(), new Date());
-                }
-            }
-
-        } catch (Throwable e) {
-
-        }
-    }
 }

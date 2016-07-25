@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
+import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
 import com.google.common.collect.Lists;
@@ -13,8 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -97,14 +96,17 @@ public class GenCodeService {
                 if(pojoFile == null){
                     return response.failure("", pojoName + " file not exist");
                 }
+                GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();
+                String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
+                onePojoInfo.setFullDaoPath(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Dao.java");
+                onePojoInfo.setFullServicePath(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Service.java");
+                onePojoInfo.setFullSqlPath(StringUtils.defaultIfEmpty(config.getSqlDir(),pojoDirPath) + response.getPathSplitter() +pojoName + ".sql");
+                onePojoInfo.setFullMapperPath(StringUtils.defaultIfEmpty(config.getMapperDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Mapper.xml");
                 onePojoInfo.setFullPojoPath(fullPojoPath);
-                onePojoInfo.setPojoPackage(GenCodeUtil.getPojoPackage(fullPojoPath));
-                String daoPath = response.getCodeConfig().getDaoPath();
-                onePojoInfo.setDaoPackage(GenCodeUtil.pathToPackage(daoPath));
-                onePojoInfo.setServicePackage(GenCodeUtil.pathToPackage(response.getCodeConfig().getServicePath()));
-
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
+                onePojoInfo.setDaoPackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
+                onePojoInfo.setServicePackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
                 List<PojoFieldInfo> pojoFieldInfos = onePojoInfo.getPojoFieldInfos();
                 String concat = StringUtils.EMPTY;
                 for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
@@ -120,5 +122,12 @@ public class GenCodeService {
             }
         }
         return response;
+    }
+
+    public static void main(String[] args) {
+        String s = System.getProperty("file.separator");
+        File f = new File("/Users/zhengjun/Workspaces/horizon");
+        s = f.getParentFile().getAbsolutePath();
+        System.out.println(s);
     }
 }

@@ -8,7 +8,10 @@ import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.DateUtil;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.collect.Lists;
+import com.google.common.collect.MapMaker;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -17,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
 
@@ -99,6 +104,7 @@ public class GenSqlService {
         int oldIndex = findFirstFieldPos(oldList);
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             if (oldSqlContainField(oldList, fieldInfo)) {
+                oldList = updateSqlComment(oldList, fieldInfo);
                 oldIndex++;
                 continue;
             }
@@ -108,6 +114,29 @@ public class GenSqlService {
         }
         return Lists.newArrayList(oldList);
 
+    }
+
+    private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
+        if(StringUtils.isBlank(fieldInfo.getFieldComment())){
+            return oldList;
+        }
+        String keyWord = "`" + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) + "`";
+        List<String> retList = Lists.newArrayList();
+        for (String s : oldList) {
+            if (s.contains(keyWord)){
+                String match = RegexUtil.getMatch("COMMENT[\\s]*'(.*)',", s);
+                if(StringUtils.isNotBlank(match)){
+                    String newComment = "COMMENT '" + fieldInfo.getFieldComment() + "',";
+                    String replaced = s.replace(match,newComment);
+                    retList.add(replaced);
+                }else{
+                    retList.add(s);
+                }
+            }else{
+                retList.add(s);
+            }
+        }
+        return retList;
     }
 
     private static boolean oldSqlContainField(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
@@ -139,23 +168,35 @@ public class GenSqlService {
         return index;
     }
 
+    public static String getComment(GenCodeResponse response, String fieldName){
+        String language = response.getUserConfigMap().get("language");
+        if(StringUtils.isBlank(language) || language.equals("EN")){
+            return fieldName;
+        }
+        Map<String,String> commentMap = Maps.newHashMap();
+        commentMap.put("lastUpdate","最后更新时间");
+        commentMap.put("createTime","创建时间");
+        commentMap.put("id","主键");
+        return StringUtils.defaultIfEmpty(commentMap.get(fieldName),fieldName);
+    }
+
     private static String genfieldSql(@NotNull PojoFieldInfo fieldInfo, GenCodeResponse response) {
         StringBuilder ret = new StringBuilder();
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(ONE_RETRACT)
-                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',");
+                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
             ret.append(ONE_RETRACT)
-                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '创建时间',");
+                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equals("id")) {
-            ret.append(ONE_RETRACT).append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',");
+            ret.append(ONE_RETRACT).append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getComment(response,fieldInfo.getFieldName())+"',");
             return ret.toString();
         }
 
@@ -167,7 +208,10 @@ public class GenSqlService {
 
     // todo
     private static String getFieldComment(PojoFieldInfo fieldInfo) {
-        return StringUtils.EMPTY;
+        if(StringUtils.isNotBlank(fieldInfo.getFieldComment())){
+            return fieldInfo.getFieldComment();
+        }
+        return fieldInfo.getFieldName();
     }
 
     private static String getDefaultField(PojoFieldInfo fieldInfo, GenCodeResponse response) {
@@ -177,7 +221,8 @@ public class GenSqlService {
         if (StringUtils.isBlank(value)) {
             if(StringUtils.equalsIgnoreCase(key,"String")){
                 return "VARCHAR(50) NOT NULL DEFAULT ''";
-            }else if(StringUtils.equalsIgnoreCase(key,"Integer")){
+            }else if(StringUtils.equalsIgnoreCase(key,"Integer")
+                    || StringUtils.equalsIgnoreCase(key,"int")){
                 return "INTEGER(12) NOT NULL DEFAULT -1";
             }else if(StringUtils.equalsIgnoreCase(key,"short")){
                 return "TINYINT NOT NULL DEFAULT -1";
@@ -192,13 +237,22 @@ public class GenSqlService {
             }else if(StringUtils.equalsIgnoreCase(key,"float")){
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
             }else {
-                throw new RuntimeException("error");
+                throw new RuntimeException("unSupport field type :" + fieldInfo.getFieldClass());
             }
         }
         return value;
     }
 
     public static void main(String[] args) {
+
+        Pattern commentPattern = Pattern.compile("COMMENT[\\s]*'(.*)',");
+
+        String s = "ULT '' COMMENTff'联系人电话',";
+        Matcher matcher = commentPattern.matcher(s);
+        if(matcher.find()){
+            String m = matcher.group();
+            System.out.println(m);
+        }
         List<Integer> list = Lists.newArrayList();
         list.add(0);
         list.add(1);

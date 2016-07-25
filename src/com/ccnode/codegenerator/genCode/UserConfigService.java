@@ -1,6 +1,5 @@
 package com.ccnode.codegenerator.genCode;
 
-import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.DirectoryConfig;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -10,6 +9,7 @@ import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
+import com.intellij.openapi.ui.Messages;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -29,26 +29,27 @@ public class UserConfigService {
 
         try{
             GenCodeConfig config = new GenCodeConfig();
+            response.setCodeConfig(config);
             Map<String, String> userConfigMap = response.getUserConfigMap();
             String pojos = userConfigMap.get("pojos");
+            if(StringUtils.isBlank(pojos)){
+                pojos = Messages.showInputDialog(response.getRequest().getProject(), "Please input Pojo Name : ", "Input Pojos", Messages.getQuestionIcon());
+            }
+            if(StringUtils.isBlank(pojos)){
+                return response.failure("no config or input pojo name");
+            }
             pojos = pojos.replace(",","|");
             response.getRequest().setPojoNames(Splitter.on("|").trimResults().omitEmptyStrings().splitToList(pojos));
             for (Map.Entry<String, String> configEntry : response.getUserConfigMap().entrySet()) {
                 String key = configEntry.getKey();
                 String value = configEntry.getValue();
                 check(response.getRequest().getProjectPath(), key,value,config);
-                response.setCodeConfig(config);
                 DirectoryConfig directoryConfig = new DirectoryConfig();
                 response.setDirectoryConfig(directoryConfig);
-                config.setDaoPath(avoidNullPath(userConfigMap.get("dao.path"),response));
-                config.setSqlPath(avoidNullPath(userConfigMap.get("sql.path"),response));
-                config.setMapperPath(avoidNullPath(userConfigMap.get("mapper.path"),response));
-                config.setServicePath(avoidNullPath(userConfigMap.get("service.path"),response));
-                String bathPath = response.getRequest().getProjectPath();
-                directoryConfig.getDirectoryMap().put(FileType.MAPPER, bathPath + response.getPathSplitter() + config.getMapperPath());
-                directoryConfig.getDirectoryMap().put(FileType.DAO, bathPath + response.getPathSplitter() + config.getDaoPath());
-                directoryConfig.getDirectoryMap().put(FileType.SQL, bathPath + response.getPathSplitter() + config.getSqlPath());
-                directoryConfig.getDirectoryMap().put(FileType.SERVICE, bathPath + response.getPathSplitter() + config.getServicePath());
+                config.setDaoDir(userConfigMap.get("dao.path"));
+                config.setSqlDir(userConfigMap.get("sql.path"));
+                config.setMapperDir(userConfigMap.get("mapper.path"));
+                config.setServiceDir(userConfigMap.get("service.path"));
             }
         }catch(Exception e){
             return response.failure(" status error occurred");
@@ -56,16 +57,6 @@ public class UserConfigService {
 
         return response;
     }
-
-    public static String avoidNullPath(String path, GenCodeResponse response){
-        String bathPath = response.getRequest().getProjectPath();
-        if(StringUtils.isBlank(path)){
-            return bathPath;
-        }
-        //todo
-        return path;
-    }
-
 
     // todo
     private static void check(String projectPath, String key, String value, GenCodeConfig config) {
@@ -85,8 +76,9 @@ public class UserConfigService {
                 fileName = propertiesFile.getAbsolutePath();
             }
             if(StringUtils.isBlank(fileName)){
-                return ret.failure("error, no generator.properties config file,"
-                        + "please add an generator.properties in you poject path");
+                return ret;
+//                return ret.failure("error, no generator.properties config file,"
+//                        + "please add an generator.properties in you poject path");
             }
             if(Objects.equal(fileName,"NOT_ONLY")){
                 return ret.failure("","error, duplicated generator.properties file");

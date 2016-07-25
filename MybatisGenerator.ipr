@@ -2382,6 +2382,13 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="zhengjun">
+      <words>
+        <w>codehelper</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -2584,6 +2591,9 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
@@ -2592,26 +2602,22 @@
   <component name="libraryTable">
     <library name="annotations-13.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../ccnodeSpace/DaoCodeUtilJars/annotations-13.0.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/annotations-13.0.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/commons-io-2.1.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/commons-lang-2.5.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/commons-lang3-3.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
-    <library name="commons-io-2.1">
+    <library name="jackson-annotations-2.6.0">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../ccnodeSpace/DaoCodeUtilJars/commons-io-2.1.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/jackson-annotations-2.6.0.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/jackson-core-2.6.0.jar!/" />
+        <root url="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/jackson-databind-2.6.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
-    </library>
-    <library name="commons-lang3-3.1">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../../ccnodeSpace/DaoCodeUtilJars/commons-lang3-3.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.ideaLibSources/commons-lang3-3.1-sources.jar!/" />
-      </SOURCES>
     </library>
   </component>
   <component name="masterDetails">

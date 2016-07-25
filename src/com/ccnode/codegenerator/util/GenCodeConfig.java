@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.util;
 
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
@@ -11,31 +12,13 @@ import java.util.Map;
  */
 public class GenCodeConfig {
 
-    String projectPath;
-    String servicePath;
-    String mapperPath;
-    String sqlPath;
-    String daoPath;
+    String projectPath = StringUtils.EMPTY;
+    String serviceDir = StringUtils.EMPTY;
+    String mapperDir = StringUtils.EMPTY;
+    String sqlDir = StringUtils.EMPTY;
+    String daoDir = StringUtils.EMPTY;
     String pojoName;
     Map<String,String> configMap = Maps.newHashMap();
-
-    public void refreshPathByPojoName(){
-        servicePath = servicePath +"/" + pojoName + "Service.java";
-        mapperPath = mapperPath +"/" + pojoName + "Dao.xml";
-        daoPath = daoPath + "/" +pojoName + "Dao.java";
-        sqlPath = sqlPath + "/" +pojoName + "alter.sql";
-        servicePath = correctPath(servicePath);
-        mapperPath = correctPath(mapperPath);
-        daoPath = correctPath(daoPath);
-        sqlPath = correctPath(sqlPath);
-    }
-
-    public String correctPath(String oldPath){
-        if(oldPath.contains("//")) {
-            return oldPath.replace("//","/");
-        }
-        return oldPath;
-    }
 
     public Map<String, String> getConfigMap() {
         return configMap;
@@ -61,35 +44,35 @@ public class GenCodeConfig {
         this.projectPath = projectPath;
     }
 
-    public String getServicePath() {
-        return servicePath;
+    public String getServiceDir() {
+        return serviceDir;
     }
 
-    public void setServicePath(String servicePath) {
-        this.servicePath = servicePath;
+    public void setServiceDir(String serviceDir) {
+        this.serviceDir = serviceDir;
     }
 
-    public String getMapperPath() {
-        return mapperPath;
+    public String getMapperDir() {
+        return mapperDir;
     }
 
-    public void setMapperPath(String mapperPath) {
-        this.mapperPath = mapperPath;
+    public void setMapperDir(String mapperDir) {
+        this.mapperDir = mapperDir;
     }
 
-    public String getSqlPath() {
-        return sqlPath;
+    public String getSqlDir() {
+        return sqlDir;
     }
 
-    public void setSqlPath(String sqlPath) {
-        this.sqlPath = sqlPath;
+    public void setSqlDir(String sqlDir) {
+        this.sqlDir = sqlDir;
     }
 
-    public String getDaoPath() {
-        return daoPath;
+    public String getDaoDir() {
+        return daoDir;
     }
 
-    public void setDaoPath(String daoPath) {
-        this.daoPath = daoPath;
+    public void setDaoDir(String daoDir) {
+        this.daoDir = daoDir;
     }
 }

@@ -15,9 +15,8 @@ import org.jetbrains.annotations.Nullable;
  * Created by zhengjun.du on 2016/07/05 14:26
  */
 
-@State(name="SettingService", storages={@Storage(id="other", file="$APP_CONFIG$/mybatis.xml")})
+@State(name="SettingService", storages={@Storage(id="other", file="$APP_CONFIG$/codeHelper.xml")})
 public class SettingService implements PersistentStateComponent<SettingDto> {
-
 
      SettingDto settingDto;
 
@@ -37,7 +36,7 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
 
     @Override
     public void loadState(SettingDto o) {
-        XmlSerializerUtil.copyBean(o, this);
+        XmlSerializerUtil.copyBean(o, getState());
     }
 
     public void setSettingDto(SettingDto settingDto) {

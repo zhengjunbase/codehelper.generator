@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$USER_HOME$/Workspaces/inspace/deduce_premium_dlw/src/main/java/com/qunar/insurance/vehicle/loss/service/RealTimeDeduceService.java" description="if (!b) {" line="151" />
+    <bookmark url="file://$USER_HOME$/Workspaces/horizon/carinfocenter/src/main/java/com/qunar/flight/car/service/SpringService.java" description="for (String name : names) {" line="72" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="27fac25e-d8b8-405e-ab1f-8f87caa25b64" name="Default" comment="" />
+    <list default="true" id="27fac25e-d8b8-405e-ab1f-8f87caa25b64" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/RegisterResponse.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/CheckRegisterService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/HexUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityHelper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MybatisGenerator.iml" afterPath="$PROJECT_DIR$/MybatisGenerator.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MybatisGenerator.ipr" afterPath="$PROJECT_DIR$/MybatisGenerator.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MybatisGenerator.iws" afterPath="$PROJECT_DIR$/MybatisGenerator.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/PojoFieldInfo.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/PojoFieldInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/GenCodeResponseHelper.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/GenCodeResponseHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/ServerRequestHelper.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/ServerRequestHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/common/PostService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/common/PostService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerRequest.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerRequest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerResponse.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerResponse.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/RegisterService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/RegisterService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingDto.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingDto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingService.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeConfig.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/HttpUtil.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/HttpUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/RegexUtil.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/RegexUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/EnterLicenseAction.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/EnterLicenseAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/GenCodeAction.java" afterPath="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/GenCodeAction.java" />
+    </list>
     <ignored path="MybatisGenerator.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -44,99 +81,109 @@
       <file leaf-file-name="GenCodeService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="89" column="52" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
-              <folding />
+            <state relative-caret-position="77">
+              <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hs_err_pid5466.log" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/hs_err_pid5466.log">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MybatisGenerator.iml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MybatisGenerator.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MybatisGenerator.ipr" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MybatisGenerator.ipr">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-16864">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MybatisGenerator.iws" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/MybatisGenerator.iws">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="159" column="33" selection-start-line="159" selection-start-column="33" selection-end-line="159" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GenSqlService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserConfigService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserConfigService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+            <state relative-caret-position="88">
+              <caret line="87" column="44" selection-start-line="87" selection-start-column="44" selection-end-line="87" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenCodeResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeResponse.java">
+      <file leaf-file-name="GenCodeAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/GenCodeAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="44" column="12" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShowPremiumAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/ShowPremiumAction.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+              <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenCodeRequest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeRequest.java">
+      <file leaf-file-name="EnterLicenseAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/EnterLicenseAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
+            <state relative-caret-position="153">
+              <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextBoxes.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/TextBoxes.java">
+      <file leaf-file-name="RegisterService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/RegisterService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
-              <caret line="96" column="35" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
+            <state relative-caret-position="459">
+              <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BaseResponse.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="127" column="19" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
+              <folding>
+                <element signature="e#2889#2890#0" expanded="true" />
+                <element signature="e#2941#2942#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VirtualFileManager.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/vfs/VirtualFileManager.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlatformVirtualFileManager.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/vfs/PlatformVirtualFileManager.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="341">
+              <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VirtualFileManagerImpl.class" pinned="false" current-in-tab="false">
+        <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/vfs/impl/VirtualFileManagerImpl.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="188">
+              <caret line="183" column="16" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="16" />
+              <folding>
+                <element signature="e#5486#5487#0" expanded="true" />
+                <element signature="e#5546#5547#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -151,6 +198,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
       <projects_view />
@@ -159,57 +209,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfoUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeConfig.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfoHelper.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/DirectoryConfig.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/FileUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeResponse.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GeneratedFile.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/IOUtils.java" />
-        <option value="$PROJECT_DIR$/out/production/MybatisGenerator/generator.properties" />
-        <option value="$PROJECT_DIR$/docs/todo.md" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/TestPojo.java" />
-        <option value="$PROJECT_DIR$/TestPojo.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/TestPojo.java" />
-        <option value="$PROJECT_DIR$/TestPojoService.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DateUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/function/MapperCondition.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/RegexUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/ListInfo.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/function/EqualCondition.java" />
-        <option value="$PROJECT_DIR$/TestPojo.xml" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/test/TestPojo.java" />
-        <option value="$PROJECT_DIR$/TestPojo.sql" />
-        <option value="$PROJECT_DIR$/TestPojoMapper.xml" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/test/TestPojoField.java" />
-        <option value="$PROJECT_DIR$/TestPojoFieldMapper.xml" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/test/TestPojoHello.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java" />
-        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/PojoFieldInfo.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeRequest.java" />
-        <option value="$PROJECT_DIR$/resources/generator.properties" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/enums/FileType.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseResponse.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/MybatisParam.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/DaoParam.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenericDao.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenericService.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/ReplaceUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java" />
-        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/IpUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/common/VersionManager.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/enums/UserLevel.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/enums/UserType.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/server/pojo/ServerRequest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/server/pojo/RegisterRequest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/common/UserTypeManager.java" />
         <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/TextBoxes.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/CodeHelperGroup.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/ShowPremiumAction.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseResponse.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/IOUtils.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/server/pojo/ServerResponse.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/enums/RequestType.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/JsonMapper.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/JSONUtil.java" />
+        <option value="$PROJECT_DIR$/test/com/ccnode/codegenerator/server/service/PostServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/server/service/PostService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseRequest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/RegisterRequest.java" />
+        <option value="$PROJECT_DIR$/test/com/ccnode/codegenerator/pojoHelper/ServerRequestHelperTest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerRequest.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/HexUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/ServerRequestHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/HttpUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/ServerResponse.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/pojo/RegisterResponse.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/common/PostService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingDto.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/CheckRegisterService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/PojoFieldInfo.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/RegexUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/GenCodeResponseHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java" />
+        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java" />
         <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeConfig.java" />
         <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java" />
-        <option value="$PROJECT_DIR$/MybatisGenerator.iws" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/GenCodeAction.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/RegisterService.java" />
+        <option value="$PROJECT_DIR$/src/com/ccnode/codegenerator/view/EnterLicenseAction.java" />
       </list>
     </option>
   </component>
@@ -535,6 +585,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -592,10 +643,6 @@
               <option name="myItemId" value="codegenerator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -615,47 +662,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pojo" />
+              <option name="myItemId" value="pojoHelper" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -678,50 +685,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="genCode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="function" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MybatisGenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codegenerator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="enums" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -773,9 +736,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -785,14 +747,16 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../horizon/generator" />
-    <property name="SearchEverywhereHistoryKey" value="Generi&#9;PSI&#9;JAVA://com.ccnode.codegenerator.util.GenericService&#10;psiclassre&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.PsiClassReferenceType&#10;Psiann&#9;PSI&#9;JAVA://com.intellij.psi.PsiAnnotation&#10;PsiClassImpl&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.PsiClassImpl&#10;PsiWhiteSpaceImpl&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl&#10;JSON&#9;PSI&#9;JAVA://com.oracle.javafx.jmx.json.JSONDocument&#10;PsiJavaFileImpl&#9;FILE&#9;jar:///Applications/IntelliJ IDEA.app/Contents/lib/idea.jar!/com/intellij/psi/impl/source/PsiJavaFileImpl.class&#10;psiel&#9;PSI&#9;JAVA://com.intellij.psi.PsiElement&#10;PsiManager&#9;PSI&#9;JAVA://com.intellij.psi.PsiManager&#10;Filenami&#9;PSI&#9;JAVA://com.intellij.psi.search.FilenameIndex&#10;File&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java&#10;URLClassloader&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/net/URLClassLoader.java&#10;helper&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java&#10;Classlo&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java&#10;DailyRollingFileAppender&#9;PSI&#9;JAVA://org.apache.log4j.DailyRollingFileAppender" />
+    <property name="last_opened_file_path" value="$APPLICATION_HOME_DIR$/lib/src" />
+    <property name="SearchEverywhereHistoryKey" value="logger&#9;PSI&#9;JAVA://org.slf4j.Logger&#10;resphe&#9;PSI&#9;JAVA://com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper&#10;psicomment&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.tree.PsiCommentImpl&#10;psicommi&#9;FILE&#9;jar:///Applications/IntelliJ IDEA.app/Contents/lib/idea.jar!/com/intellij/psi/impl/source/tree/PsiCommentImpl.class&#10;gencode&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/genCode/GenCodeService.java&#10;gencodese&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/genCode/GenCodeService.java&#10;post&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/service/common/PostService.java&#10;Test&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/test/com/ccnode/codegenerator/pojoHelper/ServerRequestHelperTest.java&#10;Gencode&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/genCode/GenCodeService.java&#10;genmap&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/genCode/GenMapperService.java&#10;httpu&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/util/HttpUtil.java&#10;jsonu&#9;PSI&#9;JAVA://org.jetbrains.io.JsonUtil&#10;httprequest&#9;PSI&#9;JAVA://org.apache.http.HttpRequest&#10;http&#9;FILE&#9;file:///Users/zhengjun/tmp/tmp/MybatisGenerator/src/com/ccnode/codegenerator/util/HttpUtil.java&#10;@stat&#9;PSI&#9;JAVA://com.intellij.openapi.components.State&#10;Storage&#9;PSI&#9;JAVA://com.intellij.openapi.components.Storage&#10;Generi&#9;PSI&#9;JAVA://com.ccnode.codegenerator.util.GenericService&#10;psiclassre&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.PsiClassReferenceType&#10;Psiann&#9;PSI&#9;JAVA://com.intellij.psi.PsiAnnotation&#10;PsiClassImpl&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.PsiClassImpl&#10;PsiWhiteSpaceImpl&#9;PSI&#9;JAVA://com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl&#10;JSON&#9;PSI&#9;JAVA://com.oracle.javafx.jmx.json.JSONDocument&#10;PsiJavaFileImpl&#9;FILE&#9;jar:///Applications/IntelliJ IDEA.app/Contents/lib/idea.jar!/com/intellij/psi/impl/source/PsiJavaFileImpl.class&#10;psiel&#9;PSI&#9;JAVA://com.intellij.psi.PsiElement&#10;PsiManager&#9;PSI&#9;JAVA://com.intellij.psi.PsiManager&#10;Filenami&#9;PSI&#9;JAVA://com.intellij.psi.search.FilenameIndex&#10;File&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java&#10;URLClassloader&#9;FILE&#9;jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/net/URLClassLoader.java&#10;helper&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java&#10;Classlo&#9;FILE&#9;file:///Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java&#10;DailyRollingFileAppender&#9;PSI&#9;JAVA://org.apache.log4j.DailyRollingFileAppender" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.ccnode.codegenerator.pojoHelper" />
+      <recent name="com.ccnode.codegenerator.server.service" />
       <recent name="com.ccnode.codegenerator.genCode" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -801,46 +765,100 @@
       <recent name="$PROJECT_DIR$/src/com/ccnode/codegenerator/util" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.ccnode.codegenerator.util" />
+      <recent name="com.ccnode.codegenerator.view" />
       <recent name="com.ccnode.codegenerator.test" />
       <recent name="com.ccnode.codegenerator.genCode" />
-      <recent name="com.ccnode.codegenerator.util" />
       <recent name="com.ccnode.codegenerator.exception" />
-      <recent name="com.ccnode.codegenerator.view" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$/src/com/ccnode/codegenerator/util" />
+      <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$/src/com/ccnode/codegenerator" />
     </key>
   </component>
   <component name="RunManager" selected="Plugin.Plugin">
-    <configuration default="false" name="GenCodeServiceTest.genCode" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="SecurityHelper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.ccnode.codegenerator.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.util.SecurityHelper" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="MybatisGenerator" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="GenSqlService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.ccnode.codegenerator.genCode.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <module name="MybatisGenerator" />
+      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.genCode.GenSqlService" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.ccnode.codegenerator.genCode" />
-      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.genCode.GenCodeServiceTest" />
-      <option name="METHOD_NAME" value="genCode" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
+      <module name="MybatisGenerator" />
       <envs />
-      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="GenCodeService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.ccnode.codegenerator.genCode.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.genCode.GenCodeService" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="MybatisGenerator" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="OnePojoInfoHelper" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.ccnode.codegenerator.pojoHelper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="MybatisGenerator" />
+      <envs />
       <method />
     </configuration>
     <configuration default="false" name="GenCodeUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -851,66 +869,6 @@
         </pattern>
       </extension>
       <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.util.GenCodeUtil" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="MybatisGenerator" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="GenMapperService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.ccnode.codegenerator.genCode.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.genCode.GenMapperService" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="MybatisGenerator" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="ReplaceUtil" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.ccnode.codegenerator.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.util.ReplaceUtil" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="MybatisGenerator" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="false" name="FileSystemClassLoader" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.ccnode.codegenerator.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="com.ccnode.codegenerator.util.FileSystemClassLoader" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -1377,19 +1335,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Plugin.Plugin" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.GenCodeServiceTest.genCode" />
-      <item index="2" class="java.lang.String" itemvalue="Application.GenCodeUtil" />
-      <item index="3" class="java.lang.String" itemvalue="Application.GenMapperService" />
-      <item index="4" class="java.lang.String" itemvalue="Application.ReplaceUtil" />
-      <item index="5" class="java.lang.String" itemvalue="Application.FileSystemClassLoader" />
+      <item index="1" class="java.lang.String" itemvalue="Application.SecurityHelper" />
+      <item index="2" class="java.lang.String" itemvalue="Application.GenSqlService" />
+      <item index="3" class="java.lang.String" itemvalue="Application.GenCodeService" />
+      <item index="4" class="java.lang.String" itemvalue="Application.OnePojoInfoHelper" />
+      <item index="5" class="java.lang.String" itemvalue="Application.GenCodeUtil" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.FileSystemClassLoader" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.GenCodeServiceTest.genCode" />
-        <item index="2" class="java.lang.String" itemvalue="Application.GenCodeUtil" />
-        <item index="3" class="java.lang.String" itemvalue="Application.GenMapperService" />
-        <item index="4" class="java.lang.String" itemvalue="Application.ReplaceUtil" />
+        <item index="0" class="java.lang.String" itemvalue="Application.GenCodeUtil" />
+        <item index="1" class="java.lang.String" itemvalue="Application.OnePojoInfoHelper" />
+        <item index="2" class="java.lang.String" itemvalue="Application.GenCodeService" />
+        <item index="3" class="java.lang.String" itemvalue="Application.GenSqlService" />
+        <item index="4" class="java.lang.String" itemvalue="Application.SecurityHelper" />
       </list>
     </recent_temporary>
   </component>
@@ -1436,16 +1394,57 @@
       <workItem from="1467466033010" duration="976000" />
       <workItem from="1467467034714" duration="7995000" />
       <workItem from="1467618501979" duration="3742000" />
+      <workItem from="1467631106704" duration="689000" />
+      <workItem from="1467632215667" duration="5107000" />
+      <workItem from="1467699966253" duration="22159000" />
+      <workItem from="1468154756095" duration="33000" />
+      <workItem from="1468154802237" duration="597000" />
+      <workItem from="1468155585134" duration="849000" />
+      <workItem from="1468157567077" duration="107000" />
+      <workItem from="1468157688140" duration="3545000" />
+      <workItem from="1468586282099" duration="3503000" />
+      <workItem from="1468634066692" duration="217000" />
+      <workItem from="1468634301515" duration="63000" />
+      <workItem from="1468634382349" duration="404000" />
+      <workItem from="1468634805732" duration="368000" />
+      <workItem from="1468635210645" duration="752000" />
+      <workItem from="1468636228706" duration="432000" />
+      <workItem from="1468636677211" duration="41000" />
+      <workItem from="1468636732621" duration="66000" />
+      <workItem from="1468636812920" duration="173000" />
+      <workItem from="1468637001308" duration="182000" />
+      <workItem from="1468637198625" duration="173000" />
+      <workItem from="1468637395519" duration="61000" />
+      <workItem from="1468637471278" duration="401000" />
+      <workItem from="1468637889633" duration="73000" />
+      <workItem from="1468637977794" duration="789000" />
+      <workItem from="1468638786535" duration="101000" />
+      <workItem from="1468638905051" duration="95000" />
+      <workItem from="1468639016248" duration="586000" />
+      <workItem from="1468639806713" duration="102000" />
+      <workItem from="1468639925050" duration="1211000" />
+      <workItem from="1468641219459" duration="9698000" />
+      <workItem from="1468676049159" duration="4965000" />
+      <workItem from="1468769342167" duration="1481000" />
+      <workItem from="1468807924629" duration="34000" />
+      <workItem from="1468809197737" duration="315000" />
+      <workItem from="1468809539002" duration="40000" />
+      <workItem from="1468809596990" duration="197000" />
+      <workItem from="1468809810920" duration="6269000" />
+      <workItem from="1468934668896" duration="2818000" />
+      <workItem from="1468998974030" duration="6902000" />
+      <workItem from="1469194561572" duration="9402000" />
+      <workItem from="1469269253704" duration="8076000" />
+      <workItem from="1469281341583" duration="3749000" />
+      <workItem from="1469285116663" duration="552000" />
+      <workItem from="1469285691509" duration="232000" />
+      <workItem from="1469285945946" duration="7947000" />
+      <workItem from="1469331717237" duration="412000" />
+      <workItem from="1469332144444" duration="14229000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="GenCodeServiceTest_genCode - 2016.06.07 at 10h 54m 32s.xml">
-      <configuration name="GenCodeServiceTest.genCode" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GenCodeServiceTest_genCode - 2016.06.07 at 10h 55m 15s.xml">
-      <configuration name="GenCodeServiceTest.genCode" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="GenCodeServiceTest_genCode - 2016.06.07 at 10h 56m 03s.xml">
       <configuration name="GenCodeServiceTest.genCode" configurationId="JUnit" />
     </history-entry>
@@ -1470,9 +1469,15 @@
     <history-entry file="GenCodeServiceTest_genCode - 2016.06.07 at 11h 23m 36s.xml">
       <configuration name="GenCodeServiceTest.genCode" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="PostServiceTest_test - 2016.07.16 at 21h 18m 07s.xml">
+      <configuration name="PostServiceTest.test" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PostServiceTest_test - 2016.07.16 at 21h 18m 14s.xml">
+      <configuration name="PostServiceTest.test" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="150160000" />
+    <option name="totallyTimeSpent" value="270357000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="all">
@@ -1482,41 +1487,41 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="821" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286517" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32215744" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32321042" sideWeight="0.52248394" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55976677" sideWeight="0.528098" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32215744" sideWeight="0.47751606" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3265306" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.324295" sideWeight="0.4882227" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.696793" sideWeight="0.471902" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32069972" sideWeight="0.49711815" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55976677" sideWeight="0.9207493" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43383947" sideWeight="0.9207709" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.324295" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.324295" sideWeight="0.4882227" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299712" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32215744" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5845481" sideWeight="0.079229124" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.55976677" sideWeight="0.528098" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1525,18 +1530,18 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43383947" sideWeight="0.9207709" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.55976677" sideWeight="0.9207493" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286517" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.324295" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32215744" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3265306" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.324295" sideWeight="0.4882227" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299712" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32321042" sideWeight="0.47982708" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18576017" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32321042" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.696793" sideWeight="0.471902" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32069972" sideWeight="0.49711815" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -1564,12 +1569,6 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java</url>
-          <line>107</line>
-          <properties />
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java</url>
           <line>37</line>
           <properties />
@@ -1582,58 +1581,16 @@
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>158</line>
-          <properties />
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java</url>
-          <line>422</line>
+          <line>425</line>
           <properties />
           <option name="timeStamp" value="57" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java</url>
-          <line>424</line>
+          <line>427</line>
           <properties />
           <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>85</line>
-          <properties />
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>77</line>
-          <properties />
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>81</line>
-          <properties />
-          <option name="timeStamp" value="86" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>76</line>
-          <properties />
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>84</line>
-          <properties />
-          <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
-          <line>82</line>
-          <properties />
-          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/FileSystemClassLoader.java</url>
@@ -1642,49 +1599,97 @@
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java</url>
-          <line>98</line>
-          <properties />
-          <option name="timeStamp" value="114" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java</url>
-          <line>44</line>
-          <properties />
-          <option name="timeStamp" value="115" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java</url>
-          <line>69</line>
-          <properties />
-          <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java</url>
-          <line>176</line>
-          <properties />
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java</url>
-          <line>132</line>
+          <line>225</line>
           <properties />
           <option name="timeStamp" value="120" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java</url>
-          <line>104</line>
+          <line>197</line>
           <properties />
           <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java</url>
-          <line>157</line>
+          <line>154</line>
           <properties />
           <option name="timeStamp" value="130" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/ReplaceUtil.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="131" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/test/com/ccnode/codegenerator/server/service/PostServiceTest.java</url>
+          <line>35</line>
+          <properties />
+          <option name="timeStamp" value="138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/ServerRequestHelper.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/test/com/ccnode/codegenerator/pojoHelper/ServerRequestHelperTest.java</url>
+          <line>30</line>
+          <properties />
+          <option name="timeStamp" value="140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityHelper.java</url>
+          <line>72</line>
+          <properties />
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java</url>
+          <line>250</line>
+          <properties />
+          <option name="timeStamp" value="156" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java</url>
+          <line>88</line>
+          <properties />
+          <option name="timeStamp" value="158" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java</url>
+          <line>239</line>
+          <properties />
+          <option name="timeStamp" value="160" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java</url>
+          <line>235</line>
+          <properties />
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java</url>
+          <line>132</line>
+          <properties />
+          <option name="timeStamp" value="165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java</url>
+          <line>100</line>
+          <properties />
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="131" />
+      <option name="time" value="169" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1693,122 +1698,72 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/wm/impl/FocusManagerImpl.class">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/compiled/ClsDocCommentImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="137" column="191" selection-start-line="137" selection-start-column="191" selection-end-line="137" selection-end-column="191" />
+        <state relative-caret-position="77">
+          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/util.jar!/com/intellij/util/ArrayFactory.class">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/javadoc/PsiDocTagImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        <state relative-caret-position="85">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/PsiWhiteSpaceImpl.class">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiDocCommentBase.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="26" column="23" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/java/stubs/PsiFieldStub.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/compiled/ClsFieldImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/compiled/ClsAnnotationImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="136">
+          <caret line="13" column="7" selection-start-line="12" selection-start-column="4" selection-end-line="13" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/PsiClassImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        <state relative-caret-position="1819">
+          <caret line="108" column="31" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiAnnotation.class">
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/SecurityHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        <state relative-caret-position="391">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
+          <folding>
+            <element signature="e#460#461#0" expanded="false" />
+            <element signature="e#534#535#0" expanded="false" />
+            <element signature="e#814#815#0" expanded="false" />
+            <element signature="e#888#889#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hs_err_pid1098.log">
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/storage/SettingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="173">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiVariable.class">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/compiled/ClsFieldImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiPrimitiveType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="32" column="41" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="31" column="35" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/PsiClassReferenceType.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiField.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        <state relative-caret-position="255">
+          <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/PojoFieldInfo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+        <state relative-caret-position="153">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/log4j.properties">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiComment.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/generator.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+        <state relative-caret-position="153">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1819,225 +1774,170 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/compiled/ClsPackageStatementImpl.class">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/javadoc/PsiDocComment.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-34">
-          <caret line="30" column="32" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="32" />
+        <state relative-caret-position="102">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/lang/String.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/PsiCoreCommentImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="1957" column="18" selection-start-line="1957" selection-start-column="18" selection-end-line="1957" selection-end-column="18" />
+        <state relative-caret-position="102">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/tree/PsiCommentImpl.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="26" column="58" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="58" />
-          <folding />
+        <state relative-caret-position="102">
+          <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeServiceTest.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/psi/impl/source/javadoc/PsiDocCommentImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/javadoc/PsiDocTag.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/RegexUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="19" column="121" selection-start-line="19" selection-start-column="121" selection-end-line="19" selection-end-column="121" />
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/DirectoryConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/PojoUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/enums/FileType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GeneratedFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar!/sun/lwawt/macosx/CAccessible.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar!/sun/lwawt/macosx/CAccessibility.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar!/sun/lwawt/macosx/LWCToolkit.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="690" column="0" selection-start-line="690" selection-start-column="0" selection-end-line="690" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/ide/IdeEventQueue.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="212" column="42" selection-start-line="212" selection-start-column="42" selection-end-line="212" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="51" column="17" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="35" column="51" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenericDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/DaoParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
-            <element signature="e#756#757#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1343#1344#0" expanded="false" />
+            <element signature="e#1399#1400#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/ListInfo.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/lang/StringBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state relative-caret-position="1785">
+          <caret line="134" column="25" selection-start-line="134" selection-start-column="25" selection-end-line="134" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#11950#0" expanded="false" />
+            <element signature="e#2871#2872#0" expanded="false" />
+            <element signature="e#2896#2897#0" expanded="false" />
+            <element signature="e#3272#3273#0" expanded="false" />
+            <element signature="e#3303#3304#0" expanded="false" />
+            <element signature="e#4161#4162#0" expanded="false" />
+            <element signature="e#4211#4212#0" expanded="false" />
+            <element signature="e#10229#10230#0" expanded="false" />
+            <element signature="e#10270#10271#0" expanded="false" />
+            <element signature="e#10337#10338#0" expanded="false" />
+            <element signature="e#10389#10390#0" expanded="false" />
+            <element signature="e#10445#10446#0" expanded="false" />
+            <element signature="e#10490#10491#0" expanded="false" />
+            <element signature="e#10561#10562#0" expanded="false" />
+            <element signature="e#10617#10618#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/GenCodeResponseHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1836">
-          <caret line="129" column="12" selection-start-line="129" selection-start-column="12" selection-end-line="129" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/ReplaceUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7820">
-          <caret line="478" column="25" selection-start-line="478" selection-start-column="25" selection-end-line="478" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenericService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="55" column="7" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="419">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenMapperService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2703">
-          <caret line="173" column="54" selection-start-line="173" selection-start-column="54" selection-end-line="173" selection-end-column="54" />
+        <state relative-caret-position="289">
+          <caret line="32" column="35" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseResponse.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiField.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="68" column="38" selection-start-line="68" selection-start-column="38" selection-end-line="68" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/TextBoxes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="96" column="35" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="29" column="20" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="102">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeResponse.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="69" column="24" selection-start-line="69" selection-start-column="24" selection-end-line="69" selection-end-column="24" />
+          <folding>
+            <element signature="e#1401#1402#0" expanded="false" />
+            <element signature="e#1434#1435#0" expanded="false" />
+            <element signature="e#1493#1494#0" expanded="false" />
+            <element signature="e#1537#1538#0" expanded="false" />
+            <element signature="e#1576#1577#0" expanded="false" />
+            <element signature="e#1611#1612#0" expanded="false" />
+            <element signature="e#1667#1668#0" expanded="false" />
+            <element signature="e#1715#1716#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/actionSystem/AnActionEvent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="556">
+          <caret line="124" column="17" selection-start-line="124" selection-start-column="17" selection-end-line="124" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GenCodeRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="23" column="11" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
+          <folding>
+            <element signature="e#752#753#0" expanded="false" />
+            <element signature="e#794#795#0" expanded="false" />
+            <element signature="e#836#837#0" expanded="false" />
+            <element signature="e#868#869#0" expanded="false" />
+            <element signature="e#980#981#0" expanded="false" />
+            <element signature="e#1015#1016#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/GeneratedFile.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/project/Project.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        <state relative-caret-position="493">
+          <caret line="36" column="12" selection-start-line="36" selection-start-column="12" selection-end-line="36" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/project/impl/DefaultProject.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        <state relative-caret-position="102">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="89" column="52" selection-start-line="89" selection-start-column="52" selection-end-line="89" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hs_err_pid5466.log">
+    <entry file="file://$PROJECT_DIR$/resources/generator.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2045,26 +1945,210 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MybatisGenerator.iml">
+    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="36" selection-start-line="10" selection-start-column="36" selection-end-line="10" selection-end-column="36" />
+        <state relative-caret-position="238">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MybatisGenerator.ipr">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/slf4j-api-1.7.10.jar!/org/slf4j/Logger.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16864">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="102">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MybatisGenerator.iws">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/psi/PsiModifierList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="159" column="33" selection-start-line="159" selection-start-column="33" selection-end-line="159" selection-end-column="33" />
+        <state relative-caret-position="102">
+          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenSqlService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="126" column="41" selection-start-line="126" selection-start-column="41" selection-end-line="126" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/lang/String.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="1924" column="18" selection-start-line="1924" selection-start-column="18" selection-end-line="1924" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Workspaces/ccnodeSpace/DaoCodeUtilJars/commons-lang3-3.1.jar!/org/apache/commons/lang3/StringUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="1937" column="0" selection-start-line="1937" selection-start-column="0" selection-end-line="1937" selection-end-column="0" />
+          <folding>
+            <element signature="e#922#923#0" expanded="true" />
+            <element signature="e#975#976#0" expanded="true" />
+            <element signature="e#65305#65306#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="79" column="66" selection-start-line="79" selection-start-column="66" selection-end-line="79" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/OnePojoInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="82">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="e#2155#2156#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/DaoCodeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/util/GenCodeConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="50" column="20" selection-start-line="50" selection-start-column="20" selection-end-line="50" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1121#1122#0" expanded="true" />
+            <element signature="e#1154#1155#0" expanded="true" />
+            <element signature="e#1206#1207#0" expanded="true" />
+            <element signature="e#1250#1251#0" expanded="true" />
+            <element signature="e#1585#1586#0" expanded="true" />
+            <element signature="e#1614#1615#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenDaoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="50" column="51" selection-start-line="50" selection-start-column="51" selection-end-line="50" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenServiceService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="44" column="51" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/vfs/PlatformVirtualFileManager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/com/intellij/openapi/vfs/impl/VirtualFileManagerImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="183" column="16" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="16" />
+          <folding>
+            <element signature="e#5486#5487#0" expanded="true" />
+            <element signature="e#5546#5547#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/openapi.jar!/com/intellij/openapi/vfs/VirtualFileManager.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="42" column="33" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/GenCodeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/GenCodeAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="44" column="12" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/ShowPremiumAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/service/register/RegisterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="45" column="22" selection-start-line="45" selection-start-column="22" selection-end-line="45" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/pojo/BaseResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="127" column="19" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
+          <folding>
+            <element signature="e#2889#2890#0" expanded="true" />
+            <element signature="e#2941#2942#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/view/EnterLicenseAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ccnode/codegenerator/genCode/UserConfigService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="87" column="44" selection-start-line="87" selection-start-column="44" selection-end-line="87" selection-end-column="44" />
           <folding />
         </state>
       </provider>
@@ -2135,7 +2219,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>annotations-13.0</last-edited>
+          <last-edited>jackson-annotations-2.6.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

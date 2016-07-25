@@ -14,6 +14,7 @@ public class PojoFieldInfo {
 
     String fieldName;
     String fieldClass;
+    String fieldComment;
     List<Annotation> annotations;
 
     public String getFieldName() {
@@ -38,5 +39,13 @@ public class PojoFieldInfo {
 
     public void setAnnotations(List<Annotation> annotations) {
         this.annotations = annotations;
+    }
+
+    public String getFieldComment() {
+        return fieldComment;
+    }
+
+    public void setFieldComment(String fieldComment) {
+        this.fieldComment = fieldComment;
     }
 }

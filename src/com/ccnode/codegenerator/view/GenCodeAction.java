@@ -9,14 +9,16 @@ import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.application.Application;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.PlatformVirtualFileManager;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.util.Date;
 
 /**
@@ -37,6 +39,8 @@ public class GenCodeAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
+        VirtualFileManager.getInstance().syncRefresh();
+        ApplicationManager.getApplication().saveAll();
         if(project == null){
             return;
         }
@@ -47,40 +51,19 @@ public class GenCodeAction extends AnAction {
 
         GenCodeRequest request;
         GenCodeResponse genCodeResponse = new GenCodeResponse();
-        Date oldTime;
-        String s = StringUtils.EMPTY;
-        SettingService service = ServiceManager.getService(SettingService.class);
-        SettingDto state = service.getState();
 
         try{
-            InetAddress ip = InetAddress.getLocalHost();
-            NetworkInterface network = NetworkInterface.getByInetAddress(ip);
-            byte[] mac = network.getHardwareAddress();
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < mac.length; i++) {
-                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-            }
-            String a = sb.toString();
-            System.out.println(a);
-
-        }catch(Exception e){
-            System.out.println(e);
-        }
-
-
-
-        try{
-            request = new GenCodeRequest(Lists.newArrayList(),projectPath,"/");
+            request = new GenCodeRequest(Lists.newArrayList(),projectPath,System.getProperty("file.separator"));
             request.setProject(project);
             genCodeResponse = GenCodeService.genCode(request);
+            VirtualFileManager.getInstance().syncRefresh();
         }catch(Exception e){
             e.printStackTrace();
             genCodeResponse.setMsg(e.getMessage());
         }
-//        String txt= Messages
-//                .showInputDialog(project, projectPath + "Insdfsput pojos splits with comma?", "Input Pojos", Messages.getQuestionIcon());
         Messages.showMessageDialog(project, genCodeResponse.getMsg(), genCodeResponse.getStatus(), Messages.getInformationIcon());
+        ApplicationManager.getApplication().saveAll();
+        VirtualFileManager.getInstance().syncRefresh();
 
     }
 }

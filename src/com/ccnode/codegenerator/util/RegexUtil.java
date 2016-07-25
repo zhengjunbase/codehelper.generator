@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
  */
 public class RegexUtil {
 
-    public static String getMatch(@NotNull String pattern,@NotNull String line){
+    public static String getMatch(@NotNull String pattern, @NotNull String line) {
         Pattern p = Pattern.compile(pattern);
         Matcher matcher = p.matcher(line);
-        if (matcher.find()){
+        if (matcher.find()) {
             return matcher.group(0);
         }
         return StringUtils.EMPTY;

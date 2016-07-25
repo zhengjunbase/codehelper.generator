@@ -1,6 +1,7 @@
-package      com . ccnode.codegenerator.util ;
+package com.ccnode.codegenerator.util;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -65,37 +66,6 @@ public class GenCodeUtil {
 
     }
 
-    @Nullable
-    public static Class loadClassByFileName(@NotNull String dir, @NotNull String pojoName){
-        String fullPojoPath = IOUtils.matchOnlyOneFile(dir, pojoName +  ".java").getAbsolutePath();
-        if(StringUtils.isBlank(fullPojoPath)){
-            return null;
-        }
-        try{
-            fullPojoPath = "/Users/zhengjun/Workspaces/inspace/insurance_risk/src/main/java/com/qunar/insurance/statistic/dao/model/BlackListRecord.java";
-            dir = "/Users/zhengjun/Workspaces/inspace/insurance_risk";
-            Runtime.getRuntime().exec("javac " + fullPojoPath);
-//            dir = "/Users/zhengjun/Workspaces/inspace/insurance_risk/src/main/java/com/qunar/insurance/statistic/dao/model/BlackListRecord.class";
-//            dir = "/Users/zhengjun/tmp";
-            File file = new File(dir);
-            java.net.URL url = file.toURL();
-            java.net.URL[] urls = new java.net.URL[]{url};
-            URLClassLoader loader = new URLClassLoader(urls);
-            String path = getPojoPackage(fullPojoPath)+ "." + pojoName;
-            path = "/Users/zhengjun/Workspaces/inspace/insurance_risk/src/main/java/com/qunar/insurance/statistic/dao/model/BlackListRecord";
-            Class<?> aClass = loader.loadClass(path);
-
-            return aClass;
-        }catch(Exception e){
-            System.out.println("load class By file Name error");
-            return null;
-        }finally {
-            String clazzPath = fullPojoPath.replace(".java", ".class");
-            File file = new File(clazzPath);
-            file.deleteOnExit();
-        }
-    }
-
     public static boolean sqlContain(List<String> lines, @NotNull String word) {
         lines = PojoUtil.avoidEmptyList(lines);
         for (String line : lines) {
@@ -104,6 +74,19 @@ public class GenCodeUtil {
             }
         }
         return false;
+    }
+
+    public static String deducePackage(String path, String pojoPackage){
+        List<String> packages = Splitter.on(".").trimResults().omitEmptyStrings().splitToList(pojoPackage);
+        String packagePrefix = packages.get(0);
+        int indexOf = StringUtils.indexOf(path, packagePrefix);
+        if(indexOf < 0){
+            throw new RuntimeException("invalid path:"+path +", Please input an valid path");
+        }
+        String subPath = path.substring(indexOf);
+        String separator = System.getProperty("file.separator");
+        String replace = subPath.replace(separator, ".");
+        return replace;
     }
 
     public static String pathToPackage(String path){
@@ -146,20 +129,10 @@ public class GenCodeUtil {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL,value);
     }
 
-    public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
-
-          ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-        for(URL url: urls){
-        	System.out.println(url.getFile());
-        }
-
-        Class testPojo = loadClassByFileName(
-                "/Users/zhengjun/Workspaces/genCodeSpace/MybatisGenerator/src/com/ccnode/codegenerator/test/",
-                "TestPojo");
-
-        System.out.println(testPojo);
+    public static void main(String[] args) {
+        System.out.println(deducePackage("src/main/java/com/qunar/insurance","com.qunar.insurance.annotion"));
+        System.out.println(deducePackage("src/com/java/com/qunar/insurance","com.com.com.annotion"));
+        System.out.println(deducePackage("src/com/java/com/qunar/insurance","xxx.com.com.annotion"));
     }
+
 }

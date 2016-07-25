@@ -5,7 +5,6 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,10 +44,10 @@ public class DaoCodeUtil {
     public static void main(String[] args) throws IOException, URISyntaxException {
         GenCodeConfig genCodeConfig = new GenCodeConfig();
         genCodeConfig.setProjectPath("/Users/zhengjun/Workspaces/inspace/insurance_statistic");
-        genCodeConfig.setServicePath("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/java/com/qunar/insurance/statistic/risk/service");
-        genCodeConfig.setDaoPath("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/java/com/qunar/insurance/statistic/dao");
-        genCodeConfig.setMapperPath("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/resources/mappers");
-        genCodeConfig.setSqlPath("/Users/zhengjun/Workspaces/inspace/insurance_statistic/doc/sql");
+        genCodeConfig.setServiceDir("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/java/com/qunar/insurance/statistic/risk/service");
+        genCodeConfig.setDaoDir("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/java/com/qunar/insurance/statistic/dao");
+        genCodeConfig.setMapperDir("/Users/zhengjun/Workspaces/inspace/insurance_statistic/src/main/resources/mappers");
+        genCodeConfig.setSqlDir("/Users/zhengjun/Workspaces/inspace/insurance_statistic/doc/sql");
 
         /**
          * pojoName 设置 pojo名称
@@ -56,7 +55,6 @@ public class DaoCodeUtil {
          */
 
         genCodeConfig.setPojoName("TicketCountDto");
-        genCodeConfig.refreshPathByPojoName();
         genCode(genCodeConfig);
 
     }
@@ -73,22 +71,22 @@ public class DaoCodeUtil {
 
         List<String> fieldList = loadFieldMap(pojoFilePath).getRight();
         String sqlFileContent = generateSQLFile(fieldTypeMap,fieldList);
-        File sqlFile = new File(genCodeConfig.getSqlPath());
+        File sqlFile = new File(genCodeConfig.getSqlDir());
         writeLines(ImmutableList.of(sqlFileContent), "\n",new FileOutputStream(sqlFile));
 
         System.out.println(sqlFileContent);
         String mapperFileContent = generateMapperFile(fieldTypeMap,fieldList);
-        File mapperFile = new File(genCodeConfig.getMapperPath());
+        File mapperFile = new File(genCodeConfig.getMapperDir());
         writeLines(ImmutableList.of(mapperFileContent), "\n",new FileOutputStream(mapperFile));
         System.out.println(mapperFileContent);
 
         String daoFileContent = generateDaoFile(fieldTypeMap,fieldList);
-        File daoFile = new File(genCodeConfig.getDaoPath());
+        File daoFile = new File(genCodeConfig.getDaoDir());
         writeLines(ImmutableList.of(daoFileContent), "\n",new FileOutputStream(daoFile));
         System.out.println(daoFileContent);
 
         String serviceFileContent = generateServiceFile(fieldTypeMap, fieldList);
-        File serviceFile = new File(genCodeConfig.getServicePath());
+        File serviceFile = new File(genCodeConfig.getServiceDir());
         writeLines(ImmutableList.of(serviceFileContent), "\n",new FileOutputStream(serviceFile));
         System.out.println(serviceFileContent);
     }

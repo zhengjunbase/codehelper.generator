@@ -20,10 +20,14 @@ public class OnePojoInfo {
     PsiClassImpl psiClass;
     Class pojoClass;
     String pojoName;
-    String fullPojoPath;
     String pojoPackage;
     String daoPackage;
     String servicePackage;
+    String fullPojoPath;
+    String fullDaoPath;
+    String fullServicePath;
+    String fullSqlPath;
+    String fullMapperPath;
     String pojoClassSimpleName;
 
     public String getPojoName() {
@@ -120,5 +124,37 @@ public class OnePojoInfo {
 
     public void setPsiClass(PsiClassImpl psiClass) {
         this.psiClass = psiClass;
+    }
+
+    public String getFullDaoPath() {
+        return fullDaoPath;
+    }
+
+    public void setFullDaoPath(String fullDaoPath) {
+        this.fullDaoPath = fullDaoPath;
+    }
+
+    public String getFullServicePath() {
+        return fullServicePath;
+    }
+
+    public void setFullServicePath(String fullServicePath) {
+        this.fullServicePath = fullServicePath;
+    }
+
+    public String getFullSqlPath() {
+        return fullSqlPath;
+    }
+
+    public void setFullSqlPath(String fullSqlPath) {
+        this.fullSqlPath = fullSqlPath;
+    }
+
+    public String getFullMapperPath() {
+        return fullMapperPath;
+    }
+
+    public void setFullMapperPath(String fullMapperPath) {
+        this.fullMapperPath = fullMapperPath;
     }
 }

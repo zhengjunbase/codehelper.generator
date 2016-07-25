@@ -4,8 +4,10 @@ import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.google.common.base.Objects;
 import com.intellij.vcs.log.ui.filter.FlatSpeedSearchPopup;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes;
 
 import java.awt.*;
@@ -27,4 +29,17 @@ public class GenCodeResponseHelper {
         // todo
         throw new RuntimeException("获取文件错误");
     }
+    public static Boolean isUseGenericDao(GenCodeResponse response){
+        return getSwitch(response,"usegenericdao");
+    }
+
+    public static Boolean getSwitch(GenCodeResponse response, String key){
+        return Objects.equal( response.getUserConfigMap().get(key),"true");
+    }
+
+    @Nullable
+    public static String getSplitKey(GenCodeResponse response){
+        return response.getUserConfigMap().get("splitkey");
+    }
+
 }

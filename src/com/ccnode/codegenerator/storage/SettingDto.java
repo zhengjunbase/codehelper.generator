@@ -1,5 +1,9 @@
 package com.ccnode.codegenerator.storage;
 
+import com.ccnode.codegenerator.enums.UserType;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,13 +15,17 @@ import java.util.Map;
  */
 public class SettingDto {
 
-    String userType;
+    String userType = UserType.FREE_USER.name();
 
-    String lastRunTime;
+    Date lastRunTime = new Date();
 
-    Map<String,Date> returnKeyMap;
+    Map<String,Date> returnKeyMap = Maps.newHashMap();
 
-    List<Date> lastRegisterDate;
+    List<Date> lastRegisterDate = Lists.newArrayList();
+
+    List<String> keyList = Lists.newArrayList();
+
+    List<String> tkeyList = Lists.newArrayList();
 
     public String getUserType() {
         return userType;
@@ -43,11 +51,27 @@ public class SettingDto {
         this.lastRegisterDate = lastRegisterDate;
     }
 
-    public String getLastRunTime() {
+    public Date getLastRunTime() {
         return lastRunTime;
     }
 
-    public void setLastRunTime(String lastRunTime) {
+    public void setLastRunTime(Date lastRunTime) {
         this.lastRunTime = lastRunTime;
+    }
+
+    public List<String> getKeyList() {
+        return keyList;
+    }
+
+    public void setKeyList(List<String> keyList) {
+        this.keyList = keyList;
+    }
+
+    public List<String> getTkeyList() {
+        return tkeyList;
+    }
+
+    public void setTkeyList(List<String> tkeyList) {
+        this.tkeyList = tkeyList;
     }
 }

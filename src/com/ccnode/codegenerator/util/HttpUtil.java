@@ -144,6 +144,10 @@ public class HttpUtil {
         return postJsonWithResult(url, body).result;
     }
 
+    public static String postJson(String url, Object body) {
+        return postJsonWithResult(url, JSONUtil.toJSONString(body)).result;
+    }
+
 
 
     public static HttpResult postJsonWithResult(String url, String body) {
