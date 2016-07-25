@@ -96,13 +96,17 @@ public class GenCodeService {
                 if(pojoFile == null){
                     return response.failure("", pojoName + " file not exist");
                 }
+                String projectPath = response.getRequest().getProjectPath();
+                if(!projectPath.endsWith(response.getPathSplitter())){
+                    projectPath += response.getPathSplitter();
+                }
                 GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
-                onePojoInfo.setFullDaoPath(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Dao.java");
-                onePojoInfo.setFullServicePath(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Service.java");
-                onePojoInfo.setFullSqlPath(StringUtils.defaultIfEmpty(config.getSqlDir(),pojoDirPath) + response.getPathSplitter() +pojoName + ".sql");
-                onePojoInfo.setFullMapperPath(StringUtils.defaultIfEmpty(config.getMapperDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Mapper.xml");
+                onePojoInfo.setFullDaoPath(StringUtils.defaultIfEmpty(projectPath + config.getDaoDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Dao.java");
+                onePojoInfo.setFullServicePath(StringUtils.defaultIfEmpty(projectPath + config.getServiceDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Service.java");
+                onePojoInfo.setFullSqlPath(StringUtils.defaultIfEmpty(projectPath + config.getSqlDir(),pojoDirPath) + response.getPathSplitter() +pojoName + ".sql");
+                onePojoInfo.setFullMapperPath(StringUtils.defaultIfEmpty(projectPath + config.getMapperDir(),pojoDirPath) + response.getPathSplitter() +pojoName + "Mapper.xml");
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
                 onePojoInfo.setDaoPackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
