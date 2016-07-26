@@ -15,7 +15,7 @@ import java.util.List;
  */
 public abstract class GenericService<T> implements GenericDao<T> {
 
-//    private final static Logger LOGGER = LoggerFactory.getLogger(GenericService.class);
+//    private final static Logger LOGGER = LoggerWrapper.getLogger(GenericService.class);
 //
 //    private final static String UPDATE_NOT_WITH_LAST_UPDATE = "false";
 //    private final static String UPDATE_WITH_LAST_UPDATE = "true";

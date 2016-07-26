@@ -7,11 +7,13 @@ import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.RegexUtil;
 import com.ccnode.codegenerator.util.ReplaceUtil;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -24,17 +26,26 @@ import static com.ccnode.codegenerator.util.GenCodeUtil.*;
  */
 public class GenMapperService {
 
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenMapperService.class);
+
     private static String COMMA = ",";
 
     public static void genMapper( GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
-            GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
-            String mapperExpandStr = response.getUserConfigMap().get("mapper.expand");
-            Boolean expand = false;
-            if("true".equals(mapperExpandStr)){
-                expand = true;
+            try{
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
+                String mapperExpandStr = response.getUserConfigMap().get("mapper.expand");
+                Boolean expand = false;
+                if("true".equals(mapperExpandStr)){
+                    expand = true;
+                }
+                genMapper(response,pojoInfo,fileInfo,expand);
+            }catch(Throwable e){
+                LOGGER.error("GenMapperService genMapper error", e);
+                response.failure("GenMapperService genMapper error");
             }
-            genMapper(response,pojoInfo,fileInfo,expand);
+
+
         }
     }
 

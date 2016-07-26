@@ -1,9 +1,9 @@
 package com.ccnode.codegenerator.server.service;
 
 import com.ccnode.codegenerator.util.HttpUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PostServiceTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PostServiceTest.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(PostServiceTest.class);
 
     @Test
     public void testLoop(){

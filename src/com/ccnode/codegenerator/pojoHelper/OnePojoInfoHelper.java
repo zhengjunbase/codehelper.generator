@@ -3,28 +3,26 @@ package com.ccnode.codegenerator.pojoHelper;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.util.IOUtils;
-import com.ccnode.codegenerator.util.JSONUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassImpl;
-import com.intellij.psi.impl.source.PsiModifierListImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
-import com.intellij.psi.javadoc.PsiDocComment;
-import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
-import org.apache.commons.codec.language.Soundex;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -36,6 +34,8 @@ import static org.apache.commons.io.IOUtils.writeLines;
  * Created by zhengjun.du on 2016/05/21 21:50
  */
 public class OnePojoInfoHelper {
+
+    private final static Logger LOGGER = LoggerWrapper.getLogger(OnePojoInfoHelper.class);
 
     @NotNull
     public static Boolean containSplitKey(@NotNull OnePojoInfo onePojoInfo, String splitKey){
@@ -222,11 +222,11 @@ public class OnePojoInfoHelper {
 
         try{
             for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
-                System.out.println("wirte linese");
                 writeLines(generatedFile.getNewLines(), "\n", new FileOutputStream(generatedFile.getFile()));
             }
             return response;
         }catch(Exception e){
+            LOGGER.info("flush file error",e);
             return response.failure("flush file error",e);
         }
 

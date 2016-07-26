@@ -8,6 +8,7 @@ import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.DateUtil;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -15,7 +16,6 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
@@ -32,21 +32,20 @@ import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
  */
 public class GenSqlService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GenSqlService.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenSqlService.class);
 
     public static void genSQL(GenCodeResponse response) {
-        try {
-            for (OnePojoInfo onePojoInfo : response.getPojoInfos()) {
+        for (OnePojoInfo onePojoInfo : response.getPojoInfos()) {
+            try {
                 genSQLFile(onePojoInfo, response);
+            } catch (Exception e) {
+                LOGGER.error("GenSqlService genSQL error", e);
             }
-
-        } catch (Exception e) {
-            LOGGER.error("GenSqlService genSQL error", e);
         }
-
     }
 
     private static void genSQLFile(OnePojoInfo onePojoInfo, GenCodeResponse response) {
+        LOGGER.info("genSQLFile :{}", onePojoInfo.getPojoName());
         GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(onePojoInfo, FileType.SQL);
         Boolean canReplace = canReplace(fileInfo, response);
         if (fileInfo.getOldLines().isEmpty() || !canReplace) {

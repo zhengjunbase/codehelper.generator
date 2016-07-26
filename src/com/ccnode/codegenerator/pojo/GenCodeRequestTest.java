@@ -1,8 +1,9 @@
 package com.ccnode.codegenerator.pojo;
 
 //import org.junit.Test;
+
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GenCodeRequestTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GenCodeRequestTest.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenCodeRequestTest.class);
 
 //    @Test
     public void getPojoName() throws Exception {

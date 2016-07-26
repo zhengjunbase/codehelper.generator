@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class PojoUtil {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PojoUtil.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(PojoUtil.class);
 
 
     public static String avoidEmptyString(String s){

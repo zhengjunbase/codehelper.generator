@@ -39,7 +39,7 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class HttpUtil {
-    private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
+    private static final Logger logger = LoggerWrapper.getLogger(HttpUtil.class);
 
     private static final int CON_TIMEOUT = 5000;
     private static final int SO_TIMEOUT = 20000;

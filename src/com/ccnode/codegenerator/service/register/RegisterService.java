@@ -8,7 +8,9 @@ import com.ccnode.codegenerator.service.pojo.ServerResponse;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.JSONUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
+import org.slf4j.Logger;
 
 import java.util.Date;
 
@@ -18,6 +20,8 @@ import java.util.Date;
  * Created by zhengjun.du on 2016/07/16 21:29
  */
 public class RegisterService {
+
+    private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
     private static String URL = "www.codehelper.me/generator";
 

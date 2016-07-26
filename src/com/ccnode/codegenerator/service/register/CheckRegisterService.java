@@ -2,7 +2,9 @@ package com.ccnode.codegenerator.service.register;
 
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
+import org.slf4j.Logger;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  * Created by zhengjun.du on 2016/07/23 17:51
  */
 public class CheckRegisterService {
+
+    private final static Logger LOGGER = LoggerWrapper.getLogger(CheckRegisterService.class);
 
     public static Boolean checkFromLocal(){
         List<String> keyList = SettingService.getInstance().getState().getKeyList();

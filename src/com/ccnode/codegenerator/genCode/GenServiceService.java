@@ -6,8 +6,10 @@ import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -21,11 +23,19 @@ import static com.ccnode.codegenerator.util.GenCodeUtil.TWO_RETRACT;
  */
 public class GenServiceService {
 
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenServiceService.class);
+
     public static void genService( GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
-            GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.SERVICE);
-            Boolean useGenericDao = Objects.equal(response.getUserConfigMap().get("usegenericdao"),"true");
-            genDaoFile(pojoInfo,fileInfo,useGenericDao);
+            try{
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.SERVICE);
+                Boolean useGenericDao = Objects.equal(response.getUserConfigMap().get("usegenericdao"),"true");
+                genDaoFile(pojoInfo,fileInfo,useGenericDao);
+
+            }catch(Throwable e){
+                LOGGER.error("GenServiceService genService error", e);
+                response.failure("GenServiceService genService error");
+            }
         }
     }
 
@@ -64,6 +74,7 @@ public class GenServiceService {
             newLines.add("package "+ onePojoInfo.getServicePackage() + ";");
             newLines.add("");
             newLines.add("import org.springframework.stereotype.Service;");
+            newLines.add("import javax.annotation.Resource;");
             newLines.add("import java.util.List;");
             newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
             newLines.add("import "+ onePojoInfo.getDaoPackage() + "." +onePojoInfo.getPojoName() + "Dao;");

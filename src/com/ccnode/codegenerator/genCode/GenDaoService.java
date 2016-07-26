@@ -5,8 +5,9 @@ import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import com.google.common.base.Objects;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -19,10 +20,17 @@ import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
  */
 public class GenDaoService {
 
-    public static void genDAO( GenCodeResponse response) {
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenDaoService.class);
+
+    public static void genDAO(GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
-            GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.DAO);
-            genDaoFile(pojoInfo,fileInfo,GenCodeResponseHelper.isUseGenericDao(response));
+            try{
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.DAO);
+                genDaoFile(pojoInfo,fileInfo,GenCodeResponseHelper.isUseGenericDao(response));
+            }catch(Throwable e){
+                LOGGER.error("GenDaoService genDAO error", e);
+                response.failure("GenDaoService genDAO error");
+            }
         }
     }
 
@@ -34,10 +42,12 @@ public class GenDaoService {
             return;
         }
         if(useGenericDao){
+            LOGGER.info("genDaoFile useGenericDao true");
             List<String> newLines = Lists.newArrayList();
             newLines.add("package "+ onePojoInfo.getDaoPackage() + ";");
             newLines.add("");
             newLines.add("import java.util.List;");
+            newLines.add("import org.apache.ibatis.annotations.Param;");
             newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
             newLines.add("");
             newLines.add("public interface "+pojoNameDao +" extends GenericDao<"+pojoName+"> {");
@@ -45,9 +55,11 @@ public class GenDaoService {
             newLines.add("}");
             fileInfo.setNewLines(newLines);
         }else{
+            LOGGER.info("genDaoFile useGenericDao false");
             List<String> newLines = Lists.newArrayList();
             newLines.add("package "+ onePojoInfo.getDaoPackage() + ";");
             newLines.add("");
+            newLines.add("import org.apache.ibatis.annotations.Param;");
             newLines.add("import java.util.List;");
             newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
             newLines.add("");

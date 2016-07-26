@@ -1,8 +1,8 @@
 package com.ccnode.codegenerator.pojoHelper;
 
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ServerRequestHelperTest {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ServerRequestHelperTest.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(ServerRequestHelperTest.class);
 
 
     @Test

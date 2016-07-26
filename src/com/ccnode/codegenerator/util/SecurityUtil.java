@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtil {
     private static final String defaultCharset = "UTF-8";
-    private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
+    private static final Logger logger = LoggerWrapper.getLogger(SecurityUtil.class);
 
     public static class MD5 {
         /**

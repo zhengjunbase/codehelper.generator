@@ -18,7 +18,7 @@ import java.util.*;
  * Description:
  */
 public class JSONUtil {
-    private static final Logger logger = LoggerFactory.getLogger(JSONUtil.class);
+    private static final Logger logger = LoggerWrapper.getLogger(JSONUtil.class);
     public static final ObjectMapper mapper = getMapper();
 
     public static final DateFormat defaultFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

@@ -20,7 +20,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class FileUtil {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(FileUtil.class);
 
     public static Iterable<String> readFile(String filename) throws IOException {
         return readFile(new File(filename));

@@ -5,12 +5,14 @@ import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
 import com.intellij.openapi.ui.Messages;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +26,10 @@ import java.util.Map;
  */
 public class UserConfigService {
 
+    private final static Logger LOGGER = LoggerWrapper.getLogger(UserConfigService.class);
 
     public static GenCodeResponse initConfig(GenCodeResponse response){
-
+        LOGGER.info("initConfig");
         try{
             GenCodeConfig config = new GenCodeConfig();
             response.setCodeConfig(config);
@@ -46,16 +49,28 @@ public class UserConfigService {
                 check(response.getRequest().getProjectPath(), key,value,config);
                 DirectoryConfig directoryConfig = new DirectoryConfig();
                 response.setDirectoryConfig(directoryConfig);
-                config.setDaoDir(userConfigMap.get("dao.path"));
-                config.setSqlDir(userConfigMap.get("sql.path"));
-                config.setMapperDir(userConfigMap.get("mapper.path"));
-                config.setServiceDir(userConfigMap.get("service.path"));
+                config.setDaoDir(removeStartSplitter(userConfigMap.get("dao.path")));
+                config.setSqlDir(removeStartSplitter(userConfigMap.get("sql.path")));
+                config.setMapperDir(removeStartSplitter(userConfigMap.get("mapper.path")));
+                config.setServiceDir(removeStartSplitter(userConfigMap.get("service.path")));
             }
         }catch(Exception e){
+            LOGGER.error(" status error occurred :{}",response,e);
             return response.failure(" status error occurred");
         }
 
         return response;
+    }
+
+    public static String removeStartSplitter(String s){
+        if(StringUtils.isBlank(s)){
+            return s;
+        }
+        String splitter = System.getProperty("file.separator");
+        if(s.startsWith(splitter)){
+            return s.substring(1);
+        }
+        return s;
     }
 
     // todo
@@ -66,6 +81,7 @@ public class UserConfigService {
     }
 
     public static GenCodeResponse readConfigFile(GenCodeRequest request){
+        LOGGER.info("readConfigFile");
         GenCodeResponse ret = new GenCodeResponse();
         ret.accept();
         try{
@@ -81,6 +97,7 @@ public class UserConfigService {
 //                        + "please add an generator.properties in you poject path");
             }
             if(Objects.equal(fileName,"NOT_ONLY")){
+                LOGGER.error("error, duplicated generator.properties file");
                 return ret.failure("","error, duplicated generator.properties file");
             }
             File configFile = new File(fileName);
@@ -94,20 +111,31 @@ public class UserConfigService {
                     continue;
                 }
                 if(configLine.startsWith("=")){
+                    LOGGER.error("line: "+ lineIndex + "error, config key con not be empty");
                     return ret.failure("","line: "+ lineIndex + "error, config key con not be empty");
                 }
                 List<String> split = Splitter.on("=").trimResults().omitEmptyStrings().splitToList(configLine);
                 if(split.size() != 2){
+
+                    LOGGER.error("","line: "+ lineIndex + "config error, correct format : key = value");
                     return ret.failure("","line: "+ lineIndex + "config error, correct format : key = value");
                 }
                 configMap.put(split.get(0).toLowerCase(),split.get(1));
             }
             ret.setUserConfigMap(configMap);
+            LOGGER.info("readConfigFile configMap:{}",configMap);
             return ret;
         }catch(IOException e){
+            LOGGER.error(" readConfigFile config file read error ",e);
             return ret.failure(""," readConfigFile config file read error ");
         }catch(Exception e){
+            LOGGER.error(" readConfigFile config file read error ",e);
             return ret.failure("","readConfigFile error occurred");
         }
+    }
+
+    public static void main(String[] args) {
+        String s = "dsfasdjfasdjf";
+        System.out.println(s.substring(1));
     }
 }
