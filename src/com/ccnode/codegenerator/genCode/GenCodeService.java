@@ -4,6 +4,7 @@ import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -104,10 +105,7 @@ public class GenCodeService {
                 if(pojoFile == null){
                     return response.failure("", pojoName + " file not exist");
                 }
-                String projectPath = response.getRequest().getProjectPath();
-                if(!projectPath.endsWith(response.getPathSplitter())){
-                    projectPath += response.getPathSplitter();
-                }
+                String projectPath = GenCodeResponseHelper.getProjectPathWithSplitter(response);
                 GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();

@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -48,15 +49,14 @@ public class GenCodeAction extends AnAction {
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
         }
-
         GenCodeRequest request;
         GenCodeResponse genCodeResponse = new GenCodeResponse();
-
         try{
             request = new GenCodeRequest(Lists.newArrayList(),projectPath,System.getProperty("file.separator"));
             request.setProject(project);
             genCodeResponse = GenCodeService.genCode(request);
             VirtualFileManager.getInstance().syncRefresh();
+            LoggerWrapper.saveAllLogs(genCodeResponse);
         }catch(Exception e){
             e.printStackTrace();
             genCodeResponse.setMsg(e.getMessage());
@@ -64,6 +64,5 @@ public class GenCodeAction extends AnAction {
         Messages.showMessageDialog(project, genCodeResponse.getMsg(), genCodeResponse.getStatus(), Messages.getInformationIcon());
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
-
     }
 }

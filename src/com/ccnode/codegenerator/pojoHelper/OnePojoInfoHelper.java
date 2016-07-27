@@ -6,6 +6,7 @@ import com.ccnode.codegenerator.util.IOUtils;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -85,6 +86,9 @@ public class OnePojoInfoHelper {
             if(isStaticField(field)){
                 continue;
             }
+            if(!isSupportType(field.getType().getPresentableText())){
+                continue;
+            }
             parseComment(field);
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
             fieldInfo.setFieldComment(parseComment(field));
@@ -95,6 +99,14 @@ public class OnePojoInfoHelper {
             fieldList.add(fieldInfo);
         }
         onePojoInfo.setPojoFieldInfos(fieldList);
+    }
+
+    private static Boolean isSupportType(String fieldType){
+        if(StringUtils.isBlank(fieldType)){
+            return false;
+        }
+        List<String> supportList= ImmutableList.of("string","integer","int","short","date","long","bigdecimal","double","float");
+        return supportList.contains(fieldType.toLowerCase());
     }
 
     private static Boolean isStaticField(@NotNull PsiField field){

@@ -1,10 +1,16 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.google.common.base.Objects;
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +23,33 @@ public class LoggerWrapper implements Logger {
     public static List<String> logList = Lists.newArrayList();
 
     public LoggerWrapper() {
+
+    }
+
+    public static void saveAllLogs(GenCodeResponse response)  {
+        Boolean needSaveLog = false;
+        String printLog = response.getUserConfigMap().get("printlog");
+        if(Objects.equal(printLog,"true") || response.getUserConfigMap().isEmpty()){
+            needSaveLog = true;
+        }
+        if(!needSaveLog){
+            return;
+        }
+        String path = GenCodeResponseHelper.getProjectPathWithSplitter(response) + "codehelper.generator.log";
+        File logFile = new File(path);
+        try{
+            List<String> allLines = Lists.newArrayList();
+            if(logFile.exists()){
+                List<String> oldLines = IOUtils.readLines(path);
+                if(oldLines !=null && !oldLines.isEmpty()){
+                    allLines.addAll(oldLines);
+                }
+            }
+            allLines.addAll(logList);
+            IOUtils.writeLines(new File(path),allLines);
+        }catch(Throwable e){
+            System.out.println();
+        }
 
     }
 
@@ -35,9 +68,10 @@ public class LoggerWrapper implements Logger {
 
     private String format(String format, Object... objects) {
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
-        String className = stackTraceElement.getClassName();
+        List<String> splits = Splitter.on(".").splitToList(stackTraceElement.getClassName());
+        String className = splits.get(splits.size() - 1);
         String methodName = stackTraceElement.getMethodName();
-        String logLevel = Thread.currentThread().getStackTrace()[2].getMethodName();
+        String logLevel = Thread.currentThread().getStackTrace()[2].getMethodName().toUpperCase();
         format = format.replace("{}", "%s");
         format = format.replace("{ }", "%s");
         for (Object object : objects) {
@@ -48,7 +82,7 @@ public class LoggerWrapper implements Logger {
             }
         }
         // TODO: 7/26/16  add dateUtil
-        logList.add("[" + className + "] " + "[" + methodName + "] " + "[" + logLevel + "] " + format);
+        logList.add(DateUtil.formatLong(new Date()) + " [" + className + "." + methodName + "] " + "[" + logLevel + "] " + format);
         return format;
     }
 

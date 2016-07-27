@@ -37,6 +37,14 @@ public class GenCodeResponseHelper {
         return Objects.equal( response.getUserConfigMap().get(key),"true");
     }
 
+    public static String getProjectPathWithSplitter(GenCodeResponse response){
+        String projectPath = response.getRequest().getProjectPath();
+                if(!projectPath.endsWith(response.getPathSplitter())){
+                    projectPath += response.getPathSplitter();
+                }
+        return projectPath;
+    }
+
     @Nullable
     public static String getSplitKey(GenCodeResponse response){
         return response.getUserConfigMap().get("splitkey");
