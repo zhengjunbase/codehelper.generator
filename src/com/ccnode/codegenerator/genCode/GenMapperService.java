@@ -6,10 +6,7 @@ import com.ccnode.codegenerator.function.MapperCondition;
 import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
-import com.ccnode.codegenerator.util.GenCodeUtil;
-import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.util.RegexUtil;
-import com.ccnode.codegenerator.util.ReplaceUtil;
+import com.ccnode.codegenerator.util.*;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -50,7 +47,6 @@ public class GenMapperService {
     }
 
     private static void genMapper(GenCodeResponse response,OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean expand) {
-        String pojoName = onePojoInfo.getPojoName();
         List<String> oldLines = fileInfo.getOldLines();
 
         ListInfo<String> listInfo = new ListInfo<String>();
@@ -175,12 +171,26 @@ public class GenMapperService {
                 if(StringUtils.isBlank(match1) ){
                     return false;
                 }
-                return  match1.equals(match2);
+                return match1.equals(match2);
             }
         });
-        fileInfo.setNewLines(listInfo.getFullList());
+        List<String> newList = listInfo.getFullList();
+        newList = adjustList(newList);
+        fileInfo.setNewLines(newList);
     }
-    
+
+    private static List<String> adjustList(List<String> newList) {
+        newList = PojoUtil.avoidEmptyList(newList);
+        List<String> retList = Lists.newArrayList();
+        for (String s : newList) {
+            if(!s.contains("</mapper>")){
+                retList.add(s);
+            }
+        }
+        retList.add("</mapper>");
+        return retList;
+    }
+
     public static List<String> getMapperHeader(OnePojoInfo onePojoInfo) {
         List<String> retList = Lists.newArrayList();
         retList.add( "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");

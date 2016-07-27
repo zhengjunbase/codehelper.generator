@@ -20,7 +20,8 @@ import java.util.List;
  */
 public class LoggerWrapper implements Logger {
 
-    public static List<String> logList = Lists.newArrayList();
+    public static List<String> logList = Lists.newArrayList(
+            "", "----------------------    start    -------------------------");
 
     public LoggerWrapper() {
 
@@ -35,6 +36,7 @@ public class LoggerWrapper implements Logger {
         if(!needSaveLog){
             return;
         }
+        logList.add("----------------------     end     -------------------------");
         String path = GenCodeResponseHelper.getProjectPathWithSplitter(response) + "codehelper.generator.log";
         File logFile = new File(path);
         try{
@@ -49,6 +51,8 @@ public class LoggerWrapper implements Logger {
             IOUtils.writeLines(new File(path),allLines);
         }catch(Throwable e){
             System.out.println();
+        }finally {
+            logList =  Lists.newArrayList("", "----------------------    start    -------------------------");
         }
 
     }
