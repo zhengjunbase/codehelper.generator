@@ -273,31 +273,28 @@ public class GenMapperService {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<insert id=\"add\">");
-        retList.add(TWO_RETRACT + "INSERT INTO " + tableName + "(");
+        retList.add(TWO_RETRACT + "INSERT INTO " + tableName );
+        retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             String s = TWO_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
                 ,fieldName,getUnderScore(fieldName));
-            if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
-                s = s.replace(COMMA, StringUtils.EMPTY);
-            }
             retList.add(s);
             index ++;
         }
         index = 0;
-        retList.add(TWO_RETRACT + ")VALUES(");
+        retList.add(TWO_RETRACT + "</trim>");
+        retList.add(TWO_RETRACT + "VALUES");
+        retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             String s = TWO_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
                 ,fieldName,fieldName);
-            if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
-                s = s.replace(COMMA, StringUtils.EMPTY);
-            }
             retList.add(s);
             index ++;
         }
-        retList.add(TWO_RETRACT + ")");
+        retList.add(TWO_RETRACT + "</trim>");
         retList.add(ONE_RETRACT + "</insert>");
         return retList;
     }
@@ -379,9 +376,9 @@ public class GenMapperService {
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
             retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> id, <include refid=\"all_column\"/></if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/></if>" );
         }else{
-            retList.add(TWO_RETRACT + "SELECT id, <include refid=\"all_column\"/>"  );
+            retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
         retList.add(TWO_RETRACT + "FROM " + tableName  );
         retList.add(TWO_RETRACT + "WHERE id != -1 ");
@@ -414,9 +411,9 @@ public class GenMapperService {
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
             retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> id, <include refid=\"all_column\"/></if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/></if>" );
         }else{
-            retList.add(TWO_RETRACT + "SELECT id, <include refid=\"all_column\"/>"  );
+            retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
         retList.add(TWO_RETRACT + "FROM " + tableName);
         retList.add(TWO_RETRACT + "WHERE id != -1 ");

@@ -11,15 +11,15 @@ public class BaseResponse implements Serializable {
     /**
      * 0 - 只接受请求，为处理中
      */
-    public static final String STATUS_ACCEPT = "ACCEPT";
+    public static final String ACCEPT = "ACCEPT";
     /**
      * 1 - 处理成功
      */
-    public static final String STATUS_SUCCESS = "SUCCESS";
+    public static final String SUCCESS = "SUCCESS";
     /**
      * 2 - 处理失败
      */
-    public static final String STATUS_FAILURE = "FAILURE";
+    public static final String FAILURE = "FAILURE";
 
     private static final long serialVersionUID = -3041437055079912036L;
 
@@ -68,42 +68,42 @@ public class BaseResponse implements Serializable {
     }
 
     public <T extends BaseResponse> T success() {
-        this.status = STATUS_SUCCESS;
+        this.status = SUCCESS;
         this.code = "";
         this.msg = "SUCCESS";
         return (T) this;
     }
 
     public <T extends BaseResponse> T accept() {
-        this.status = STATUS_ACCEPT;
+        this.status = ACCEPT;
         this.code = "";
         this.msg = "请求处理中";
         return (T) this;
     }
 
     public <T extends BaseResponse> T accept(String msg) {
-        this.status = STATUS_ACCEPT;
+        this.status = ACCEPT;
         this.code = "";
         this.msg = msg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String code, String errMsg) {
-        this.status = STATUS_FAILURE;
+        this.status = FAILURE;
         this.code = code;
         this.msg = errMsg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String errMsg) {
-        this.status = STATUS_FAILURE;
+        this.status = FAILURE;
         this.code = StringUtils.EMPTY;
         this.msg = errMsg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String errMsg,Throwable throwable) {
-        this.status = STATUS_FAILURE;
+        this.status = FAILURE;
         this.code = StringUtils.EMPTY;
         this.msg = errMsg;
         this.throwable = throwable;
@@ -111,7 +111,7 @@ public class BaseResponse implements Serializable {
     }
 
     public <T extends BaseResponse> T failure(RetStatus retStatus) {
-        this.status = STATUS_FAILURE;
+        this.status = FAILURE;
         this.code = retStatus.getCode().toString();
         this.msg = retStatus.getDesc();
         return (T) this;
@@ -119,21 +119,21 @@ public class BaseResponse implements Serializable {
     }
 
     public <T extends BaseResponse> T failure(RetStatus retStatus, String errorMsg) {
-        this.status = STATUS_FAILURE;
+        this.status = FAILURE;
         this.code = retStatus.getCode().toString();
         this.msg = errorMsg;
         return (T) this;
     }
 
     public boolean checkSuccess() {
-        return STATUS_SUCCESS.equals(status);
+        return SUCCESS.equals(status);
     }
 
     public boolean checkAccept() {
-        return STATUS_ACCEPT.equals(status);
+        return ACCEPT.equals(status);
     }
 
     public boolean checkFailure() {
-        return STATUS_FAILURE.equals(status);
+        return FAILURE.equals(status);
     }
 }

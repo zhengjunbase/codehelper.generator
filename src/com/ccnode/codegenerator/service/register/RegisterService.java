@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.service.register;
 
+import com.ccnode.codegenerator.enums.RequestType;
 import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
 import com.ccnode.codegenerator.service.pojo.RegisterRequest;
@@ -23,7 +24,7 @@ public class RegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
-    private static String URL = "www.codehelper.me/generator";
+    private static String URL = "http://115.28.149.106:8080/generator/register";
 
     public static ServerResponse register(String license) {
 
@@ -31,6 +32,7 @@ public class RegisterService {
         long startTime = System.currentTimeMillis();
         try {
             RegisterRequest request = new RegisterRequest();
+            request.setRequestType(RequestType.REGISTER.name());
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
             String s = HttpUtil.postJson(URL, request);
@@ -47,12 +49,18 @@ public class RegisterService {
     }
 
     private static void saveRegisterResponse(RegisterResponse response, String license) {
-        if (BaseResponse.STATUS_SUCCESS.equals(response.getCode())) {
+        if (BaseResponse.SUCCESS.equals(response.getCode())) {
             Date expiredDate = response.getExpiredDate();
             String key = SecurityHelper.encryptDate("fascias", expiredDate);
             String el = SecurityHelper.encrypt("fascias",license);
             SettingService.getInstance().getState().getKeyList().add(key);
             SettingService.getInstance().getState().getTkeyList().add(el);
         }
+    }
+
+    public static void main(String[] args) {
+        String license = "dakjfalsfsjdf";
+        ServerResponse register = register(license);
+        System.out.println(register);
     }
 }

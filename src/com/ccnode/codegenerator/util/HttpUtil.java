@@ -1,4 +1,5 @@
 package com.ccnode.codegenerator.util;
+import com.ccnode.codegenerator.pojo.RequestData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
@@ -145,7 +146,9 @@ public class HttpUtil {
     }
 
     public static String postJson(String url, Object body) {
-        return postJsonWithResult(url, JSONUtil.toJSONString(body)).result;
+        RequestData data = new RequestData();
+        data.setData(JSONUtil.toJSONString(body));
+        return postJsonWithResult(url, JSONUtil.toJSONString(data)).result;
     }
 
 
