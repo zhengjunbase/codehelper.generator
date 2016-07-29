@@ -80,8 +80,8 @@ public class GenMapperService {
             @Override
             public boolean isEqual(String o1, String o2) {
 
-                String match1 = RegexUtil.getMatch("[a-z_ ,]{1,100}", o1);
-                String match2 = RegexUtil.getMatch("[a-z_ ,]{1,100}", o2);
+                String match1 = RegexUtil.getMatch("[0-9A-Za-z_ ,]{1,100}", o1);
+                String match2 = RegexUtil.getMatch("[0-9A-Za-z_ ,]{1,100}", o2);
                 if(StringUtils.isBlank(match1) ){
                     return false;
                 }

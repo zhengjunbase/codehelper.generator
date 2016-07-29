@@ -112,8 +112,30 @@ public class GenSqlService {
             oldList.add(oldIndex, fieldSql);
             oldIndex++;
         }
+        oldList = removeDeleteField(onePojoInfo.getPojoFieldInfos(),oldList);
         return Lists.newArrayList(oldList);
 
+    }
+
+    private static List<String> removeDeleteField(List<PojoFieldInfo> pojoFieldInfos, List<String> oldList) {
+        for (String line : oldList) {
+            String prefix = RegexUtil.getMatch("^[\\s]*`.+`",line);
+            if(StringUtils.isNotBlank(prefix)){
+                Boolean containField = false;
+                for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
+                    String fieldName = GenCodeUtil.getUnderScore(pojoFieldInfo.getFieldName());
+                    if(prefix.contains(fieldName)){
+                        containField = true;
+                    }
+                }
+                if(containField){
+                    oldList.add(line);
+                }
+            }else{
+                oldList.add(line);
+            }
+        }
+        return oldList;
     }
 
     private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo,
