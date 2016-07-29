@@ -376,7 +376,7 @@ public class GenMapperService {
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
             retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/></if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
             retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
@@ -404,14 +404,14 @@ public class GenMapperService {
         return retList;
     }
 
-        private static List<String> genQueryUseStatementMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
+    private static List<String> genQueryUseStatementMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"BaseResultMap\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
             retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/></if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
             retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
