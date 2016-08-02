@@ -2,15 +2,21 @@ package com.ccnode.codegenerator.service.register;
 
 import com.ccnode.codegenerator.enums.RequestType;
 import com.ccnode.codegenerator.pojo.BaseResponse;
+import com.ccnode.codegenerator.pojo.RegisterRawRequest;
+import com.ccnode.codegenerator.pojo.RegisterRawResponse;
+import com.ccnode.codegenerator.pojoHelper.RegisterRawRequestHelper;
+import com.ccnode.codegenerator.pojoHelper.RegisterRawResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
 import com.ccnode.codegenerator.service.pojo.RegisterRequest;
 import com.ccnode.codegenerator.service.pojo.RegisterResponse;
 import com.ccnode.codegenerator.service.pojo.ServerResponse;
+import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.JSONUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
+import com.intellij.openapi.components.ServiceManager;
 import org.slf4j.Logger;
 
 import java.util.Date;
@@ -24,7 +30,7 @@ public class RegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
-    private static String URL = "http://115.28.149.106:8080/generator/register";
+    private static String URL = "http://localhost:8080/generator/register";
 
     public static ServerResponse register(String license) {
 
@@ -35,11 +41,14 @@ public class RegisterService {
             request.setRequestType(RequestType.REGISTER.name());
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
-            String s = HttpUtil.postJson(URL, request);
-            RegisterResponse response = JSONUtil.parseObject(s, RegisterResponse.class);
+            RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
+            String s = HttpUtil.postJson(URL, rawRequest);
+            RegisterRawResponse rawResponse = JSONUtil.parseObject(s, RegisterRawResponse.class);
+            RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
             saveRegisterResponse(response,license);
 
         } catch (Throwable e) {
+            LOGGER.error("register error", e);
 
         } finally {
 
@@ -49,12 +58,25 @@ public class RegisterService {
     }
 
     private static void saveRegisterResponse(RegisterResponse response, String license) {
-        if (BaseResponse.SUCCESS.equals(response.getCode())) {
-            Date expiredDate = response.getExpiredDate();
-            String key = SecurityHelper.encryptDate("fascias", expiredDate);
-            String el = SecurityHelper.encrypt("fascias",license);
-            SettingService.getInstance().getState().getKeyList().add(key);
-            SettingService.getInstance().getState().getTkeyList().add(el);
+        if (BaseResponse.SUCCESS.equals(response.getStatus())) {
+            long startTime = System.currentTimeMillis();
+            try{
+
+                Date expiredDate = response.getExpireDate();
+                String key = SecurityHelper.encryptDate("fascias", expiredDate);
+                String el = SecurityHelper.encrypt("fascias",license);
+                SettingService setting = ServiceManager.getService(SettingService.class);
+                SettingDto state = setting.getState();
+                state.getKeyList().add(key);
+                state.getTkeyList().add(el);
+            }catch(Throwable e){
+                LOGGER.error("RegisterService saveRegisterResponse error", e);
+            }
+
+
+
+//            SettingService.getInstance().getState().getKeyList().add(key);
+//            SettingService.getInstance().getState().getTkeyList().add(el);
         }
     }
 

@@ -16,7 +16,9 @@ public class GeneratedFile {
     String filePath;
     List<String> newLines;
     List<String> oldLines;
+    List<String> originLines;
     FileType fileType;
+
     public File getFile() {
         return file;
     }
@@ -55,5 +57,13 @@ public class GeneratedFile {
 
     public void setFileType(FileType fileType) {
         this.fileType = fileType;
+    }
+
+    public List<String> getOriginLines() {
+        return originLines;
+    }
+
+    public void setOriginLines(List<String> originLines) {
+        this.originLines = originLines;
     }
 }

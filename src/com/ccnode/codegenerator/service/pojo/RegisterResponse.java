@@ -1,5 +1,7 @@
 package com.ccnode.codegenerator.service.pojo;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Date;
 
 /**
@@ -9,31 +11,41 @@ import java.util.Date;
  */
 public class RegisterResponse extends ServerResponse {
 
-    private String returnKey;
-    private Date expiredDate;
-    private String userType;
+    String license;
 
-    public String getReturnKey() {
-        return returnKey;
+    Date expireDate;
+    String licenseStatus;
+    String licenseType;
+
+    public String getLicense() {
+        return license;
     }
 
-    public void setReturnKey(String returnKey) {
-        this.returnKey = returnKey;
+    public void setLicense(String license) {
+        this.license = license;
     }
 
-    public Date getExpiredDate() {
-        return expiredDate;
+    public Date getExpireDate() {
+        return expireDate;
     }
 
-    public void setExpiredDate(Date expiredDate) {
-        this.expiredDate = expiredDate;
+    public void setExpireDate(@Nullable Date expireDate) {
+        this.expireDate = expireDate;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getLicenseStatus() {
+        return licenseStatus;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setLicenseStatus(String licenseStatus) {
+        this.licenseStatus = licenseStatus;
+    }
+
+    public String getLicenseType() {
+        return licenseType;
+    }
+
+    public void setLicenseType(String licenseType) {
+        this.licenseType = licenseType;
     }
 }

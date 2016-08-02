@@ -6,12 +6,8 @@ import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import com.ccnode.codegenerator.util.DateUtil;
-import com.ccnode.codegenerator.util.GenCodeUtil;
-import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.util.RegexUtil;
+import com.ccnode.codegenerator.util.*;
 import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
@@ -118,6 +114,9 @@ public class GenSqlService {
     }
 
     private static List<String> removeDeleteField(List<PojoFieldInfo> pojoFieldInfos, List<String> oldList) {
+        oldList = PojoUtil.avoidEmptyList(oldList);
+        List<String> retList = Lists.newArrayList();
+
         for (String line : oldList) {
             String prefix = RegexUtil.getMatch("^[\\s]*`.+`",line);
             if(StringUtils.isNotBlank(prefix)){
@@ -129,13 +128,13 @@ public class GenSqlService {
                     }
                 }
                 if(containField){
-                    oldList.add(line);
+                    retList.add(line);
                 }
             }else{
-                oldList.add(line);
+                retList.add(line);
             }
         }
-        return oldList;
+        return retList;
     }
 
     private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo,

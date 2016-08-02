@@ -1,10 +1,12 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.genCode.GenCodeService;
+import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
+import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -21,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * What always stop you is what you always believe.
@@ -61,8 +64,42 @@ public class GenCodeAction extends AnAction {
             e.printStackTrace();
             genCodeResponse.setMsg(e.getMessage());
         }
-        Messages.showMessageDialog(project, genCodeResponse.getMsg(), genCodeResponse.getStatus(), Messages.getInformationIcon());
+        String msg = "----------------------------------------\n -----------------------------------------------------\n-----------------------------------------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n";
+//        Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
+        Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
+        Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
+    }
+
+    private static String buildEffectRowMsg(GenCodeResponse response){
+        List<ChangeInfo> newFiles = response.getNewFiles();
+        List<ChangeInfo> updateFiles = response.getUpdateFiles();
+        List<String> msgList = Lists.newArrayList();
+        if(response.checkSuccess()){
+            if(newFiles.size() > 0){
+                msgList.add(" ");
+            }
+            for (ChangeInfo newFile : newFiles) {
+                msgList.add("       new file:"+ "\t\t" + newFile.getFileName());
+            }
+            if(updateFiles.size() > 0){
+                msgList.add("");
+            }
+            for (ChangeInfo updated : updateFiles) {
+                if(updated.getAffectRow() > 0){
+                    msgList.add("   updated:"+ "\t\t" + updated.getFileName());
+                }
+            }
+        }else{
+            msgList.add(response.getMsg());
+        }
+        String ret = StringUtils.EMPTY;
+        for (String msg : msgList) {
+            ret += msg;
+            ret += "\n";
+        }
+        return ret.trim();
+
     }
 }

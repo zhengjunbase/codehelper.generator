@@ -2,8 +2,6 @@ package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.BaseRequest;
 
-import java.util.List;
-
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -11,20 +9,20 @@ import java.util.List;
  */
 public class ServerRequest extends BaseRequest {
 
-    String version;
+    String pluginVersion;
     String system;
     String ip;
-    List<String> macAddressList;
+    String macAddressList;
     String license;
     String requestType;
     String userType;
 
-    public String getVersion() {
-        return version;
+    public String getPluginVersion() {
+        return pluginVersion;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setPluginVersion(String pluginVersion) {
+        this.pluginVersion = pluginVersion;
     }
 
     public String getSystem() {
@@ -43,11 +41,11 @@ public class ServerRequest extends BaseRequest {
         this.ip = ip;
     }
 
-    public List<String> getMacAddressList() {
+    public String getMacAddressList() {
         return macAddressList;
     }
 
-    public void setMacAddressList(List<String> macAddressList) {
+    public void setMacAddressList(String macAddressList) {
         this.macAddressList = macAddressList;
     }
 

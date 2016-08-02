@@ -3,6 +3,7 @@ package com.ccnode.codegenerator.pojoHelper;
 import com.ccnode.codegenerator.common.VersionManager;
 import com.ccnode.codegenerator.service.pojo.ServerRequest;
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -20,13 +21,13 @@ public class ServerRequestHelper {
 
     public static <T extends ServerRequest> T fillCommonField(T request){
 
-        request.setVersion(VersionManager.getCurrentVersion());
+        request.setPluginVersion(VersionManager.getCurrentVersion());
         request.setIp(getIpAddress());
         request.setMacAddressList(getMacAddress());
         return request;
     }
 
-    public static List<String> getMacAddress() {
+    public static String getMacAddress() {
         List<String> retList = Lists.newArrayList();
         try{
             Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
@@ -44,7 +45,12 @@ public class ServerRequestHelper {
         }catch(Throwable e){
 
         }
-        return retList;
+        String ret = StringUtils.EMPTY;
+        for (String s : retList) {
+            ret += "|";
+            ret += s;
+        }
+        return ret;
     }
 
     public static String getIpAddress() {

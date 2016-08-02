@@ -2,12 +2,11 @@ package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.*;
-import com.ccnode.codegenerator.util.IOUtils;
-import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.util.RegexUtil;
+import com.ccnode.codegenerator.util.*;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
@@ -19,6 +18,7 @@ import com.intellij.psi.impl.source.tree.PsiCommentImpl;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -217,8 +217,10 @@ public class OnePojoInfoHelper {
             try{
                 if(file.getFile().exists()){
                     file.setOldLines(Lists.newArrayList(IOUtils.readLines(file.getFile())));
+                    file.setOriginLines(Lists.newArrayList(IOUtils.readLines(file.getFile())));
                 }else{
                     file.setOldLines(Lists.newArrayList());
+                    file.setOriginLines(Lists.newArrayList());
                 }
 
             }catch(Exception e){
@@ -236,6 +238,10 @@ public class OnePojoInfoHelper {
             for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
                 writeLines(generatedFile.getNewLines(), "\n", new FileOutputStream(generatedFile.getFile()));
             }
+            Pair<List<ChangeInfo>, List<ChangeInfo>> pair = statisticChange(response.getPojoInfos());
+            LOGGER.info(" flushFiles :{},pair.getRight():{}",pair.getLeft(),pair.getRight());
+            response.setNewFiles(pair.getLeft());
+            response.setUpdateFiles(pair.getRight());
             return response;
         }catch(Exception e){
             LOGGER.info("flush file error",e);
@@ -244,7 +250,54 @@ public class OnePojoInfoHelper {
 
     }
 
+    public static Pair<List<ChangeInfo>, List<ChangeInfo>> statisticChange(List<OnePojoInfo> onePojoInfos){
+        List<ChangeInfo> newFiles = Lists.newArrayList();
+        List<ChangeInfo> updatedFiles = Lists.newArrayList();
+        for (OnePojoInfo onePojoInfo : onePojoInfos) {
+            for (GeneratedFile file : onePojoInfo.getFiles()) {
+                if(file.getOriginLines().isEmpty()){
+                    ChangeInfo newFile = new ChangeInfo();
+                    newFile.setFileName(file.getFile().getName());
+                    newFile.setAffectRow(file.getNewLines().size());
+                    newFile.setChangeType("new file");
+                    newFiles.add(newFile);
+                }else{
+                    ChangeInfo updatedFile = new ChangeInfo();
+                    updatedFile.setFileName(file.getFile().getName());
+                    updatedFile.setAffectRow(countChangeRows(file.getOldLines(), file.getNewLines()));
+                    updatedFile.setChangeType("updated");
+                    updatedFiles.add(updatedFile);
+                }
+            }
+        }
+        return Pair.of(newFiles, updatedFiles);
+        
+    }
+
+    private static Integer countChangeRows(List<String> oldLines, List<String> newLines) {
+        oldLines = PojoUtil.avoidEmptyList(oldLines);
+        newLines = PojoUtil.avoidEmptyList(newLines);
+        Integer changeCount = 0;
+        for (String oldLine : oldLines) {
+            if(!newLines.contains(oldLine)){
+                changeCount ++;
+            }
+        }
+
+        for (String line : newLines) {
+            if(!oldLines.contains(line)){
+                changeCount ++;
+            }
+        }
+        return changeCount;
+    }
+
     public static void main(String[] args) {
+
+        List<Integer> xList = Lists.newArrayList(0,1,2,3);
+        List<Integer> yList = Lists.newArrayList(2,3,4,5,6);
+        System.out.println(Sets.intersection(Sets.newHashSet(xList), Sets.newHashSet(yList)));
+
         String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", "   package cox3m.qunar.Sn_+surance.service.dto  ;  \n");
             if(StringUtils.isNotBlank(match)){
                 String pack = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
@@ -252,4 +305,5 @@ public class OnePojoInfoHelper {
                 pack = pack.replace(" ","");
             }
     }
+
 }

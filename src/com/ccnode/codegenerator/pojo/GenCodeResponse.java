@@ -26,6 +26,10 @@ public class GenCodeResponse extends BaseResponse {
 
     String pathSplitter;
 
+    List<ChangeInfo> newFiles;
+
+    List<ChangeInfo> updateFiles;
+
     public DirectoryConfig getDirectoryConfig() {
         return directoryConfig;
     }
@@ -72,5 +76,21 @@ public class GenCodeResponse extends BaseResponse {
 
     public void setPathSplitter(String pathSplitter) {
         this.pathSplitter = pathSplitter;
+    }
+
+    public List<ChangeInfo> getNewFiles() {
+        return newFiles;
+    }
+
+    public void setNewFiles(List<ChangeInfo> newFiles) {
+        this.newFiles = newFiles;
+    }
+
+    public List<ChangeInfo> getUpdateFiles() {
+        return updateFiles;
+    }
+
+    public void setUpdateFiles(List<ChangeInfo> updateFiles) {
+        this.updateFiles = updateFiles;
     }
 }

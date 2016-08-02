@@ -15,20 +15,32 @@ public class SecurityHelper {
 
     private static String encryptKey = "fascias";
 
-    @Nullable
+    @NotNull
     public static String encrypt( String encryptContent){
-        return SecurityUtil.AES.encrypt(encryptContent,encryptKey);
+        String encrypt = SecurityUtil.AES.encrypt(encryptContent, encryptKey);
+        if(StringUtils.isBlank(encrypt)){
+            return StringUtils.EMPTY;
+        }
+        return encrypt;
     }
 
-    @Nullable
+    @NotNull
     public static String encryptDate(@NotNull Date date){
         String timeStampStr = String.valueOf(date.getTime());
-        return SecurityUtil.AES.encrypt(encryptKey,timeStampStr);
+        String encrypt = SecurityUtil.AES.encrypt(timeStampStr, encryptKey);
+        if(StringUtils.isBlank(encrypt)){
+            return StringUtils.EMPTY;
+        }
+        return encrypt;
     }
 
-    @Nullable
+    @NotNull
     public static String decrypt( String decryptContent){
-        return SecurityUtil.AES.decrypt(decryptContent,encryptKey);
+        String decrypt = SecurityUtil.AES.decrypt(decryptContent, encryptKey);
+        if(StringUtils.isBlank(decrypt)){
+            return StringUtils.EMPTY;
+        }
+        return decrypt;
     }
 
     @Nullable
@@ -69,8 +81,8 @@ public class SecurityHelper {
     }
 
     public static void main(String[] args) {
-        String key = encrypt("qunar","dfalsfjk");
-        String qunar = decrypt("qunar", key);
+        String key = encrypt("fascias",String.valueOf(1501683413030L));
+        String qunar = decrypt("fascias", "gFXWrIcCdTUd86a3zzhHVw==");
         System.out.println(qunar);
     }
 }
