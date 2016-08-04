@@ -73,10 +73,6 @@ public class RegisterService {
                 LOGGER.error("RegisterService saveRegisterResponse error", e);
             }
 
-
-
-//            SettingService.getInstance().getState().getKeyList().add(key);
-//            SettingService.getInstance().getState().getTkeyList().add(el);
         }
     }
 
