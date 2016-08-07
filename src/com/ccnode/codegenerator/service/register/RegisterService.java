@@ -30,7 +30,7 @@ public class RegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
-    private static String URL = "http://localhost:8080/generator/register";
+    private static String REGISTER_URL = "www.codehelper.me/generator/register";
 
     public static ServerResponse register(String license) {
 
@@ -42,26 +42,22 @@ public class RegisterService {
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
             RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
-            String s = HttpUtil.postJson(URL, rawRequest);
+            String s = HttpUtil.postJson(REGISTER_URL, rawRequest);
             RegisterRawResponse rawResponse = JSONUtil.parseObject(s, RegisterRawResponse.class);
             RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
             saveRegisterResponse(response,license);
+            return response;
 
         } catch (Throwable e) {
             LOGGER.error("register error", e);
-
-        } finally {
-
+            return ret;
         }
 
-        return ret;
     }
 
     private static void saveRegisterResponse(RegisterResponse response, String license) {
         if (BaseResponse.SUCCESS.equals(response.getStatus())) {
-            long startTime = System.currentTimeMillis();
             try{
-
                 Date expiredDate = response.getExpireDate();
                 String key = SecurityHelper.encryptDate("fascias", expiredDate);
                 String el = SecurityHelper.encrypt("fascias",license);
