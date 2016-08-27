@@ -67,7 +67,6 @@ public class GenCodeAction extends AnAction {
         String msg = "----------------------------------------\n -----------------------------------------------------\n-----------------------------------------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n";
 //        Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
         Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
-        Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
     }

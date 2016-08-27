@@ -1,5 +1,7 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.exception.BizException;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -115,6 +117,9 @@ public class IOUtils {
     @Nullable
     public static File matchOnlyOneFile(String directory, String subFileName){
         List<File> allSubFiles = IOUtils.getAllSubFiles(directory);
+        if(!subFileName.startsWith(GenCodeResponseHelper.getPathSplitter())){
+            subFileName = GenCodeResponseHelper.getPathSplitter() + subFileName;
+        }
         allSubFiles = PojoUtil.avoidEmptyList(allSubFiles);
         File configFile = null;
         for (File subFile : allSubFiles) {
@@ -125,7 +130,7 @@ public class IOUtils {
                 }else{
                     //todo 调试的时候加上.
 //                    return "NOT_ONLY";
-                    throw new RuntimeException("not only one file:" + subFileName);
+                    throw new BizException("not only one file:" + subFileName);
                 }
             }
         }

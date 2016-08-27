@@ -264,7 +264,7 @@ public class OnePojoInfoHelper {
                 }else{
                     ChangeInfo updatedFile = new ChangeInfo();
                     updatedFile.setFileName(file.getFile().getName());
-                    updatedFile.setAffectRow(countChangeRows(file.getOldLines(), file.getNewLines()));
+                    updatedFile.setAffectRow(countChangeRows(file.getNewLines(), file.getOriginLines()));
                     updatedFile.setChangeType("updated");
                     updatedFiles.add(updatedFile);
                 }

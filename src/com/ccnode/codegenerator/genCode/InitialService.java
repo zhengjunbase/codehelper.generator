@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.genCode;
 
+import com.ccnode.codegenerator.exception.BizException;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
@@ -37,7 +38,6 @@ public class InitialService {
                 if(pojoFile == null){
                     return response.failure("", pojoName + " file not exist");
                 }
-                String projectPath = GenCodeResponseHelper.getProjectPathWithSplitter(response);
                 GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
@@ -61,6 +61,9 @@ public class InitialService {
                 }
                 OnePojoInfoHelper.parseFiles(onePojoInfo,response);
                 contextList.add(onePojoInfo);
+            }catch(BizException e){
+                LOGGER.error("parse Class,bizException",e);
+                return response.failure("",e.getMessage());
             }catch(Exception e){
                 LOGGER.error("parse Class:"+pojoName + "failure",e);
                 return response.failure("","parse Class:"+pojoName + "failure");
@@ -79,11 +82,6 @@ public class InitialService {
             return pojoDirPath + response.getPathSplitter() +pojoName + fileSuffix;
         }
         return projectPath + configDir + response.getPathSplitter() +pojoName + fileSuffix;
-    }
-
-    private static void checkPathChange(OnePojoInfo onePojoInfo){
-
-
     }
 
 }

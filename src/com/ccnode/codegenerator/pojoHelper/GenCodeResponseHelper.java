@@ -5,12 +5,9 @@ import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.google.common.base.Objects;
-import com.intellij.vcs.log.ui.filter.FlatSpeedSearchPopup;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.svg.SVGFilterPrimitiveStandardAttributes;
-
-import java.awt.*;
 
 /**
  * What always stop you is what you always believe.
@@ -39,12 +36,18 @@ public class GenCodeResponseHelper {
 
     public static String getProjectPathWithSplitter(GenCodeResponse response){
         String projectPath = response.getRequest().getProjectPath();
+        if(StringUtils.isBlank(projectPath)){
+            throw new RuntimeException("error, projectPath is empty");
+        }
                 if(!projectPath.endsWith(response.getPathSplitter())){
                     projectPath += response.getPathSplitter();
                 }
         return projectPath;
     }
 
+    public static String getPathSplitter(){
+        return System.getProperty("file.separator");
+    }
     @Nullable
     public static String getSplitKey(GenCodeResponse response){
         return response.getUserConfigMap().get("splitkey");

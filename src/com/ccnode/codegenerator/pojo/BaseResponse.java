@@ -115,7 +115,7 @@ public class BaseResponse implements Serializable {
         this.code = retStatus.getCode().toString();
         this.msg = retStatus.getDesc();
         return (T) this;
-//        throw new FailureException();
+//        throw new BizException();
     }
 
     public <T extends BaseResponse> T failure(RetStatus retStatus, String errorMsg) {
