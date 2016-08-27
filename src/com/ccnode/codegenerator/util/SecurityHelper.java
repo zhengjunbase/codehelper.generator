@@ -62,7 +62,7 @@ public class SecurityHelper {
     @Nullable
     public static String encryptDate(String encryptKey,@NotNull Date date){
         String timeStampStr = String.valueOf(date.getTime());
-        return SecurityUtil.AES.encrypt(encryptKey,timeStampStr);
+        return SecurityUtil.AES.encrypt(timeStampStr, encryptKey);
     }
 
     @Nullable

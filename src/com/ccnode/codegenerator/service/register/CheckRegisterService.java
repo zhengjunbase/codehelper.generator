@@ -18,6 +18,12 @@ public class CheckRegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(CheckRegisterService.class);
 
+    private static String REGISTER_CHECK_URL = "www.codehelper.me/generator/register/check";
+
+    public static Boolean checkAll(){
+        return checkFromLocal() && checkOnline();
+    }
+
     public static Boolean checkFromLocal(){
         List<String> keyList = SettingService.getInstance().getState().getKeyList();
         for (String s : keyList) {
@@ -32,10 +38,9 @@ public class CheckRegisterService {
         return false;
     }
 
-    // TODO: 7/23/16
     public static Boolean checkOnline(){
         try{
-            String s = HttpUtil.postJson("", SettingService.getInstance().getState());
+            String s = HttpUtil.postJsonEncryptly(REGISTER_CHECK_URL, SettingService.getInstance().getState());
             if(s.contains("SUCCESS")){
                 return true;
             }else{
@@ -48,4 +53,5 @@ public class CheckRegisterService {
 
 
     }
+
 }

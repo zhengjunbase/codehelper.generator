@@ -1,5 +1,9 @@
 package com.ccnode.codegenerator.pojo;
 
+import com.ccnode.codegenerator.util.SecurityHelper;
+
+import java.util.Date;
+
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -46,5 +50,12 @@ public class RegisterRawResponse extends BaseResponse {
 
     public void setKey4(String key4) {
         this.key4 = key4;
+    }
+
+    public static void main(String[] args) {
+        Date date = SecurityHelper.decryptToDate("bfWsh6Y9JSdxH/XH8D5KVA==");
+        System.out.println(date);
+        String s = SecurityHelper.encryptDate(date);
+        System.out.println(s);
     }
 }

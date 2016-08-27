@@ -59,7 +59,7 @@ public class RegisterService {
         if (BaseResponse.SUCCESS.equals(response.getStatus())) {
             try{
                 Date expiredDate = response.getExpireDate();
-                String key = SecurityHelper.encryptDate("fascias", expiredDate);
+                String key = SecurityHelper.encryptDate( expiredDate);
                 String el = SecurityHelper.encrypt("fascias",license);
                 SettingService setting = ServiceManager.getService(SettingService.class);
                 SettingDto state = setting.getState();
