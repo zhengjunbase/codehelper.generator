@@ -67,10 +67,14 @@ public class UserConfigService {
             return s;
         }
         String splitter = System.getProperty("file.separator");
+        String ret = s;
         if(s.startsWith(splitter)){
-            return s.substring(1);
+            ret =  s.substring(1);
         }
-        return s;
+        if(s.endsWith(splitter)){
+            ret = ret.substring(0, ret.length() -1);
+        }
+        return ret;
     }
 
     // todo
@@ -136,6 +140,6 @@ public class UserConfigService {
 
     public static void main(String[] args) {
         String s = "dsfasdjfasdjf";
-        System.out.println(s.substring(1));
+        System.out.println(s.substring(0,s.length() - 1));
     }
 }

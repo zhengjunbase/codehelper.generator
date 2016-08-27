@@ -50,7 +50,7 @@ public class GenCodeService {
             }
             LOGGER.info("UserConfigService.initConfig done");
 
-            response = initPojos(response);
+            response = InitialService.initPojos(response);
             if(response.checkFailure()){
                 return response;
             }
@@ -88,50 +88,6 @@ public class GenCodeService {
         }catch(Exception e){
             LOGGER.error("gen code failure ",e);
             response.failure("gen code failure ",e);
-        }
-        return response;
-    }
-
-
-    private static GenCodeResponse initPojos(GenCodeResponse response) {
-        List<OnePojoInfo> contextList = Lists.newArrayList();
-        response.setPojoInfos(contextList);
-        for (String pojoName : response.getRequest().getPojoNames()) {
-            OnePojoInfo onePojoInfo = new OnePojoInfo();
-            try{
-                onePojoInfo.setPojoName(pojoName);
-                onePojoInfo.setPojoClassSimpleName(pojoName);
-                File pojoFile = IOUtils.matchOnlyOneFile(response.getRequest().getProjectPath(), pojoName + ".java");
-                if(pojoFile == null){
-                    return response.failure("", pojoName + " file not exist");
-                }
-                String projectPath = GenCodeResponseHelper.getProjectPathWithSplitter(response);
-                GenCodeConfig config = response.getCodeConfig();
-                String fullPojoPath = pojoFile.getAbsolutePath();
-                String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
-                onePojoInfo.setFullDaoPath((StringUtils.isBlank(config.getDaoDir()) ? pojoDirPath : (projectPath + config.getDaoDir())) + response.getPathSplitter() +pojoName + "Dao.java");
-                onePojoInfo.setFullServicePath((StringUtils.isBlank(config.getServiceDir()) ? pojoDirPath : (projectPath + config.getServiceDir())) + response.getPathSplitter() +pojoName + "Service.java");
-                onePojoInfo.setFullSqlPath((StringUtils.isBlank(config.getSqlDir()) ? pojoDirPath : (projectPath + config.getSqlDir())) + response.getPathSplitter() +pojoName + ".sql");
-                onePojoInfo.setFullMapperPath((StringUtils.isBlank(config.getMapperDir()) ? pojoDirPath : (projectPath + config.getMapperDir())) + response.getPathSplitter() +pojoName + "Mapper.xml");
-                onePojoInfo.setFullPojoPath(fullPojoPath);
-                OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
-                onePojoInfo.setDaoPackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
-                onePojoInfo.setServicePackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
-                List<PojoFieldInfo> pojoFieldInfos = onePojoInfo.getPojoFieldInfos();
-                String concat = StringUtils.EMPTY;
-                for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
-                    concat += "|"+pojoFieldInfo.getFieldName();
-                }
-                if(!concat.contains("id")){
-                    LOGGER.error(pojoName + " should has 'id' field");
-                    return response.failure(pojoName + " should has 'id' field");
-                }
-                OnePojoInfoHelper.parseFiles(onePojoInfo,response);
-                contextList.add(onePojoInfo);
-            }catch(Exception e){
-                LOGGER.error("parse Class:"+pojoName + "failure",e);
-                return response.failure("","parse Class:"+pojoName + "failure");
-            }
         }
         return response;
     }

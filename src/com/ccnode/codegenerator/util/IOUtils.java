@@ -125,6 +125,7 @@ public class IOUtils {
                 }else{
                     //todo 调试的时候加上.
 //                    return "NOT_ONLY";
+                    throw new RuntimeException("not only one file:" + subFileName);
                 }
             }
         }
