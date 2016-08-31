@@ -42,4 +42,9 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     public void setSettingDto(SettingDto settingDto) {
         this.settingDto = settingDto;
     }
+
+    public  Boolean canUsePremium(){
+        return true;
+    }
+
 }

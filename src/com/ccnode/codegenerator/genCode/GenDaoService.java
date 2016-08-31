@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.genCode;
 
 import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
@@ -65,13 +66,13 @@ public class GenDaoService {
             newLines.add("");
             newLines.add("public interface "+pojoNameDao+" {");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int add(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(ONE_RETRACT + "int "+ MethodName.insert.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int adds(@Param(\"pojos\") List< "+pojoName +"> pojo);");
+            newLines.add(ONE_RETRACT + "int "+ MethodName.insertList.name() +"(@Param(\"pojos\") List< "+pojoName +"> pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "List<"+pojoName+"> query(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(ONE_RETRACT + "List<"+pojoName+"> "+ MethodName.select.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int update(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(ONE_RETRACT + "int "+ MethodName.update.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);

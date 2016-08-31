@@ -6,6 +6,7 @@ import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
+import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
@@ -78,7 +79,7 @@ public class InitialService {
         if(file != null){
             return file.getAbsolutePath();
         }
-        if(StringUtils.isBlank(configDir)){
+        if(StringUtils.isBlank(configDir) || !SettingService.getInstance().canUsePremium()){
             return pojoDirPath + response.getPathSplitter() +pojoName + fileSuffix;
         }
         return projectPath + configDir + response.getPathSplitter() +pojoName + fileSuffix;

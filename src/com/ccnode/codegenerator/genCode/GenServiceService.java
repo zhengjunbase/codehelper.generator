@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.genCode;
 
 import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
@@ -85,20 +86,20 @@ public class GenServiceService {
             newLines.add("    @Resource");
             newLines.add(ONE_RETRACT + "private " + pojoName + "Dao " + daoName + ";");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "public int add("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + ".add(pojo);");
+            newLines.add(ONE_RETRACT + "public int "+ MethodName.insert.name() +"("+pojoName +" pojo){");
+            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.insert.name() +"(pojo);");
             newLines.add(ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT +"public int adds(List< "+pojoName +"> pojos){");
-            newLines.add(TWO_RETRACT + "return "+daoName + ".adds(pojos);");
+            newLines.add(ONE_RETRACT +"public int "+ MethodName.insertList.name() +"(List< "+pojoName +"> pojos){");
+            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.insertList.name() +"(pojos);");
             newLines.add(ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "public List<"+pojoName+"> query("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + ".query(pojo);");
+            newLines.add(ONE_RETRACT + "public List<"+pojoName+"> "+ MethodName.select.name() +"("+pojoName +" pojo){");
+            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.select.name() +"(pojo);");
             newLines.add(ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT +"public int update("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + ".update(pojo);");
+            newLines.add(ONE_RETRACT +"public int "+ MethodName.update.name() +"("+pojoName +" pojo){");
+            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
             newLines.add(ONE_RETRACT + "}");
             newLines.add("");
             newLines.add("}");

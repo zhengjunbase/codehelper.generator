@@ -42,18 +42,16 @@ public class UserConfigService {
                 return response.failure("no config or input pojo name");
             }
             pojos = pojos.replace(",","|");
+            pojos = pojos.replace("，","|");
+            pojos = pojos.replace(";","|");
+            pojos = pojos.replace("；","|");
             response.getRequest().setPojoNames(Splitter.on("|").trimResults().omitEmptyStrings().splitToList(pojos));
-            for (Map.Entry<String, String> configEntry : response.getUserConfigMap().entrySet()) {
-                String key = configEntry.getKey();
-                String value = configEntry.getValue();
-                check(response.getRequest().getProjectPath(), key,value,config);
-                DirectoryConfig directoryConfig = new DirectoryConfig();
-                response.setDirectoryConfig(directoryConfig);
-                config.setDaoDir(removeStartSplitter(userConfigMap.get("dao.path")));
-                config.setSqlDir(removeStartSplitter(userConfigMap.get("sql.path")));
-                config.setMapperDir(removeStartSplitter(userConfigMap.get("mapper.path")));
-                config.setServiceDir(removeStartSplitter(userConfigMap.get("service.path")));
-            }
+            DirectoryConfig directoryConfig = new DirectoryConfig();
+            response.setDirectoryConfig(directoryConfig);
+            config.setDaoDir(removeStartAndEndSplitter(userConfigMap.get("dao.path")));
+            config.setSqlDir(removeStartAndEndSplitter(userConfigMap.get("sql.path")));
+            config.setMapperDir(removeStartAndEndSplitter(userConfigMap.get("mapper.path")));
+            config.setServiceDir(removeStartAndEndSplitter(userConfigMap.get("service.path")));
         }catch(Exception e){
             LOGGER.error(" status error occurred :{}",response,e);
             return response.failure(" status error occurred");
@@ -62,7 +60,7 @@ public class UserConfigService {
         return response;
     }
 
-    public static String removeStartSplitter(String s){
+    public static String removeStartAndEndSplitter(String s){
         if(StringUtils.isBlank(s)){
             return s;
         }
@@ -77,12 +75,6 @@ public class UserConfigService {
         return ret;
     }
 
-    // todo
-    private static void check(String projectPath, String key, String value, GenCodeConfig config) {
-//        List<String> fileName = Splitter.on(",").trimResults().omitEmptyStrings().splitToList(value);
-//        String fileName = IOUtils.matchOnlyOneFile(projectPath, "value");
-
-    }
 
     public static GenCodeResponse readConfigFile(GenCodeRequest request){
         LOGGER.info("readConfigFile");
@@ -90,7 +82,7 @@ public class UserConfigService {
         ret.accept();
         try{
             String projectPath = request.getProjectPath();
-            File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, "generator.properties");
+            File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, "codehelper.properties");
             String fileName = StringUtils.EMPTY;
             if(propertiesFile != null){
                 fileName = propertiesFile.getAbsolutePath();
@@ -101,8 +93,8 @@ public class UserConfigService {
 //                        + "please add an generator.properties in you poject path");
             }
             if(Objects.equal(fileName,"NOT_ONLY")){
-                LOGGER.error("error, duplicated generator.properties file");
-                return ret.failure("","error, duplicated generator.properties file");
+                LOGGER.error("error, duplicated codehelper.properties file");
+                return ret.failure("","error, duplicated codehelper.properties file");
             }
             File configFile = new File(fileName);
             List<String> strings = IOUtils.readLines(configFile);
