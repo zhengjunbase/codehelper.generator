@@ -17,7 +17,6 @@ import java.util.List;
  */
 public class ServerRequestHelper {
 
-    private static String URL = "www.codehelper.me/generator";
 
     public static <T extends ServerRequest> T fillCommonField(T request){
 

@@ -50,7 +50,9 @@ public class GenMapperService {
 
     private static void genMapper(GenCodeResponse response,OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean expand) {
         List<String> oldLines = fileInfo.getOldLines();
-
+        if(!oldLines.isEmpty() && !SettingService.getInstance().canUsePremium()){
+            return;
+        }
         ListInfo<String> listInfo = new ListInfo<String>();
         if(oldLines.isEmpty()){
             listInfo.setFullList(getMapperHeader(onePojoInfo));

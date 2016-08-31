@@ -50,13 +50,14 @@ public class GenSqlService {
         LOGGER.info("genSQLFile :{}", onePojoInfo.getPojoName());
         GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(onePojoInfo, FileType.SQL);
         Boolean canReplace = canReplace(fileInfo, response);
-        if (fileInfo.getOldLines().isEmpty() || !canReplace) {
+        if (fileInfo.getOldLines().isEmpty()) {
             List<String> newLines = genSql(onePojoInfo, response);
             fileInfo.setNewLines(newLines);
-        }
-        if (canReplace) {
-            List<String> newLines = replaceSql(onePojoInfo, fileInfo, response);
-            fileInfo.setNewLines(newLines);
+        }else{
+            if(canReplace && SettingService.getInstance().canUsePremium()){
+                List<String> newLines = replaceSql(onePojoInfo, fileInfo, response);
+                fileInfo.setNewLines(newLines);
+            }
         }
     }
 
@@ -224,7 +225,13 @@ public class GenSqlService {
         }
 
         if (fieldInfo.getFieldName().equals("id")) {
-            ret.append(ONE_RETRACT).append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+            String append = new StringBuilder().append(ONE_RETRACT).
+                    append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',").toString();
+            if(fieldInfo.getFieldClass().equals("Integer")
+                    || fieldInfo.getFieldClass().equals("int")){
+                append = append.replace("BIGINT(20)","INTEGER(20)");
+            }
+            ret.append(append);
             return ret.toString();
         }
 

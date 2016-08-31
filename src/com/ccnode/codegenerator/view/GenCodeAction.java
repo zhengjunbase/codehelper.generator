@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
@@ -9,6 +10,8 @@ import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
+import com.intellij.ide.browsers.BrowserLauncher;
+import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -64,9 +67,15 @@ public class GenCodeAction extends AnAction {
             e.printStackTrace();
             genCodeResponse.setMsg(e.getMessage());
         }
-        String msg = "----------------------------------------\n -----------------------------------------------------\n-----------------------------------------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n-------------------\n";
-//        Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
-        Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
+        if(SettingService.getInstance().canUsePremium()){
+            Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
+        }else{
+            int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse),
+                    "-------" + genCodeResponse.getStatus() + "-------","OK","Buy Premium", null);
+            if(result == 2){
+                BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
+            }
+        }
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
     }

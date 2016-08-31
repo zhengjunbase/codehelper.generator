@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -33,7 +34,7 @@ public class ShowPremiumAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
 
-        BrowserLauncher.getInstance().browse("http://www.baidu.com", WebBrowserManager.getInstance().getFirstActiveBrowser());
+        BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
 
     }
 }

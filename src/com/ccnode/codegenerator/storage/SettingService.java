@@ -1,13 +1,16 @@
 package com.ccnode.codegenerator.storage;
 
+import com.ccnode.codegenerator.util.PojoUtil;
+import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.intellij.spring.model.utils.SpringBeanUtils;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * What always stop you is what you always believe.
@@ -43,8 +46,23 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         this.settingDto = settingDto;
     }
 
-    public  Boolean canUsePremium(){
-        return true;
+    public Boolean canUsePremium(){
+        List<String> keyList = settingDto.getKeyList();
+        keyList = PojoUtil.avoidEmptyList(keyList);
+        Boolean expired = true;
+        for (String key : keyList) {
+            Date date = SecurityHelper.decryptToDate(key);
+            if(date == null || new Date().compareTo(date) > 0){
+                continue;
+            }else{
+                expired = false;
+            }
+        }
+        if(expired){
+            return false;
+        }else{
+            return false;
+        }
     }
 
 }

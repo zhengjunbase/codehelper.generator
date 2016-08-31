@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.service.register;
 
 import com.ccnode.codegenerator.enums.RequestType;
+import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojo.RegisterRawRequest;
 import com.ccnode.codegenerator.pojo.RegisterRawResponse;
@@ -42,7 +43,7 @@ public class RegisterService {
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
             RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
-            String s = HttpUtil.postJson(REGISTER_URL, rawRequest);
+            String s = HttpUtil.postJson(UrlManager.REGISTER_URL, rawRequest);
             RegisterRawResponse rawResponse = JSONUtil.parseObject(s, RegisterRawResponse.class);
             RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
             saveRegisterResponse(response,license);
@@ -59,7 +60,7 @@ public class RegisterService {
         if (BaseResponse.SUCCESS.equals(response.getStatus())) {
             try{
                 Date expiredDate = response.getExpireDate();
-                String key = SecurityHelper.encryptDate( expiredDate);
+                String key = SecurityHelper.encryptDate(expiredDate);
                 String el = SecurityHelper.encrypt("fascias",license);
                 SettingService setting = ServiceManager.getService(SettingService.class);
                 SettingDto state = setting.getState();
