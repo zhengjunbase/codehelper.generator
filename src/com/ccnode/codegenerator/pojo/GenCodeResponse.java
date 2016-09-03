@@ -30,6 +30,10 @@ public class GenCodeResponse extends BaseResponse {
 
     List<ChangeInfo> updateFiles;
 
+    Throwable throwable;
+
+    ServerMsg serverMsg;
+
     public DirectoryConfig getDirectoryConfig() {
         return directoryConfig;
     }
@@ -92,5 +96,22 @@ public class GenCodeResponse extends BaseResponse {
 
     public void setUpdateFiles(List<ChangeInfo> updateFiles) {
         this.updateFiles = updateFiles;
+    }
+
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
+    public void setThrowable(Throwable throwable) {
+        this.throwable = throwable;
+        this.setMsg(throwable.getMessage());
+    }
+
+    public ServerMsg getServerMsg() {
+        return serverMsg;
+    }
+
+    public void setServerMsg(ServerMsg serverMsg) {
+        this.serverMsg = serverMsg;
     }
 }

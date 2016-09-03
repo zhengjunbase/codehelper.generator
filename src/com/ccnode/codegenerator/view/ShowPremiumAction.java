@@ -33,8 +33,6 @@ import java.util.Date;
 public class ShowPremiumAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
-
         BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
-
     }
 }

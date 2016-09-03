@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.ServerMsg;
 import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -55,26 +56,32 @@ public class GenCodeAction extends AnAction {
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
         }
-        GenCodeRequest request;
         GenCodeResponse genCodeResponse = new GenCodeResponse();
         try{
-            request = new GenCodeRequest(Lists.newArrayList(),projectPath,System.getProperty("file.separator"));
+            GenCodeRequest request = new GenCodeRequest(Lists.newArrayList(), projectPath,
+                    System.getProperty("file.separator"));
             request.setProject(project);
             genCodeResponse = GenCodeService.genCode(request);
             VirtualFileManager.getInstance().syncRefresh();
             LoggerWrapper.saveAllLogs(genCodeResponse);
-        }catch(Exception e){
-            e.printStackTrace();
-            genCodeResponse.setMsg(e.getMessage());
-        }
-        if(SettingService.getInstance().canUsePremium()){
-            Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), "-------"+genCodeResponse.getStatus() +"-------",null);
-        }else{
-            int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse),
-                    "-------" + genCodeResponse.getStatus() + "-------","OK","Buy Premium", null);
-            if(result == 2){
-                BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
+            if(SettingService.getInstance().canUsePremium()){
+                Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
+            }else{
+                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Buy Premium", null);
+                if(result == 2){
+                    BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
+                }
             }
+            ServerMsg serverMsg = genCodeResponse.getServerMsg();
+            if(serverMsg != null && serverMsg.getHasServerMsg()){
+                int result = Messages.showOkCancelDialog(project, serverMsg.getContent(), serverMsg.getTitle(), "OK", serverMsg.getButtonStr(), null);
+                if(result == 2 && StringUtils.isNotBlank(serverMsg.getButtonUrl())){
+                    BrowserLauncher.getInstance().browse(serverMsg.getButtonUrl(), WebBrowserManager.getInstance().getFirstActiveBrowser());
+                }
+            }
+        }catch(Throwable e){
+            e.printStackTrace();
+            genCodeResponse.setThrowable(e);
         }
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
@@ -85,13 +92,13 @@ public class GenCodeAction extends AnAction {
         List<ChangeInfo> updateFiles = response.getUpdateFiles();
         List<String> msgList = Lists.newArrayList();
         if(response.checkSuccess()){
-            if(newFiles.size() > 0){
+            if(!newFiles.isEmpty()){
                 msgList.add(" ");
             }
             for (ChangeInfo newFile : newFiles) {
                 msgList.add("       new file:"+ "\t\t" + newFile.getFileName());
             }
-            if(updateFiles.size() > 0){
+            if(!updateFiles.isEmpty()){
                 msgList.add("");
             }
             for (ChangeInfo updated : updateFiles) {
