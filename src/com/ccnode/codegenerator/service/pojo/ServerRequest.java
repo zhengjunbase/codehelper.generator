@@ -13,9 +13,10 @@ public class ServerRequest extends BaseRequest {
     String system;
     String ip;
     String macAddressList;
-    String license;
     String requestType;
     String userType;
+    String osName;
+    String osVersion;
 
     public String getPluginVersion() {
         return pluginVersion;
@@ -49,14 +50,6 @@ public class ServerRequest extends BaseRequest {
         this.macAddressList = macAddressList;
     }
 
-    public String getLicense() {
-        return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
     public String getRequestType() {
         return requestType;
     }
@@ -71,5 +64,21 @@ public class ServerRequest extends BaseRequest {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public String getOsName() {
+        return osName;
+    }
+
+    public void setOsName(String osName) {
+        this.osName = osName;
+    }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
+
+    public void setOsVersion(String osVersion) {
+        this.osVersion = osVersion;
     }
 }

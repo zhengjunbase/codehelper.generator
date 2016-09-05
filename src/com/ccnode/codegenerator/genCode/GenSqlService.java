@@ -53,11 +53,16 @@ public class GenSqlService {
         if (fileInfo.getOldLines().isEmpty()) {
             List<String> newLines = genSql(onePojoInfo, response);
             fileInfo.setNewLines(newLines);
-        }else{
-            if(canReplace && SettingService.getInstance().canUsePremium()){
-                List<String> newLines = replaceSql(onePojoInfo, fileInfo, response);
-                fileInfo.setNewLines(newLines);
-            }
+            return;
+        }
+        if(!SettingService.getInstance().canUsePremium()) {
+            fileInfo.setNewLines(fileInfo.getOriginLines());
+            return;
+        }
+        if(canReplace){
+            List<String> newLines = replaceSql(onePojoInfo, fileInfo, response);
+            fileInfo.setNewLines(newLines);
+            return;
         }
     }
 

@@ -23,6 +23,8 @@ public class ServerRequestHelper {
         request.setPluginVersion(VersionManager.getCurrentVersion());
         request.setIp(getIpAddress());
         request.setMacAddressList(getMacAddress());
+        request.setOsName(System.getProperty("os.name"));
+        request.setOsVersion(System.getProperty("os.version"));
         return request;
     }
 
@@ -42,7 +44,7 @@ public class ServerRequestHelper {
                  retList.add(builder.toString());
              }
         }catch(Throwable e){
-
+            e.printStackTrace();
         }
         String ret = StringUtils.EMPTY;
         for (String s : retList) {
@@ -63,6 +65,8 @@ public class ServerRequestHelper {
     }
 
     public static void main(String[] args) {
+        String os = System.getProperty("os.name");
+        System.out.println(os);
         System.out.println(getMacAddress());
         System.out.println(getIpAddress());
     }

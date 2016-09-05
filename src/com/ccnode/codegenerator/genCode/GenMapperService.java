@@ -51,6 +51,7 @@ public class GenMapperService {
     private static void genMapper(GenCodeResponse response,OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean expand) {
         List<String> oldLines = fileInfo.getOldLines();
         if(!oldLines.isEmpty() && !SettingService.getInstance().canUsePremium()){
+            fileInfo.setNewLines(fileInfo.getOriginLines());
             return;
         }
         ListInfo<String> listInfo = new ListInfo<String>();
@@ -96,7 +97,7 @@ public class GenMapperService {
         posPair = ReplaceUtil
                 .getPos(listInfo.getFullList(), "<insert id=\""+ MethodName.insert.name() +"\"", "</insert>", new MapperCondition());
         listInfo.setPos(posPair);
-        listInfo.setNewSegments(genAddMethod(onePojoInfo));
+        listInfo.setNewSegments(genAddMethod(onePojoInfo,expand));
         ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
             @Override
             public boolean isEqual(String o1, String o2) {
@@ -273,30 +274,38 @@ public class GenMapperService {
 
     }
 
-    private static List<String> genAddMethod(OnePojoInfo onePojoInfo) {
+    private static List<String> genAddMethod(OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<insert id=\""+ MethodName.insert.name() +"\">");
         retList.add(TWO_RETRACT + "INSERT INTO " + tableName );
         retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
-        int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String s = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
-                ,fieldName,getUnderScore(fieldName));
-            retList.add(s);
-            index ++;
+            if(expand){
+                retList.add(THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
+                retList.add(FOUR_RETRACT + String.format("#{pojo.%s},",getUnderScore(fieldName)));
+                retList.add(THREE_RETRACT +"</if>");
+            }else{
+                String s = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
+                    ,fieldName,getUnderScore(fieldName));
+                retList.add(s);
+            }
         }
-        index = 0;
         retList.add(TWO_RETRACT + "</trim>");
         retList.add(TWO_RETRACT + "VALUES");
         retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String s = THREE_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
-                ,fieldName,fieldName);
-            retList.add(s);
-            index ++;
+            if(expand){
+                retList.add(THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
+                retList.add(FOUR_RETRACT + String.format("#{pojo.%s},",fieldName));
+                retList.add(THREE_RETRACT +"</if>");
+            }else{
+                String s = THREE_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
+                    ,fieldName,fieldName);
+                retList.add(s);
+            }
         }
         retList.add(TWO_RETRACT + "</trim>");
         retList.add(ONE_RETRACT + "</insert>");

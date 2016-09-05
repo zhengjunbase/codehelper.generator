@@ -10,4 +10,13 @@ import org.slf4j.LoggerFactory;
  */
 public class RegisterRequest extends ServerRequest {
 
+    String license;
+
+    public String getLicense() {
+        return license;
+    }
+
+    public void setLicense(String license) {
+        this.license = license;
+    }
 }

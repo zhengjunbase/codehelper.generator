@@ -236,7 +236,11 @@ public class OnePojoInfoHelper {
 
         try{
             for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
-                writeLines(generatedFile.getNewLines(), "\n", new FileOutputStream(generatedFile.getFile()));
+                List<String> lines = generatedFile.getNewLines();
+                if(lines == null || lines.isEmpty()){
+                    lines = generatedFile.getOriginLines();
+                }
+                writeLines(lines, "\n", new FileOutputStream(generatedFile.getFile()));
             }
             Pair<List<ChangeInfo>, List<ChangeInfo>> pair = statisticChange(response.getPojoInfos());
             LOGGER.info(" flushFiles :{},pair.getRight():{}",pair.getLeft(),pair.getRight());

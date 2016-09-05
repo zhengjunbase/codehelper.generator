@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.storage;
 
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -30,7 +31,7 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     @NotNull
     @Override
     public SettingDto getState() {
-        if(settingDto == null){
+        if(settingDto == null || GenCodeResponseHelper.isRegisterDebug()){
             settingDto = new SettingDto();
         }
         return settingDto;
@@ -47,7 +48,7 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     }
 
     public Boolean canUsePremium(){
-        List<String> keyList = settingDto.getKeyList();
+        List<String> keyList = getState().getKeyList();
         keyList = PojoUtil.avoidEmptyList(keyList);
         Boolean expired = true;
         for (String key : keyList) {
@@ -61,7 +62,7 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         if(expired){
             return false;
         }else{
-            return false;
+            return true;
         }
     }
 

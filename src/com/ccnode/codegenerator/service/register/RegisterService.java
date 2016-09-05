@@ -31,8 +31,6 @@ public class RegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
-    private static String REGISTER_URL = "www.codehelper.me/generator/register";
-
     public static ServerResponse register(String license) {
 
         ServerResponse ret = new ServerResponse();
@@ -42,10 +40,10 @@ public class RegisterService {
             request.setRequestType(RequestType.REGISTER.name());
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
-            RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
-            String s = HttpUtil.postJson(UrlManager.REGISTER_URL, rawRequest);
-            RegisterRawResponse rawResponse = JSONUtil.parseObject(s, RegisterRawResponse.class);
-            RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
+//            RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
+            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_URL, request);
+            RegisterResponse response = JSONUtil.parseObject(SecurityHelper.decrypt(s), RegisterResponse.class);
+//            RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
             saveRegisterResponse(response,license);
             return response;
 

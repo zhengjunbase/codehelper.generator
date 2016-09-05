@@ -16,6 +16,15 @@ import org.jetbrains.annotations.Nullable;
  */
 public class GenCodeResponseHelper {
 
+    private static GenCodeResponse response;
+
+    public static void setResponse(GenCodeResponse response) {
+        GenCodeResponseHelper.response = response;
+    }
+
+    public static GenCodeResponse getResponse() {
+        return response;
+    }
 
     public static GeneratedFile getByFileType(@NotNull OnePojoInfo onePojoInfo, FileType type){
         for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
@@ -29,9 +38,12 @@ public class GenCodeResponseHelper {
     public static Boolean isUseGenericDao(GenCodeResponse response){
         return getSwitch(response,"usegenericdao");
     }
+    public static Boolean isRegisterDebug(){
+        return getSwitch(response,"registerdebug");
+    }
 
     public static Boolean getSwitch(GenCodeResponse response, String key){
-        return Objects.equal( response.getUserConfigMap().get(key),"true");
+        return response != null && response.getUserConfigMap() != null && Objects.equal( response.getUserConfigMap().get(key),"true");
     }
 
     public static String getProjectPathWithSplitter(GenCodeResponse response){

@@ -151,7 +151,7 @@ public class HttpUtil {
         return postJsonWithResult(url, JSONUtil.toJSONString(data)).result;
     }
 
-    public static String postJsonEncryptly(String url, Object body) {
+    public static String postJsonEncrypt(String url, Object body) {
         RequestData data = new RequestData();
         data.setData(SecurityHelper.encrypt(JSONUtil.toJSONString(body)));
         return postJsonWithResult(url, JSONUtil.toJSONString(data)).result;

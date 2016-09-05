@@ -6,6 +6,7 @@ import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.ServerMsg;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -57,6 +58,7 @@ public class GenCodeAction extends AnAction {
             projectPath = StringUtils.EMPTY;
         }
         GenCodeResponse genCodeResponse = new GenCodeResponse();
+        GenCodeResponseHelper.setResponse(genCodeResponse);
         try{
             GenCodeRequest request = new GenCodeRequest(Lists.newArrayList(), projectPath,
                     System.getProperty("file.separator"));

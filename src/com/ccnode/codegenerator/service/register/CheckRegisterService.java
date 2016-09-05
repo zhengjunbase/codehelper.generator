@@ -40,7 +40,7 @@ public class CheckRegisterService {
 
     public static Boolean checkOnline(){
         try{
-            String s = HttpUtil.postJsonEncryptly(REGISTER_CHECK_URL, SettingService.getInstance().getState());
+            String s = HttpUtil.postJsonEncrypt(REGISTER_CHECK_URL, SettingService.getInstance().getState());
             if(s.contains("SUCCESS")){
                 return true;
             }else{
