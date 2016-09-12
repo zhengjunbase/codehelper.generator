@@ -7,27 +7,22 @@ import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.ServerMsg;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import com.ccnode.codegenerator.storage.SettingDto;
 import com.ccnode.codegenerator.storage.SettingService;
-import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.collect.Lists;
 import com.intellij.ide.browsers.BrowserLauncher;
 import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.PlatformVirtualFileManager;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,6 +89,11 @@ public class GenCodeAction extends AnAction {
         List<ChangeInfo> updateFiles = response.getUpdateFiles();
         List<String> msgList = Lists.newArrayList();
         if(response.checkSuccess()){
+            Integer affectRows = getAffectRows(newFiles);
+            affectRows += getAffectRows(updateFiles);
+            if(newFiles.isEmpty() && affectRows.equals(0)){
+                return "No File Generated Or Updated";
+            }
             if(!newFiles.isEmpty()){
                 msgList.add(" ");
             }
@@ -118,5 +118,16 @@ public class GenCodeAction extends AnAction {
         }
         return ret.trim();
 
+    }
+
+    private static Integer getAffectRows(List<ChangeInfo> newFiles) {
+        newFiles = PojoUtil.avoidEmptyList(newFiles);
+        Integer affectRow = 0;
+        for (ChangeInfo newFile : newFiles) {
+            if(newFile.getAffectRow() != null){
+                affectRow += newFile.getAffectRow();
+            }
+        }
+        return affectRow;
     }
 }
