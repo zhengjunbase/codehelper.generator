@@ -119,7 +119,19 @@ public class GenSqlService {
             oldList.add(oldIndex, fieldSql);
             oldIndex++;
         }
-        oldList = removeDeleteField(onePojoInfo.getPojoFieldInfos(),oldList);
+        List<String> replaceList = Lists.newArrayList();
+        String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
+        oldList = PojoUtil.avoidEmptyList(oldList);
+        for (String line : oldList) {
+            if(GenCodeUtil.sqlContain(line, ")ENGINE=")){
+                replaceList.add(String.format(")ENGINE=%s DEFAULT CHARSET=%s COMMENT '%s';", getSqlEngine(response), getSqlCharSet(response), tableName));
+            }else{
+                replaceList.add(line);
+            }
+
+        }
+        oldList = removeDeleteField(onePojoInfo.getPojoFieldInfos(),replaceList);
+
         return Lists.newArrayList(oldList);
 
     }

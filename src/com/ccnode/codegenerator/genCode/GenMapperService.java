@@ -62,9 +62,9 @@ public class GenMapperService {
         }
 
         Pair<Integer, Integer> posPair = ReplaceUtil
-                .getPos(listInfo.getFullList(), "<resultMap id=\"BaseResultMap\" type=", "</resultMap>", new MapperCondition());
+                .getPos(listInfo.getFullList(), "<resultMap id=\"AllColumnMap\" type=", "</resultMap>", new MapperCondition());
         listInfo.setPos(posPair);
-        listInfo.setNewSegments(genBaseResultMap(onePojoInfo));
+        listInfo.setNewSegments(genAllColumnMap(onePojoInfo));
         ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
             @Override
             public boolean isEqual(String o1, String o2) {
@@ -164,21 +164,21 @@ public class GenMapperService {
         });
         fileInfo.setNewLines(listInfo.getFullList());
 
-        posPair = ReplaceUtil
-                .getPos(listInfo.getFullList(), "<select id=\"queryUseStatement\"", "</select>", new MapperCondition());
-        listInfo.setPos(posPair);
-        listInfo.setNewSegments(genQueryUseStatementMethod(response,onePojoInfo,expand));
-        ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
-            @Override
-            public boolean isEqual(String o1, String o2) {
-                String match1 = RegexUtil.getMatch("(.*)pojo.(.*)", o1);
-                String match2 = RegexUtil.getMatch("(.*)pojo.(.*)", o2);
-                if(StringUtils.isBlank(match1) ){
-                    return false;
-                }
-                return match1.equals(match2);
-            }
-        });
+//        posPair = ReplaceUtil
+//                .getPos(listInfo.getFullList(), "<select id=\"queryUseStatement\"", "</select>", new MapperCondition());
+//        listInfo.setPos(posPair);
+//        listInfo.setNewSegments(genQueryUseStatementMethod(response,onePojoInfo,expand));
+//        ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
+//            @Override
+//            public boolean isEqual(String o1, String o2) {
+//                String match1 = RegexUtil.getMatch("(.*)pojo.(.*)", o1);
+//                String match2 = RegexUtil.getMatch("(.*)pojo.(.*)", o2);
+//                if(StringUtils.isBlank(match1) ){
+//                    return false;
+//                }
+//                return match1.equals(match2);
+//            }
+//        });
         List<String> newList = listInfo.getFullList();
         newList = adjustList(newList);
         fileInfo.setNewLines(newList);
@@ -203,7 +203,7 @@ public class GenMapperService {
         retList.add("<mapper namespace=\"" + onePojoInfo.getDaoPackage() +"."+ onePojoInfo.getPojoName() + "Dao\">");
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<resultMap id=\"BaseResultMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+        retList.add(ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         retList.add(ONE_RETRACT+"</resultMap>");
 
         retList.add(StringUtils.EMPTY);
@@ -228,24 +228,26 @@ public class GenMapperService {
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<select id=\""+ MethodName.select.name() +"\" resultMap=\"BaseResultMap\">");
+        retList.add(ONE_RETRACT+ "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
         retList.add(ONE_RETRACT+"</select>");
+
+//        retList.add(StringUtils.EMPTY);
+//        retList.add("<!--auto generated Code-->");
+//        retList.add(ONE_RETRACT+ "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
+//        retList.add(ONE_RETRACT+"</select>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"BaseResultMap\">");
-        retList.add(ONE_RETRACT+"</select>");
-
-        retList.add("<!--auto generated Code-->");
         retList.add(ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
+        retList.add(TWO_RETRACT+ "DELETE FROM "+ getUnderScore(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
         retList.add(ONE_RETRACT+"</delete>");
         retList.add("</mapper>");
         return retList;
     }
 
-    private static List<String> genBaseResultMap(OnePojoInfo onePojoInfo){
+    private static List<String> genAllColumnMap(OnePojoInfo onePojoInfo){
         List<String> retList = Lists.newArrayList();
-        retList.add(ONE_RETRACT+ "<resultMap id=\"BaseResultMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+        retList.add(ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             retList.add(String.format("%s<result column=\"%s\" property=\"%s\"/>",
@@ -366,9 +368,13 @@ public class GenMapperService {
 
         String splitKey = GenCodeResponseHelper.getSplitKey(response);
         if(StringUtils.isNotBlank(splitKey) && OnePojoInfoHelper.containSplitKey(onePojoInfo,splitKey)){
-            retList.add(TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">");
-            retList.add(THREE_RETRACT + "AND "+getUnderScore(splitKey)+" = #{pojo."+splitKey+"}");
-            retList.add(TWO_RETRACT + "</if>");
+            if(expand){
+                retList.add(TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">");
+                retList.add(THREE_RETRACT + "AND "+getUnderScore(splitKey)+" = #{pojo."+splitKey+"}");
+                retList.add(TWO_RETRACT + "</if>");
+            }else{
+                retList.add(TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">"+" AND "+getUnderScore(splitKey)+" = #{pojo."+splitKey+"}" +" </if>");
+            }
         }
 
         if(GenCodeResponseHelper.isUseGenericDao(response)){
@@ -385,11 +391,11 @@ public class GenMapperService {
     private static List<String> genQueryMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"BaseResultMap\">");
+        retList.add( ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+            retList.add(TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
             retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
@@ -410,6 +416,13 @@ public class GenMapperService {
         }
         retList.add(TWO_RETRACT + "</where>");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
+            if(expand){
+                retList.add(TWO_RETRACT + "<if test=\"option.orderBy == 'TRUE'\">");
+                retList.add(THREE_RETRACT + "ORDER BY id DESC");
+                retList.add(TWO_RETRACT + "</if>");
+            }else{
+                retList.add(TWO_RETRACT + "<if test=\"option.orderBy == 'TRUE'\"> ORDER BY id DESC </if>");
+            }
             retList.add(TWO_RETRACT + "LIMIT #{option.limit}");
             retList.add(TWO_RETRACT + "OFFSET #{option.offset}");
         }
@@ -421,11 +434,11 @@ public class GenMapperService {
     private static List<String> genQueryUseStatementMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"BaseResultMap\">");
+        retList.add( ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(TWO_RETRACT + "SELECT"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.queryCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+            retList.add(TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
             retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
