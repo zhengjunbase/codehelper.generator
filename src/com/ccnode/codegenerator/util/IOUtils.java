@@ -122,9 +122,10 @@ public class IOUtils {
         }
         allSubFiles = PojoUtil.avoidEmptyList(allSubFiles);
         File configFile = null;
+        String targetDirPrefix = directory + GenCodeResponseHelper.getPathSplitter() + "target";
         for (File subFile : allSubFiles) {
-            if(StringUtils.endsWithIgnoreCase(
-                    subFile.getAbsolutePath(),subFileName)){
+            if(!StringUtils.containsIgnoreCase(subFile.getAbsolutePath(), targetDirPrefix)
+                    && StringUtils.endsWithIgnoreCase(subFile.getAbsolutePath(),subFileName)){
                 if(configFile == null){
                     configFile = subFile;
                 }else{

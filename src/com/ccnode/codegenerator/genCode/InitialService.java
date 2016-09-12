@@ -45,7 +45,7 @@ public class InitialService {
                 onePojoInfo.setFullDaoPath(genPath(response, pojoDirPath, config.getDaoDir(), pojoName,"Dao.java"));
                 onePojoInfo.setFullServicePath(genPath(response, pojoDirPath, config.getServiceDir(), pojoName,"Service.java"));
                 onePojoInfo.setFullSqlPath(genPath(response, pojoDirPath, config.getSqlDir(), pojoName,".sql"));
-                onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,"Mapper.xml"));
+                onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,"Dao.xml"));
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
                 onePojoInfo.setDaoPackage(GenCodeUtil
