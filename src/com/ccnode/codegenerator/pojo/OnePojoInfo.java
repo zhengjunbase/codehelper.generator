@@ -23,6 +23,7 @@ public class OnePojoInfo {
     String pojoPackage;
     String daoPackage;
     String servicePackage;
+    String pojoDirPath;
     String fullPojoPath;
     String fullDaoPath;
     String fullServicePath;
@@ -156,5 +157,13 @@ public class OnePojoInfo {
 
     public void setFullMapperPath(String fullMapperPath) {
         this.fullMapperPath = fullMapperPath;
+    }
+
+    public String getPojoDirPath() {
+        return pojoDirPath;
+    }
+
+    public void setPojoDirPath(String pojoDirPath) {
+        this.pojoDirPath = pojoDirPath;
     }
 }

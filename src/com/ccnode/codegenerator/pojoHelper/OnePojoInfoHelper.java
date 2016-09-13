@@ -1,3 +1,4 @@
+
 package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
@@ -20,6 +21,7 @@ import com.intellij.psi.search.FilenameIndex;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -78,7 +80,7 @@ public class OnePojoInfoHelper {
             throw new RuntimeException("parse class error");
         }
         String text = context.getText();
-        onePojoInfo.setPojoPackage(parsePojoPackage(text));
+        onePojoInfo.setPojoPackage(parsePackage(text));
         PsiField[] allFields = psiClass.getAllFields();
         List<PojoFieldInfo> fieldList = Lists.newArrayList();
 
@@ -120,7 +122,7 @@ public class OnePojoInfoHelper {
         return false;
     }
 
-    private static String parsePojoPackage(String context){
+    private static String parsePackage(String context){
         List<String> lines = Splitter.on("\n").trimResults().omitEmptyStrings().splitToList(context);
         for (String line : lines) {
             String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", line);
@@ -179,6 +181,46 @@ public class OnePojoInfoHelper {
             fieldInfo.setAnnotations(Lists.newArrayList(field.getDeclaredAnnotations()));
             fieldInfoList.add(fieldInfo);
         }
+    }
+
+    public static void deduceDaoPackage(OnePojoInfo onePojoInfo, GenCodeResponse response){
+        GeneratedFile daoFile = getFileByType(onePojoInfo, FileType.DAO);
+        if(daoFile == null){
+            return;
+        }
+        String deducePackage = GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(response.getCodeConfig().getDaoDir(),onePojoInfo.getPojoDirPath()) ,onePojoInfo.getPojoPackage());
+        for (String s : daoFile.getOriginLines()) {
+            if(s.trim().contains("package ")){
+                deducePackage = parsePackage(s);
+                break;
+            }
+        }
+        onePojoInfo.setDaoPackage(deducePackage);
+    }
+
+    public static void deduceServicePackage(OnePojoInfo onePojoInfo, GenCodeResponse response){
+        GeneratedFile serviceFile = getFileByType(onePojoInfo, FileType.SERVICE);
+        if(serviceFile == null){
+            return;
+        }
+        String deducePackage = GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(response.getCodeConfig().getServiceDir(),onePojoInfo.getPojoDirPath()) ,onePojoInfo.getPojoPackage());
+        for (String s : serviceFile.getOriginLines()) {
+            if(s.trim().contains("package ")){
+                deducePackage = parsePackage(s);
+                break;
+            }
+        }
+        onePojoInfo.setServicePackage(deducePackage);
+    }
+
+    @Nullable
+    public static GeneratedFile getFileByType(OnePojoInfo onePojoInfo, FileType fileType){
+        for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
+            if(generatedFile.getFileType() == fileType){
+                return generatedFile;
+            }
+        }
+        return null;
     }
 
     public static void parseFiles(OnePojoInfo onePojoInfo, GenCodeResponse response) {

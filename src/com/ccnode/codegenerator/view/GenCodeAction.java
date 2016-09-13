@@ -92,7 +92,7 @@ public class GenCodeAction extends AnAction {
             Integer affectRows = getAffectRows(newFiles);
             affectRows += getAffectRows(updateFiles);
             if(newFiles.isEmpty() && affectRows.equals(0)){
-                return "No File Generated Or Updated";
+                return "No File Generated Or Updated.";
             }
             if(!newFiles.isEmpty()){
                 msgList.add(" ");

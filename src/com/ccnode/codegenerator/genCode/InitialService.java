@@ -42,15 +42,17 @@ public class InitialService {
                 GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
+                onePojoInfo.setPojoDirPath(pojoDirPath);
                 onePojoInfo.setFullDaoPath(genPath(response, pojoDirPath, config.getDaoDir(), pojoName,"Dao.java"));
                 onePojoInfo.setFullServicePath(genPath(response, pojoDirPath, config.getServiceDir(), pojoName,"Service.java"));
                 onePojoInfo.setFullSqlPath(genPath(response, pojoDirPath, config.getSqlDir(), pojoName,".sql"));
                 onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,"Dao.xml"));
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
-                onePojoInfo.setDaoPackage(GenCodeUtil
-                        .deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
-                onePojoInfo.setServicePackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
+                // todo fix daoPackage Bug
+//                onePojoInfo.setDaoPackage(GenCodeUtil
+//                        .deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
+//                onePojoInfo.setServicePackage(GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(config.getServiceDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));
                 List<PojoFieldInfo> pojoFieldInfos = onePojoInfo.getPojoFieldInfos();
                 String concat = StringUtils.EMPTY;
                 for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
@@ -61,6 +63,8 @@ public class InitialService {
                     return response.failure(pojoName + " should has 'id' field");
                 }
                 OnePojoInfoHelper.parseFiles(onePojoInfo,response);
+                OnePojoInfoHelper.deduceDaoPackage(onePojoInfo, response);
+                OnePojoInfoHelper.deduceServicePackage(onePojoInfo, response);
                 contextList.add(onePojoInfo);
             }catch(BizException e){
                 LOGGER.error("parse Class,bizException",e);
