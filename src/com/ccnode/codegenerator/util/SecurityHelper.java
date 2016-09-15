@@ -3,6 +3,8 @@ package com.ccnode.codegenerator.util;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
@@ -13,7 +15,11 @@ import java.util.Date;
  */
 public class SecurityHelper {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(SecurityHelper.class);
+
     private static String encryptKey = "fascias";
+
+
 
     @NotNull
     public static String encrypt( String encryptContent){
@@ -36,21 +42,41 @@ public class SecurityHelper {
 
     @NotNull
     public static String decrypt( String decryptContent){
-        String decrypt = SecurityUtil.AES.decrypt(decryptContent, encryptKey);
-        if(StringUtils.isBlank(decrypt)){
+        long startTime = System.currentTimeMillis();
+        try{
+            if(StringUtils.isBlank(decryptContent)){
+                return StringUtils.EMPTY;
+            }
+            String decrypt = SecurityUtil.AES.decrypt(decryptContent, encryptKey);
+            if(StringUtils.isBlank(decrypt)){
+                return StringUtils.EMPTY;
+            }
+            return decrypt;
+
+        }catch(Throwable e){
+            LOGGER.error("decrypt error,decryptContent:{}",decryptContent ,e);
             return StringUtils.EMPTY;
         }
-        return decrypt;
     }
 
     @Nullable
     public static Date decryptToDate( String decryptContent){
-        String decryptDateStr = SecurityUtil.AES.decrypt(decryptContent, encryptKey);
-        if(StringUtils.isBlank(decryptDateStr)){
+        try{
+            if(StringUtils.isBlank(decryptContent)){
+                return null;
+            }
+            String decryptDateStr = SecurityUtil.AES.decrypt(decryptContent, encryptKey);
+            if(StringUtils.isBlank(decryptDateStr)){
+                return null;
+            }
+            Long timeStamp = Long.valueOf(decryptDateStr);
+            return new Date(timeStamp);
+
+        }catch(Throwable e){
+            LOGGER.error("decryptToDate error,decryptContent:{}",decryptContent ,e);
             return null;
         }
-        Long timeStamp = Long.valueOf(decryptDateStr);
-        return new Date(timeStamp);
+
     }
 
 

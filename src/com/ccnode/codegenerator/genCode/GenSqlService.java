@@ -221,6 +221,7 @@ public class GenSqlService {
         }
         Map<String,String> commentMap = Maps.newHashMap();
         commentMap.put("lastUpdate","最后更新时间");
+        commentMap.put("updateTime","更新时间");
         commentMap.put("createTime","创建时间");
         commentMap.put("id","主键");
         return StringUtils.defaultIfEmpty(commentMap.get(fieldName),fieldName);
@@ -232,6 +233,11 @@ public class GenSqlService {
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(ONE_RETRACT)
                     .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+            return ret.toString();
+        }
+        if (fieldInfo.getFieldName().equalsIgnoreCase("updateTime")) {
+            ret.append(ONE_RETRACT)
+                    .append("`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
@@ -267,10 +273,11 @@ public class GenSqlService {
         String language = response.getUserConfigMap().get("language");
         Map<String,String> commentMap = Maps.newHashMap();
         commentMap.put("lastUpdate","最后更新时间");
+        commentMap.put("updateTime","更新时间");
         commentMap.put("createTime","创建时间");
         commentMap.put("id","主键");
         if(commentMap.get(fieldInfo.getFieldName()) != null){
-            if(StringUtils.isBlank(language) || language.equals("EN")){
+            if(StringUtils.isBlank(language) || StringUtils.equalsIgnoreCase(language,"EN")){
                 return fieldInfo.getFieldName();
             }else{
                 return commentMap.get(fieldInfo.getFieldName());

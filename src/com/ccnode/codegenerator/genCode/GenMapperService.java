@@ -150,7 +150,7 @@ public class GenMapperService {
         posPair = ReplaceUtil
                 .getPos(listInfo.getFullList(), "<select id=\""+ MethodName.select.name() +"\"", "</select>", new MapperCondition());
         listInfo.setPos(posPair);
-        listInfo.setNewSegments(genQueryMethod(response,onePojoInfo,expand));
+        listInfo.setNewSegments(genSelectMethod(response,onePojoInfo,expand));
         ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
             @Override
             public boolean isEqual(String o1, String o2) {
@@ -388,7 +388,7 @@ public class GenMapperService {
     }
 
 
-    private static List<String> genQueryMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
+    private static List<String> genSelectMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
