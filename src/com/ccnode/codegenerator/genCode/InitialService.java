@@ -8,12 +8,11 @@ import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.GenCodeConfig;
-import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
  */
 public class InitialService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(InitialService.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(InitialService.class);
 
     public static GenCodeResponse initPojos(GenCodeResponse response) {
         List<OnePojoInfo> contextList = Lists.newArrayList();

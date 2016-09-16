@@ -38,9 +38,6 @@ public class GenCodeResponseHelper {
     public static Boolean isUseGenericDao(GenCodeResponse response){
         return getSwitch(response,"usegenericdao");
     }
-    public static Boolean isRegisterDebug(){
-        return getSwitch(response,"registerdebug");
-    }
 
     public static Boolean getSwitch(GenCodeResponse response, String key){
         return response != null && response.getUserConfigMap() != null && Objects.equal( response.getUserConfigMap().get(key),"true");

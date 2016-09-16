@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class SecurityHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SecurityHelper.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(SecurityHelper.class);
 
     private static String encryptKey = "fascias";
 

@@ -2,8 +2,8 @@ package com.ccnode.codegenerator.genCode;
 
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class GenTestService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(GenTestService.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenTestService.class);
 
     public static void genTest(GenCodeResponse response) {
         for (OnePojoInfo onePojoInfo : response.getPojoInfos()) {

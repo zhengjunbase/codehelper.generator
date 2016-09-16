@@ -3,10 +3,6 @@ package com.ccnode.codegenerator.service.register;
 import com.ccnode.codegenerator.enums.RequestType;
 import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.pojo.BaseResponse;
-import com.ccnode.codegenerator.pojo.RegisterRawRequest;
-import com.ccnode.codegenerator.pojo.RegisterRawResponse;
-import com.ccnode.codegenerator.pojoHelper.RegisterRawRequestHelper;
-import com.ccnode.codegenerator.pojoHelper.RegisterRawResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
 import com.ccnode.codegenerator.service.pojo.RegisterRequest;
 import com.ccnode.codegenerator.service.pojo.RegisterResponse;
@@ -18,6 +14,7 @@ import com.ccnode.codegenerator.util.JSONUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.ServiceManager;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.Date;
@@ -58,12 +55,16 @@ public class RegisterService {
         if (BaseResponse.SUCCESS.equals(response.getStatus())) {
             try{
                 Date expiredDate = response.getExpireDate();
-                String key = SecurityHelper.encryptDate(expiredDate);
-                String el = SecurityHelper.encrypt("fascias",license);
+                String eKey = SecurityHelper.encryptDate(expiredDate);
+                String lKey = SecurityHelper.encrypt("fascias",license);
                 SettingService setting = ServiceManager.getService(SettingService.class);
                 SettingDto state = setting.getState();
-                state.getKeyList().add(key);
-                state.getTkeyList().add(el);
+                if(StringUtils.isNotBlank(eKey) && SettingService.notExpired(eKey)){
+                    state.geteKeyList().add(state.geteKey());
+                    state.seteKey(eKey);
+                    state.getlKeyList().add(lKey);
+                    SettingService.setCheckSuccess();
+                }
             }catch(Throwable e){
                 LOGGER.error("RegisterService saveRegisterResponse error", e);
             }

@@ -4,10 +4,10 @@ import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * What always stop you is what you always believe.
@@ -25,33 +25,30 @@ public class CheckRegisterService {
     }
 
     public static Boolean checkFromLocal(){
-        List<String> keyList = SettingService.getInstance().getState().getKeyList();
-        for (String s : keyList) {
-            Date date = SecurityHelper.decryptToDate(s);
-            if(date == null){
-                continue;
-            }
-            if(date.compareTo(new Date()) > 0){
-                return true;
-            }
+        String eKey = SettingService.getInstance().getState().geteKey();
+        if(StringUtils.isBlank(eKey)){
+            return false;
         }
-        return false;
+        Date date = SecurityHelper.decryptToDate(eKey);
+        if(date == null || date.compareTo(new Date()) < 0){
+            return false;
+        }
+        return true;
     }
 
     public static Boolean checkOnline(){
         try{
             String s = HttpUtil.postJsonEncrypt(REGISTER_CHECK_URL, SettingService.getInstance().getState());
-            if(s.contains("SUCCESS")){
-                return true;
-            }else{
+            if(s.contains("FAILURE")){
+                SettingService.setCheckFailure();
                 return false;
+            }else{
+                SettingService.setCheckSuccess();
+                return true;
             }
-
         }catch(Throwable e){
-            return false;
+            return true;
         }
-
-
     }
 
 }

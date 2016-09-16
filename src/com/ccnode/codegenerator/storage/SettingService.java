@@ -1,6 +1,5 @@
 package com.ccnode.codegenerator.storage;
 
-import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -8,6 +7,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
@@ -31,12 +31,28 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     @NotNull
     @Override
     public SettingDto getState() {
-        if(settingDto == null || GenCodeResponseHelper.isRegisterDebug()){
+        if(settingDto == null){
             settingDto = new SettingDto();
         }
         return settingDto;
     }
 
+    public static Boolean checkSuccess(){
+        SettingService instance = getInstance();
+        if(StringUtils.isBlank(instance.getState().getrKey())){
+            return true;
+        }
+        return "423".equals(instance.getState().getrKey());
+    }
+
+    public static void setCheckFailure(){
+        getInstance().getState().setrKey("413");
+    }
+
+
+    public static void setCheckSuccess(){
+        getInstance().getState().setrKey("423");
+    }
 
     @Override
     public void loadState(SettingDto o) {
@@ -47,23 +63,16 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         this.settingDto = settingDto;
     }
 
-    public Boolean canUsePremium(){
-        List<String> keyList = getState().getKeyList();
-        keyList = PojoUtil.avoidEmptyList(keyList);
-        Boolean expired = true;
-        for (String key : keyList) {
-            Date date = SecurityHelper.decryptToDate(key);
-            if(date == null || new Date().compareTo(date) > 0){
-                continue;
-            }else{
-                expired = false;
-            }
-        }
-        if(expired){
+    public static Boolean notExpired(String eKey) {
+        Date date = SecurityHelper.decryptToDate(eKey);
+        if (date == null || new Date().compareTo(date) > 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
+    }
+    public static Boolean canUsePremium(){
+        return checkSuccess() && notExpired(getInstance().getState().geteKey());
     }
 
 }

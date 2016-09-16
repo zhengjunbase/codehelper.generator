@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.service.register.CheckRegisterService;
 import com.ccnode.codegenerator.service.register.RegisterService;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.DateUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -12,6 +13,8 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.Date;
 
@@ -22,18 +25,18 @@ import java.util.Date;
  */
 public class EnterLicenseAction extends AnAction {
 
+    private final static Logger LOGGER = LoggerWrapper.getLogger(EnterLicenseAction.class);
+
     @Override
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
-        String tipMsg = "Please enter license Key : ";
+        String tipMsg = SettingService.getInstance().getState().getRegisterTipMsg();
         if(CheckRegisterService.checkFromLocal()){
-            int keySize = SettingService.getInstance().getState().getKeyList().size();
-            String key = SettingService.getInstance().getState().getKeyList().get(keySize - 1);
-            int tkeySize = SettingService.getInstance().getState().getTkeyList().size();
-            String tkey = SettingService.getInstance().getState().getTkeyList().get(tkeySize - 1);
-            Date expiredDate = SecurityHelper.decryptToDate(key);
+            String eKey = SettingService.getInstance().getState().geteKey();
+            String lKey = SettingService.getInstance().getState().getlKey();
+            Date expiredDate = SecurityHelper.decryptToDate(eKey);
             if(expiredDate != null){
-                String license = SecurityHelper.decrypt(tkey).toUpperCase();
+                String license = SecurityHelper.decrypt(lKey).toUpperCase();
                 String expiredDateStr = DateUtil.formatLong(expiredDate);
                 if( expiredDate.compareTo(new Date()) <= 0){
                     tipMsg = license + "\nhas been expired at " + expiredDateStr + ",\n Please enter new license Key :";
@@ -44,16 +47,25 @@ public class EnterLicenseAction extends AnAction {
                 }
             }
         }
-        String license = Messages.showInputDialog(project, tipMsg, "Entry License", Messages.getQuestionIcon());
-        if(StringUtils.isBlank(license)){
-            Messages.showMessageDialog(project, "Register Failure", "Information", Messages.getInformationIcon());
-            return;
+        ShowRegisterDialog(project, tipMsg);
+    }
+
+    public static void ShowRegisterDialog(@Nullable Project project, String tipMsg) {
+        try{
+            String license = Messages.showInputDialog(project, tipMsg, "Entry License", Messages.getQuestionIcon());
+            if(StringUtils.isBlank(license)){
+                Messages.showMessageDialog(project, "Register Failure", "Information", Messages.getInformationIcon());
+                return;
+            }
+            ServerResponse response = RegisterService.register(license);
+            if(response.checkSuccess() && SettingService.getInstance().canUsePremium()){
+                Messages.showMessageDialog(project, "Register Success", "Information", Messages.getInformationIcon());
+            }else{
+                Messages.showMessageDialog(project, "Register Failure", "Information", Messages.getInformationIcon());
+            }
+        }catch(Throwable e){
+            LOGGER.error("ShowRegisterDialog, error ",e);
         }
-        ServerResponse response = RegisterService.register(license);
-        if(response.checkSuccess() && SettingService.getInstance().canUsePremium()){
-            Messages.showMessageDialog(project, "Register Success", "Information", Messages.getInformationIcon());
-        }else{
-            Messages.showMessageDialog(project, "Register Failure", "Information", Messages.getInformationIcon());
-        }
+
     }
 }

@@ -2,10 +2,10 @@ package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.pojo.RegisterRawResponse;
 import com.ccnode.codegenerator.service.pojo.RegisterResponse;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RegisterRawResponseHelper {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(RegisterRawResponseHelper.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterRawResponseHelper.class);
 
     public static RegisterRawResponse buildRawResponse(@NotNull RegisterResponse response){
         RegisterRawResponse ret = new RegisterRawResponse();

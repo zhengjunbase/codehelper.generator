@@ -7,6 +7,7 @@ import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.ServerMsg;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.service.register.CheckRegisterService;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
@@ -22,6 +23,8 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -31,6 +34,9 @@ import java.util.List;
  * Created by zhengjun.du on 2016/04/16 21:30
  */
 public class GenCodeAction extends AnAction {
+
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenCodeAction.class);
+
     // If you register the action from Java code, this constructor is used to set the menu item name
     // (optionally, you can specify the menu description and an icon to display next to the menu item).
     // You can omit this constructor when registering the action in the plugin.xml file.
@@ -77,11 +83,17 @@ public class GenCodeAction extends AnAction {
                 }
             }
         }catch(Throwable e){
-            e.printStackTrace();
+            LOGGER.error("actionPerformed error",e);
             genCodeResponse.setThrowable(e);
         }
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
+        Boolean checkSuccess = CheckRegisterService.checkAll();
+        if(!checkSuccess){
+            String tipMsg = "Licence Check Register Failure.\n Please Entry a New License:";
+            SettingService.getInstance().getState().setRegisterTipMsg(tipMsg);
+            EnterLicenseAction.ShowRegisterDialog(project, tipMsg);
+        }
     }
 
     private static String buildEffectRowMsg(GenCodeResponse response){
