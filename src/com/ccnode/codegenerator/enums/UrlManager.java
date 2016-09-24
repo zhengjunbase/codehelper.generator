@@ -9,6 +9,7 @@ public class UrlManager {
 
     public static String REGISTER_URL = "www.codehelper.me/generator/register";
     public static String PREMIUM_URL = "www.codehelper.me/generator/premium";
-    public static String VERSION_URL = "www.codehelper.me/generator/version";
+    public static String POST_URL = "www.codehelper.me/generator/post";
+    public static String REGISTER_CHECK_URL = "www.codehelper.me/generator/register/check";
 
 }

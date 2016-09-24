@@ -417,11 +417,11 @@ public class GenMapperService {
         retList.add(TWO_RETRACT + "</where>");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             if(expand){
-                retList.add(TWO_RETRACT + "<if test=\"option.orderBy == 'TRUE'\">");
+                retList.add(TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\">");
                 retList.add(THREE_RETRACT + "ORDER BY id DESC");
                 retList.add(TWO_RETRACT + "</if>");
             }else{
-                retList.add(TWO_RETRACT + "<if test=\"option.orderBy == 'TRUE'\"> ORDER BY id DESC </if>");
+                retList.add(TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\"> ORDER BY id DESC </if>");
             }
             retList.add(TWO_RETRACT + "LIMIT #{option.limit}");
             retList.add(TWO_RETRACT + "OFFSET #{option.offset}");

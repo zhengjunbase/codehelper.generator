@@ -8,7 +8,7 @@ package com.ccnode.codegenerator.enums;
 public enum RequestType {
 
     REGISTER(0,"注册"),
-    UPLOAD(1,""),
+    GEN_CODE(1,""),
     NONE(-1,"none");
 
     private Integer code;
@@ -59,7 +59,7 @@ public enum RequestType {
         return this == fromName(name);
     }
 
-    public Boolean equalWithCode(String name){
-        return this == fromName(name);
+    public Boolean equalWithCode(Integer code){
+        return this == fromCode(code);
     }
 }

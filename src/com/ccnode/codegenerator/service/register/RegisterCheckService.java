@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.service.register;
 
+import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
@@ -14,11 +15,10 @@ import java.util.Date;
  * <p>
  * Created by zhengjun.du on 2016/07/23 17:51
  */
-public class CheckRegisterService {
+public class RegisterCheckService {
 
-    private final static Logger LOGGER = LoggerWrapper.getLogger(CheckRegisterService.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterCheckService.class);
 
-    private static String REGISTER_CHECK_URL = "www.codehelper.me/generator/register/check";
 
     public static Boolean checkAll(){
         return checkFromLocal() && checkOnline();
@@ -38,7 +38,7 @@ public class CheckRegisterService {
 
     public static Boolean checkOnline(){
         try{
-            String s = HttpUtil.postJsonEncrypt(REGISTER_CHECK_URL, SettingService.getInstance().getState());
+            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_CHECK_URL, SettingService.getInstance().getState());
             if(s.contains("FAILURE")){
                 SettingService.setCheckFailure();
                 return false;

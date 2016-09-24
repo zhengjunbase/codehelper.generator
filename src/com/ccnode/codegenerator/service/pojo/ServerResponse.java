@@ -11,32 +11,51 @@ import java.util.Date;
  */
 public class ServerResponse extends BaseResponse {
 
-    String requestType;
-    String updateMsg;
-    String recommendMsg;
+    private static final long serialVersionUID = 4421391031885485173L;
 
-    public String getUpdateMsg() {
-        return updateMsg;
+    Boolean hasServerMsg;
+    String content;
+    String title;
+    String buttonStr;
+    String buttonUrl;
+
+    public Boolean getHasServerMsg() {
+        return hasServerMsg;
     }
 
-    public void setUpdateMsg(String updateMsg) {
-        this.updateMsg = updateMsg;
+    public void setHasServerMsg(Boolean hasServerMsg) {
+        this.hasServerMsg = hasServerMsg;
     }
 
-    public String getRecommendMsg() {
-        return recommendMsg;
+    public String getContent() {
+        return content;
     }
 
-    public void setRecommendMsg(String recommendMsg) {
-        this.recommendMsg = recommendMsg;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getRequestType() {
-        return requestType;
+    public String getTitle() {
+        return title;
     }
 
-    public void setRequestType(String requestType) {
-        this.requestType = requestType;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
+    public String getButtonStr() {
+        return buttonStr;
+    }
+
+    public void setButtonStr(String buttonStr) {
+        this.buttonStr = buttonStr;
+    }
+
+    public String getButtonUrl() {
+        return buttonUrl;
+    }
+
+    public void setButtonUrl(String buttonUrl) {
+        this.buttonUrl = buttonUrl;
+    }
 }

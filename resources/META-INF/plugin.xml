@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
-  <name>mybatis.generator</name>
+  <name>codehelper.generator</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="codehelper.me@gmail.com" url="http://www.codehelper.me">CodeHelper</vendor>
 
   <description><![CDATA[
       Enter short description for your plugin here.<br>
@@ -17,7 +17,7 @@
 
 
   <actions>
-  <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="CodeGenerator" popup="true">
+  <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="Generator" popup="true">
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>

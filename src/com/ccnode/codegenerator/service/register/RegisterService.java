@@ -59,10 +59,11 @@ public class RegisterService {
                 String lKey = SecurityHelper.encrypt("fascias",license);
                 SettingService setting = ServiceManager.getService(SettingService.class);
                 SettingDto state = setting.getState();
-                if(StringUtils.isNotBlank(eKey) && SettingService.notExpired(eKey)){
+                if(StringUtils.isNotBlank(eKey) && StringUtils.isNotBlank(lKey) && SettingService.notExpired(eKey)){
                     state.geteKeyList().add(state.geteKey());
                     state.seteKey(eKey);
                     state.getlKeyList().add(lKey);
+                    state.setlKey(lKey);
                     SettingService.setCheckSuccess();
                 }
             }catch(Throwable e){

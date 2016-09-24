@@ -1,7 +1,7 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.service.pojo.ServerResponse;
-import com.ccnode.codegenerator.service.register.CheckRegisterService;
+import com.ccnode.codegenerator.service.register.RegisterCheckService;
 import com.ccnode.codegenerator.service.register.RegisterService;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.DateUtil;
@@ -31,7 +31,7 @@ public class EnterLicenseAction extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
         String tipMsg = SettingService.getInstance().getState().getRegisterTipMsg();
-        if(CheckRegisterService.checkFromLocal()){
+        if(RegisterCheckService.checkFromLocal()){
             String eKey = SettingService.getInstance().getState().geteKey();
             String lKey = SettingService.getInstance().getState().getlKey();
             Date expiredDate = SecurityHelper.decryptToDate(eKey);

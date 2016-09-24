@@ -23,6 +23,10 @@ public class LoggerWrapper implements Logger {
     public static List<String> logList = Lists.newArrayList(
             "", "----------------------    start    -------------------------");
 
+    public static List<String> errorList = Lists.newArrayList(
+            "", "----------------------    start    -------------------------"
+    );
+
     public LoggerWrapper() {
 
     }
@@ -86,7 +90,11 @@ public class LoggerWrapper implements Logger {
             }
         }
         // TODO: 7/26/16  add dateUtil
-        logList.add(DateUtil.formatLong(new Date()) + " [" + className + "." + methodName + "] " + "[" + logLevel + "] " + format);
+        String logContent = DateUtil.formatLong(new Date()) + " [" + className + "." + methodName + "] " + "[" + logLevel + "] " + format;
+        logList.add(logContent);
+        if("error".equalsIgnoreCase(logLevel)){
+            errorList.add(logContent);
+        }
         return format;
     }
 

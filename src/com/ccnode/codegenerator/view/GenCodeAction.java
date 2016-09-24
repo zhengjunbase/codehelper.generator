@@ -5,9 +5,9 @@ import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
-import com.ccnode.codegenerator.pojo.ServerMsg;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import com.ccnode.codegenerator.service.register.CheckRegisterService;
+import com.ccnode.codegenerator.service.SendToServerService;
+import com.ccnode.codegenerator.service.pojo.PostResponse;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
@@ -24,7 +24,6 @@ import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -75,8 +74,8 @@ public class GenCodeAction extends AnAction {
                     BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
                 }
             }
-            ServerMsg serverMsg = genCodeResponse.getServerMsg();
-            if(serverMsg != null && serverMsg.getHasServerMsg()){
+            PostResponse serverMsg = SendToServerService.postToServer(project, genCodeResponse);
+            if(serverMsg.checkSuccess() && serverMsg.getHasServerMsg()){
                 int result = Messages.showOkCancelDialog(project, serverMsg.getContent(), serverMsg.getTitle(), "OK", serverMsg.getButtonStr(), null);
                 if(result == 2 && StringUtils.isNotBlank(serverMsg.getButtonUrl())){
                     BrowserLauncher.getInstance().browse(serverMsg.getButtonUrl(), WebBrowserManager.getInstance().getFirstActiveBrowser());
@@ -88,12 +87,6 @@ public class GenCodeAction extends AnAction {
         }
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
-        Boolean checkSuccess = CheckRegisterService.checkAll();
-        if(!checkSuccess){
-            String tipMsg = "Licence Check Register Failure.\n Please Entry a New License:";
-            SettingService.getInstance().getState().setRegisterTipMsg(tipMsg);
-            EnterLicenseAction.ShowRegisterDialog(project, tipMsg);
-        }
     }
 
     private static String buildEffectRowMsg(GenCodeResponse response){

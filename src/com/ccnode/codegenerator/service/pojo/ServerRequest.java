@@ -17,6 +17,7 @@ public class ServerRequest extends BaseRequest {
     String userType;
     String osName;
     String osVersion;
+    String platform = "Intellij Idea";
 
     public String getPluginVersion() {
         return pluginVersion;
@@ -80,5 +81,13 @@ public class ServerRequest extends BaseRequest {
 
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }
