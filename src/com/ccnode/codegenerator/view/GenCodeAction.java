@@ -67,7 +67,10 @@ public class GenCodeAction extends AnAction {
             VirtualFileManager.getInstance().syncRefresh();
             LoggerWrapper.saveAllLogs(genCodeResponse);
             if(SettingService.getInstance().canUsePremium()){
+//                Messages.showDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
                 Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
+//                Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Share", null);
+
             }else{
                 int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Buy Premium", null);
                 if(result == 2){
