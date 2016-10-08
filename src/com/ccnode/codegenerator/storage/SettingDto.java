@@ -19,6 +19,8 @@ public class SettingDto {
 
     Date lastRunTime = new Date();
 
+    String uuid;
+
     Map<String,Date> returnKeyMap = Maps.newHashMap();
 
     List<Date> lastRegisterDate = Lists.newArrayList();
@@ -113,5 +115,13 @@ public class SettingDto {
 
     public void setrKey(String rKey) {
         this.rKey = rKey;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

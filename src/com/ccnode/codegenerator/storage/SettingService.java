@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * What always stop you is what you always believe.
@@ -33,6 +34,10 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     public SettingDto getState() {
         if(settingDto == null){
             settingDto = new SettingDto();
+            settingDto.setUuid(UUID.randomUUID().toString());
+        }
+        if(StringUtils.isBlank(settingDto.getUuid())){
+            settingDto.setUuid(UUID.randomUUID().toString());
         }
         return settingDto;
     }

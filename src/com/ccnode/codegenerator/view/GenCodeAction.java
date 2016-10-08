@@ -77,16 +77,12 @@ public class GenCodeAction extends AnAction {
                     BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
                 }
             }
-            PostResponse serverMsg = SendToServerService.postToServer(project, genCodeResponse);
-            if(serverMsg.checkSuccess() && serverMsg.getHasServerMsg()){
-                int result = Messages.showOkCancelDialog(project, serverMsg.getContent(), serverMsg.getTitle(), "OK", serverMsg.getButtonStr(), null);
-                if(result == 2 && StringUtils.isNotBlank(serverMsg.getButtonUrl())){
-                    BrowserLauncher.getInstance().browse(serverMsg.getButtonUrl(), WebBrowserManager.getInstance().getFirstActiveBrowser());
-                }
-            }
         }catch(Throwable e){
             LOGGER.error("actionPerformed error",e);
             genCodeResponse.setThrowable(e);
+        }finally {
+            SendToServerService.postToCheck(project, genCodeResponse);
+            SendToServerService.postToServer(project, genCodeResponse);
         }
         ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();

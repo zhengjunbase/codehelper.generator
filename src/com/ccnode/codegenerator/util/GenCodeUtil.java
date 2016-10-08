@@ -5,12 +5,9 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.List;
 
 /**
@@ -19,7 +16,9 @@ import java.util.List;
  * Created by zhengjun.du on 2016/05/21 22:05
  */
 public class GenCodeUtil {
-    
+
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenCodeUtil.class);
+
     public static final String ONE_RETRACT = "    ";
     public static final String TWO_RETRACT = "        ";
     public static final String THREE_RETRACT = "            ";
@@ -77,11 +76,13 @@ public class GenCodeUtil {
     }
 
     public static String deducePackage(String path, String pojoPackage){
+        LOGGER.info("path:{}, pojoPackage:{}",path,pojoPackage);
         List<String> packages = Splitter.on(".").trimResults().omitEmptyStrings().splitToList(pojoPackage);
         String packagePrefix = packages.get(0);
         int indexOf = StringUtils.indexOf(path, packagePrefix);
         if(indexOf < 0){
-            throw new RuntimeException("invalid path:"+path +", Please input an valid path");
+            indexOf = StringUtils.indexOf(path, "com");
+//            throw new RuntimeException("invalid path:"+path +", Please input an valid path");
         }
         String subPath = path.substring(indexOf);
         String separator = System.getProperty("file.separator");

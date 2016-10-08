@@ -34,7 +34,7 @@ public class LoggerWrapper implements Logger {
     public static void saveAllLogs(GenCodeResponse response)  {
         Boolean needSaveLog = false;
         String printLog = response.getUserConfigMap().get("printlog");
-        if(Objects.equal(printLog,"true") || response.getUserConfigMap().isEmpty()){
+        if(Objects.equal(printLog,"true")){
             needSaveLog = true;
         }
         if(!needSaveLog){

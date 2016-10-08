@@ -1,14 +1,15 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>0.0.1</version>
-  <vendor email="codehelper.me@gmail.com" url="http://www.codehelper.me">CodeHelper</vendor>
+  <version>2016.10.08</version>
+  <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me">CodeHelper</vendor>
 
   <description><![CDATA[
       <div>
       <p>An Generator for Mybatis, generate code more easily and productive.</p>
       <p></p>
       <p>Features</p>
+      <ul>
       <li><p>Generate dao, service, sql and mybatis xml file according to pojo by one click.</p></li>
       <li><p>Update sql, mybatis xml file elegantly when the pojo file updated by one click.</p></li>
       <li><p>Provide insert, insertList, select, update and delete method.</p></li>
@@ -17,24 +18,31 @@
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
       <li><p>Shortcut for generate.</p></li>
       <li><p>Support java + MySQL and later will support more DB.</p></li>
-      <li><a href="http://www.codehelper.me/generator">www.codehelper.me</a> to learn configuration.</li>
-      <li><p>If you enjoying it, We'd appreciate it if you share.</p></li>
+      <li><a href="http://www.codehelper.me/generator">www.codehelper.me</a> to learn more.</li>
+      <li><p>If you enjoying it, We'd appreciate it if you share, thanks!</p></li>
+      </ul>
+      <p>Usages</p>
+      <ul>
+      <li>Go to Intellij Idea's Plugin Repositories to download the codehelper.generator plugin.</li>
+      <li>Click main menu Tools-> Codehelper-> GenDaoCode button to generate the code.</li>
+      <li>Method One: Click GenDaoCode, and then enter the Pojo name in prompt box,</br> multiple Pojo separated by | ,
+      CodeHelper will generate code use default config.</li>
+      <li>Method two: Add a codehelper.properties in you project directory.</br>Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.</li>
       </ul>
       </div>
     ]]></description>
 
   <change-notes><![CDATA[
-      First version, wish you enjoy.
+      Stability improvements and bug fixes.
     ]]>
   </change-notes>
-
 
   <actions>
   <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="Generator" popup="true">
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
-    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenCode" description="GenMybatisCode"/>
+    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
     <!--<action id="mybatis.premium" class="com.ccnode.codegenerator.view.ShowPremiumAction" text="Premium" description="Premium"/>-->
     <action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>
 

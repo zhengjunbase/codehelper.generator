@@ -15,7 +15,12 @@ import com.ccnode.codegenerator.util.SecurityHelper;
 import com.ccnode.codegenerator.view.EnterLicenseAction;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
+import com.intellij.ide.browsers.BrowserLauncher;
+import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,18 +35,27 @@ public class SendToServerService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(SendToServerService.class);
 
-    public static PostResponse postToServer(Project project, GenCodeResponse genCodeResponse){
+    public static void postToCheck(Project project, GenCodeResponse genCodeResponse){
         long startTime = System.currentTimeMillis();
         try{
 
             Boolean checkSuccess = RegisterCheckService.checkAll();
-            if(!checkSuccess){
+            if(!checkSuccess && RegisterCheckService.checkFromLocal()){
                 String tipMsg = "Licence Check Register Failure.\n Please Entry a New License:";
                 SettingService.getInstance().getState().setRegisterTipMsg(tipMsg);
                 EnterLicenseAction.ShowRegisterDialog(project, tipMsg);
-                return new PostResponse().failure("Check Failure");
             }
 
+        }catch(Throwable e){
+            LOGGER.error("SendToServerService postToCheck error", e);
+        }finally{
+            LOGGER.info("SendToServerService postToCheck cost:{}", System.currentTimeMillis() - startTime);
+        }
+    }
+
+    public static void postToServer(Project project, GenCodeResponse genCodeResponse){
+        long startTime = System.currentTimeMillis();
+        try{
             SendToServerRequest request = new SendToServerRequest();
             ServerRequestHelper.fillCommonField(request);
             List<ChangeInfo> changeInfos = Lists.newArrayList();
@@ -53,14 +67,19 @@ public class SendToServerService {
                 request.setStackTraceMsg(Lists.newArrayList(Throwables.getStackTraceAsString(genCodeResponse.getThrowable())));
             }
             String s = HttpUtil.postJsonEncrypt(UrlManager.POST_URL, request);
-            PostResponse response = JSONUtil.parseObject(SecurityHelper.decrypt(s), PostResponse.class);
-            return response.success();
-
+            PostResponse serverMsg = JSONUtil.parseObject(SecurityHelper.decrypt(s), PostResponse.class);
+            if(serverMsg != null && serverMsg.checkSuccess() && serverMsg.getHasServerMsg()){
+                int result = Messages
+                        .showOkCancelDialog(project, serverMsg.getContent(), serverMsg.getTitle(), "OK", serverMsg.getButtonStr(), null);
+                if(result == 2 && StringUtils.isNotBlank(serverMsg.getButtonUrl())){
+                    BrowserLauncher.getInstance().browse(serverMsg.getButtonUrl(), WebBrowserManager.getInstance().getFirstActiveBrowser());
+                }
+            }
         }catch(Throwable e){
-            LOGGER.error("SendToServerService postToServer error", e);
-            return new PostResponse().failure("Exception");
+            LOGGER.error("SendToServerService postToServer error,{}", e);
         }finally{
             LOGGER.info("SendToServerService postToServer cost:{}", System.currentTimeMillis() - startTime);
         }
+
     }
 }

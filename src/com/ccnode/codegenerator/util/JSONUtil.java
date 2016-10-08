@@ -2,11 +2,10 @@ package com.ccnode.codegenerator.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -40,8 +39,12 @@ public class JSONUtil {
         return s;
     }
 
+    @Nullable
     public static <T> T parseObject(String json, Class<T> cls) {
         try{
+            if(StringUtils.isBlank(json)){
+                return null;
+            }
             return getMapper().readValue(json, cls);
         }catch(Exception e){
             logger.error("JSON反序列化异常",e);
