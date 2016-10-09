@@ -46,6 +46,8 @@ public class EnterLicenseAction extends AnAction {
                     return;
                 }
             }
+        }else{
+            tipMsg = "Please Enter a License:";
         }
         ShowRegisterDialog(project, tipMsg);
     }

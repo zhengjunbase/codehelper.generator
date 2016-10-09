@@ -1,9 +1,9 @@
 package com.ccnode.codegenerator.pojo;
 
 import com.ccnode.codegenerator.util.GenCodeConfig;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +20,22 @@ public class GenCodeResponse extends BaseResponse {
 
     DirectoryConfig directoryConfig;
 
-    List<OnePojoInfo> pojoInfos;
+    List<OnePojoInfo> pojoInfos = Lists.newArrayList();
 
     GenCodeRequest request;
 
     String pathSplitter;
 
-    List<ChangeInfo> newFiles;
+    List<ChangeInfo> newFiles = Lists.newArrayList();
 
-    List<ChangeInfo> updateFiles;
+    List<ChangeInfo> updateFiles = Lists.newArrayList();
 
     Throwable throwable;
 
     ServerMsg serverMsg;
+
+    public GenCodeResponse() {
+    }
 
     public DirectoryConfig getDirectoryConfig() {
         return directoryConfig;

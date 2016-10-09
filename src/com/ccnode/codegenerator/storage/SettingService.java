@@ -29,6 +29,11 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
        return ServiceManager.getService(SettingService.class);
     }
 
+    public static String getUUID(){
+        return getInstance().getState().getUuid();
+    }
+
+
     @NotNull
     @Override
     public SettingDto getState() {

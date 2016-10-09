@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.ChangeInfo;
+import com.ccnode.codegenerator.storage.SettingDto;
 import com.google.common.base.Throwables;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class SendToServerRequest extends ServerRequest {
 
     List<ChangeInfo> changeInfos;
     List<String> errorMsg;
+    SettingDto settingDto;
     List<String> stackTraceMsg;
 
     public List<ChangeInfo> getChangeInfos() {
@@ -40,5 +42,13 @@ public class SendToServerRequest extends ServerRequest {
 
     public void setStackTraceMsg(List<String> stackTraceMsg) {
         this.stackTraceMsg = stackTraceMsg;
+    }
+
+    public SettingDto getSettingDto() {
+        return settingDto;
+    }
+
+    public void setSettingDto(SettingDto settingDto) {
+        this.settingDto = settingDto;
     }
 }

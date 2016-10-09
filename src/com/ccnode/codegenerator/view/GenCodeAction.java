@@ -72,9 +72,9 @@ public class GenCodeAction extends AnAction {
 //                Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Share", null);
 
             }else{
-                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Buy Premium", null);
-                if(result == 2){
-                    BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
+                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Buy Premium", "OK", null);
+                if(result != 2){
+                    BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL + "?id=" + SettingService.getUUID(), WebBrowserManager.getInstance().getFirstActiveBrowser());
                 }
             }
         }catch(Throwable e){
@@ -102,14 +102,14 @@ public class GenCodeAction extends AnAction {
                 msgList.add(" ");
             }
             for (ChangeInfo newFile : newFiles) {
-                msgList.add("       new file:"+ "\t\t" + newFile.getFileName());
+                msgList.add("new File:"+ "  " + newFile.getFileName());
             }
             if(!updateFiles.isEmpty()){
                 msgList.add("");
             }
             for (ChangeInfo updated : updateFiles) {
                 if(updated.getAffectRow() > 0){
-                    msgList.add("   updated:"+ "\t\t" + updated.getFileName());
+                    msgList.add("updated:"+ "  " + updated.getFileName());
                 }
             }
         }else{

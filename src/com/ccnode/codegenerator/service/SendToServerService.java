@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class SendToServerService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SendToServerService.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(SendToServerService.class);
 
     public static void postToCheck(Project project, GenCodeResponse genCodeResponse){
         long startTime = System.currentTimeMillis();
@@ -59,14 +59,23 @@ public class SendToServerService {
             SendToServerRequest request = new SendToServerRequest();
             ServerRequestHelper.fillCommonField(request);
             List<ChangeInfo> changeInfos = Lists.newArrayList();
+            if(genCodeResponse.getUpdateFiles() != null)
             changeInfos.addAll(genCodeResponse.getUpdateFiles());
             changeInfos.addAll(genCodeResponse.getNewFiles());
             request.setChangeInfos(changeInfos);
-            request.setErrorMsg(LoggerWrapper.errorList);
+            request.setSettingDto(SettingService.getInstance().getState());
+            List<String> errorList = Lists.newArrayList();
+            for (String s : LoggerWrapper.errorList) {
+                if(StringUtils.isNotBlank(s)){
+                    errorList.add(StringUtils.deleteWhitespace(s));
+                }
+            }
+            request.setErrorMsg(errorList);
+
             if(genCodeResponse.getThrowable() != null){
                 request.setStackTraceMsg(Lists.newArrayList(Throwables.getStackTraceAsString(genCodeResponse.getThrowable())));
             }
-            String s = HttpUtil.postJsonEncrypt(UrlManager.POST_URL, request);
+            String s = HttpUtil.postJsonEncrypt(UrlManager.POST_URL + "?id=" + SettingService.getUUID(), request);
             PostResponse serverMsg = JSONUtil.parseObject(SecurityHelper.decrypt(s), PostResponse.class);
             if(serverMsg != null && serverMsg.checkSuccess() && serverMsg.getHasServerMsg()){
                 int result = Messages

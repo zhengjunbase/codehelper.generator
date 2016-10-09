@@ -38,7 +38,7 @@ public class RegisterCheckService {
 
     public static Boolean checkOnline(){
         try{
-            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_CHECK_URL, SettingService.getInstance().getState());
+            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_CHECK_URL +"?id=" + SettingService.getUUID(), SettingService.getInstance().getState());
             if(s.contains("FAILURE")){
                 SettingService.setCheckFailure();
                 return false;

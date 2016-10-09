@@ -15,6 +15,7 @@ import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.ServiceManager;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class RegisterService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(RegisterService.class);
 
+    @Nullable
     public static ServerResponse register(String license) {
 
         ServerResponse ret = new ServerResponse();
@@ -38,10 +40,12 @@ public class RegisterService {
             request = ServerRequestHelper.fillCommonField(request);
             request.setLicense(license);
 //            RegisterRawRequest rawRequest = RegisterRawRequestHelper.buildRawRequest(request);
-            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_URL, request);
+            String s = HttpUtil.postJsonEncrypt(UrlManager.REGISTER_URL + "?id=" + SettingService.getUUID(), request);
             RegisterResponse response = JSONUtil.parseObject(SecurityHelper.decrypt(s), RegisterResponse.class);
 //            RegisterResponse response = RegisterRawResponseHelper.parseRawResponse(rawResponse);
-            saveRegisterResponse(response,license);
+            if(response != null){
+                saveRegisterResponse(response,license);
+            }
             return response;
 
         } catch (Throwable e) {

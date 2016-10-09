@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2016.10.08</version>
-  <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me">CodeHelper</vendor>
+  <version>2016.10.09</version>
+  <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
       <div>
@@ -18,7 +18,7 @@
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
       <li><p>Shortcut for generate.</p></li>
       <li><p>Support java + MySQL and later will support more DB.</p></li>
-      <li><a href="http://www.codehelper.me/generator">www.codehelper.me</a> to learn more.</li>
+      <li><a href="http://www.codehelper.me/generator?from=jetbrains">www.codehelper.me</a> to learn more.</li>
       <li><p>If you enjoying it, We'd appreciate it if you share, thanks!</p></li>
       </ul>
       <p>Usages</p>
