@@ -21,4 +21,6 @@ out*
 *RegisterRawResponse.java
 *RegisterRawRequestHelper.java
 *RegisterService.java
-MybatisGenerator.*
+MybatisGenerator.iml
+MybatisGenerator.ipr
+MybatisGenerator.iws
