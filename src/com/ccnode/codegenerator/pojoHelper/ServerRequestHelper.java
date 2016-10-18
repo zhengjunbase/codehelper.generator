@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.common.VersionManager;
 import com.ccnode.codegenerator.service.pojo.ServerRequest;
+import com.ccnode.codegenerator.storage.SettingService;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,37 +23,12 @@ public class ServerRequestHelper {
 
         request.setPluginVersion(VersionManager.getCurrentVersion());
         request.setIp(getIpAddress());
-        request.setMacAddressList(getMacAddress());
         request.setOsName(System.getProperty("os.name"));
         request.setOsVersion(System.getProperty("os.version"));
+        request.setUuid(SettingService.getUUID());
         return request;
     }
 
-    public static String getMacAddress() {
-        List<String> retList = Lists.newArrayList();
-        try{
-            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
-             for (; networks.hasMoreElements();){
-                byte[] mac = networks.nextElement().getHardwareAddress();
-                if(mac == null){
-                    continue;
-                }
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < mac.length; i++) {
-                    builder.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-                }
-                 retList.add(builder.toString());
-             }
-        }catch(Throwable e){
-            e.printStackTrace();
-        }
-        String ret = StringUtils.EMPTY;
-        for (String s : retList) {
-            ret += "|";
-            ret += s;
-        }
-        return ret;
-    }
 
     public static String getIpAddress() {
         long startTime = System.currentTimeMillis();
@@ -64,10 +40,4 @@ public class ServerRequestHelper {
 
     }
 
-    public static void main(String[] args) {
-        String os = System.getProperty("os.name");
-        System.out.println(os);
-        System.out.println(getMacAddress());
-        System.out.println(getIpAddress());
-    }
 }

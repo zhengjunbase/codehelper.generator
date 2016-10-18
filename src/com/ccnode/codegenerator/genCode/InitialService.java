@@ -82,7 +82,7 @@ public class InitialService {
         if(file != null){
             return file.getAbsolutePath();
         }
-        if(StringUtils.isBlank(configDir) || !SettingService.getInstance().canUsePremium()){
+        if(StringUtils.isBlank(configDir)){
             return pojoDirPath + response.getPathSplitter() +pojoName + fileSuffix;
         }
         return projectPath + configDir + response.getPathSplitter() +pojoName + fileSuffix;

@@ -66,25 +66,22 @@ public class GenCodeAction extends AnAction {
             genCodeResponse = GenCodeService.genCode(request);
             VirtualFileManager.getInstance().syncRefresh();
             LoggerWrapper.saveAllLogs(genCodeResponse);
-            if(SettingService.getInstance().canUsePremium()){
-//                Messages.showDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
+            if(!SettingService.showDonateBtn()){
                 Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
-//                Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"OK","Share", null);
-
             }else{
-                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Buy Premium", "OK", null);
+                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Donate", "OK", null);
                 if(result != 2){
-                    BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL + "?id=" + SettingService.getUUID(), WebBrowserManager.getInstance().getFirstActiveBrowser());
+                    BrowserLauncher.getInstance().browse(UrlManager.getDonateClickUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
+                    SettingService.setDonated();
                 }
             }
         }catch(Throwable e){
             LOGGER.error("actionPerformed error",e);
             genCodeResponse.setThrowable(e);
         }finally {
-            SendToServerService.postToCheck(project, genCodeResponse);
-            SendToServerService.postToServer(project, genCodeResponse);
+            SendToServerService.post(project, genCodeResponse);
+            SendToServerService.postError(project, genCodeResponse);
         }
-        ApplicationManager.getApplication().saveAll();
         VirtualFileManager.getInstance().syncRefresh();
     }
 

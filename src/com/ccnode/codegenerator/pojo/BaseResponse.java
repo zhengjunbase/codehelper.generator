@@ -126,7 +126,7 @@ public class BaseResponse implements Serializable {
     }
 
     public boolean checkSuccess() {
-        return SUCCESS.equals(status);
+        return SUCCESS.equalsIgnoreCase(status);
     }
 
     public boolean checkAccept() {

@@ -30,9 +30,9 @@ import java.util.Date;
  * <p>
  * Created by zhengjun.du on 2016/04/16 21:30
  */
-public class ShowPremiumAction extends AnAction {
+public class ShowLearnMoreAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
-        BrowserLauncher.getInstance().browse(UrlManager.PREMIUM_URL, WebBrowserManager.getInstance().getFirstActiveBrowser());
+        BrowserLauncher.getInstance().browse(UrlManager.getGeneratorUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
     }
 }

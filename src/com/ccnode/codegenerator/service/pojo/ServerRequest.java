@@ -12,12 +12,12 @@ public class ServerRequest extends BaseRequest {
     String pluginVersion;
     String system;
     String ip;
-    String macAddressList;
     String requestType;
     String userType;
     String osName;
     String osVersion;
     String platform = "Intellij Idea";
+    String uuid;
 
     public String getPluginVersion() {
         return pluginVersion;
@@ -43,13 +43,6 @@ public class ServerRequest extends BaseRequest {
         this.ip = ip;
     }
 
-    public String getMacAddressList() {
-        return macAddressList;
-    }
-
-    public void setMacAddressList(String macAddressList) {
-        this.macAddressList = macAddressList;
-    }
 
     public String getRequestType() {
         return requestType;
@@ -89,5 +82,13 @@ public class ServerRequest extends BaseRequest {
 
     public void setPlatform(String platform) {
         this.platform = platform;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

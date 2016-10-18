@@ -34,9 +34,9 @@ public class GenMapperService {
             try{
                 GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
                 String mapperExpandStr = response.getUserConfigMap().get("mapper.expand");
-                Boolean expand = true;
-                if("false".equals(mapperExpandStr) && SettingService.getInstance().canUsePremium()){
-                    expand = false;
+                Boolean expand = false;
+                if("true".equals(mapperExpandStr)){
+                    expand = true;
                 }
                 genMapper(response,pojoInfo,fileInfo,expand);
             }catch(Throwable e){
@@ -50,10 +50,6 @@ public class GenMapperService {
 
     private static void genMapper(GenCodeResponse response,OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean expand) {
         List<String> oldLines = fileInfo.getOldLines();
-        if(!oldLines.isEmpty() && !SettingService.getInstance().canUsePremium()){
-            fileInfo.setNewLines(fileInfo.getOriginLines());
-            return;
-        }
         ListInfo<String> listInfo = new ListInfo<String>();
         if(oldLines.isEmpty()){
             listInfo.setFullList(getMapperHeader(onePojoInfo));

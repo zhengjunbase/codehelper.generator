@@ -1,11 +1,15 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2016.10.09</version>
+  <version>2016.10.18</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
       <div>
+      <p><a href="https://github.com/zhengjunbase/codehelper.generator">GitHub</a>
+      |&nbsp<a href="https://github.com/zhengjunbase/codehelper.generator/issues">Issues</a>
+      |&nbsp<a href="http://www.codehelper.me/generator?from=jetbrains#toc_4">Donate</a></p>
+
       <p>An Generator for Mybatis, generate code more easily and productive.</p>
       <p></p>
       <p>Features</p>
@@ -19,7 +23,6 @@
       <li><p>Shortcut for generate.</p></li>
       <li><p>Support java + MySQL and later will support more DB.</p></li>
       <li><a href="http://www.codehelper.me/generator?from=jetbrains">www.codehelper.me</a> to learn more.</li>
-      <li><p>If you enjoying it, We'd appreciate it if you share, thanks!</p></li>
       </ul>
       <p>Usages</p>
       <ul>
@@ -33,7 +36,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      Stability improvements and bug fixes.
+      AutoCoding.
     ]]>
   </change-notes>
 
@@ -42,12 +45,13 @@
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
+    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
     <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
-    <!--<action id="mybatis.premium" class="com.ccnode.codegenerator.view.ShowPremiumAction" text="Premium" description="Premium"/>-->
-    <action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>
+    <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
+    <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
 
       <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
-  </group >
+  </group>
     <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
       <!--<add-to-group group-id="TestActionSubGroup" />-->
             <!--<action id="mybatis.generator_1" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode1" description="A test menu item1"/>-->

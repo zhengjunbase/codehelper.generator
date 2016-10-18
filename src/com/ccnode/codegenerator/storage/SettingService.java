@@ -1,5 +1,9 @@
 package com.ccnode.codegenerator.storage;
 
+import com.ccnode.codegenerator.common.VersionManager;
+import com.ccnode.codegenerator.enums.UrlManager;
+import com.ccnode.codegenerator.service.SendToServerService;
+import com.ccnode.codegenerator.util.DateUtil;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -33,6 +37,10 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         return getInstance().getState().getUuid();
     }
 
+    public static SettingDto getSetting(){
+        return getInstance().getState();
+    }
+
 
     @NotNull
     @Override
@@ -40,6 +48,16 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         if(settingDto == null){
             settingDto = new SettingDto();
             settingDto.setUuid(UUID.randomUUID().toString());
+            settingDto.setVersion(VersionManager.getCurrentVersion());
+            if(settingDto.getInstalledDate() == null){
+                settingDto.setInstalledDate(new Date());
+            }
+        }else{
+            if(settingDto.getUpdateDate() == null && !VersionManager.CURRENT_VERSION.equalsIgnoreCase(settingDto.getVersion())){
+                settingDto.setOldVersion(settingDto.getVersion());
+                settingDto.setVersion(VersionManager.CURRENT_VERSION);
+                settingDto.setUpdateDate(new Date());
+            }
         }
         if(StringUtils.isBlank(settingDto.getUuid())){
             settingDto.setUuid(UUID.randomUUID().toString());
@@ -47,26 +65,14 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
         return settingDto;
     }
 
-    public static Boolean checkSuccess(){
-        SettingService instance = getInstance();
-        if(StringUtils.isBlank(instance.getState().getrKey())){
-            return true;
-        }
-        return "423".equals(instance.getState().getrKey());
-    }
-
-    public static void setCheckFailure(){
-        getInstance().getState().setrKey("413");
-    }
-
-
-    public static void setCheckSuccess(){
-        getInstance().getState().setrKey("423");
-    }
 
     @Override
     public void loadState(SettingDto o) {
         XmlSerializerUtil.copyBean(o, getState());
+    }
+
+    public static void setDonated(){
+        getInstance().getState().setDonatedDate(new Date());
     }
 
     public void setSettingDto(SettingDto settingDto) {
@@ -81,8 +87,28 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
             return true;
         }
     }
-    public static Boolean canUsePremium(){
-        return checkSuccess() && notExpired(getInstance().getState().geteKey());
+
+    public static boolean showDonateBtn(){
+        Integer count = getSetting().getCount();
+        if(isDonated()){
+            return false;
+        }
+        if(count > 5 && count % 7 == 0){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isDonated() {
+        return getInstance().getState().getDonatedDate() != null && DateUtil.getDayBetween(getInstance().getState().getDonatedDate(), new Date()) < 365;
+    }
+
+    public static String getOldVersion(){
+        String oldVersion = getInstance().getState().getVersion();
+        if(StringUtils.isBlank(oldVersion)){
+            return "no_version";
+        }
+        return oldVersion;
     }
 
 }

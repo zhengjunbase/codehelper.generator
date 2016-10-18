@@ -35,6 +35,18 @@ public class SettingDto {
 
     String registerTipMsg = "Please enter license Key : ";
 
+    Date donatedDate;
+
+    Date installedDate;
+
+    Date updateDate;
+
+    String version;
+
+    String oldVersion;
+
+    Integer count;
+
     List<String> lKeyList = Lists.newArrayList();
 
     public String getUserType() {
@@ -123,5 +135,53 @@ public class SettingDto {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getDonatedDate() {
+        return donatedDate;
+    }
+
+    public void setDonatedDate(Date donatedDate) {
+        this.donatedDate = donatedDate;
+    }
+
+    public Date getInstalledDate() {
+        return installedDate;
+    }
+
+    public void setInstalledDate(Date installedDate) {
+        this.installedDate = installedDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public String getOldVersion() {
+        return oldVersion;
+    }
+
+    public void setOldVersion(String oldVersion) {
+        this.oldVersion = oldVersion;
     }
 }

@@ -18,6 +18,8 @@ public class ServerResponse extends BaseResponse {
     String title;
     String buttonStr;
     String buttonUrl;
+    String status;
+    Integer msgId;
 
     public Boolean getHasServerMsg() {
         return hasServerMsg;
@@ -57,5 +59,23 @@ public class ServerResponse extends BaseResponse {
 
     public void setButtonUrl(String buttonUrl) {
         this.buttonUrl = buttonUrl;
+    }
+
+    @Override
+    public String getStatus() {
+        return status;
+    }
+
+    @Override
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(Integer msgId) {
+        this.msgId = msgId;
     }
 }

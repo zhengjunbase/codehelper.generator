@@ -11,10 +11,6 @@ import com.ccnode.codegenerator.util.*;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.intellij.ide.actionMacro.ActionMacro;
-import com.intellij.openapi.actionSystem.Shortcut;
-import com.intellij.openapi.actionSystem.ShortcutProvider;
-import com.intellij.openapi.keymap.impl.ui.ShortcutTextField;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -53,10 +49,6 @@ public class GenSqlService {
         if (fileInfo.getOldLines().isEmpty()) {
             List<String> newLines = genSql(onePojoInfo, response);
             fileInfo.setNewLines(newLines);
-            return;
-        }
-        if(!SettingService.getInstance().canUsePremium()) {
-            fileInfo.setNewLines(fileInfo.getOriginLines());
             return;
         }
         if(canReplace){
@@ -266,9 +258,6 @@ public class GenSqlService {
 
     // todo
     private static String getFieldComment(GenCodeResponse response, PojoFieldInfo fieldInfo) {
-        if(!SettingService.getInstance().canUsePremium()){
-            return StringUtils.EMPTY;
-        }
 
         String language = response.getUserConfigMap().get("language");
         Map<String,String> commentMap = Maps.newHashMap();

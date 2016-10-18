@@ -42,10 +42,10 @@ import java.util.List;
 public class HttpUtil {
     private static final Logger logger = LoggerWrapper.getLogger(HttpUtil.class);
 
-    private static final int CON_TIMEOUT = 5000;
-    private static final int SO_TIMEOUT = 20000;
-    private static final int POOL_TIMECOUT = 3000;
-    private static final int HTTP_RETRY_COUNT = 3;
+    private static final int CON_TIMEOUT = 1000;
+    private static final int SO_TIMEOUT = 1000;
+    private static final int POOL_TIMECOUT = 1000;
+    private static final int HTTP_RETRY_COUNT = 1;
     private static final String NOTICELINE = "--------------------------------------------";
     private static CloseableHttpClient httpclient;
     public static ContentType TEXT_XML_UTF8 = ContentType.create("text/xml", Consts.UTF_8);

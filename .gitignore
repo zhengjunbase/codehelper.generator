@@ -12,3 +12,13 @@ gen
 /MybatisGenerator.ipr
 /MybatisGenerator.iws
 out*
+
+*EnterLicenseAction.java
+*ShowPremiumAction.java
+*RegisterCheckService.java
+*RegisterRawResponseHelper.java
+*RegisterRawRequest.java
+*RegisterRawResponse.java
+*RegisterRawRequestHelper.java
+*RegisterService.java
+MybatisGenerator.*
