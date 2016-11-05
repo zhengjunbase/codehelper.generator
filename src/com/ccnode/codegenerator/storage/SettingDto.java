@@ -45,9 +45,9 @@ public class SettingDto {
 
     String oldVersion;
 
-    Integer count;
 
     List<String> lKeyList = Lists.newArrayList();
+
 
     public String getUserType() {
         return userType;
@@ -165,18 +165,6 @@ public class SettingDto {
         return version;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
     public String getOldVersion() {
         return oldVersion;
     }
@@ -184,4 +172,9 @@ public class SettingDto {
     public void setOldVersion(String oldVersion) {
         this.oldVersion = oldVersion;
     }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
 }

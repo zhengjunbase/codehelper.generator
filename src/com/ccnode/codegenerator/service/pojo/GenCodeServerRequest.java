@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2016/09/17 18:27
  */
-public class SendToServerRequest extends ServerRequest {
+public class GenCodeServerRequest extends ServerRequest {
 
     private static final long serialVersionUID = -8687380055394742770L;
 

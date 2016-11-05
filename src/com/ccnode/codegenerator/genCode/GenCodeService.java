@@ -29,7 +29,9 @@ public class GenCodeService {
     public static GenCodeResponse genCode(GenCodeRequest request){
         GenCodeResponse response = new GenCodeResponse();
         try{
-            response = UserConfigService.readConfigFile(request);
+
+            response.setUserConfigMap(UserConfigService.userConfigMap);
+//            response = UserConfigService.readConfigFile(request.getProjectPath());
             LOGGER.info("UserConfigService.readConfigFile done");
             if(response.checkFailure()){
                 return response;

@@ -1,10 +1,13 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.pojoHelper.ProjectHelper;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -31,17 +34,13 @@ public class LoggerWrapper implements Logger {
 
     }
 
-    public static void saveAllLogs(GenCodeResponse response)  {
-        Boolean needSaveLog = false;
-        String printLog = response.getUserConfigMap().get("printlog");
-        if(Objects.equal(printLog,"true")){
-            needSaveLog = true;
-        }
-        if(!needSaveLog){
+    public static void saveAllLogs(String projectPath)  {
+        String printLog = UserConfigService.userConfigMap.get("printlog");
+        if(!Objects.equal(printLog,"true") || StringUtils.isBlank(projectPath)){
             return;
         }
         logList.add("----------------------     end     -------------------------");
-        String path = GenCodeResponseHelper.getProjectPathWithSplitter(response) + "codehelper.generator.log";
+        String path = projectPath + "codehelper.generator.log";
         File logFile = new File(path);
         try{
             List<String> allLines = Lists.newArrayList();

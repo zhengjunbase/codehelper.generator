@@ -1,7 +1,5 @@
 package com.ccnode.codegenerator.pojo;
 
-import java.util.Date;
-
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -14,7 +12,7 @@ public class PojoLine {
     String className;
     String variableName;
     Integer lineNumber;
-    Integer variablePos;
+    Integer lineStartPos;
 
     public String getRawLine() {
         return rawLine;
@@ -24,12 +22,12 @@ public class PojoLine {
         this.rawLine = rawLine;
     }
 
-    public Integer getVariablePos() {
-        return variablePos;
+    public Integer getLineStartPos() {
+        return lineStartPos;
     }
 
-    public void setVariablePos(Integer variablePos) {
-        this.variablePos = variablePos;
+    public void setLineStartPos(Integer lineStartPos) {
+        this.lineStartPos = lineStartPos;
     }
 
     public String getClassName() {

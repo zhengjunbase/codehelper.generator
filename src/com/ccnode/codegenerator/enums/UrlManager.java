@@ -10,10 +10,9 @@ import com.ccnode.codegenerator.storage.SettingService;
  */
 public class UrlManager {
 
-    private static String GENERATOR_URL = "http://www.codehelper.me/generator/" ;
-    private static String POST_ERROR_URL = "http://www.codehelper.me/generator/post" ;
-    private static String POST_URL = "http://www.codehelper.me/generator/postError" ;
-    private static String DONATE_CLICK_URL = "http://www.codehelper.me/generator/donate" ;
+    private static String GENERATOR_URL = "http://www.codehelper.me/generator/";
+    private static String POST_URL = "http://www.codehelper.me/generator/post";
+    private static String DONATE_CLICK_URL = "http://www.codehelper.me/generator" ;
 
     public static String getUrlSuffix (){
         return "?id=" + SettingService.getUUID() + "&version=" + VersionManager.getCurrentVersion();
@@ -24,10 +23,6 @@ public class UrlManager {
     }
 
 
-    public static String getPostErrorUrl() {
-        return POST_ERROR_URL + getUrlSuffix();
-    }
-
 
     public static String getPostUrl() {
         return POST_URL + getUrlSuffix();
@@ -35,7 +30,7 @@ public class UrlManager {
 
 
     public static String getDonateClickUrl() {
-        return DONATE_CLICK_URL + getUrlSuffix();
+        return DONATE_CLICK_URL + getUrlSuffix() + "#toc_4";
     }
 
 

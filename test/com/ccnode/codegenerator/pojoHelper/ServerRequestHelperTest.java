@@ -29,7 +29,6 @@ public class ServerRequestHelperTest {
     @Test
     public void testgetMac(){
         System.out.println(ServerRequestHelper.getIpAddress());
-        System.out.println(ServerRequestHelper.getMacAddress());
     }
 
 }

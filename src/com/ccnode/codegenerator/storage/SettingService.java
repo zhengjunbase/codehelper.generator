@@ -89,13 +89,13 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     }
 
     public static boolean showDonateBtn(){
-        Integer count = getSetting().getCount();
-        if(isDonated()){
-            return false;
-        }
-        if(count > 5 && count % 7 == 0){
-            return true;
-        }
+//        Integer count = getSetting().getCount();
+//        if(isDonated()){
+//            return false;
+//        }
+//        if(count == null count > 5 && count % 7 == 0){
+//            return true;
+//        }
         return false;
     }
 
@@ -109,6 +109,15 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
             return "no_version";
         }
         return oldVersion;
+    }
+
+    public static void updateLastRunTime(){
+        getSetting().setLastRunTime(new Date());
+    }
+
+    public static int getSecondAfterLastRun(){
+        long l = new Date().getTime() - getSetting().getLastRunTime().getTime() /1000L;
+        return (int) l;
     }
 
 }

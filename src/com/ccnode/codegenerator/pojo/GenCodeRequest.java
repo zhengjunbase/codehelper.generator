@@ -15,7 +15,6 @@ public class GenCodeRequest extends BaseRequest {
     Project project;
     List<String> pojoNames;
     String projectPath;
-    UserType userType;
     String pathSplitter;
 
     public GenCodeRequest() {

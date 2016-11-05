@@ -2,12 +2,13 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.genCode.GenCodeService;
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.service.SendToServerService;
-import com.ccnode.codegenerator.service.pojo.PostResponse;
+import com.ccnode.codegenerator.service.pojo.GenCodeServerRequest;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
@@ -47,6 +48,7 @@ public class GenCodeAction extends AnAction {
     }
 
     public void actionPerformed(AnActionEvent event) {
+        UserConfigService.loadUserConfig(event);
         Project project = event.getData(PlatformDataKeys.PROJECT);
         VirtualFileManager.getInstance().syncRefresh();
         ApplicationManager.getApplication().saveAll();
@@ -65,22 +67,22 @@ public class GenCodeAction extends AnAction {
             request.setProject(project);
             genCodeResponse = GenCodeService.genCode(request);
             VirtualFileManager.getInstance().syncRefresh();
-            LoggerWrapper.saveAllLogs(genCodeResponse);
-            if(!SettingService.showDonateBtn()){
-                Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
-            }else{
-                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Donate", "OK", null);
-                if(result != 2){
-                    BrowserLauncher.getInstance().browse(UrlManager.getDonateClickUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
-                    SettingService.setDonated();
-                }
-            }
+            LoggerWrapper.saveAllLogs(projectPath);
+//            if(!SettingService.showDonateBtn()){
+            Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
+//            }else{
+//                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Donate", "OK", null);
+//                if(result != 2){
+//                    BrowserLauncher.getInstance().browse(UrlManager.getDonateClickUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
+//                    SettingService.setDonated();
+//                }
+//            }
         }catch(Throwable e){
             LOGGER.error("actionPerformed error",e);
             genCodeResponse.setThrowable(e);
         }finally {
-            SendToServerService.post(project, genCodeResponse);
-            SendToServerService.postError(project, genCodeResponse);
+            GenCodeServerRequest request = SendToServerService.buildGenCodeRequest(genCodeResponse);
+            SendToServerService.post(project, request);
         }
         VirtualFileManager.getInstance().syncRefresh();
     }

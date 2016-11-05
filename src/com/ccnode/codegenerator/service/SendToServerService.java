@@ -5,7 +5,8 @@ import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
 import com.ccnode.codegenerator.service.pojo.PostResponse;
-import com.ccnode.codegenerator.service.pojo.SendToServerRequest;
+import com.ccnode.codegenerator.service.pojo.GenCodeServerRequest;
+import com.ccnode.codegenerator.service.pojo.ServerRequest;
 import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.JSONUtil;
@@ -48,16 +49,20 @@ public class SendToServerService {
 //        }
 //    }
 
-    public static void postError(Project project, GenCodeResponse genCodeResponse){
+    public static GenCodeServerRequest buildGenCodeRequest(GenCodeResponse genCodeResponse){
         long startTime = System.currentTimeMillis();
         try{
-            SendToServerRequest request = new SendToServerRequest();
-//            ServerRequestHelper.fillCommonField(request);
+            GenCodeServerRequest request = new GenCodeServerRequest();
+            ServerRequestHelper.fillCommonField(request);
             List<ChangeInfo> changeInfos = Lists.newArrayList();
             if(genCodeResponse.getUpdateFiles() != null) {
                 changeInfos.addAll(genCodeResponse.getUpdateFiles());
             }
-            changeInfos.addAll(genCodeResponse.getNewFiles());
+            if(genCodeResponse.getNewFiles() != null){
+                changeInfos.addAll(genCodeResponse.getNewFiles());
+            }
+            request.setChangeInfos(changeInfos);
+            request.setSettingDto(SettingService.getInstance().getState());
             List<String> errorList = Lists.newArrayList();
             for (String s : LoggerWrapper.errorList) {
                 if(StringUtils.isNotBlank(s)){
@@ -70,23 +75,17 @@ public class SendToServerService {
                 request.setStackTraceMsg(Lists.newArrayList(
                         StringUtils.deleteWhitespace(Throwables.getStackTraceAsString(genCodeResponse.getThrowable()))));
             }
-            String s = HttpUtil.postJson(UrlManager.getPostErrorUrl(), request);
-        }catch(Throwable ignored){
+            return request;
+        }catch(Throwable e){
+            return null;
         }
+
     }
 
-    public static void post(Project project, GenCodeResponse genCodeResponse){
+    public static void post(Project project, ServerRequest request){
         try{
-            SendToServerRequest request = new SendToServerRequest();
-            ServerRequestHelper.fillCommonField(request);
-            List<ChangeInfo> changeInfos = Lists.newArrayList();
-            if(genCodeResponse.getUpdateFiles() != null) {
-                changeInfos.addAll(genCodeResponse.getUpdateFiles());
-            }
-            changeInfos.addAll(genCodeResponse.getNewFiles());
-            request.setChangeInfos(changeInfos);
-            request.setSettingDto(SettingService.getInstance().getState());
-            String s = HttpUtil.postJsonEncrypt(UrlManager.getPostUrl(), request);
+
+            String s = HttpUtil.postJson(UrlManager.getPostUrl() + "&type="+request.getRequestType(), request);
             LOGGER.info("ret:{}",s);
             if(StringUtils.isBlank(s) || !StringUtils.containsIgnoreCase(s,"success")){
                 return;
