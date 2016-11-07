@@ -1,5 +1,7 @@
 package com.ccnode.codegenerator.service.pojo;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -9,8 +11,7 @@ public class AutoCodingRequest extends ServerRequest{
 
     String codingType = "Setter";
     String pojoName ;
-
-    int i;
+    String insert = StringUtils.EMPTY;
     public String getCodingType() {
         return codingType;
     }
@@ -27,11 +28,11 @@ public class AutoCodingRequest extends ServerRequest{
         this.pojoName = pojoName;
     }
 
-    public int getI() {
-        return i;
+    public String getInsert() {
+        return insert;
     }
 
-    public void setI(int i) {
-        this.i = i;
+    public void setInsert(String insert) {
+        this.insert = insert;
     }
 }

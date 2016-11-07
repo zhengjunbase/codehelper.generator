@@ -1,7 +1,6 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.genCode.UserConfigService;
-import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.PojoLine;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.ProjectHelper;
@@ -62,8 +61,8 @@ public class AutoCodingAction extends AnAction {
             request.setRequestType("AutoCoding");
             request.setCodingType("Setter");
             ServerRequestHelper.fillCommonField(request);
-            request.setPojoName(pojo.getClassName());
             if (pojo != null) {
+                request.setPojoName(pojo.getClassName());
                 LogicalPosition newStatementPos = new LogicalPosition(pojo.getLineNumber() , pojo.getLineStartPos() + 1);
                 LogicalPosition insertPos = new LogicalPosition(pojo.getLineNumber() + 1 , 0 );
                 caretModel.moveToLogicalPosition(newStatementPos);
@@ -76,15 +75,17 @@ public class AutoCodingAction extends AnAction {
                     Document document = PsiDocumentManager.getInstance(event.getProject()).getDocument(currentFile);
                     caretModel.moveToLogicalPosition(insertPos);
                     Integer offset = caretModel.getOffset();
-                    insertSetter(project, pojo, document, currentFileElement, offset);
+                    String insert = insertSetter(project, pojo, document, currentFileElement, offset);
+                    request.setInsert(insert);
 //                    SettingService.getSetting().setLastInsertPos(offset);
 //                    SettingService.getSetting().setLastInsertLength(setter.length());
                 }
             }
 //            VirtualFileManager.getInstance().syncRefresh();
 //            ApplicationManager.getApplication().saveAll();
+
             caretModel.moveToLogicalPosition(oldLogicPos);
-            SendToServerService.post(project,request );
+            SendToServerService.post(project,request);
         } catch (Throwable ignored) {
             LOGGER.error("actionPerformed :{}", ignored);
         }finally {
@@ -94,7 +95,7 @@ public class AutoCodingAction extends AnAction {
 
     }
 
-    private void insertSetter(Project project, PojoLine pojo, Document document, PsiElement currentFileElement,
+    private String insertSetter(Project project, PojoLine pojo, Document document, PsiElement currentFileElement,
             Integer offset) {
         LOGGER.info("insertSetter");
         String withDefaultValue = genInsertLine(currentFileElement, pojo, true);
@@ -103,7 +104,7 @@ public class AutoCodingAction extends AnAction {
         if(endOffSet >= document.getTextLength() + 1){
             LOGGER.info("insertSetter  insertString noDefaultValue:{},offset:{}", noDefaultValue, offset);
             DocumentUtil.insertString(document,noDefaultValue,offset, project);
-            return;
+            return noDefaultValue;
         }
         TextRange range = new TextRange(offset, offset + noDefaultValue.length());
         LOGGER.info("insertSetter textInRange:{}",document.getText(range));
@@ -112,7 +113,7 @@ public class AutoCodingAction extends AnAction {
             LOGGER.info("insertSetter replaceString withDefaultValue:{},offset:{},length:{}"
                     ,noDefaultValue, offset,withDefaultValue.length());
             DocumentUtil.replaceString(project,document, noDefaultValue,offset, withDefaultValue.length() );
-            return;
+            return noDefaultValue;
         }
         range = new TextRange(offset, offset + noDefaultValue.length());
         LOGGER.info("insertSetter textInRange:{}",document.getText(range));
@@ -121,10 +122,11 @@ public class AutoCodingAction extends AnAction {
             LOGGER.info("insertSetter replaceString withDefaultValue:{},offset:{},length:{}"
                     ,withDefaultValue, offset,noDefaultValue.length());
             DocumentUtil.replaceString(project,document, withDefaultValue,offset, noDefaultValue.length() );
-            return;
+            return withDefaultValue;
         }
         LOGGER.info("insertSetter  insertString noDefaultValue:{},offset:{}", noDefaultValue, offset);
         DocumentUtil.insertString(document,noDefaultValue,offset, project);
+        return noDefaultValue;
     }
 
     private Integer getOffset(PojoLine pojo, String path) {
@@ -219,18 +221,26 @@ public class AutoCodingAction extends AnAction {
                 || StringUtils.equalsIgnoreCase(text, "Long")){
             return "-1L";
         }
+        if(StringUtils.equalsIgnoreCase(text, "Boolean")
+                || StringUtils.equalsIgnoreCase(text, "boolean")){
+            return "false";
+        }
 
         if(StringUtils.equalsIgnoreCase(text, "double")
                 || StringUtils.equalsIgnoreCase(text, "Double")){
-            return "-1D";
+            return "-1d";
         }
         if(StringUtils.equalsIgnoreCase(text, "float")
                 || StringUtils.equalsIgnoreCase(text, "Float")){
             return "-1.0f";
         }
+        if(StringUtils.equalsIgnoreCase(text, "short")
+                || StringUtils.equalsIgnoreCase(text, "Short")){
+            return "-1";
+        }
 
         if(StringUtils.equalsIgnoreCase(text, "BigDecimal")){
-            return "BigDecimal.ONE.negate()";
+            return "new BigDecimal(-1)";
         }
         return "null";
 

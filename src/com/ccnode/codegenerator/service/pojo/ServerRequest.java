@@ -1,6 +1,11 @@
 package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.BaseRequest;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
 
 /**
  * What always stop you is what you always believe.
@@ -18,6 +23,8 @@ public class ServerRequest extends BaseRequest {
     String osVersion;
     String platform = "Intellij Idea";
     String uuid;
+    List<String> errorList = Lists.newArrayList();
+
 
     public String getPluginVersion() {
         return pluginVersion;
@@ -90,5 +97,13 @@ public class ServerRequest extends BaseRequest {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public List<String> getErrorList() {
+        return errorList;
+    }
+
+    public void setErrorList(List<String> errorList) {
+        this.errorList = errorList;
     }
 }

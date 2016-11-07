@@ -16,7 +16,6 @@ public class GenCodeServerRequest extends ServerRequest {
     private static final long serialVersionUID = -8687380055394742770L;
 
     List<ChangeInfo> changeInfos;
-    List<String> errorMsg;
     SettingDto settingDto;
     List<String> stackTraceMsg;
 
@@ -26,14 +25,6 @@ public class GenCodeServerRequest extends ServerRequest {
 
     public void setChangeInfos(List<ChangeInfo> changeInfos) {
         this.changeInfos = changeInfos;
-    }
-
-    public List<String> getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(List<String> errorMsg) {
-        this.errorMsg = errorMsg;
     }
 
     public List<String> getStackTraceMsg() {

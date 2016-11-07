@@ -63,13 +63,7 @@ public class SendToServerService {
             }
             request.setChangeInfos(changeInfos);
             request.setSettingDto(SettingService.getInstance().getState());
-            List<String> errorList = Lists.newArrayList();
-            for (String s : LoggerWrapper.errorList) {
-                if(StringUtils.isNotBlank(s)){
-                    errorList.add(StringUtils.deleteWhitespace(s));
-                }
-            }
-            request.setErrorMsg(errorList);
+
 
             if(genCodeResponse.getThrowable() != null){
                 request.setStackTraceMsg(Lists.newArrayList(
@@ -84,6 +78,13 @@ public class SendToServerService {
 
     public static void post(Project project, ServerRequest request){
         try{
+             List<String> errorList = Lists.newArrayList();
+            for (String s : LoggerWrapper.errorList) {
+                if(StringUtils.isNotBlank(s)){
+                    errorList.add(StringUtils.deleteWhitespace(s));
+                }
+            }
+            request.setErrorList(errorList);
 
             String s = HttpUtil.postJson(UrlManager.getPostUrl() + "&type="+request.getRequestType(), request);
             LOGGER.info("ret:{}",s);

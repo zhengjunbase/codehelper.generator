@@ -35,14 +35,14 @@ public class LoggerWrapper implements Logger {
     }
 
     public static void saveAllLogs(String projectPath)  {
-        String printLog = UserConfigService.userConfigMap.get("printlog");
-        if(!Objects.equal(printLog,"true") || StringUtils.isBlank(projectPath)){
-            return;
-        }
-        logList.add("----------------------     end     -------------------------");
-        String path = projectPath + "codehelper.generator.log";
-        File logFile = new File(path);
         try{
+            String printLog = UserConfigService.userConfigMap.get("printlog");
+            if(!Objects.equal(printLog,"true") || StringUtils.isBlank(projectPath)){
+                return;
+            }
+            logList.add("----------------------     end     -------------------------");
+            String path = projectPath + "codehelper.generator.log";
+            File logFile = new File(path);
             List<String> allLines = Lists.newArrayList();
             if(logFile.exists()){
                 List<String> oldLines = IOUtils.readLines(path);
@@ -52,8 +52,7 @@ public class LoggerWrapper implements Logger {
             }
             allLines.addAll(logList);
             IOUtils.writeLines(new File(path),allLines);
-        }catch(Throwable e){
-            System.out.println();
+        }catch(Throwable ignored){
         }finally {
             logList =  Lists.newArrayList("", "----------------------    start    -------------------------");
         }
