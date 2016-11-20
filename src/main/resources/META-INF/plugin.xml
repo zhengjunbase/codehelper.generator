@@ -1,0 +1,89 @@
+<idea-plugin version="2">
+  <id>com.ccnode.codegenerator.mybatis.generator</id>
+  <name>codehelper.generator</name>
+  <version>2016.11.07</version>
+  <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
+
+  <description><![CDATA[
+      <div>
+      <p><a href="https://github.com/zhengjunbase/codehelper.generator">GitHub</a>
+      |&nbsp<a href="https://github.com/zhengjunbase/codehelper.generator/issues">Issues</a></p>
+
+      <p>An Generator, generate code more easily and productive.</p>
+      <p>AutoCoding Features</p>
+      <ul>
+      <li><p>Auto gen all Setter method(method start with set) when you click AutoCoding btn(support shortcut).</p></li>
+      <li><p>Auto gen all Setter method with default value when you click AutoCoding btn twice.</p></li>
+      </ul>
+       <p>AutoCoding Usage</p>
+      <ul>
+      <li><p>Click main menu Tools-> Codehelper-> AutoCoding button to generate the code</p></li>
+      </ul>
+      <p>GenDaoCode Features</p>
+      <ul>
+      <li><p>Generate dao, service, sql and mybatis xml file according to pojo by one click.</p></li>
+      <li><p>Update sql, mybatis xml file elegantly when the pojo file updated by one click.</p></li>
+      <li><p>Provide insert, insertList, select, update and delete method.</p></li>
+      <li><p>You can generate for multi pojo by once click.</p></li>
+      <li><p>Recognize comment of pojo fields automatically and add as sql comment.</p></li>
+      <li><p>Support rich config by config file, and use default config for no config file.</p></li>
+      <li><p>Shortcut for generate.</p></li>
+      <li><p>Support java + MySQL and later will support more DB.</p></li>
+      <li><a href="http://www.codehelper.me/generator?from=jetbrains">www.codehelper.me</a> to learn more.</li>
+      </ul>
+      <p>GenDaoCode Usages</p>
+      <ul>
+      <li>Go to Intellij Idea's Plugin Repositories to download the codehelper.generator plugin.</li>
+      <li>Click main menu Tools-> Codehelper-> GenDaoCode button to generate the code.</li>
+      <li>Method One: Click GenDaoCode, and then enter the Pojo name in prompt box,</br> multiple Pojo separated by | ,
+      CodeHelper will generate code use default config.</li>
+      <li>Method two: Add a codehelper.properties in you project directory.</br>Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.</li>
+      </ul>
+      </div>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      AutoCoding.
+    ]]>
+  </change-notes>
+
+  <actions>
+  <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="Generator" popup="true">
+      <separator/>
+      <group id="TestActionSubGroup"/>
+      <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
+    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
+    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
+    <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
+    <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
+
+      <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
+  </group>
+    <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
+      <!--<add-to-group group-id="TestActionSubGroup" />-->
+            <!--<action id="mybatis.generator_1" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode1" description="A test menu item1"/>-->
+            <!--<action id="mybatis.generator_2" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode2" description="A test menu item2"/>-->
+
+    <!--</group>-->
+</actions>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+      <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
+                          serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>

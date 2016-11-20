@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'}
+    }
+}
+
+plugins {
+    id "org.jetbrains.intellij" version "0.1.10"
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+apply plugin: 'idea'
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'java'
+
+intellij {
+    version 'IC-14.1.4' //IntelliJ IDEA dependency
+    plugins 'coverage' //Bundled plugin dependencies
+    pluginName 'gradle_plugin_demo'
+}
+
+//填好自己的即可
+publish {
+    username 'Prengepower'
+    pluginId '7658'
+
+    password System.getenv('PLUGIN_PASSWORD')
+    channel System.getenv('PLUGIN_CHANNEL') ?: ''
+}
+
+dependencies{
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.8.5'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.5'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    testCompile "org.assertj:assertj-core:2.2.0"
+}
+
+group 'org.jetbrains'
+version '1.2' // Plugin version
+
+
+
+
