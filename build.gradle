@@ -14,6 +14,8 @@ repositories {
 }
 
 
+compileJava.options.encoding = 'UTF-8'
+
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
@@ -21,16 +23,13 @@ apply plugin: 'java'
 intellij {
     version 'IC-14.1.4' //IntelliJ IDEA dependency
     plugins 'coverage' //Bundled plugin dependencies
-    pluginName 'gradle_plugin_demo'
-}
+    pluginName 'codehelper.generator'
 
-//填好自己的即可
-publish {
-    username 'Prengepower'
-    pluginId '7658'
-
-    password System.getenv('PLUGIN_PASSWORD')
-    channel System.getenv('PLUGIN_CHANNEL') ?: ''
+//    需要来填写publish这块 类似
+//    publish {
+//        username 'AmailP'
+//        pluginId '7415'
+//    }
 }
 
 dependencies{
