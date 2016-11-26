@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
@@ -44,7 +45,8 @@ public class AutoCodingAction extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         String projectPath = StringUtils.EMPTY;
         try {
-            UserConfigService.loadUserConfig(event);
+            //todo need check if need module.
+            UserConfigService.loadUserConfig(ProjectHelper.getProjectPath(event));
             projectPath = ProjectHelper.getProjectPath(event);
             Project project = event.getProject();
             Editor editor = event.getData(LangDataKeys.EDITOR);
