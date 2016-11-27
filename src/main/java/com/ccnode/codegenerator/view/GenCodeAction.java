@@ -19,13 +19,19 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectFileIndex;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -48,14 +54,19 @@ public class GenCodeAction extends AnAction {
     }
 
     public void actionPerformed(AnActionEvent event) {
-        UserConfigService.loadUserConfig(event);
         Project project = event.getData(PlatformDataKeys.PROJECT);
+        VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
+        final ProjectFileIndex index = ProjectRootManager.getInstance(project).getFileIndex();
+        Module moduleForFile = index.getModuleForFile(file);
+        String modulePath = moduleForFile.getModuleFilePath();
+        Path parent = Paths.get(modulePath).getParent();
         VirtualFileManager.getInstance().syncRefresh();
         ApplicationManager.getApplication().saveAll();
         if(project == null){
             return;
         }
-        @Nullable String projectPath = project.getBasePath();
+        String projectPath = parent.toString();
+        UserConfigService.loadUserConfig(projectPath);
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
         }
