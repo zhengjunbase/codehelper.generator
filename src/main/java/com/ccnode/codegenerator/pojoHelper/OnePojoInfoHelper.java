@@ -188,7 +188,7 @@ public class OnePojoInfoHelper {
         if(daoFile == null){
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(response.getCodeConfig().getDaoDir(),onePojoInfo.getPojoDirPath()) ,onePojoInfo.getPojoPackage());
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
         for (String s : daoFile.getOriginLines()) {
             if(s.trim().contains("package ")){
                 deducePackage = parsePackage(s);
@@ -203,7 +203,7 @@ public class OnePojoInfoHelper {
         if(serviceFile == null){
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(StringUtils.defaultIfEmpty(response.getCodeConfig().getServiceDir(),onePojoInfo.getPojoDirPath()) ,onePojoInfo.getPojoPackage());
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullServicePath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
         for (String s : serviceFile.getOriginLines()) {
             if(s.trim().contains("package ")){
                 deducePackage = parsePackage(s);
