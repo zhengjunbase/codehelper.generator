@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -75,19 +77,25 @@ public class GenCodeUtil {
         return false;
     }
 
-    public static String deducePackage(String path, String pojoPackage){
-        LOGGER.info("path:{}, pojoPackage:{}",path,pojoPackage);
-        List<String> packages = Splitter.on(".").trimResults().omitEmptyStrings().splitToList(pojoPackage);
-        String packagePrefix = packages.get(0);
-        int indexOf = StringUtils.indexOf(path, packagePrefix);
-        if(indexOf < 0){
-            indexOf = StringUtils.indexOf(path, "com");
-//            throw new RuntimeException("invalid path:"+path +", Please input an valid path");
+    public static String deducePackage(String daoFilePathString, String pojoPackage,String pojoPathString){
+        //get the path by
+        LOGGER.info("path:{}, pojoPackage:{}",daoFilePathString,pojoPackage);
+        Path realpojoPath = Paths.get(pojoPathString);
+        String[] split = pojoPackage.split("\\.");
+        int len = split.length;
+        Path sourcePath = realpojoPath;
+        while(len>=0){
+            sourcePath = sourcePath.getParent();
+            len--;
         }
-        String subPath = path.substring(indexOf);
-        String separator = System.getProperty("file.separator");
-        String replace = subPath.replace(separator, ".");
-        return replace;
+        Path daoFilePath = Paths.get(daoFilePathString);
+        Path daoFolder = daoFilePath.getParent();
+        //shall combine two path
+        Path relativeToSouce = sourcePath.relativize(daoFolder);
+        String relate = relativeToSouce.toString();
+        relate = relate.replace("\\", ".");
+        relate = relate.replace("/",".");
+        return relate;
     }
 
     public static String pathToPackage(String path){
@@ -131,9 +139,9 @@ public class GenCodeUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(deducePackage("src/main/java/com/qunar/insurance","com.qunar.insurance.annotion"));
-        System.out.println(deducePackage("src/com/java/com/qunar/insurance","com.com.com.annotion"));
-        System.out.println(deducePackage("src/com/java/com/qunar/insurance","xxx.com.com.annotion"));
+//        System.out.println(deducePackage("src/main/java/com/qunar/insurance","com.qunar.insurance.annotion"));
+//        System.out.println(deducePackage("src/com/java/com/qunar/insurance","com.com.com.annotion"));
+//        System.out.println(deducePackage("src/com/java/com/qunar/insurance","xxx.com.com.annotion"));
     }
 
 }

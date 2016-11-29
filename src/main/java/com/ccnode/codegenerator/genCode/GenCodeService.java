@@ -46,6 +46,7 @@ public class GenCodeService {
                 return response;
             }
 
+            //get pojos and init location
             response = UserConfigService.initConfig(response);
             if(response.checkFailure()){
                 return response;

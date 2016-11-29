@@ -32,10 +32,9 @@ public class UserConfigService {
 
     public static Map<String,String> userConfigMap = Maps.newHashMap();
 
-    public static void loadUserConfig(AnActionEvent event) {
+    public static void loadUserConfig(String projectPath) {
 
         try {
-            String projectPath = ProjectHelper.getProjectPath(event);
             File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, "codehelper.properties");
             String fileName = StringUtils.EMPTY;
             if (propertiesFile != null) {

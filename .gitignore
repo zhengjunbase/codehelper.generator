@@ -6,9 +6,9 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
+.idea/
 *.iml
-out
+out/
 gen
 /MybatisGenerator.iml
 /MybatisGenerator.ipr
@@ -26,3 +26,12 @@ out*
 MybatisGenerator.iml
 MybatisGenerator.ipr
 MybatisGenerator.iws
+build/
+.gradle/
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+out
+
