@@ -26,3 +26,6 @@ out*
 MybatisGenerator.iml
 MybatisGenerator.ipr
 MybatisGenerator.iws
+
+classes
+plugin.zip
