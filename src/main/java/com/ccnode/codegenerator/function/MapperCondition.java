@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.function;
+package com.ccnode.codegenerator.function;
 
 import org.apache.commons.lang3.StringUtils;
 

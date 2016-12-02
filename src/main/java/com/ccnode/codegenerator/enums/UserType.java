@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.enums;
+package com.ccnode.codegenerator.enums;
 
 /**
  * What always stop you is what you always believe.

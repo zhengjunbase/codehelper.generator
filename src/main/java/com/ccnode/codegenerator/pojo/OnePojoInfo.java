@@ -1,6 +1,7 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
-import main.java.com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import org.jetbrains.annotations.Nullable;
 

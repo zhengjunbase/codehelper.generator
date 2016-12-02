@@ -1,8 +1,9 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
 //import org.junit.Test;
 
-import main.java.com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
 
 /**

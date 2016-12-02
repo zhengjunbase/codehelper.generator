@@ -1,7 +1,9 @@
 
-package main.java.com.ccnode.codegenerator.pojoHelper;
+package com.ccnode.codegenerator.pojoHelper;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.pojo.*;
+import com.ccnode.codegenerator.util.*;
+import com.ccnode.codegenerator.enums.FileType;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -16,8 +18,6 @@ import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
 import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
-import main.java.com.ccnode.codegenerator.pojo.*;
-import main.java.com.ccnode.codegenerator.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.test;
+package com.ccnode.codegenerator.test;
 
 import java.math.BigDecimal;
 import java.util.Date;

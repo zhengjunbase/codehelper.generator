@@ -1,6 +1,7 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
-import main.java.com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.GenCodeConfig;
 
 /**
  * What always stop you is what you always believe.

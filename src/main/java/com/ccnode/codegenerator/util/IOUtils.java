@@ -1,7 +1,8 @@
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
-import main.java.com.ccnode.codegenerator.exception.BizException;
-import main.java.com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.exception.BizException;
+import com.ccnode.codegenerator.exception.BizException;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;

@@ -1,7 +1,9 @@
-package main.java.com.ccnode.codegenerator.service.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
-import main.java.com.ccnode.codegenerator.pojo.ChangeInfo;
-import main.java.com.ccnode.codegenerator.storage.SettingDto;
+import com.ccnode.codegenerator.pojo.ChangeInfo;
+import com.ccnode.codegenerator.storage.SettingDto;
+import com.ccnode.codegenerator.pojo.ChangeInfo;
+import com.ccnode.codegenerator.storage.SettingDto;
 
 import java.util.List;
 

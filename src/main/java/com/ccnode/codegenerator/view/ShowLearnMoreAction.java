@@ -1,6 +1,7 @@
-package main.java.com.ccnode.codegenerator.view;
+package com.ccnode.codegenerator.view;
 
-import main.java.com.ccnode.codegenerator.enums.UrlManager;
+import com.ccnode.codegenerator.enums.UrlManager;
+import com.ccnode.codegenerator.enums.UrlManager;
 import com.intellij.ide.browsers.BrowserLauncher;
 import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.actionSystem.AnAction;

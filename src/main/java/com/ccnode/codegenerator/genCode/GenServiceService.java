@@ -1,13 +1,18 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
-import main.java.com.ccnode.codegenerator.enums.MethodName;
-import main.java.com.ccnode.codegenerator.pojo.GenCodeResponse;
-import main.java.com.ccnode.codegenerator.pojo.GeneratedFile;
-import main.java.com.ccnode.codegenerator.pojo.OnePojoInfo;
-import main.java.com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import main.java.com.ccnode.codegenerator.util.GenCodeUtil;
-import main.java.com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.GeneratedFile;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;

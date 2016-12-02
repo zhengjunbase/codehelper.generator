@@ -1,9 +1,12 @@
-package main.java.com.ccnode.codegenerator.pojoHelper;
+package com.ccnode.codegenerator.pojoHelper;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
-import main.java.com.ccnode.codegenerator.pojo.GenCodeResponse;
-import main.java.com.ccnode.codegenerator.pojo.GeneratedFile;
-import main.java.com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.GeneratedFile;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;

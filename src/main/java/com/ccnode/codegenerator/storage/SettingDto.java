@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.storage;
+package com.ccnode.codegenerator.storage;
 
-import main.java.com.ccnode.codegenerator.enums.UserType;
+import com.ccnode.codegenerator.enums.UserType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 

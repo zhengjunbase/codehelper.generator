@@ -1,7 +1,7 @@
-package main.java.com.ccnode.codegenerator.enums;
+package com.ccnode.codegenerator.enums;
 
-import main.java.com.ccnode.codegenerator.common.VersionManager;
-import main.java.com.ccnode.codegenerator.storage.SettingService;
+import com.ccnode.codegenerator.common.VersionManager;
+import com.ccnode.codegenerator.storage.SettingService;
 
 /**
  * What always stop you is what you always believe.

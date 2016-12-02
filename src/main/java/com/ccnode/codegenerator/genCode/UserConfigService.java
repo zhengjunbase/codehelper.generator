@@ -1,12 +1,15 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.pojo.DirectoryConfig;
-import main.java.com.ccnode.codegenerator.pojo.GenCodeResponse;
-import main.java.com.ccnode.codegenerator.pojoHelper.ProjectHelper;
-import main.java.com.ccnode.codegenerator.util.GenCodeConfig;
-import main.java.com.ccnode.codegenerator.util.IOUtils;
-import main.java.com.ccnode.codegenerator.util.LoggerWrapper;
-import main.java.com.ccnode.codegenerator.util.PojoUtil;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.pojo.DirectoryConfig;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojoHelper.ProjectHelper;
+import com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;

@@ -1,7 +1,7 @@
 /* FileUtil.java
  * 
  * Copyright (c) 2014 Qunar.com. All Rights Reserved. */
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
 import com.google.common.base.Charsets;
 import org.apache.commons.io.FileUtils;

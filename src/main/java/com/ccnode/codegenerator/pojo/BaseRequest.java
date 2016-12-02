@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.exception;
+package com.ccnode.codegenerator.exception;
 
 /**
  * What always stop you is what you always believe.

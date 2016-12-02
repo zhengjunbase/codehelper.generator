@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
 /**
  * What always stop you is what you always believe.

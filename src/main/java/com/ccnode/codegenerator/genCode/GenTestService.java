@@ -1,8 +1,10 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.pojo.GenCodeResponse;
-import main.java.com.ccnode.codegenerator.pojo.OnePojoInfo;
-import main.java.com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
 
 /**

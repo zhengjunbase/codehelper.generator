@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.service.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
-import main.java.com.ccnode.codegenerator.pojo.BaseResponse;
+import com.ccnode.codegenerator.pojo.BaseResponse;
 
 /**
  * What always stop you is what you always believe.

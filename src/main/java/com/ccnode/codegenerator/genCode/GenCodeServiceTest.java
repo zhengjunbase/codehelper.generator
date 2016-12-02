@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.pojo.GenCodeRequest;
+import com.ccnode.codegenerator.pojo.GenCodeRequest;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 

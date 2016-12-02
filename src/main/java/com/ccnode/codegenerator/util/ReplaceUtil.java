@@ -1,7 +1,8 @@
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
-import main.java.com.ccnode.codegenerator.function.EqualCondition;
-import main.java.com.ccnode.codegenerator.pojo.ListInfo;
+import com.ccnode.codegenerator.pojo.ListInfo;
+import com.ccnode.codegenerator.function.EqualCondition;
+import com.ccnode.codegenerator.pojo.ListInfo;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;

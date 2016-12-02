@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.service.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
 import org.jetbrains.annotations.Nullable;
 

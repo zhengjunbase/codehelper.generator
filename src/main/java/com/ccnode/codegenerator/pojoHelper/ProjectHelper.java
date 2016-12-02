@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.pojoHelper;
+package com.ccnode.codegenerator.pojoHelper;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;

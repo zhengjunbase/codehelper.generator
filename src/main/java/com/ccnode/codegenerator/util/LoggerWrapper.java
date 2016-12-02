@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
-import main.java.com.ccnode.codegenerator.genCode.UserConfigService;
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;

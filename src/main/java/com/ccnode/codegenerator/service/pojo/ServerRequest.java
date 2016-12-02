@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.service.pojo;
+package com.ccnode.codegenerator.service.pojo;
 
-import main.java.com.ccnode.codegenerator.pojo.BaseRequest;
+import com.ccnode.codegenerator.pojo.BaseRequest;
 import com.google.common.collect.Lists;
 
 import java.util.List;

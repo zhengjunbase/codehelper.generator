@@ -1,8 +1,9 @@
-package main.java.com.ccnode.codegenerator.pojoHelper;
+package com.ccnode.codegenerator.pojoHelper;
 
-import main.java.com.ccnode.codegenerator.common.VersionManager;
-import main.java.com.ccnode.codegenerator.service.pojo.ServerRequest;
-import main.java.com.ccnode.codegenerator.storage.SettingService;
+import com.ccnode.codegenerator.service.pojo.ServerRequest;
+import com.ccnode.codegenerator.common.VersionManager;
+import com.ccnode.codegenerator.service.pojo.ServerRequest;
+import com.ccnode.codegenerator.storage.SettingService;
 
 import java.net.InetAddress;
 

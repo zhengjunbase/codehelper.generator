@@ -1,6 +1,6 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
-import main.java.com.ccnode.codegenerator.util.GenCodeConfig;
+import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 

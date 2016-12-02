@@ -1,6 +1,7 @@
-package main.java.com.ccnode.codegenerator.pojo;
+package com.ccnode.codegenerator.pojo;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.FileType;
 
 import java.io.File;
 import java.util.List;

@@ -1,15 +1,15 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
-import main.java.com.ccnode.codegenerator.pojo.GenCodeResponse;
-import main.java.com.ccnode.codegenerator.pojo.GeneratedFile;
-import main.java.com.ccnode.codegenerator.pojo.OnePojoInfo;
-import main.java.com.ccnode.codegenerator.pojo.PojoFieldInfo;
-import main.java.com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.GeneratedFile;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojo.PojoFieldInfo;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.util.*;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import main.java.com.ccnode.codegenerator.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;

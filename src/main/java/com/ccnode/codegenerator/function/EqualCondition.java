@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.function;
+package com.ccnode.codegenerator.function;
 
 /**
  * What always stop you is what you always believe.

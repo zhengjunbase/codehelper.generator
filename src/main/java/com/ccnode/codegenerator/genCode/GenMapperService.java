@@ -1,21 +1,20 @@
-package main.java.com.ccnode.codegenerator.genCode;
+package com.ccnode.codegenerator.genCode;
 
-import main.java.com.ccnode.codegenerator.enums.FileType;
-import main.java.com.ccnode.codegenerator.enums.MethodName;
-import main.java.com.ccnode.codegenerator.function.EqualCondition;
-import main.java.com.ccnode.codegenerator.function.MapperCondition;
-import main.java.com.ccnode.codegenerator.pojo.*;
-import main.java.com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import main.java.com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
+import com.ccnode.codegenerator.pojo.*;
+import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
+import com.ccnode.codegenerator.util.*;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
+import com.ccnode.codegenerator.function.EqualCondition;
+import com.ccnode.codegenerator.function.MapperCondition;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
+import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.google.common.collect.Lists;
-import main.java.com.ccnode.codegenerator.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 
 import java.util.List;
-
-import static main.java.com.ccnode.codegenerator.util.GenCodeUtil.*;
 
 /**
  * What always stop you is what you always believe.
@@ -198,33 +197,34 @@ public class GenMapperService {
         retList.add("<mapper namespace=\"" + onePojoInfo.getDaoPackage() +"."+ onePojoInfo.getPojoName() + "Dao\">");
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
-        retList.add(ONE_RETRACT+"</resultMap>");
+        retList.add(
+                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</resultMap>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<sql id=\"all_column\">");
-        retList.add(ONE_RETRACT+"</sql>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<sql id=\"all_column\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</sql>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<insert id=\""+ MethodName.insert.name() +"\">");
-        retList.add(ONE_RETRACT+"</insert>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<insert id=\""+ MethodName.insert.name() +"\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</insert>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<insert id=\""+ MethodName.insertList.name() +"\">");
-        retList.add(ONE_RETRACT+"</insert>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<insert id=\""+ MethodName.insertList.name() +"\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</insert>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<update id=\""+ MethodName.update.name() +"\">");
-        retList.add(ONE_RETRACT+"</update>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<update id=\""+ MethodName.update.name() +"\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</update>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
-        retList.add(ONE_RETRACT+"</select>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</select>");
 
 //        retList.add(StringUtils.EMPTY);
 //        retList.add("<!--auto generated Code-->");
@@ -233,22 +233,23 @@ public class GenMapperService {
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
-        retList.add(TWO_RETRACT+ "DELETE FROM "+ getUnderScore(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
-        retList.add(ONE_RETRACT+"</delete>");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
+        retList.add(GenCodeUtil.TWO_RETRACT+ "DELETE FROM "+ GenCodeUtil.getUnderScore(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</delete>");
         retList.add("</mapper>");
         return retList;
     }
 
     private static List<String> genAllColumnMap(OnePojoInfo onePojoInfo){
         List<String> retList = Lists.newArrayList();
-        retList.add(ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+        retList.add(
+                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             retList.add(String.format("%s<result column=\"%s\" property=\"%s\"/>",
-                    TWO_RETRACT, GenCodeUtil.getUnderScore(fieldName),fieldName));
+                    GenCodeUtil.TWO_RETRACT, GenCodeUtil.getUnderScore(fieldName),fieldName));
         }
-        retList.add(ONE_RETRACT+"</resultMap>");
+        retList.add(GenCodeUtil.ONE_RETRACT+"</resultMap>");
         return retList;
 
     }
@@ -256,17 +257,17 @@ public class GenMapperService {
     private static List<String> genAllColumn(OnePojoInfo onePojoInfo) {
 
         List<String> retList = Lists.newArrayList();
-        retList.add( ONE_RETRACT + "<sql id=\"all_column\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<sql id=\"all_column\">");
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
-            String s = TWO_RETRACT + getUnderScore(fieldInfo.getFieldName()) +COMMA ;
+            String s = GenCodeUtil.TWO_RETRACT + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) +COMMA ;
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
                 s = s.replace(COMMA, StringUtils.EMPTY);
             }
             retList.add(s);
             index ++;
         }
-        retList.add(ONE_RETRACT + "</sql>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</sql>");
         return retList;
 
     }
@@ -274,111 +275,113 @@ public class GenMapperService {
     private static List<String> genAddMethod(OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<insert id=\""+ MethodName.insert.name() +"\">");
-        retList.add(TWO_RETRACT + "INSERT INTO " + tableName );
-        retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<insert id=\""+ MethodName.insert.name() +"\">");
+        retList.add(GenCodeUtil.TWO_RETRACT + "INSERT INTO " + tableName );
+        retList.add(GenCodeUtil.TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             if(expand){
-                retList.add(THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
-                retList.add(FOUR_RETRACT + String.format("#{pojo.%s},",getUnderScore(fieldName)));
-                retList.add(THREE_RETRACT +"</if>");
+                retList.add(GenCodeUtil.THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
+                retList.add(GenCodeUtil.FOUR_RETRACT + String.format("#{pojo.%s},", GenCodeUtil.getUnderScore(fieldName)));
+                retList.add(GenCodeUtil.THREE_RETRACT +"</if>");
             }else{
-                String s = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
-                    ,fieldName,getUnderScore(fieldName));
+                String s = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\"> %s, </if>"
+                    ,fieldName, GenCodeUtil.getUnderScore(fieldName));
                 retList.add(s);
             }
         }
-        retList.add(TWO_RETRACT + "</trim>");
-        retList.add(TWO_RETRACT + "VALUES");
-        retList.add(TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</trim>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "VALUES");
+        retList.add(GenCodeUtil.TWO_RETRACT + "<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             if(expand){
-                retList.add(THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
-                retList.add(FOUR_RETRACT + String.format("#{pojo.%s},",fieldName));
-                retList.add(THREE_RETRACT +"</if>");
+                retList.add(GenCodeUtil.THREE_RETRACT + String.format("<if test=\"pojo.%s != null\">",fieldName));
+                retList.add(GenCodeUtil.FOUR_RETRACT + String.format("#{pojo.%s},",fieldName));
+                retList.add(GenCodeUtil.THREE_RETRACT +"</if>");
             }else{
-                String s = THREE_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
+                String s = GenCodeUtil.THREE_RETRACT + String.format("<if test=\"pojo.%s != null\"> #{pojo.%s}, </if>"
                     ,fieldName,fieldName);
                 retList.add(s);
             }
         }
-        retList.add(TWO_RETRACT + "</trim>");
-        retList.add(ONE_RETRACT + "</insert>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</trim>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</insert>");
         return retList;
     }
 
         private static List<String> genAddsMethod(OnePojoInfo onePojoInfo) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<insert id=\""+ MethodName.insertList.name() +"\">");
-        retList.add(TWO_RETRACT + "INSERT INTO " + tableName + "(");
-        retList.add(TWO_RETRACT + "<include refid=\"all_column\"/>");
-        retList.add(TWO_RETRACT + ")VALUES");
-        retList.add(TWO_RETRACT + "<foreach collection=\"pojos\" item=\"pojo\" index=\"index\" separator=\",\">");
-        retList.add(THREE_RETRACT + "(");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<insert id=\""+ MethodName.insertList.name() +"\">");
+        retList.add(GenCodeUtil.TWO_RETRACT + "INSERT INTO " + tableName + "(");
+        retList.add(GenCodeUtil.TWO_RETRACT + "<include refid=\"all_column\"/>");
+        retList.add(GenCodeUtil.TWO_RETRACT + ")VALUES");
+        retList.add(GenCodeUtil.TWO_RETRACT + "<foreach collection=\"pojos\" item=\"pojo\" index=\"index\" separator=\",\">");
+        retList.add(GenCodeUtil.THREE_RETRACT + "(");
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String s = THREE_RETRACT +  String.format("#{pojo.%s},",fieldName);
+            String s = GenCodeUtil.THREE_RETRACT +  String.format("#{pojo.%s},",fieldName);
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
                 s = s.replace(COMMA, StringUtils.EMPTY);
             }
             retList.add(s);
             index ++;
         }
-        retList.add(THREE_RETRACT + ")");
-        retList.add(TWO_RETRACT + "</foreach>");
-        retList.add(ONE_RETRACT + "</insert>");
+        retList.add(GenCodeUtil.THREE_RETRACT + ")");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</foreach>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</insert>");
         return retList;
     }
 
     private static List<String> genUpdateMethod(GenCodeResponse response,OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<update id=\""+ MethodName.update.name() +"\">");
-        retList.add(TWO_RETRACT + "UPDATE " + tableName );
-        retList.add(TWO_RETRACT + "<set>" );
+        retList.add( GenCodeUtil.ONE_RETRACT + "<update id=\""+ MethodName.update.name() +"\">");
+        retList.add(GenCodeUtil.TWO_RETRACT + "UPDATE " + tableName );
+        retList.add(GenCodeUtil.TWO_RETRACT + "<set>" );
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String testCondition = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
-            String updateField =  String.format("%s = #{pojo.%s},",getUnderScore(fieldName), fieldName);
+            String testCondition = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
+            String updateField =  String.format("%s = #{pojo.%s},", GenCodeUtil.getUnderScore(fieldName), fieldName);
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
                 updateField = updateField.replace(COMMA, StringUtils.EMPTY);
             }
             index ++;
             if(expand){
                 retList.add(testCondition);
-                retList.add(FOUR_RETRACT + updateField);
-                retList.add(THREE_RETRACT + "</if>");
+                retList.add(GenCodeUtil.FOUR_RETRACT + updateField);
+                retList.add(GenCodeUtil.THREE_RETRACT + "</if>");
             }else{
                 retList.add(testCondition + " " + updateField  + " </if>");
             }
 
         }
-        retList.add(TWO_RETRACT + "</set>");
-        retList.add(TWO_RETRACT + " WHERE id = #{pojo.id}");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</set>");
+        retList.add(GenCodeUtil.TWO_RETRACT + " WHERE id = #{pojo.id}");
 
         String splitKey = GenCodeResponseHelper.getSplitKey(response);
         if(StringUtils.isNotBlank(splitKey) && OnePojoInfoHelper.containSplitKey(onePojoInfo,splitKey)){
             if(expand){
-                retList.add(TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">");
-                retList.add(THREE_RETRACT + "AND "+getUnderScore(splitKey)+" = #{pojo."+splitKey+"}");
-                retList.add(TWO_RETRACT + "</if>");
+                retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">");
+                retList.add(
+                        GenCodeUtil.THREE_RETRACT + "AND "+ GenCodeUtil.getUnderScore(splitKey)+" = #{pojo."+splitKey+"}");
+                retList.add(GenCodeUtil.TWO_RETRACT + "</if>");
             }else{
-                retList.add(TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">"+" AND "+getUnderScore(splitKey)+" = #{pojo."+splitKey+"}" +" </if>");
+                retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"pojo."+splitKey+" != null\">"+" AND "+ GenCodeUtil
+                        .getUnderScore(splitKey)+" = #{pojo."+splitKey+"}" +" </if>");
             }
         }
 
         if(GenCodeResponseHelper.isUseGenericDao(response)){
-            retList.add(TWO_RETRACT + "<if test=\"option.updateOptimistic == 'TRUE'\">");
-            retList.add(THREE_RETRACT + "AND version = #{pojo.version}");
-            retList.add(TWO_RETRACT + "</if>");
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.updateOptimistic == 'TRUE'\">");
+            retList.add(GenCodeUtil.THREE_RETRACT + "AND version = #{pojo.version}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "</if>");
         }
 
-        retList.add(ONE_RETRACT + "</update>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</update>");
         return retList;
     }
 
@@ -386,79 +389,79 @@ public class GenMapperService {
     private static List<String> genSelectMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
-            retList.add(TWO_RETRACT + "SELECT"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
-            retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
-        retList.add(TWO_RETRACT + "FROM " + tableName  );
-        retList.add(TWO_RETRACT + "<where>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "FROM " + tableName  );
+        retList.add(GenCodeUtil.TWO_RETRACT + "<where>");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String testCondition = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
-            String updateField =  String.format("AND %s = #{pojo.%s}",getUnderScore(fieldName), fieldName);
+            String testCondition = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
+            String updateField =  String.format("AND %s = #{pojo.%s}", GenCodeUtil.getUnderScore(fieldName), fieldName);
             if(expand){
                 retList.add(testCondition);
-                retList.add(FOUR_RETRACT + updateField);
-                retList.add(THREE_RETRACT + "</if>");
+                retList.add(GenCodeUtil.FOUR_RETRACT + updateField);
+                retList.add(GenCodeUtil.THREE_RETRACT + "</if>");
             }else{
                 retList.add(testCondition + " " + updateField + " " + "</if>");
             }
 
         }
-        retList.add(TWO_RETRACT + "</where>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</where>");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             if(expand){
-                retList.add(TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\">");
-                retList.add(THREE_RETRACT + "ORDER BY id DESC");
-                retList.add(TWO_RETRACT + "</if>");
+                retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\">");
+                retList.add(GenCodeUtil.THREE_RETRACT + "ORDER BY id DESC");
+                retList.add(GenCodeUtil.TWO_RETRACT + "</if>");
             }else{
-                retList.add(TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\"> ORDER BY id DESC </if>");
+                retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.orderDesc == 'TRUE'\"> ORDER BY id DESC </if>");
             }
-            retList.add(TWO_RETRACT + "LIMIT #{option.limit}");
-            retList.add(TWO_RETRACT + "OFFSET #{option.offset}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "LIMIT #{option.limit}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "OFFSET #{option.offset}");
         }
 
-        retList.add(ONE_RETRACT + "</select>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</select>");
         return retList;
     }
 
     private static List<String> genQueryUseStatementMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
-            retList.add(TWO_RETRACT + "SELECT"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
         }else{
-            retList.add(TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
         }
-        retList.add(TWO_RETRACT + "FROM " + tableName);
-        retList.add(TWO_RETRACT + "<where>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "FROM " + tableName);
+        retList.add(GenCodeUtil.TWO_RETRACT + "<where>");
 
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
-            String testCondition = THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
-            String updateField =  String.format("AND %s = ${pojo.%s}",getUnderScore(fieldName), fieldName);
+            String testCondition = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
+            String updateField =  String.format("AND %s = ${pojo.%s}", GenCodeUtil.getUnderScore(fieldName), fieldName);
             if(expand){
                 retList.add(testCondition);
-                retList.add(FOUR_RETRACT + updateField);
-                retList.add(THREE_RETRACT + "</if>");
+                retList.add(GenCodeUtil.FOUR_RETRACT + updateField);
+                retList.add(GenCodeUtil.THREE_RETRACT + "</if>");
             }else{
                 retList.add(testCondition + " " + updateField + " " + "</if>");
             }
         }
-        retList.add(TWO_RETRACT + "</where>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "</where>");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
-            retList.add(TWO_RETRACT + "${option.whereConditions}");
-            retList.add(TWO_RETRACT + "LIMIT ${option.limit}");
-            retList.add(TWO_RETRACT + "OFFSET ${option.offset}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "${option.whereConditions}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "LIMIT ${option.limit}");
+            retList.add(GenCodeUtil.TWO_RETRACT + "OFFSET ${option.offset}");
         }
-        retList.add(ONE_RETRACT + "</select>");
+        retList.add(GenCodeUtil.ONE_RETRACT + "</select>");
         return retList;
     }
 

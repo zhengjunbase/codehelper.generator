@@ -1,4 +1,4 @@
-package main.java.com.ccnode.codegenerator.util;
+package com.ccnode.codegenerator.util;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;

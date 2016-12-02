@@ -1,5 +1,5 @@
-package main.java.com.ccnode.codegenerator.util;
-import main.java.com.ccnode.codegenerator.pojo.RequestData;
+package com.ccnode.codegenerator.util;
+import com.ccnode.codegenerator.pojo.RequestData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;

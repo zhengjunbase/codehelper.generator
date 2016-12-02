@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class GenCodeUtilTest {
     @Test
     public void test(){
-        GenCodeUtil.deducePackage("src/main/java/com/rest/mapper","com.rest.domain","D:\\code\\coding.net\\upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java");
+//        GenCodeUtil.deducePackage("src/main/java/com/rest/mapper","com.rest.domain","D:\\code\\coding.net\\upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java");
     }
 
 
