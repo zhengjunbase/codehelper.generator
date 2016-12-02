@@ -52,9 +52,9 @@
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
-    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
-    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
-    <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
+    <action id="mybatis.AutoCoding" class="main.java.com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
+    <action id="mybatis.genMybatisCode" class="main.java.com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
+    <action id="mybatis.LearnMore" class="main.java.com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
     <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
 
       <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
@@ -78,8 +78,8 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
-      <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
-                          serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
+      <applicationService serviceInterface="main.java.com.ccnode.codegenerator.storage.SettingService"
+                          serviceImplementation="main.java.com.ccnode.codegenerator.storage.SettingService" />
   </extensions>
 
   <actions>

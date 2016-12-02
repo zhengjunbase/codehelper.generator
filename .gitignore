@@ -15,14 +15,14 @@ gen
 /MybatisGenerator.iws
 out*
 
-*EnterLicenseAction.java
+src/main/java/com/ccnode/codegenerator/view/EnterLicenseAction.java
 *ShowPremiumAction.java
-*RegisterCheckService.java
+src/main/java/com/ccnode/codegenerator/service/register/RegisterCheckService.java
 *RegisterRawResponseHelper.java
 *RegisterRawRequest.java
 *RegisterRawResponse.java
 *RegisterRawRequestHelper.java
-*RegisterService.java
+src/main/java/com/ccnode/codegenerator/service/register/RegisterService.java
 MybatisGenerator.iml
 MybatisGenerator.ipr
 MybatisGenerator.iws
