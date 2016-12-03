@@ -57,4 +57,4 @@ GenDaoCode 使用方法
 联系作者 & 加入开发
 
 - 扫码加入 开发交流群
-- ![avatar](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/master/src/main/resources/group2.jpeg )
+ ![avatar](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/master/src/main/resources/group3.jpeg )
