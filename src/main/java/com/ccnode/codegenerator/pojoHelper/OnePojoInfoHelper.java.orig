@@ -1,9 +1,9 @@
 
 package com.ccnode.codegenerator.pojoHelper;
 
-import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.util.*;
+import com.ccnode.codegenerator.enums.FileType;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -188,7 +188,12 @@ public class OnePojoInfoHelper {
         if(daoFile == null){
             return;
         }
+<<<<<<< HEAD:src/main/java/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java
         String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
+=======
+        String deducePackage = GenCodeUtil
+                .deducePackage(StringUtils.defaultIfEmpty(response.getCodeConfig().getDaoDir(),onePojoInfo.getPojoDirPath()) ,onePojoInfo.getPojoPackage());
+>>>>>>> 0a9551978a1c06a7eb16f869129891c63cde7b37:src/main/java/com/ccnode/codegenerator/pojoHelper/OnePojoInfoHelper.java
         for (String s : daoFile.getOriginLines()) {
             if(s.trim().contains("package ")){
                 deducePackage = parsePackage(s);
