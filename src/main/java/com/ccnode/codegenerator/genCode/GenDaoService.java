@@ -3,16 +3,20 @@ package com.ccnode.codegenerator.genCode;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
+import com.ccnode.codegenerator.util.GenCodeUtil;
 import org.slf4j.Logger;
 
 import java.util.List;
-
-import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
 
 /**
  * What always stop you is what you always believe.
@@ -66,13 +70,14 @@ public class GenDaoService {
             newLines.add("");
             newLines.add("public interface "+pojoNameDao+" {");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int "+ MethodName.insert.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.insert.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int "+ MethodName.insertList.name() +"(@Param(\"pojos\") List< "+pojoName +"> pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.insertList.name() +"(@Param(\"pojos\") List< "+pojoName +"> pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "List<"+pojoName+"> "+ MethodName.select.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(
+                    GenCodeUtil.ONE_RETRACT + "List<"+pojoName+"> "+ MethodName.select.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "int "+ MethodName.update.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.update.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);

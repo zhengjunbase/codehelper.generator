@@ -1,6 +1,5 @@
 package com.ccnode.codegenerator.pojo;
 
-import com.ccnode.codegenerator.enums.UserType;
 import com.intellij.openapi.project.Project;
 
 import java.util.List;

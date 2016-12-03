@@ -2,8 +2,6 @@ package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.BaseResponse;
 
-import java.util.Date;
-
 /**
  * What always stop you is what you always believe.
  * <p>

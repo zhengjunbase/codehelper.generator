@@ -1,6 +1,5 @@
 package com.ccnode.codegenerator.function;
 
-import com.ccnode.codegenerator.util.GenCodeUtil;
 import org.apache.commons.lang3.StringUtils;
 
 /**

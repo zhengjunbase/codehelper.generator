@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.pojo.ListInfo;
 import com.ccnode.codegenerator.function.EqualCondition;
 import com.ccnode.codegenerator.pojo.ListInfo;
 import com.google.common.collect.Lists;

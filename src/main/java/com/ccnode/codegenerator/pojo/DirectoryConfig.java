@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.pojo;
 
 import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.FileType;
 import com.google.common.collect.Maps;
 
 import java.util.Map;

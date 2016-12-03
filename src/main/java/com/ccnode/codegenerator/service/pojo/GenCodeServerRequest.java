@@ -2,7 +2,8 @@ package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.storage.SettingDto;
-import com.google.common.base.Throwables;
+import com.ccnode.codegenerator.pojo.ChangeInfo;
+import com.ccnode.codegenerator.storage.SettingDto;
 
 import java.util.List;
 

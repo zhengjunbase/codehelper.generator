@@ -1,24 +1,8 @@
 package com.ccnode.codegenerator.service.register;
 
-import com.ccnode.codegenerator.enums.RequestType;
-import com.ccnode.codegenerator.enums.UrlManager;
-import com.ccnode.codegenerator.pojo.BaseResponse;
-import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
-import com.ccnode.codegenerator.service.pojo.RegisterRequest;
-import com.ccnode.codegenerator.service.pojo.RegisterResponse;
-import com.ccnode.codegenerator.service.pojo.ServerResponse;
-import com.ccnode.codegenerator.storage.SettingDto;
-import com.ccnode.codegenerator.storage.SettingService;
-import com.ccnode.codegenerator.util.HttpUtil;
-import com.ccnode.codegenerator.util.JSONUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.util.SecurityHelper;
-import com.intellij.openapi.components.ServiceManager;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
-
-import java.util.Date;
 
 /**
  * What always stop you is what you always believe.

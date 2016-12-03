@@ -12,7 +12,11 @@ import java.nio.file.Paths;
 public class GenCodeUtilTest {
     @Test
     public void test(){
+<<<<<<< HEAD
         GenCodeUtil.deducePackage("src/main/java/com/rest/mapper","com.rest.domain","D:\\code\\coding.net\\upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java");
+=======
+//        GenCodeUtil.deducePackage("src/main/java/com/rest/mapper","com.rest.domain","D:\\code\\coding.net\\upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java");
+>>>>>>> 0a9551978a1c06a7eb16f869129891c63cde7b37
     }
 
 
@@ -37,7 +41,8 @@ public class GenCodeUtilTest {
 
 
 
-        //a 不为空的情况 可以这么�
+        //a 不为空的情况 可以这么弄
+
         System.out.println(path.toString());
 
         Path  mapper = Paths.get(a);

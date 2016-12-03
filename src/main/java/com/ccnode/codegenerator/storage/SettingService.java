@@ -1,10 +1,9 @@
 package com.ccnode.codegenerator.storage;
 
 import com.ccnode.codegenerator.common.VersionManager;
-import com.ccnode.codegenerator.enums.UrlManager;
-import com.ccnode.codegenerator.service.SendToServerService;
 import com.ccnode.codegenerator.util.DateUtil;
-import com.ccnode.codegenerator.util.PojoUtil;
+import com.ccnode.codegenerator.common.VersionManager;
+import com.ccnode.codegenerator.util.DateUtil;
 import com.ccnode.codegenerator.util.SecurityHelper;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -15,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -100,7 +98,8 @@ public class SettingService implements PersistentStateComponent<SettingDto> {
     }
 
     public static boolean isDonated() {
-        return getInstance().getState().getDonatedDate() != null && DateUtil.getDayBetween(getInstance().getState().getDonatedDate(), new Date()) < 365;
+        return getInstance().getState().getDonatedDate() != null && DateUtil
+                .getDayBetween(getInstance().getState().getDonatedDate(), new Date()) < 365;
     }
 
     public static String getOldVersion(){

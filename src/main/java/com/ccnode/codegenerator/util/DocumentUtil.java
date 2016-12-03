@@ -1,14 +1,11 @@
 package com.ccnode.codegenerator.util;
 
-import com.ccnode.codegenerator.storage.SettingDto;
-import com.ccnode.codegenerator.storage.SettingService;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.DocumentRunnable;
 import com.intellij.openapi.project.Project;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * What always stop you is what you always believe.

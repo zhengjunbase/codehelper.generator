@@ -1,8 +1,5 @@
 package com.ccnode.codegenerator.service.pojo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * What always stop you is what you always believe.
  * <p>

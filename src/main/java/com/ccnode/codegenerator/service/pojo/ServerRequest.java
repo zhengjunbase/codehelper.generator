@@ -1,9 +1,7 @@
 package com.ccnode.codegenerator.service.pojo;
 
 import com.ccnode.codegenerator.pojo.BaseRequest;
-import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 

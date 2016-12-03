@@ -3,6 +3,11 @@ package com.ccnode.codegenerator.genCode;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.MethodName;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
@@ -13,9 +18,6 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 
 import java.util.List;
-
-import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
-import static com.ccnode.codegenerator.util.GenCodeUtil.TWO_RETRACT;
 
 /**
  * What always stop you is what you always believe.
@@ -61,12 +63,13 @@ public class GenServiceService {
             newLines.add("public class " + pojoName + "Service extends GenericService<" + pojoName + "> {");
             newLines.add("");
             newLines.add("    @Resource");
-            newLines.add(ONE_RETRACT + "private " + pojoName + "Dao " + GenCodeUtil.getLowerCamel(pojoName) + "Dao;");
+            newLines.add(
+                    GenCodeUtil.ONE_RETRACT + "private " + pojoName + "Dao " + GenCodeUtil.getLowerCamel(pojoName) + "Dao;");
             newLines.add("");
             newLines.add("    @Override");
-            newLines.add(ONE_RETRACT + "public GenericDao<" + pojoName + "> getGenericDao() {");
-            newLines.add(TWO_RETRACT + "return " + GenCodeUtil.getLowerCamel(pojoNameDao) + ";");
-            newLines.add(ONE_RETRACT + "}");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "public GenericDao<" + pojoName + "> getGenericDao() {");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return " + GenCodeUtil.getLowerCamel(pojoNameDao) + ";");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("}");
             fileInfo.setNewLines(newLines);
         }else{
@@ -84,23 +87,24 @@ public class GenServiceService {
             newLines.add("public class " + pojoName + "Service {");
             newLines.add("");
             newLines.add("    @Resource");
-            newLines.add(ONE_RETRACT + "private " + pojoName + "Dao " + daoName + ";");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "private " + pojoName + "Dao " + daoName + ";");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "public int "+ MethodName.insert.name() +"("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.insert.name() +"(pojo);");
-            newLines.add(ONE_RETRACT + "}");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "public int "+ MethodName.insert.name() +"("+pojoName +" pojo){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.insert.name() +"(pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT +"public int "+ MethodName.insertList.name() +"(List< "+pojoName +"> pojos){");
-            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.insertList.name() +"(pojos);");
-            newLines.add(ONE_RETRACT + "}");
+            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.insertList.name() +"(List< "+pojoName +"> pojos){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.insertList.name() +"(pojos);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT + "public List<"+pojoName+"> "+ MethodName.select.name() +"("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.select.name() +"(pojo);");
-            newLines.add(ONE_RETRACT + "}");
+            newLines.add(
+                    GenCodeUtil.ONE_RETRACT + "public List<"+pojoName+"> "+ MethodName.select.name() +"("+pojoName +" pojo){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.select.name() +"(pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(ONE_RETRACT +"public int "+ MethodName.update.name() +"("+pojoName +" pojo){");
-            newLines.add(TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
-            newLines.add(ONE_RETRACT + "}");
+            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.update.name() +"("+pojoName +" pojo){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);

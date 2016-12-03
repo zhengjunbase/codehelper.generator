@@ -1,15 +1,11 @@
 package com.ccnode.codegenerator.pojoHelper;
 
+import com.ccnode.codegenerator.service.pojo.ServerRequest;
 import com.ccnode.codegenerator.common.VersionManager;
 import com.ccnode.codegenerator.service.pojo.ServerRequest;
 import com.ccnode.codegenerator.storage.SettingService;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
-import java.util.List;
 
 /**
  * What always stop you is what you always believe.

@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.util;
 
 import com.ccnode.codegenerator.exception.BizException;
+import com.ccnode.codegenerator.exception.BizException;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;

@@ -143,7 +143,7 @@ public class DaoCodeUtil {
     private static String generateJavaSignature(){
         StringBuilder ret = new StringBuilder();
          ret.append("/**\n")
-                 .append(" * Auto Generated on " + com.ccnode.codegenerator.util.DateUtil.formatLong(new Date()) +"\n")
+                 .append(" * Auto Generated on " + DateUtil.formatLong(new Date()) +"\n")
                  .append(" */\n");
         return ret.toString();
     }

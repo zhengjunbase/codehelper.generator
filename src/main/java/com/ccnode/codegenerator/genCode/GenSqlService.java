@@ -6,7 +6,6 @@ import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
-import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.*;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -20,8 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_RETRACT;
 
 /**
  * What always stop you is what you always believe.
@@ -76,7 +73,7 @@ public class GenSqlService {
             String fieldSql = genfieldSql(field, response);
             retList.add(fieldSql);
         }
-        retList.add(ONE_RETRACT + "PRIMARY KEY (`id`)");
+        retList.add(GenCodeUtil.ONE_RETRACT + "PRIMARY KEY (`id`)");
         retList.add(String.format(")ENGINE=%s DEFAULT CHARSET=%s COMMENT '%s';", getSqlEngine(response),
                 getSqlCharSet(response), tableName));
         return retList;
@@ -223,24 +220,24 @@ public class GenSqlService {
         StringBuilder ret = new StringBuilder();
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
-            ret.append(ONE_RETRACT)
+            ret.append(GenCodeUtil.ONE_RETRACT)
                     .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
         if (fieldInfo.getFieldName().equalsIgnoreCase("updateTime")) {
-            ret.append(ONE_RETRACT)
+            ret.append(GenCodeUtil.ONE_RETRACT)
                     .append("`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
-            ret.append(ONE_RETRACT)
+            ret.append(GenCodeUtil.ONE_RETRACT)
                     .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equals("id")) {
-            String append = new StringBuilder().append(ONE_RETRACT).
+            String append = new StringBuilder().append(GenCodeUtil.ONE_RETRACT).
                     append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',").toString();
             if(fieldInfo.getFieldClass().equals("Integer")
                     || fieldInfo.getFieldClass().equals("int")){
@@ -251,7 +248,7 @@ public class GenSqlService {
         }
 
         String filedClassDefault = getDefaultField(fieldInfo, response);
-        ret.append(ONE_RETRACT).append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ")
+        ret.append(GenCodeUtil.ONE_RETRACT).append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ")
                 .append(filedClassDefault).append(" COMMENT '").append(getFieldComment(response,fieldInfo)).append("',");
         return ret.toString();
     }

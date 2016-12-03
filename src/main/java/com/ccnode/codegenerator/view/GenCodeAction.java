@@ -1,6 +1,5 @@
 package com.ccnode.codegenerator.view;
 
-import com.ccnode.codegenerator.enums.UrlManager;
 import com.ccnode.codegenerator.genCode.GenCodeService;
 import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
@@ -9,12 +8,9 @@ import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.service.SendToServerService;
 import com.ccnode.codegenerator.service.pojo.GenCodeServerRequest;
-import com.ccnode.codegenerator.storage.SettingService;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.collect.Lists;
-import com.intellij.ide.browsers.BrowserLauncher;
-import com.intellij.ide.browsers.WebBrowserManager;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -27,7 +23,6 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;

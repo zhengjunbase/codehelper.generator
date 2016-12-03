@@ -9,26 +9,30 @@
 .idea/
 *.iml
 out/
+build/
 gen
 /MybatisGenerator.iml
 /MybatisGenerator.ipr
 /MybatisGenerator.iws
+.gradle/
 out*
 
+src/com/ccnode/codegenerator/view/EnterLicenseAction.java
 *ShowPremiumAction.java
+src/com/ccnode/codegenerator/service/register/RegisterCheckService.java
 *RegisterRawResponseHelper.java
 *RegisterRawRequest.java
 *RegisterRawResponse.java
 *RegisterRawRequestHelper.java
+src/com/ccnode/codegenerator/service/register/RegisterService.java
 MybatisGenerator.iml
 MybatisGenerator.ipr
 MybatisGenerator.iws
-build/
-.gradle/
-### Example user template template
+
+classes
+plugin.zip
 ### Example user template
 
 # IntelliJ project files
 .idea
 out
-

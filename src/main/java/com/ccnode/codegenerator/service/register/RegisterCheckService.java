@@ -1,14 +1,8 @@
 package com.ccnode.codegenerator.service.register;
 
-import com.ccnode.codegenerator.enums.UrlManager;
-import com.ccnode.codegenerator.storage.SettingService;
-import com.ccnode.codegenerator.util.HttpUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.util.SecurityHelper;
-import org.apache.commons.lang3.StringUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
 import org.slf4j.Logger;
-
-import java.util.Date;
 
 /**
  * What always stop you is what you always believe.
