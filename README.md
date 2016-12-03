@@ -53,9 +53,5 @@ source code of CodeHelper.generator
       <li><p>如何配置: http://codehelper.me/generator/config</p></li>
       </ul>
       <p>联系作者 & 加入开发</p>
-      <ul>
-       <li><p> 扫码加入 开发交流群![alt tag](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/master/src/main/resources/group.jpeg)</p></li>
-       ![avatar](http://baidu.com/pic/doge.png)
 
-       </ul>
-      </div>
+
