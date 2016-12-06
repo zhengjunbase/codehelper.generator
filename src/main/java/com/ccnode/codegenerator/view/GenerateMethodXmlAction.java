@@ -1,21 +1,18 @@
 package com.ccnode.codegenerator.view;
 
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
-import com.intellij.ide.util.PropertiesComponent;
-import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.testIntegration.TestFramework;
+import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.testIntegration.createTest.CreateTestDialog;
-import com.intellij.testIntegration.createTest.TestGenerator;
-import com.intellij.testIntegration.createTest.TestGenerators;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +25,7 @@ import java.util.HashSet;
  */
 public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
+    public static final String JAVALIST = "java.util.List";
     private static final String CREATE_TEST_IN_THE_SAME_ROOT = "create.test.in.the.same.root";
     public static final String GENERATE_DAOXML = "generate daoxml";
 
@@ -35,31 +33,89 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         Module srcModule = ModuleUtilCore.findModuleForPsiElement(element);
         PsiClass srcClass = getContainingClass(element);
+
         if (srcClass == null) return;
         PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
         PsiPackage srcPackage = JavaDirectoryService.getInstance().getPackage(srcDir);
-        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-        HashSet<VirtualFile> testFolder = new HashSet<>();
-        checkForTestRoots(srcModule, testFolder);
-        if (testFolder.isEmpty() && !propertiesComponent.getBoolean(CREATE_TEST_IN_THE_SAME_ROOT, false)) {
-            if (Messages.showOkCancelDialog(project, "Create test in the same source root?", "No Test Roots Found",
-                    Messages.getQuestionIcon()) != Messages.OK) {
-                return;
-            }
-            propertiesComponent.setValue(CREATE_TEST_IN_THE_SAME_ROOT, String.valueOf(true));
-        }
-        CreateTestDialog d = createTestDialog(project, srcModule, srcClass, srcPackage);
-        if (!d.showAndGet()) {
+        PsiElement parent = element.getParent();
+        if (!(parent instanceof PsiMethod)) {
             return;
         }
-        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-            @Override
-            public void run() {
-                TestFramework framework = d.getSelectedTestFrameworkDescriptor();
-                TestGenerator testGenerator = TestGenerators.INSTANCE.forLanguage(framework.getLanguage());
-                testGenerator.generateTest(project, d);
+        PsiMethod method = (PsiMethod) parent;
+        String methodName = method.getName();
+        String returnClassName = method.getReturnType().getCanonicalText();
+        if (returnClassName.startsWith(JAVALIST)) {
+            returnClassName = returnClassName.substring(JAVALIST.length() + 1, returnClassName.length() - 1);
+        }
+        PsiClass pojoClass = null;
+        PsiMethod addMethod = null;
+        PsiMethod[] methods = srcClass.getMethods();
+        for (PsiMethod classMethod : methods) {
+            String name = classMethod.getName().toLowerCase();
+            if (name.equals("insert") || name.equals("save") || name.equals("add")) {
+                addMethod = classMethod;
+                break;
             }
-        }, GENERATE_DAOXML, this);
+        }
+        if (addMethod != null) {
+            PsiParameterList parameterList = addMethod.getParameterList();
+            PsiParameter[] parameters = parameterList.getParameters();
+            if (parameters.length == 1) {
+                PsiType type = parameters[0].getType();
+                pojoClass = PsiTypesUtil.getPsiClass(type);
+                //try to get it from the class.
+            }
+        }
+        String srcClassName = srcClass.getName();
+        if (pojoClass == null) {
+            if (srcClassName.endsWith("Dao")) {
+                String className = srcClassName.substring(0, srcClassName.length() - "Dao".length());
+                PsiClass[] classesByName
+                        = PsiShortNamesCache.getInstance(project).getClassesByName(className, GlobalSearchScope.moduleScope(srcModule));
+                if (classesByName.length == 1) {
+                    pojoClass = classesByName[0];
+                } else {
+                    //todo say there are two class with same name. let use choose with one.
+                }
+            } else {
+                //todo show with error can't from the pojo class to inject.
+            }
+            //then get the file of xml get table name from it cause it the most right.
+        }
+        if (pojoClass == null) {
+            //say can't find with pojo class file.
+            return;
+        }
+
+
+
+
+        //use this to find the class.
+        //then get the returnclassName, go the load with the name.
+        //find the Po class and get it's property.
+
+//        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+//        HashSet<VirtualFile> testFolder = new HashSet<>();
+//        checkForTestRoots(srcModule, testFolder);
+//        if (testFolder.isEmpty() && !propertiesComponent.getBoolean(CREATE_TEST_IN_THE_SAME_ROOT, false)) {
+//            if (Messages.showOkCancelDialog(project, "Create test in the same source root?", "No Test Roots Found",
+//                    Messages.getQuestionIcon()) != Messages.OK) {
+//                return;
+//            }
+//            propertiesComponent.setValue(CREATE_TEST_IN_THE_SAME_ROOT, String.valueOf(true));
+//        }
+//        CreateTestDialog d = createTestDialog(project, srcModule, srcClass, srcPackage);
+//        if (!d.showAndGet()) {
+//            return;
+//        }
+//        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+//            @Override
+//            public void run() {
+//                TestFramework framework = d.getSelectedTestFrameworkDescriptor();
+//                TestGenerator testGenerator = TestGenerators.INSTANCE.forLanguage(framework.getLanguage());
+//                testGenerator.generateTest(project, d);
+//            }
+//        }, GENERATE_DAOXML, this);
     }
 
     private CreateTestDialog createTestDialog(Project project, Module srcModule, PsiClass srcClass, PsiPackage srcPackage) {
