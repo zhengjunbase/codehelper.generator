@@ -91,8 +91,19 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (leftBrace == null) {
             return false;
         }
-        if (element.getTextOffset() >= leftBrace.getTextOffset()) return false;
-        return true;
+        if (element instanceof PsiMethod) {
+            PsiMethod method = (PsiMethod) element;
+        }
+        PsiElement parent = element.getParent();
+        if (parent instanceof PsiMethod) {
+            // ok.
+            PsiMethod method = (PsiMethod) parent;
+            String methodName = method.getName().toLowerCase();
+            if (methodName.startsWith("find") || methodName.startsWith("update") || methodName.startsWith("delete")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @NotNull
@@ -110,7 +121,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (containingClass == null) return false;
         Module srcMoudle = ModuleUtilCore.findModuleForPsiElement(containingClass);
         if (srcMoudle == null) return false;
-        if (containingClass.isAnnotationType() || containingClass instanceof PsiAnonymousClass) {
+        if (containingClass.isAnnotationType() || containingClass instanceof PsiAnonymousClass || !containingClass.isInterface()) {
             return false;
         }
         return true;

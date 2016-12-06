@@ -111,6 +111,13 @@
         <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
         <bundleName>Generate daoxml</bundleName>
       </intentionAction>
+
+
+    <!--<intentionAction>-->
+      <!--<className>com.ccnode.codegenerator.view.GenerateDaoXmlFixAction</className>-->
+      <!--<category>Conditional Operator</category>-->
+      <!--<descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>-->
+    <!--</intentionAction>-->
   </extensions>
 
   <!--<project-components>-->
