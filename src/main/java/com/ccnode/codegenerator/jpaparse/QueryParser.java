@@ -18,10 +18,10 @@ public class QueryParser {
 
     /**
      * @param
-     * @param props      the props of bean need to use with
+     * @param props the props of bean need to use with
      * @return
      */
-    public static XmlTag parse(XmlTag rootTag, String orginMethodName, List<String> props, String tableName, String returnClassName) {
+    public static XmlTag parse(XmlTag rootTag, String orginMethodName, List<String> props, String tableName, ReturnClassInfo returnClssInfo) {
         String methodName = orginMethodName.toLowerCase();
         Collections.sort(props, new Comparator<String>() {
             @Override
@@ -34,7 +34,11 @@ public class QueryParser {
             String sql = FindParser.parse(methodName, props, tableName);
             XmlTag select = rootTag.createChildTag("select", "", sql, false);
             select.setAttribute("id", orginMethodName);
-            select.setAttribute("resultType", returnClassName);
+            if (returnClssInfo.getResultMap() != null) {
+                select.setAttribute("resultMap", returnClssInfo.getResultMap());
+            } else {
+                select.setAttribute("resultType", returnClssInfo.getReturnClassName());
+            }
             return select;
         } else if (methodName.startsWith(KeyWordConstants.UPDATE)) {
             String sql = UpdateParser.parse(methodName, props, tableName);

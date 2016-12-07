@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
+import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
@@ -78,6 +79,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
         String srcClassName = srcClass.getName();
+
         if (pojoClass == null) {
             if (srcClassName.endsWith("Dao")) {
                 String className = srcClassName.substring(0, srcClassName.length() - "Dao".length());
@@ -136,6 +138,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         boolean allColumMapExist = false;
         boolean allColumns = false;
 
+        //boolean isReturnclassCurrentClass.
         for (XmlTag tag : subTags) {
             if (tag.getName().equalsIgnoreCase("insert")) {
                 String insertText = tag.getValue().getText();
@@ -182,8 +185,8 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         //go get the props
         //create resultMap for return class.
 
-
-        XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, returnClassName);
+        ReturnClassInfo info = buildReturnClassInfo(returnClassName, pojoClass);
+        XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
         //todo display a form for user to choose from. let user check and edit.
 
         rootTag.addSubTag(sql, false);
@@ -228,10 +231,24 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //        }, GENERATE_DAOXML, this);
     }
 
+    private ReturnClassInfo buildReturnClassInfo(String returnClassName, PsiClass pojoClass) {
+        ReturnClassInfo info = new ReturnClassInfo();
+        info.setReturnClassName(returnClassName);
+        if (returnClassName.startsWith("java.lang")) {
+            info.setBasicType(true);
+        } else if (returnClassName.equals(pojoClass.getQualifiedName())) {
+            info.setResultMap(MapperConstants.ALL_COLUMN_MAP);
+        }
+        return info;
+    }
+
     private String buildAllColumn(List<String> props) {
         StringBuilder bu = new StringBuilder();
-        for (String pp : props) {
-            bu.append("\n\t").append(GenCodeUtil.getUnderScore(pp) + ",");
+        for (int i = 0; i < props.size(); i++) {
+            bu.append("\n\t").append(GenCodeUtil.getUnderScore(props.get(i)));
+            if (i != props.size() - 1) {
+                bu.append(",");
+            }
         }
         bu.append("\n");
         return bu.toString();
