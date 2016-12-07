@@ -245,8 +245,7 @@ public class FindParser extends AbstractParser {
         //first check with orderBy.
         // than check with props
         for (String prop : props) {
-            prop = prop.toLowerCase();
-            Pattern propPattern = PatternUtils.getPattern(prop);
+            Pattern propPattern = PatternUtils.getPattern(prop.toLowerCase());
             Matcher propMatcher = propPattern.matcher(methodName);
             while (propMatcher.find()) {
                 int start = propMatcher.start();

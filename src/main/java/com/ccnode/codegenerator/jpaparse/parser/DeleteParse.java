@@ -115,7 +115,7 @@ public class DeleteParse extends AbstractParser {
             throw new ParseException("update not start with update not legal");
         }
         for (String prop : props) {
-            Pattern pattern = PatternUtils.getPattern(prop);
+            Pattern pattern = PatternUtils.getPattern(prop.toLowerCase());
             Matcher matcher = pattern.matcher(method);
             while (matcher.find()) {
                 int start = matcher.start();
