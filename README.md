@@ -30,7 +30,8 @@ GenDaoCode Usages
 - Click main menu Tools-> Codehelper-> GenDaoCode button to generate the code.
 - Method One: Click GenDaoCode, and then enter the Pojo name in prompt box,
   multiple Pojo separated by | , CodeHelper will generate code use default config.
-- Method two: Add a codehelper.properties in your resources directory.
+- Method two: Add a codehelper.properties in your resources directory.  
+  example is here [https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties](https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties)
   Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.
 
 GenDaoCode 特性
@@ -50,7 +51,8 @@ GenDaoCode 使用方法
 - 主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。
 - 方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。
 - Codehelper Generator会根据默认配置为您生成代码。
-- 方法二：在resources目录下添加文件名为codehelper.properties的文件。
+- 方法二：在resources目录下添加文件名为codehelper.properties的文件。  
+例子：[https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties](https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties)
 - 点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码
 - 如何配置: [http://codehelper.me/generator/config](http://codehelper.me/generator/config)
 
