@@ -101,27 +101,16 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         String xmlFileName = srcClassName + ".xml";
 
         String tableName = null;
-        XmlTag rootTag = null;
-        PsiFile psixml = null;
+        XmlFileImpl psixml = null;
         PsiFile[] filesByName = PsiShortNamesCache.getInstance(project).getFilesByName(xmlFileName);
         if (filesByName.length == 1) {
-            psixml = filesByName[0];
-            rootTag = ((XmlFileImpl) psixml).getRootTag();
-            String namespace = rootTag.getAttribute("namespace").getValue();
-            if (namespace.equals(srcClass.getQualifiedName())) {
-                XmlTag[] subTags = rootTag.getSubTags();
-                for (XmlTag tag : subTags) {
-                    if (tag.getName().equalsIgnoreCase("insert")) {
-                        String insertText = tag.getValue().getText();
-                        //go format it.
-                        tableName = extractTable(insertText);
-                        if (tableName != null) {
-                            break;
-                        }
-                    }
+            if (filesByName[0] instanceof XmlFileImpl) {
+                XmlTag rootTag = ((XmlFileImpl) filesByName[0]).getRootTag();
+                String namespace = rootTag.getAttribute("namespace").getValue();
+                //only the name space is equal than deal with it.
+                if (namespace.equals(srcClass.getQualifiedName())) {
+                    psixml = (XmlFileImpl) filesByName[0];
                 }
-                //then go next shall be the same.
-                //deal with it.
             }
         } else if (filesByName.length > 1) {
             //todo display a form for user to select.
@@ -134,12 +123,30 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
         }
 
+        //extract field from pojoClass.
+        PsiField[] allFields = pojoClass.getAllFields();
+        List<String> props = extractProps(allFields);
+        //find the corresponding xml file.
+        XmlTag rootTag = psixml.getRootTag();
+        XmlTag[] subTags = rootTag.getSubTags();
+        for (XmlTag tag : subTags) {
+            if (tag.getName().equalsIgnoreCase("insert")) {
+                String insertText = tag.getValue().getText();
+                //go format it.
+                tableName = extractTable(insertText);
+                if (tableName != null) {
+                    break;
+                }
+            }
+            //then go next shall be the same.
+            //deal with it.
+        }
+
         String existValues
                 = methodAlreadyExist(psixml, methodName);
 
         //go get the props
-        PsiField[] allFields = pojoClass.getAllFields();
-        List<String> props = extractProps(allFields);
+
 
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, returnClassName);
         //todo display a form for user to choose from. let user check and edit.

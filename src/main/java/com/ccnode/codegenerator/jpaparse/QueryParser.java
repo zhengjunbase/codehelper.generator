@@ -17,7 +17,7 @@ import java.util.List;
 public class QueryParser {
 
     /**
-     * @param methodName
+     * @param
      * @param props      the props of bean need to use with
      * @return
      */
