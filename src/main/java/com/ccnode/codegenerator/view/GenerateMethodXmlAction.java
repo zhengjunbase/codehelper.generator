@@ -15,6 +15,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiTypesUtil;
+import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testIntegration.createTest.CreateTestDialog;
 import com.intellij.util.IncorrectOperationException;
@@ -25,6 +26,7 @@ import org.jetbrains.jps.model.java.JavaSourceRootType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bruce.ge on 2016/12/5.
@@ -127,13 +129,21 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             //todo can't find with file, so how to deal with this. go to the resource folder check with it.
         }
 
+        if (psixml == null) {
+            //todo let user chooose or just close it. means we can't find your xml file. //so can't create tableName etc.
+
+        }
+
+        String existValues
+                = methodAlreadyExist(psixml, methodName);
+
         //go get the props
         PsiField[] allFields = pojoClass.getAllFields();
         List<String> props = extractProps(allFields);
 
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, returnClassName);
-        int a = rootTag.getSubTags().length;
         //todo display a form for user to choose from. let user check and edit.
+
         rootTag.addSubTag(sql, false);
 //        Assert.assertEquals(a + 1, rootTag.getSubTags().length);
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
@@ -174,6 +184,21 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //                testGenerator.generateTest(project, d);
 //            }
 //        }, GENERATE_DAOXML, this);
+    }
+
+    private static String methodAlreadyExist(PsiFile psixml, String methodName) {
+        XmlTag rootTag = ((XmlFileImpl) psixml).getRootTag();
+        XmlTag[] subTags = rootTag.getSubTags();
+        Set<String> existIds = new HashSet<String>();
+        for (XmlTag subTag : subTags) {
+            XmlAttribute id = subTag.getAttribute("id");
+            if (id != null && id.getValue() != null && id.getValue().equalsIgnoreCase(methodName)) {
+                return subTag.getText();
+            }
+        }
+
+        return null;
+
     }
 
     private List<String> extractProps(PsiField[] allFields) {
