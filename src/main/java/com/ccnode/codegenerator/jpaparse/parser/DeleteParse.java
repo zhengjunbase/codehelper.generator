@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 /**
  * Created by bruce.ge on 2016/12/4.
  */
-public class DeleteParse extends AbstractParser {
+public class DeleteParse extends BaseParser {
 
 
     public static String parse(String method, List<String> props, String tableName) {

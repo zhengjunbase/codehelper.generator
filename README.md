@@ -33,6 +33,10 @@ GenDaoCode Usages
 - Method two: Add a codehelper.properties in your resources directory.  
   example is here [https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties](https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties)
   Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.
+  
+Screenshot
+-----------------------------------------------------------------
+
 
 GenDaoCode 特性
 -----------------------------------------------------------------------

@@ -8,7 +8,7 @@ import com.ccnode.codegenerator.jpaparse.info.BaseInfo;
 /**
  * Created by bruce.ge on 2016/12/5.
  */
-public abstract class AbstractParser {
+public  class BaseParser {
     protected static String[] finds = {KeyWordConstants.FINDDISTINCT, KeyWordConstants.FIND};
 
     protected static String[] linkOp = {KeyWordConstants.AND, KeyWordConstants.OR};
@@ -22,17 +22,17 @@ public abstract class AbstractParser {
     protected static void handleWithCompare(BaseInfo info, Term cur) {
         switch (cur.getValue()) {
             case KeyWordConstants.GREATERTHAN: {
-                info.setQueryPart(info.getQueryPart() + " >#{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " "+cdata(">")+"#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.LESSTHAN: {
-                info.setQueryPart(info.getQueryPart() + " <#{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " "+cdata("<")+"#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.BETWEEN: {
-                info.setQueryPart(info.getQueryPart() + " >=#{" + info.getParamCount() + "} and " + info.getLastQueryProp() + " <={" + (info.getParamCount() + 1) + "}");
+                info.setQueryPart(info.getQueryPart() + " "+cdata(">=")+"#{" + info.getParamCount() + "} and " + info.getLastQueryProp() + " "+cdata("<=")+"#{" + (info.getParamCount() + 1) + "}");
                 info.setParamCount(info.getParamCount() + 2);
                 break;
             }
@@ -72,5 +72,9 @@ public abstract class AbstractParser {
             }
 
         }
+    }
+
+    public static String cdata(String s){
+        return "<![CDATA["+s+"]]>";
     }
 }

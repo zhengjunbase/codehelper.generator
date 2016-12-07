@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Created by bruce.ge on 2016/12/4.
  */
-public class FindParser extends AbstractParser {
+public class FindParser extends BaseParser {
     // there are the order
 
     // make sure orderby matched before by. finddistinct before find.
