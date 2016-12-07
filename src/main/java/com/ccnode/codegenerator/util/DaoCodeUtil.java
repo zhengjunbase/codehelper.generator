@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.constants.MapperConstants;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
@@ -178,7 +179,7 @@ public class DaoCodeUtil {
         List<String> replaceList = segments.get("resultMap");
         replaceList(startKeyWord,endKeyWord,oldFile,replaceList);
 
-        startKeyWord = "<sql id=\"all_column\">";
+        startKeyWord = "<sql id=\"" + MapperConstants.ALL_COLUMN + "\">";
         endKeyWord = "</sql>";
         replaceList = segments.get("sql");
         replaceList(startKeyWord,endKeyWord,oldFile,replaceList);
@@ -281,7 +282,7 @@ public class DaoCodeUtil {
         }
             ret.append(TWO_RETRACT).append(">\n")
                 .append(TWO_RETRACT).append("INSERT INTO " + fieldTypeMap.get(POJO_TABLE_NAME) + "(\n")
-                .append(TWO_RETRACT).append("<include refid=\"all_column\"/>\n").append(TWO_RETRACT).append(")VALUES\n")
+                .append(TWO_RETRACT).append("<include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>\n").append(TWO_RETRACT).append(")VALUES\n")
                 .append(THREE_RETRACT).append("(\n")
         ;
         for (String field : fieldList) {
@@ -304,7 +305,7 @@ public class DaoCodeUtil {
         StringBuilder ret = new StringBuilder();
         ret.append(ONE_RETRACT).append("<select id=\"query\" resultMap=\"BaseResultMap\">\n")
             .append(TWO_RETRACT).append("SELECT\n")
-            .append(THREE_RETRACT).append(getUnderScore(fieldList.get(0))).append(", <include refid=\"all_column\"/>\n")
+            .append(THREE_RETRACT).append(getUnderScore(fieldList.get(0))).append(", <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>\n")
             .append(TWO_RETRACT).append("FROM ").append(fieldTypeMap.get(POJO_TABLE_NAME) + "\n")
             .append(TWO_RETRACT).append("WHERE id != -1\n")
             ;
@@ -326,7 +327,7 @@ public class DaoCodeUtil {
         StringBuilder ret = new StringBuilder();
         ret.append(ONE_RETRACT).append("<insert id=\"adds\">\n")
             .append(TWO_RETRACT).append("INSERT INTO " + fieldTypeMap.get("pojoTableName") + "(\n")
-            .append(TWO_RETRACT).append("<include refid=\"all_column\"/>\n")
+            .append(TWO_RETRACT).append("<include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>\n")
             .append(TWO_RETRACT).append(")VALUES\n")
             .append(TWO_RETRACT).append(
                 "<foreach collection=\"pojos\" item=\"pojo\" index=\"index\" separator=\",\">\n")
@@ -416,7 +417,7 @@ public class DaoCodeUtil {
 
     private static String genAllColumn(List<String> fieldList) {
         StringBuilder ret = new StringBuilder();
-        ret.append(ONE_RETRACT).append("<sql id=\"all_column\">\n");
+        ret.append(ONE_RETRACT).append("<sql id=\"" + MapperConstants.ALL_COLUMN + "\">\n");
         for (String field : fieldList) {
             if(isNotField(field) || fieldList.indexOf(field) == 0){
                 continue;

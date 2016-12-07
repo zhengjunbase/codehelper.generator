@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.jpaparse.parser;
 
 
+import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.jpaparse.*;
 import com.ccnode.codegenerator.jpaparse.info.FindInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -33,15 +34,15 @@ public class FindParser extends AbstractParser {
         StringBuilder queryBuilder = new StringBuilder();
         if (!info.getDistinct()) {
             if (info.getAllField()) {
-                queryBuilder.append("select *");
+                queryBuilder.append("\n\tselect <include refid=\"" + MapperConstants.ALL_COLUMN+"\"/>");
             } else {
-                queryBuilder.append("select" + info.getFetchPart());
+                queryBuilder.append("\n\tselect" + info.getFetchPart());
             }
         } else {
-            queryBuilder.append("select dictinct(" + info.getFetchPart() + ")");
+            queryBuilder.append("\n\tselect dictinct(" + info.getFetchPart() + ")");
         }
-        queryBuilder.append(" from " + info.getTable());
-        queryBuilder.append(info.getQueryPart());
+        queryBuilder.append("\n\tfrom " + info.getTable());
+        queryBuilder.append("\n\t" + info.getQueryPart());
         return queryBuilder.toString();
     }
 

@@ -1,6 +1,8 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
+import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.editor.Editor;
@@ -129,6 +131,11 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         //find the corresponding xml file.
         XmlTag rootTag = psixml.getRootTag();
         XmlTag[] subTags = rootTag.getSubTags();
+
+
+        boolean allColumMapExist = false;
+        boolean allColumns = false;
+
         for (XmlTag tag : subTags) {
             if (tag.getName().equalsIgnoreCase("insert")) {
                 String insertText = tag.getValue().getText();
@@ -137,15 +144,43 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 if (tableName != null) {
                     break;
                 }
+            } else if (tag.getName().equalsIgnoreCase("resultMap")) {
+                XmlAttribute id = tag.getAttribute("id");
+                if (id != null && id.getValue().equals(MapperConstants.ALL_COLUMN_MAP)) {
+                    allColumMapExist = true;
+                }
+            } else if (tag.getName().equalsIgnoreCase("sql")) {
+                XmlAttribute id = tag.getAttribute("id");
+                if (id != null && id.getValue().equals(MapperConstants.ALL_COLUMN)) {
+                    allColumns = true;
+                }
             }
             //then go next shall be the same.
             //deal with it.
+        }
+
+        //if not exist then add it to the file.
+        if (!allColumMapExist) {
+            String pojoFullName = pojoClass.getQualifiedName();
+            String allColumnText = buildAllCoumnMap(props);
+            XmlTag resultMap = rootTag.createChildTag("resultMap", "", allColumnText, false);
+            resultMap.setAttribute("id", MapperConstants.ALL_COLUMN_MAP);
+            resultMap.setAttribute("type", pojoFullName);
+            rootTag.addSubTag(resultMap, true);
+        }
+
+        if (!allColumns) {
+            String allColumn = buildAllColumn(props);
+            XmlTag sql = rootTag.createChildTag("sql", "", allColumn, false);
+            sql.setAttribute("id", MapperConstants.ALL_COLUMN);
+            rootTag.addSubTag(sql, true);
         }
 
         String existValues
                 = methodAlreadyExist(psixml, methodName);
 
         //go get the props
+        //create resultMap for return class.
 
 
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, returnClassName);
@@ -191,6 +226,25 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //                testGenerator.generateTest(project, d);
 //            }
 //        }, GENERATE_DAOXML, this);
+    }
+
+    private String buildAllColumn(List<String> props) {
+        StringBuilder bu = new StringBuilder();
+        for (String pp : props) {
+            bu.append("\n\t").append(GenCodeUtil.getUnderScore(pp) + ",");
+        }
+        bu.append("\n");
+        return bu.toString();
+    }
+
+    private String buildAllCoumnMap(List<String> props) {
+        StringBuilder builder = new StringBuilder();
+        for (String prop : props) {
+            builder.append("\n\t").append("<result column=\"").append(GenCodeUtil.getUnderScore(prop)).append("\"")
+                    .append(" property=\"").append(prop).append("\"/>");
+        }
+        builder.append("\n");
+        return builder.toString();
     }
 
     private static String methodAlreadyExist(PsiFile psixml, String methodName) {

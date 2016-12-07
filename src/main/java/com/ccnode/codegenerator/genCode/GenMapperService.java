@@ -1,14 +1,14 @@
 package com.ccnode.codegenerator.genCode;
 
-import com.ccnode.codegenerator.pojo.*;
-import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
-import com.ccnode.codegenerator.util.*;
+import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.function.EqualCondition;
 import com.ccnode.codegenerator.function.MapperCondition;
+import com.ccnode.codegenerator.pojo.*;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
+import com.ccnode.codegenerator.util.*;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -56,7 +56,7 @@ public class GenMapperService {
         }
 
         Pair<Integer, Integer> posPair = ReplaceUtil
-                .getPos(listInfo.getFullList(), "<resultMap id=\"AllColumnMap\" type=", "</resultMap>", new MapperCondition());
+                .getPos(listInfo.getFullList(), "<resultMap id=\"" + MapperConstants.ALL_COLUMN_MAP + "\" type=", "</resultMap>", new MapperCondition());
         listInfo.setPos(posPair);
         listInfo.setNewSegments(genAllColumnMap(onePojoInfo));
         ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
@@ -72,7 +72,7 @@ public class GenMapperService {
         });
 
         posPair = ReplaceUtil
-                .getPos(listInfo.getFullList(), "<sql id=\"all_column\">", "</sql>", new MapperCondition());
+                .getPos(listInfo.getFullList(), "<sql id=\"" + MapperConstants.ALL_COLUMN + "\">", "</sql>", new MapperCondition());
         listInfo.setPos(posPair);
         listInfo.setNewSegments(genAllColumn(onePojoInfo));
         ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
@@ -198,12 +198,12 @@ public class GenMapperService {
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
         retList.add(
-                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"" + MapperConstants.ALL_COLUMN_MAP + "\" type=\"" +onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         retList.add(GenCodeUtil.ONE_RETRACT+"</resultMap>");
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(GenCodeUtil.ONE_RETRACT+ "<sql id=\"all_column\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<sql id=\"" + MapperConstants.ALL_COLUMN + "\">");
         retList.add(GenCodeUtil.ONE_RETRACT+"</sql>");
 
         retList.add(StringUtils.EMPTY);
@@ -223,7 +223,7 @@ public class GenMapperService {
 
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
-        retList.add(GenCodeUtil.ONE_RETRACT+ "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
+        retList.add(GenCodeUtil.ONE_RETRACT+ "<select id=\""+ MethodName.select.name() + "\" resultMap=\"" + MapperConstants.ALL_COLUMN_MAP + "\">");
         retList.add(GenCodeUtil.ONE_RETRACT+"</select>");
 
 //        retList.add(StringUtils.EMPTY);
@@ -243,7 +243,7 @@ public class GenMapperService {
     private static List<String> genAllColumnMap(OnePojoInfo onePojoInfo){
         List<String> retList = Lists.newArrayList();
         retList.add(
-                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"AllColumnMap\" type=\""+onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
+                GenCodeUtil.ONE_RETRACT+ "<resultMap id=\"" + MapperConstants.ALL_COLUMN_MAP + "\" type=\"" +onePojoInfo.getPojoPackage() +"." + onePojoInfo.getPojoName()+"\">");
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             retList.add(String.format("%s<result column=\"%s\" property=\"%s\"/>",
@@ -257,7 +257,7 @@ public class GenMapperService {
     private static List<String> genAllColumn(OnePojoInfo onePojoInfo) {
 
         List<String> retList = Lists.newArrayList();
-        retList.add( GenCodeUtil.ONE_RETRACT + "<sql id=\"all_column\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<sql id=\"" + MapperConstants.ALL_COLUMN + "\">");
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String s = GenCodeUtil.TWO_RETRACT + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) +COMMA ;
@@ -315,7 +315,7 @@ public class GenMapperService {
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
         retList.add( GenCodeUtil.ONE_RETRACT + "<insert id=\""+ MethodName.insertList.name() +"\">");
         retList.add(GenCodeUtil.TWO_RETRACT + "INSERT INTO " + tableName + "(");
-        retList.add(GenCodeUtil.TWO_RETRACT + "<include refid=\"all_column\"/>");
+        retList.add(GenCodeUtil.TWO_RETRACT + "<include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>");
         retList.add(GenCodeUtil.TWO_RETRACT + ")VALUES");
         retList.add(GenCodeUtil.TWO_RETRACT + "<foreach collection=\"pojos\" item=\"pojo\" index=\"index\" separator=\",\">");
         retList.add(GenCodeUtil.THREE_RETRACT + "(");
@@ -389,13 +389,13 @@ public class GenMapperService {
     private static List<String> genSelectMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\""+ MethodName.select.name() +"\" resultMap=\"AllColumnMap\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\""+ MethodName.select.name() + "\" resultMap=\"" + MapperConstants.ALL_COLUMN_MAP + "\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(GenCodeUtil.TWO_RETRACT + "SELECT"  );
             retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/> </if>");
         }else{
-            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>");
         }
         retList.add(GenCodeUtil.TWO_RETRACT + "FROM " + tableName  );
         retList.add(GenCodeUtil.TWO_RETRACT + "<where>");
@@ -432,13 +432,13 @@ public class GenMapperService {
     private static List<String> genQueryUseStatementMethod(GenCodeResponse response, OnePojoInfo onePojoInfo, Boolean expand) {
         List<String> retList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
-        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
+        retList.add( GenCodeUtil.ONE_RETRACT + "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"" + MapperConstants.ALL_COLUMN_MAP + "\">");
         if(GenCodeResponseHelper.isUseGenericDao(response)){
             retList.add(GenCodeUtil.TWO_RETRACT + "SELECT"  );
             retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount == 'TRUE'\"> COUNT(1) AS id </if>"  );
-            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"all_column\"/> </if>" );
+            retList.add(GenCodeUtil.TWO_RETRACT + "<if test=\"option.selectCount != 'TRUE'\"> <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/> </if>");
         }else{
-            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"all_column\"/>"  );
+            retList.add(GenCodeUtil.TWO_RETRACT + "SELECT <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>");
         }
         retList.add(GenCodeUtil.TWO_RETRACT + "FROM " + tableName);
         retList.add(GenCodeUtil.TWO_RETRACT + "<where>");
