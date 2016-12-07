@@ -5,7 +5,7 @@ source code of CodeHelper.generator
 An Generator, generate code more easily and productive.
 
 AutoCoding Features
-
+----------------------------------------------------------------
 - Auto gen all Setter method(method start with set) when you click AutoCoding btn(support shortcut).
 - Auto gen all Setter method with default value when you click AutoCoding btn twice.
 
@@ -14,7 +14,7 @@ AutoCoding Usage
 - Click main menu Tools-> Codehelper-> AutoCoding button to generate the code
 
 GenDaoCode Features
-
+--------------------------------------------------------------
 - Generate dao, service, sql and mybatis xml file according to pojo by one click.
 - Update sql, mybatis xml file elegantly when the pojo file updated by one click.
 - Provide insert, insertList, select, update and delete method.
@@ -26,7 +26,7 @@ GenDaoCode Features
 - [www.codehelper.me](http://www.codehelper.me/generator?from=jetbrains) to learn more.
 
 GenDaoCode Usages
-
+------------------------------------------------------------------
 - Click main menu Tools-> Codehelper-> GenDaoCode button to generate the code.
 - Method One: Click GenDaoCode, and then enter the Pojo name in prompt box,
   multiple Pojo separated by | , CodeHelper will generate code use default config.
@@ -35,7 +35,7 @@ GenDaoCode Usages
   Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.
 
 GenDaoCode 特性
-
+-----------------------------------------------------------------------
 - 根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。
 - Pojo文件更新后一键更新对应的Sql和mybatis xml文件。
 - 提供insert，insertList，update，select，delete五种方法。
@@ -47,7 +47,7 @@ GenDaoCode 特性
 - 如果喜欢我们的插件，非常感谢您的分享。
 
 GenDaoCode 使用方法
-
+--------------------------------------------------------------------------
 - 主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。
 - 方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。
 - Codehelper Generator会根据默认配置为您生成代码。
