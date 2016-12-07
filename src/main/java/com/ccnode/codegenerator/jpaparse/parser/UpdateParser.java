@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.jpaparse.parser;
 
 import com.ccnode.codegenerator.jpaparse.*;
 import com.ccnode.codegenerator.jpaparse.info.UpdateInfo;
+import com.ccnode.codegenerator.util.GenCodeUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,7 +138,7 @@ public class UpdateParser extends AbstractParser {
                     for (int i = start; i < end; i++) {
                         used[i] = 1;
                     }
-                    termMap.put(start, new Term(start, end, TermType.PROP, prop));
+                    termMap.put(start, new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScore(prop)));
                 }
             }
         }

@@ -3,6 +3,7 @@ package com.ccnode.codegenerator.jpaparse.parser;
 
 import com.ccnode.codegenerator.jpaparse.*;
 import com.ccnode.codegenerator.jpaparse.info.FindInfo;
+import com.ccnode.codegenerator.util.GenCodeUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -255,7 +256,7 @@ public class FindParser extends AbstractParser {
                     for (int i = start; i < end; i++) {
                         used[i] = 1;
                     }
-                    Term e = new Term(start, end, TermType.PROP, prop);
+                    Term e = new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScore(prop));
                     termMaps.put(start, e);
                 }
             }
