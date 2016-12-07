@@ -148,7 +148,7 @@ public class FindParser extends AbstractParser {
                     if (cur.getTermType() == TermType.PROP) {
 //                        shall add with equalPart.
                         Integer paramCount = info.getParamCount();
-                        String equalPart = " =" + "{" + paramCount + "}";
+                        String equalPart = " =#{" + paramCount + "}";
                         info.setParamCount(info.getParamCount() + 1);
                         info.setLastEqualLength(equalPart.length());
                         info.setLastQueryProp(cur.getValue());

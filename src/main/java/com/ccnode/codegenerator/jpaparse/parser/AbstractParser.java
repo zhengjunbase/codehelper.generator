@@ -22,17 +22,17 @@ public abstract class AbstractParser {
     protected static void handleWithCompare(BaseInfo info, Term cur) {
         switch (cur.getValue()) {
             case KeyWordConstants.GREATERTHAN: {
-                info.setQueryPart(info.getQueryPart() + " >{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " >#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.LESSTHAN: {
-                info.setQueryPart(info.getQueryPart() + " <{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " <#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.BETWEEN: {
-                info.setQueryPart(info.getQueryPart() + " >={" + info.getParamCount() + "} and " + info.getLastQueryProp() + " <={" + (info.getParamCount() + 1) + "}");
+                info.setQueryPart(info.getQueryPart() + " >=#{" + info.getParamCount() + "} and " + info.getLastQueryProp() + " <={" + (info.getParamCount() + 1) + "}");
                 info.setParamCount(info.getParamCount() + 2);
                 break;
             }
@@ -46,27 +46,27 @@ public abstract class AbstractParser {
                 break;
             }
             case KeyWordConstants.NOT: {
-                info.setQueryPart(info.getQueryPart() + " !={" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " !=#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.NOTIN: {
-                info.setQueryPart(info.getQueryPart() + " not in{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " not in#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.IN: {
-                info.setQueryPart(info.getQueryPart() + " in{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " in#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.NOTLIKE: {
-                info.setQueryPart(info.getQueryPart() + " not like{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " not like#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }
             case KeyWordConstants.LIKE: {
-                info.setQueryPart(info.getQueryPart() + " like{" + info.getParamCount() + "}");
+                info.setQueryPart(info.getQueryPart() + " like#{" + info.getParamCount() + "}");
                 info.setParamCount(info.getParamCount() + 1);
                 break;
             }

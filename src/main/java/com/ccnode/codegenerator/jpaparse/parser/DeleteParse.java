@@ -56,7 +56,7 @@ public class DeleteParse extends AbstractParser {
                 case 3: {
                     if (cur.getTermType() == TermType.PROP) {
                         Integer paramCount = info.getParamCount();
-                        String equalPart = " =" + "{" + paramCount + "}";
+                        String equalPart = " =" + "#{" + paramCount + "}";
                         info.setParamCount(info.getParamCount() + 1);
                         info.setLastEqualLength(equalPart.length());
                         info.setLastQueryProp(cur.getValue());

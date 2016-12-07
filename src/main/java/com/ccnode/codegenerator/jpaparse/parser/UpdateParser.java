@@ -45,7 +45,7 @@ public class UpdateParser extends AbstractParser {
                 }
                 case 1: {
                     if (cur.getTermType() == TermType.PROP) {
-                        info.setUpdatePart(info.getUpdatePart() + " " + cur.getValue() + "={" + info.getParamCount() + "}");
+                        info.setUpdatePart(info.getUpdatePart() + " " + cur.getValue() + "=#{" + info.getParamCount() + "}");
                         info.setParamCount(info.getParamCount() + 1);
                         state = 2;
                         break;
@@ -69,7 +69,7 @@ public class UpdateParser extends AbstractParser {
                 case 3: {
                     if (cur.getTermType() == TermType.PROP) {
                         Integer paramCount = info.getParamCount();
-                        String equalPart = " =" + "{" + paramCount + "}";
+                        String equalPart = " =" + "#{" + paramCount + "}";
                         info.setParamCount(info.getParamCount() + 1);
                         info.setLastEqualLength(equalPart.length());
                         info.setLastQueryProp(cur.getValue());
