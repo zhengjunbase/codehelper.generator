@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.jpaparse.QueryParser;
+import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
@@ -99,9 +100,10 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
         String tableName = null;
         XmlTag rootTag = null;
+        PsiFile psixml = null;
         PsiFile[] filesByName = PsiShortNamesCache.getInstance(project).getFilesByName(xmlFileName);
         if (filesByName.length == 1) {
-            PsiFile psixml = filesByName[0];
+            psixml = filesByName[0];
             rootTag = ((XmlFileImpl) psixml).getRootTag();
             String namespace = rootTag.getAttribute("namespace").getValue();
             if (namespace.equals(srcClass.getQualifiedName())) {
@@ -130,10 +132,14 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         List<String> props = extractProps(allFields);
 
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, returnClassName);
+        int a = rootTag.getSubTags().length;
+        //todo display a form for user to choose from. let user check and edit.
         rootTag.addSubTag(sql, false);
+//        Assert.assertEquals(a + 1, rootTag.getSubTags().length);
+        CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
+        //navigate to the xml file.
         //add some thing with sql to deal with it.
         //make it cool to know.
-        //todo display a form for user to choose from. let user check and edit.
 
 
         // add the sql to the xml file.
