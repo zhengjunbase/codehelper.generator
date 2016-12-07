@@ -221,18 +221,18 @@ public class GenSqlService {
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
         if (fieldInfo.getFieldName().equalsIgnoreCase("updateTime")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`create_time` DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 

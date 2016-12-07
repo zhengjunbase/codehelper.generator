@@ -104,7 +104,27 @@
     <!-- Add your extensions here -->
       <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
+
+      <intentionAction>
+        <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
+        <category>Conditional Operator</category>
+        <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
+        <bundleName>Generate daoxml</bundleName>
+      </intentionAction>
+
+
+    <!--<intentionAction>-->
+      <!--<className>com.ccnode.codegenerator.view.GenerateDaoXmlFixAction</className>-->
+      <!--<category>Conditional Operator</category>-->
+      <!--<descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>-->
+    <!--</intentionAction>-->
   </extensions>
+
+  <!--<project-components>-->
+    <!--<component>-->
+      <!--&lt;!&ndash;<implementation-class>com.intellij.codeInsight.intention.Condition</implementation-class>&ndash;&gt;-->
+    <!--</component>-->
+  <!--</project-components>-->
 
   <actions>
     <!-- Add your actions here -->
