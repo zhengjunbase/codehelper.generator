@@ -32,18 +32,18 @@ public class QueryParser {
         if (methodName.startsWith(KeyWordConstants.FIND)) {
             //user find parser to parse.
             String sql = FindParser.parse(methodName, props, tableName);
-            XmlTag select = rootTag.createChildTag("select", "", sql, false);
+            XmlTag select = rootTag.createChildTag("select", "", "\n"+sql+"\n", false);
             select.setAttribute("id", orginMethodName);
             select.setAttribute("resultType", returnClassName);
             return select;
         } else if (methodName.startsWith(KeyWordConstants.UPDATE)) {
             String sql = UpdateParser.parse(methodName, props, tableName);
-            XmlTag update = rootTag.createChildTag("update", "", sql, false);
+            XmlTag update = rootTag.createChildTag("update", "", "\n"+sql+"\n", false);
             update.setAttribute("id", orginMethodName);
             return update;
         } else if (methodName.startsWith(KeyWordConstants.DELETE)) {
             String sql = DeleteParse.parse(methodName, props, tableName);
-            XmlTag delete = rootTag.createChildTag("delete", "", sql, false);
+            XmlTag delete = rootTag.createChildTag("delete", "", "\n"+sql+"\n", false);
             delete.setAttribute("id", orginMethodName);
             return delete;
         }
