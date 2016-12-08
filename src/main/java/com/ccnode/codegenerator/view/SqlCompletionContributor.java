@@ -1,11 +1,9 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,15 +45,12 @@ public class SqlCompletionContributor extends CompletionContributor {
         if (!(topLevelFile instanceof PsiJavaFile)) {
             return;
         }
-        PsiJavaFile javaFile = (PsiJavaFile) topLevelFile;
-        PsiClass[] classes = javaFile.getClasses();
-        for (PsiClass psiClass : classes) {
-            if (!psiClass.isInterface()) {
-                return;
-            }
+        PsiClass containingClass = PsiElementUtil.getContainingClass(originalPosition);
+        if(!containingClass.isInterface()){
+            return;
         }
         String text = originalPosition.getText();
-        if (text.startsWith("find") || text.startsWith("update")) {
+        if (text.startsWith("find") || text.startsWith("update") ||text.startsWith("delete")) {
             //go tell them to choose.
             LookupElementBuilder builder = LookupElementBuilder.create("findOrder");
             result.addElement(builder);

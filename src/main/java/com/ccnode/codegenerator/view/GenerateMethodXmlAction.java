@@ -4,6 +4,7 @@ import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.components.ServiceManager;
@@ -19,7 +20,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiNonJavaFileReferenceProcessor;
 import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.PsiShortNamesCache;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
@@ -47,7 +47,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         Module srcModule = ModuleUtilCore.findModuleForPsiElement(element);
-        PsiClass srcClass = getContainingClass(element);
+        PsiClass srcClass = PsiElementUtil.getContainingClass(element);
 
         if (srcClass == null) return;
         PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
@@ -345,7 +345,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     @Override
     public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
         if (!isAvailbleForElement(element)) return false;
-        PsiClass containingClass = getContainingClass(element);
+        PsiClass containingClass = PsiElementUtil.getContainingClass(element);
         assert containingClass != null;
         PsiElement leftBrace = containingClass.getLBrace();
         if (leftBrace == null) {
@@ -377,7 +377,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             return false;
         }
 
-        PsiClass containingClass = getContainingClass(psiElement);
+        PsiClass containingClass = PsiElementUtil.getContainingClass(psiElement);
         if (containingClass == null) return false;
         Module srcMoudle = ModuleUtilCore.findModuleForPsiElement(containingClass);
         if (srcMoudle == null) return false;
@@ -387,20 +387,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         return true;
     }
 
-
-    private static PsiClass getContainingClass(PsiElement psiElement) {
-        PsiClass psiClass = PsiTreeUtil.getParentOfType(psiElement, PsiClass.class, false);
-        if (psiClass == null) {
-            PsiFile containingFile = psiElement.getContainingFile();
-            if (containingFile instanceof PsiClassOwner) {
-                PsiClass[] classes = ((PsiClassOwner) containingFile).getClasses();
-                if (classes.length == 1) {
-                    return classes[0];
-                }
-            }
-        }
-        return psiClass;
-    }
 
     @Nls
     @NotNull
