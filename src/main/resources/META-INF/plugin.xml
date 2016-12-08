@@ -106,9 +106,11 @@
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
       <codeInsight.lineMarkerProvider language="XML" implementationClass="com.ccnode.codegenerator.view.MybatisXmlLineMarkerProvider"/>
+      <completion.contributor language="JAVA" implementationClass="com.ccnode.codegenerator.view.SqlCompletionContributor"/>
 
 
-    <intentionAction>
+
+      <intentionAction>
         <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
         <category>Conditional Operator</category>
         <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
