@@ -110,7 +110,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (filesByName.length == 1) {
             if (filesByName[0] instanceof XmlFileImpl) {
                 XmlTag rootTag = ((XmlFileImpl) filesByName[0]).getRootTag();
-                String namespace = rootTag.getAttribute("namespace").getValue();
+                String namespace = rootTag.getAttribute ("namespace").getValue();
                 //only the name space is equal than deal with it.
                 if (namespace.equals(srcClass.getQualifiedName())) {
                     psixml = (XmlFileImpl) filesByName[0];
