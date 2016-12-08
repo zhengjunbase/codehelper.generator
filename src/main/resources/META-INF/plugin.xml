@@ -104,8 +104,10 @@
     <!-- Add your extensions here -->
       <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
 
-      <intentionAction>
+
+    <intentionAction>
         <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
         <category>Conditional Operator</category>
         <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
