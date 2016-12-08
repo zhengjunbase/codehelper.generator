@@ -6,6 +6,7 @@ import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -15,10 +16,13 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.search.PsiNonJavaFileReferenceProcessor;
+import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testIntegration.createTest.CreateTestDialog;
 import com.intellij.util.IncorrectOperationException;
@@ -37,7 +41,6 @@ import java.util.Set;
 public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
     public static final String JAVALIST = "java.util.List";
-    private static final String CREATE_TEST_IN_THE_SAME_ROOT = "create.test.in.the.same.root";
     public static final String GENERATE_DAOXML = "generate daoxml";
     public static final String INSERT_INTO = "insert into";
 
@@ -79,7 +82,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
         String srcClassName = srcClass.getName();
-
         if (pojoClass == null) {
             if (srcClassName.endsWith("Dao")) {
                 String className = srcClassName.substring(0, srcClassName.length() - "Dao".length());
@@ -103,30 +105,49 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         //when pojoClass is not null, then try to extract all property from it. then get the sql generated.do thing with batch.
 
         String xmlFileName = srcClassName + ".xml";
-
         String tableName = null;
-        XmlFileImpl psixml = null;
+        XmlFile psixml = null;
         PsiFile[] filesByName = PsiShortNamesCache.getInstance(project).getFilesByName(xmlFileName);
-        if (filesByName.length == 1) {
-            if (filesByName[0] instanceof XmlFileImpl) {
-                XmlTag rootTag = ((XmlFileImpl) filesByName[0]).getRootTag();
-                String namespace = rootTag.getAttribute ("namespace").getValue();
-                //only the name space is equal than deal with it.
-                if (namespace.equals(srcClass.getQualifiedName())) {
-                    psixml = (XmlFileImpl) filesByName[0];
+        if (filesByName.length > 0) {
+            for (PsiFile file : filesByName) {
+                if (file instanceof XmlFileImpl) {
+                    XmlFileImpl xmlFile = (XmlFileImpl) file;
+                    XmlTag rootTag = xmlFile.getRootTag();
+                    String namespace = rootTag.getAttribute("namespace").getValue();
+                    //only the name space is equal than deal with it.
+                    if (namespace != null && namespace.equals(srcClass.getQualifiedName())) {
+                        psixml = xmlFile;
+                        break;
+                    }
                 }
             }
-        } else if (filesByName.length > 1) {
-            //todo display a form for user to select.
         } else {
-            //todo can't find with file, so how to deal with this. go to the resource folder check with it.
+            //cant' find the file by name. then go to search it.
+            PsiSearchHelper searchService = ServiceManager.getService(project, PsiSearchHelper.class);
+            List<XmlFile> xmlFiles = new ArrayList<XmlFile>();
+            searchService.processUsagesInNonJavaFiles("mapper", new PsiNonJavaFileReferenceProcessor() {
+                @Override
+                public boolean process(PsiFile file, int startOffset, int endOffset) {
+                    if (file instanceof XmlFile) {
+                        XmlFile xmlFile = (XmlFile) file;
+                        if (xmlFile.getRootTag() != null) {
+                            XmlAttribute namespace = xmlFile.getRootTag().getAttribute("namespace");
+                            if (namespace != null && namespace.getValue().equals(srcClass.getQualifiedName())) {
+                                xmlFiles.add(xmlFile);
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+            }, GlobalSearchScope.moduleScope(ModuleUtilCore.findModuleForPsiElement(method)));
+            if (xmlFiles.size() == 0) {
+                //todo no corresponding xml exist. go to tell the user.
+                return;
+            } else {
+                psixml = xmlFiles.get(0);
+            }
         }
-
-        if (psixml == null) {
-            //todo let user chooose or just close it. means we can't find your xml file. //so can't create tableName etc.
-
-        }
-
         //extract field from pojoClass.
         PsiField[] allFields = pojoClass.getAllFields();
         List<String> props = extractProps(allFields);
