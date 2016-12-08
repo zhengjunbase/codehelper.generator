@@ -203,53 +203,14 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         String existValues
                 = methodAlreadyExist(psixml, methodName);
 
-        //go get the props
-        //create resultMap for return class.
+        //todo need to tell the user the method already exist let user to choose it.
 
         ReturnClassInfo info = buildReturnClassInfo(returnClassName, pojoClass);
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
         //todo display a form for user to choose from. let user check and edit.
 
         rootTag.addSubTag(sql, false);
-//        Assert.assertEquals(a + 1, rootTag.getSubTags().length);
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
-        //navigate to the xml file.
-        //add some thing with sql to deal with it.
-        //make it cool to know.
-
-
-        // add the sql to the xml file.
-
-
-        //after extract the table name than generate xml file.
-
-
-        //use this to find the class.
-        //then get the returnclassName, go the load with the name.
-        //find the Po class and get it's property.
-
-//        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-//        HashSet<VirtualFile> testFolder = new HashSet<>();
-//        checkForTestRoots(srcModule, testFolder);
-//        if (testFolder.isEmpty() && !propertiesComponent.getBoolean(CREATE_TEST_IN_THE_SAME_ROOT, false)) {
-//            if (Messages.showOkCancelDialog(project, "Create test in the same source root?", "No Test Roots Found",
-//                    Messages.getQuestionIcon()) != Messages.OK) {
-//                return;
-//            }
-//            propertiesComponent.setValue(CREATE_TEST_IN_THE_SAME_ROOT, String.valueOf(true));
-//        }
-//        CreateTestDialog d = createTestDialog(project, srcModule, srcClass, srcPackage);
-//        if (!d.showAndGet()) {
-//            return;
-//        }
-//        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-//            @Override
-//            public void run() {
-//                TestFramework framework = d.getSelectedTestFrameworkDescriptor();
-//                TestGenerator testGenerator = TestGenerators.INSTANCE.forLanguage(framework.getLanguage());
-//                testGenerator.generateTest(project, d);
-//            }
-//        }, GENERATE_DAOXML, this);
     }
 
     private ReturnClassInfo buildReturnClassInfo(String returnClassName, PsiClass pojoClass) {

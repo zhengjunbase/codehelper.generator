@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created by bruce.ge on 2016/12/6.
  */
+@Deprecated
 public class GenerateDaoXmlFixAction extends CreateFromUsageBaseFix {
 
     public static final String GENERATE_METHOD_SQL = "generate method sql";
