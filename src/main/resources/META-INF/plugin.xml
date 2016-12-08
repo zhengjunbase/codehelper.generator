@@ -105,6 +105,7 @@
       <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
+      <codeInsight.lineMarkerProvider language="XML" implementationClass="com.ccnode.codegenerator.view.MybatisXmlLineMarkerProvider"/>
 
 
     <intentionAction>
