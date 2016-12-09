@@ -67,7 +67,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         PsiMethod[] methods = srcClass.getMethods();
         for (PsiMethod classMethod : methods) {
             String name = classMethod.getName().toLowerCase();
-            if (name.equals("insert") || name.equals("save") || name.equals("add")) {
+            if (name.startsWith("insert") || name.startsWith("save") || name.startsWith("add")) {
                 addMethod = classMethod;
                 break;
             }
