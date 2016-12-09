@@ -43,6 +43,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     public static final String JAVALIST = "java.util.List";
     public static final String GENERATE_DAOXML = "generate daoxml";
     public static final String INSERT_INTO = "insert into";
+    public static final String DAOCLASSEND = "Dao";
 
     @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
@@ -65,8 +66,8 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         PsiClass pojoClass = PsiClassUtil.getPojoClass(srcClass);
         String srcClassName = srcClass.getName();
         if (pojoClass == null) {
-            if (srcClassName.endsWith("Dao")) {
-                String className = srcClassName.substring(0, srcClassName.length() - "Dao".length());
+            if (srcClassName.endsWith(DAOCLASSEND)) {
+                String className = srcClassName.substring(0, srcClassName.length() - DAOCLASSEND.length());
                 PsiClass[] classesByName
                         = PsiShortNamesCache.getInstance(project).getClassesByName(className, GlobalSearchScope.moduleScope(srcModule));
                 if (classesByName.length == 1) {
@@ -79,6 +80,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
             //then get the file of xml get table name from it cause it the most right.
         }
+        //todo maybe wo can provide other method to know the real pojo class like annotation.
         if (pojoClass == null) {
             //todo say can't find with pojo class file.
             return;
