@@ -40,7 +40,7 @@ public class UpdateParser extends BaseParser {
                         state = 1;
                         break;
                     } else {
-                        throw new ParseException("shall start with find, update or delete, the current value is " + cur.getValue());
+                        throw new ParseException(cur,"shall start with find, update or delete");
                     }
                 }
                 case 1: {
@@ -50,7 +50,7 @@ public class UpdateParser extends BaseParser {
                         state = 2;
                         break;
                     } else {
-                        throw new ParseException("current element is not filed of bean the value is " + cur.getValue());
+                        throw new ParseException(cur,"shall use property after update or 'and'" );
                     }
                 }
                 case 2: {
@@ -63,7 +63,7 @@ public class UpdateParser extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("after field in bean shall be by or and ,the cur value is " + cur.getValue());
+                        throw new ParseException(cur,"shall use 'and' or 'by' after update property");
                     }
                 }
                 case 3: {
@@ -77,7 +77,7 @@ public class UpdateParser extends BaseParser {
                         state = 4;
                         break;
                     } else {
-                        throw new ParseException("use filed after by, the current vlaue is " + cur.getValue());
+                        throw new ParseException(cur,"shall use property of bean after by");
                     }
                 }
                 case 4: {
@@ -92,7 +92,7 @@ public class UpdateParser extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("query field after prop not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur,"shall use with compartor or 'and/or' after by property");
                     }
                 }
 
@@ -102,7 +102,7 @@ public class UpdateParser extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("the term after compare is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur,"shall use with 'and/or' after comparator");
                     }
                 }
             }
@@ -200,7 +200,8 @@ public class UpdateParser extends BaseParser {
         while (i < method.length()) {
             if (used[i] == 1) {
                 if (q.length() > 0) {
-                    throw new ParseException(" the property: '" + q + "' not in bean, the index range of wrong property is start with " + (i - 1 - q.length()) + " and end with " + (i - 1));
+                    Term term = new Term((i-1-q.length()),(i-1),TermType.PROP,q);
+                    throw new ParseException(term,"can't parse it with known values");
 //                    terms.add(new Term(0, 0, TermType.PROP, q));
 //                    q = "";
                 }

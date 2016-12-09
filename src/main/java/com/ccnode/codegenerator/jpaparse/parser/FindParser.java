@@ -34,7 +34,7 @@ public class FindParser extends BaseParser {
         StringBuilder queryBuilder = new StringBuilder();
         if (!info.getDistinct()) {
             if (info.getAllField()) {
-                queryBuilder.append("\n\tselect <include refid=\"" + MapperConstants.ALL_COLUMN+"\"/>");
+                queryBuilder.append("\n\tselect <include refid=\"" + MapperConstants.ALL_COLUMN + "\"/>");
             } else {
                 queryBuilder.append("\n\tselect" + info.getFetchPart());
             }
@@ -64,7 +64,7 @@ public class FindParser extends BaseParser {
                             break;
                         }
                     } else {
-                        throw new ParseException("index is not find or insert or delete the value is:" + cur.getValue());
+                        throw new ParseException(cur, "index is not find or insert or delete");
                     }
                 }
                 case 1: {
@@ -82,7 +82,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException("the term after find is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "the term after find shall be property of bean or 'by' or 'orderby'");
                     }
                 }
                 case 2: {
@@ -91,7 +91,7 @@ public class FindParser extends BaseParser {
                         state = 11;
                         break;
                     } else {
-                        throw new ParseException("the term after findDistinct is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "shall use property of bean after find distinct");
                     }
                 }
                 case 3: {
@@ -100,7 +100,7 @@ public class FindParser extends BaseParser {
                         state = 4;
                         break;
                     } else {
-                        throw new ParseException("the term after order by is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "shall use property of bean after orderby");
                     }
                 }
                 case 4: {
@@ -110,12 +110,12 @@ public class FindParser extends BaseParser {
                         break;
                     } else {
                         //
-                        throw new ParseException("the term after order by properter is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "shall be desc or asc after orderby with property, not support with multiple property order by now");
                     }
                 }
 
                 case 5: {
-                    throw new ParseException("the term after desc asc etc is not legal, the term is " + cur.getValue());
+                    throw new ParseException(cur, "not support to multiple property order by now");
                 }
 
                 case 6: {
@@ -132,7 +132,7 @@ public class FindParser extends BaseParser {
                         state = 7;
                         break;
                     } else {
-                        throw new ParseException("the term shall be orderby or and/or, the term is " + cur.getValue());
+                        throw new ParseException(cur, "the term shall be orderby or 'and/or' after property of bean");
                     }
                 }
 
@@ -142,7 +142,7 @@ public class FindParser extends BaseParser {
                         state = 6;
                         break;
                     } else {
-                        throw new ParseException(" fetch part after and/or is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "shall use with property of bean after 'and/or'");
                     }
                 }
                 case 8: {
@@ -157,7 +157,7 @@ public class FindParser extends BaseParser {
                         state = 9;
                         break;
                     } else {
-                        throw new ParseException(" the term after by is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur,"shall use property of bean after 'by'" );
                     }
                 }
 
@@ -178,7 +178,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException("query field after prop not legal, the term is:" + cur.getValue());
+                        throw new ParseException(cur,"shall use with 'orderby' or 'compartor' or 'and/or' after property");
                     }
                 }
                 case 10: {
@@ -191,7 +191,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException("the term after compare is not legal, the term is:" + cur.getValue());
+                        throw new ParseException(cur,"shall use 'orderby' or 'and/or' after comparator");
                     }
                 }
                 case 11: {
@@ -204,7 +204,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException("the term after secect distinct() is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur,"shall use with 'orderby' or 'by' or empty after select distinct(property) ");
                     }
                 }
             }
@@ -349,7 +349,8 @@ public class FindParser extends BaseParser {
         while (i < methodName.length()) {
             if (used[i] == 1) {
                 if (q.length() > 0) {
-                    throw new ParseException(" the property: '" + q + "' not in bean, the index range of wrong property is start with " + (i - 1 - q.length()) + " and end with " + (i - 1));
+                    Term term  = new Term((i-1-q.length()),i-1,TermType.PROP,q);
+                    throw new ParseException(term,"can't parse the part");
 //                    terms.add(new Term(0, 0, TermType.PROP, q));
 //                    q = "";
                 }

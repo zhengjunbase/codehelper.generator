@@ -40,7 +40,7 @@ public class DeleteParse extends BaseParser {
                         state = 2;
                         break;
                     } else {
-                        throw new ParseException("shall start with find, update or delete, the current value is " + cur.getValue());
+                        throw new ParseException(cur, "method shall start with 'find', 'update' or 'delete'");
                     }
                 }
 
@@ -50,7 +50,7 @@ public class DeleteParse extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("after field in bean shall be by or and ,the cur value is " + cur.getValue());
+                        throw new ParseException(cur, "shall use 'by' after delete");
                     }
                 }
                 case 3: {
@@ -64,7 +64,7 @@ public class DeleteParse extends BaseParser {
                         state = 4;
                         break;
                     } else {
-                        throw new ParseException("use filed after by, the current vlaue is " + cur.getValue());
+                        throw new ParseException(cur, "shall use property of bean after by");
                     }
                 }
                 case 4: {
@@ -79,7 +79,7 @@ public class DeleteParse extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("query field after prop not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "after property shall be compare operator, or 'and' or 'or'");
                     }
                 }
 
@@ -89,7 +89,7 @@ public class DeleteParse extends BaseParser {
                         state = 3;
                         break;
                     } else {
-                        throw new ParseException("the term after compare is not legal, the term is " + cur.getValue());
+                        throw new ParseException(cur, "after comparator shall be 'and' or 'or' or empty");
                     }
                 }
             }
@@ -113,7 +113,7 @@ public class DeleteParse extends BaseParser {
                 termMap.put(0, new Term(0, KeyWordConstants.DELETE.length(), TermType.START_OP, KeyWordConstants.DELETE));
             }
         } else {
-            throw new ParseException("update not start with update not legal");
+            throw new ParseException("update not start with 'update'");
         }
         for (String prop : props) {
             Pattern pattern = PatternUtils.getPattern(prop.toLowerCase());
@@ -187,7 +187,8 @@ public class DeleteParse extends BaseParser {
         while (i < method.length()) {
             if (used[i] == 1) {
                 if (q.length() > 0) {
-                    throw new ParseException(" the property: '" + q + "' not in bean, the index range of wrong property is start with " + (i - 1 - q.length()) + " and end with " + (i - 1));
+                    Term term = new Term((i - 1 - q.length()), i - 1, TermType.PROP, q);
+                    throw new ParseException(term, " the property can't be found in bean or comparator etc, please check it");
 //                    terms.add(new Term(0, 0, TermType.PROP, q));
 //                    q = "";
                 }
