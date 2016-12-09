@@ -38,6 +38,14 @@ Screenshot
 -----------------------------------------------------------------
 
 
+todo
+----------------------------------------------------------------
+
+- auto generate sql for first, like findFirst3OrderById,findFirst3DistinctNameById etc.
+- auto generate sql for count, like count,countDistinctUserTypeByUserName etc.
+- 
+
+
 GenDaoCode 特性
 -----------------------------------------------------------------------
 - 根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。
