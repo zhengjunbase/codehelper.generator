@@ -1,12 +1,10 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiJavaFile;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,11 +69,24 @@ public class SqlCompletionContributor extends CompletionContributor {
         if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete")) {
             //go tell them to choose.
             //todo could use like when there. why after press tab can't show with more?
+//            get pojo class from it.
+            PsiClass pojoClass = PsiClassUtil.getPojoClass(containingClass);
+            if (pojoClass == null) {
+                return;
+            }
+            List<String> strings = PsiClassUtil.extractProps(pojoClass);
+            List<String> formatProps = new ArrayList<String>();
+            for (String s : strings) {
+                formatProps.add(s.substring(0, 1).toUpperCase() + s.substring(1));
+            }
             String lower = text.toLowerCase();
-            for(String end:textEndList){
-                if(lower.endsWith(end)){
-                    LookupElementBuilder builder = LookupElementBuilder.create(text + "order");
-                    result.addElement(builder);
+            for (String end : textEndList) {
+                if (lower.endsWith(end)) {
+                    //add formated prop to recommend list.
+                    for (String prop : formatProps) {
+                        LookupElementBuilder builder = LookupElementBuilder.create(text + prop);
+                        result.addElement(builder);
+                    }
                 }
             }
         }

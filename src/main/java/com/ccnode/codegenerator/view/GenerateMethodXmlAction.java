@@ -4,6 +4,7 @@ import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
@@ -20,7 +21,6 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiNonJavaFileReferenceProcessor;
 import com.intellij.psi.search.PsiSearchHelper;
 import com.intellij.psi.search.PsiShortNamesCache;
-import com.intellij.psi.util.PsiTypesUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
@@ -62,25 +62,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (returnClassName.startsWith(JAVALIST)) {
             returnClassName = returnClassName.substring(JAVALIST.length() + 1, returnClassName.length() - 1);
         }
-        PsiClass pojoClass = null;
-        PsiMethod addMethod = null;
-        PsiMethod[] methods = srcClass.getMethods();
-        for (PsiMethod classMethod : methods) {
-            String name = classMethod.getName().toLowerCase();
-            if (name.startsWith("insert") || name.startsWith("save") || name.startsWith("add")) {
-                addMethod = classMethod;
-                break;
-            }
-        }
-        if (addMethod != null) {
-            PsiParameterList parameterList = addMethod.getParameterList();
-            PsiParameter[] parameters = parameterList.getParameters();
-            if (parameters.length == 1) {
-                PsiType type = parameters[0].getType();
-                pojoClass = PsiTypesUtil.getPsiClass(type);
-                //try to get it from the class.
-            }
-        }
+        PsiClass pojoClass = PsiClassUtil.getPojoClass(srcClass);
         String srcClassName = srcClass.getName();
         if (pojoClass == null) {
             if (srcClassName.endsWith("Dao")) {
@@ -149,8 +131,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
         //extract field from pojoClass.
-        PsiField[] allFields = pojoClass.getAllFields();
-        List<String> props = extractProps(allFields);
+        List<String> props = PsiClassUtil.extractProps(pojoClass);
         //find the corresponding xml file.
         XmlTag rootTag = psixml.getRootTag();
         XmlTag[] subTags = rootTag.getSubTags();
@@ -259,16 +240,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
         return null;
 
-    }
-
-    private List<String> extractProps(PsiField[] allFields) {
-        List<String> props = new ArrayList<String>();
-        for (PsiField psiField : allFields) {
-            if (psiField.hasModifierProperty("private") && !psiField.hasModifierProperty("static")) {
-                props.add(psiField.getName());
-            }
-        }
-        return props;
     }
 
     private static String extractTable(String insertText) {
