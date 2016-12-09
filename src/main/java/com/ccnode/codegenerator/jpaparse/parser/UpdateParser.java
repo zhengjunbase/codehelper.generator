@@ -25,7 +25,7 @@ public class UpdateParser extends BaseParser {
     }
 
     private static String buildUpdateByInfo(UpdateInfo info) {
-        return "update " + info.getTable() + " set " + info.getUpdatePart() + info.getQueryPart();
+        return "\n\tupdate " + info.getTable() + "\n\tset " + info.getUpdatePart() + "\n\t" + info.getQueryPart()+"\n";
     }
 
     private static UpdateInfo buildUpdateInfo(List<Term> terms) {

@@ -25,7 +25,7 @@ public class DeleteParse extends BaseParser {
     }
 
     private static String buildDeleteSql(DeleteInfo info) {
-        return "delete from " + info.getTable() + info.getQueryPart();
+        return "\n\tdelete from " + "\n\t" + info.getTable() + "\n\t" + info.getQueryPart() + "\n";
     }
 
     private static DeleteInfo buildUpdateInfo(List<Term> terms) {
