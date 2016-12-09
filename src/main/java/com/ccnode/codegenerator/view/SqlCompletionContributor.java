@@ -15,28 +15,6 @@ import java.util.List;
  * Created by bruce.ge on 2016/12/8.
  */
 public class SqlCompletionContributor extends CompletionContributor {
-//    public SqlCompletionContributor() {
-//        extend(CompletionType.BASIC, PsiJavaPatterns.psiElement().afterLeaf("find"), new CompletionProvider<CompletionParameters>() {
-//            @Override
-//            protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
-//                //do something in it.
-//                PsiElement position = parameters.getPosition();
-//
-//                PsiElement parent = position.getParent();
-//                if (parent instanceof PsiMethod) {
-//                    //do something in it.
-//                    PsiMethod method = (PsiMethod) parent;
-//                    PsiClass containingClass = method.getContainingClass();
-//                    if (!containingClass.isInterface()) {
-//                        return;
-//                    }
-//                    String name = method.getName();
-//
-//                }
-//            }
-//        });
-//    }
-
     private static List<String> textEndList = new ArrayList<String>() {{
         add("find");
         add("update");

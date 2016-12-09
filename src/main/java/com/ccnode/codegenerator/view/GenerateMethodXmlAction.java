@@ -287,7 +287,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     }
 
     private static boolean isBlankChar(char c) {
-        if (c == ' ' || c == '\t' || c == '\n') {
+        if (c == ' ' || c == '\t' || c == '\n'||c=='('||c=='<'||c==')'||c=='>') {
             return true;
         }
         return false;
