@@ -23,18 +23,28 @@ public class PsiClassUtil {
 
     public static PsiMethod getAddMethod(PsiClass srcClass) {
         PsiMethod[] methods = srcClass.getMethods();
+        List<PsiMethod> methodsList = new ArrayList<PsiMethod>();
         for (PsiMethod classMethod : methods) {
             String name = classMethod.getName().toLowerCase();
             if (name.startsWith("insert") || name.startsWith("save") || name.startsWith("add")) {
-                return classMethod;
+                methodsList.add(classMethod);
             }
         }
-        return null;
+        if (methodsList.size() == 0) {
+            return null;
+        } else {
+            PsiMethod miniMethod = methodsList.get(0);
+            for (int i = 1; i < methodsList.size(); i++) {
+                if (methodsList.get(i).getName().length() < miniMethod.getName().length()) {
+                    miniMethod = methodsList.get(i);
+                }
+            }
+            return miniMethod;
+        }
     }
 
     public static PsiClass getPojoClass(PsiClass srcClass) {
-        PsiMethod addMethod = null;
-        addMethod = getAddMethod(srcClass);
+        PsiMethod addMethod = getAddMethod(srcClass);
         if (addMethod != null) {
             PsiParameterList parameterList = addMethod.getParameterList();
             PsiParameter[] parameters = parameterList.getParameters();

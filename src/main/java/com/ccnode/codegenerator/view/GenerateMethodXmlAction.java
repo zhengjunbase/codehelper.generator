@@ -103,7 +103,8 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                     }
                 }
             }
-        } else {
+        }
+        if (psixml == null) {
             //cant' find the file by name. then go to search it.
             PsiSearchHelper searchService = ServiceManager.getService(project, PsiSearchHelper.class);
             List<XmlFile> xmlFiles = new ArrayList<XmlFile>();
@@ -135,7 +136,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         //find the corresponding xml file.
         XmlTag rootTag = psixml.getRootTag();
         XmlTag[] subTags = rootTag.getSubTags();
-
 
         boolean allColumMapExist = false;
         boolean allColumns = false;
@@ -287,7 +287,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     }
 
     private static boolean isBlankChar(char c) {
-        if (c == ' ' || c == '\t' || c == '\n'||c=='('||c=='<'||c==')'||c=='>') {
+        if (c == ' ' || c == '\t' || c == '\n' || c == '(' || c == '<' || c == ')' || c == '>') {
             return true;
         }
         return false;
