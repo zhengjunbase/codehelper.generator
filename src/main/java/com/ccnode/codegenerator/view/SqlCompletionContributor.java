@@ -58,13 +58,35 @@ public class SqlCompletionContributor extends CompletionContributor {
                 formatProps.add(s.substring(0, 1).toUpperCase() + s.substring(1));
             }
             String lower = text.toLowerCase();
+            boolean defaultrecommed = false;
             for (String end : textEndList) {
                 if (lower.endsWith(end)) {
+                    defaultrecommed = true;
                     //add formated prop to recommend list.
                     for (String prop : formatProps) {
                         LookupElementBuilder builder = LookupElementBuilder.create(text + prop);
                         result.addElement(builder);
                     }
+                }
+            }
+            if (defaultrecommed) {
+                return;
+            }
+            //todo may be can add more.
+            List<String> afterlower = new ArrayList<String>();
+            if (lower.endsWith("g")) {
+                afterlower.add("reaterThan");
+            } else if (lower.endsWith("l")) {
+                afterlower.add("essThan");
+            } else if (lower.endsWith("b")) {
+                afterlower.add("etween");
+            } else if (lower.endsWith("d")) {
+                afterlower.add("istinct");
+            }
+            if (afterlower.size() > 0) {
+                for (String after : afterlower) {
+                    LookupElementBuilder builder = LookupElementBuilder.create(text + after);
+                    result.addElement(builder);
                 }
             }
         }
