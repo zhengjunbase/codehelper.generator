@@ -15,6 +15,7 @@ public class GenCodeRequest extends BaseRequest {
     List<String> pojoNames;
     String projectPath;
     String pathSplitter;
+    AltInsertInfo info;
 
     public GenCodeRequest() {
     }
@@ -23,6 +24,14 @@ public class GenCodeRequest extends BaseRequest {
         this.pojoNames = pojoNames;
         this.projectPath = projectPath;
         this.pathSplitter = pathSplitter;
+    }
+
+    public AltInsertInfo getInfo() {
+        return info;
+    }
+
+    public void setInfo(AltInsertInfo info) {
+        this.info = info;
     }
 
     public void setPojoNames(List<String> pojoNames) {

@@ -1,10 +1,10 @@
 <idea-plugin version="2">
-  <id>com.ccnode.codegenerator.mybatis.generator</id>
-  <name>codehelper.generator</name>
-  <version>2016.12.03</version>
-  <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
+    <id>com.ccnode.codegenerator.mybatis.generator</id>
+    <name>codehelper.generator</name>
+    <version>2016.12.03</version>
+    <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       <div>
       <p><a href="https://github.com/zhengjunbase/codehelper.generator">GitHub</a>
       |&nbsp<a href="https://github.com/zhengjunbase/codehelper.generator/issues">Issues</a></p>
@@ -66,73 +66,84 @@
       </div>
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       use gradle, fix bugs.
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <actions>
-  <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="Generator" popup="true">
-      <separator/>
-      <group id="TestActionSubGroup"/>
-      <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
-    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
-    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
-    <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
-    <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
+    <actions>
+        <group id="com.ccnode.codegenerator.mybatis.generator" text="CodeHelper" description="Generator" popup="true">
+            <separator/>
+            <group id="TestActionSubGroup"/>
+            <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
+            <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding"
+                    description="AutoCoding"/>
+            <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode"
+                    description="GenMybatisCode"/>
+            <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More"
+                    description="Learn_More"/>
+            <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
 
-      <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
-  </group>
-    <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
-      <!--<add-to-group group-id="TestActionSubGroup" />-->
-            <!--<action id="mybatis.generator_1" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode1" description="A test menu item1"/>-->
-            <!--<action id="mybatis.generator_2" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode2" description="A test menu item2"/>-->
+            <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
+        </group>
 
-    <!--</group>-->
-</actions>
+        <group id="generatesqlgroup">
+            <add-to-group group-id="GenerateGroup" relative-to-action="GenerateGetter" anchor="after"/>
+            <action class="com.ccnode.codegenerator.view.GenCodeActionUsingAlt" id="gencodeusingalt" text="generate sql"
+                    description="generate sql"/>
+        </group>
+        <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
+        <!--<add-to-group group-id="TestActionSubGroup" />-->
+        <!--<action id="mybatis.generator_1" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode1" description="A test menu item1"/>-->
+        <!--<action id="mybatis.generator_2" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode2" description="A test menu item2"/>-->
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="141.0"/>
+        <!--</group>-->
+    </actions>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-      <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
-                          serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
-    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
-      <codeInsight.lineMarkerProvider language="XML" implementationClass="com.ccnode.codegenerator.view.MybatisXmlLineMarkerProvider"/>
-      <completion.contributor language="JAVA" implementationClass="com.ccnode.codegenerator.view.SqlCompletionContributor"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-
-
-      <intentionAction>
-        <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
-        <category>Conditional Operator</category>
-        <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
-        <bundleName>Generate daoxml</bundleName>
-      </intentionAction>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
+                            serviceImplementation="com.ccnode.codegenerator.storage.SettingService"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML"
+                                        implementationClass="com.ccnode.codegenerator.view.MybatisXmlLineMarkerProvider"/>
+        <completion.contributor language="JAVA"
+                                implementationClass="com.ccnode.codegenerator.view.SqlCompletionContributor"/>
 
 
-    <!--<intentionAction>-->
-      <!--<className>com.ccnode.codegenerator.view.GenerateDaoXmlFixAction</className>-->
-      <!--<category>Conditional Operator</category>-->
-      <!--<descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>-->
-    <!--</intentionAction>-->
-  </extensions>
+        <intentionAction>
+            <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
+            <category>Conditional Operator</category>
+            <descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>
+            <bundleName>Generate daoxml</bundleName>
+        </intentionAction>
 
-  <!--<project-components>-->
+
+        <!--<intentionAction>-->
+        <!--<className>com.ccnode.codegenerator.view.GenerateDaoXmlFixAction</className>-->
+        <!--<category>Conditional Operator</category>-->
+        <!--<descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>-->
+        <!--</intentionAction>-->
+    </extensions>
+
+    <!--<project-components>-->
     <!--<component>-->
-      <!--&lt;!&ndash;<implementation-class>com.intellij.codeInsight.intention.Condition</implementation-class>&ndash;&gt;-->
+    <!--&lt;!&ndash;<implementation-class>com.intellij.codeInsight.intention.Condition</implementation-class>&ndash;&gt;-->
     <!--</component>-->
-  <!--</project-components>-->
+    <!--</project-components>-->
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
 
 </idea-plugin>
