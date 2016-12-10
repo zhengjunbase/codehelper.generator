@@ -14,7 +14,9 @@ repositories {
 }
 
 
-compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
 
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
