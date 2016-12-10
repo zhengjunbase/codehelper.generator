@@ -40,7 +40,7 @@ Screenshot
 
 todo
 ----------------------------------------------------------------
-
+- add delete method to it.
 - auto generate sql for first, like findFirst3OrderById,findFirst3DistinctNameById etc.
 - auto generate sql for count, like count,countDistinctUserTypeByUserName etc.
 - 

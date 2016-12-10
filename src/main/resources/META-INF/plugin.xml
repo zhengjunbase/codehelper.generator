@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.ccnode.codegenerator.mybatis.generator</id>
     <name>codehelper.generator</name>
-    <version>2016.12.03</version>
+  <version>2016.12.05</version>
     <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
     <description><![CDATA[
@@ -38,28 +38,28 @@
       CodeHelper will generate code use default config.</li>
       <li>Method two: Add a codehelper.properties in you project directory.</br>Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.</li>
       </ul>
-      <p>GenDaoCode 特性</p>
+      <p>GenDaoCode 特性/p>
       <ul>
-      <li><p>根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。</p></li>
-      <li><p>Pojo文件更新后一键更新对应的Sql和mybatis xml文件。</p></li>
-      <li><p>提供insert，insertList，update，select，delete五种方法。</p></li>
-      <li><p>能够批量生成多个Pojo的对应的文件。</p></li>
-      <li><p>自动将pojo的注释添加到对应的Sql文件的注释中。 </p></li>
-      <li><p>丰富的配置，如果没有配置文件，则会使用默认配置。</p></li>
-      <li><p>可以在Intellij Idea中快捷键配置中配置快捷键。</p></li>
-      <li><p>目前支持MySQL + Java，后续会支持更多的DB。</p></li>
-      <li><p>如果喜欢我们的插件，非常感谢您的分享。</p></li>
+      <li><p>根据Pojo 文件一键生成Dao，Service，Xml，Sql文件/p></li>
+      <li><p>Pojo文件更新后一键更新对应的Sql和mybatis xml文件/p></li>
+      <li><p>提供insert，insertList，update，select，delete五种方法/p></li>
+      <li><p>能够批量生成多个Pojo的对应的文件</p></li>
+      <li><p>自动将pojo的注释添加到对应的Sql文件的注释中/p></li>
+      <li><p>丰富的配置，如果没有配置文件，则会使用默认配置/p></li>
+      <li><p>可以在Intellij Idea中快捷键配置中配置快捷键/p></li>
+      <li><p>目前支持MySQL + Java，后续会支持更多的DB/p></li>
+      <li><p>如果喜欢我们的插件，非常感谢您的分享/p></li>
       </ul>
       <p>GenDaoCode 使用方法</p>
       <ul>
-      <li><p>主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。</p></li>
-      <li><p>方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。</p></li>
-      <li><p>Codehelper Generator会根据默认配置为您生成代码。</p></li>
-      <li><p>方法二：在工程目录下添加文件名为codehelper.properties的文件。</p></li>
-      <li><p>点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码</p></li>
+      <li><p>主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码/p></li>
+      <li><p>方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo| 分隔/p></li>
+      <li><p>Codehelper Generator会根据默认配置为您生成代码/p></li>
+      <li><p>方法二：在工程目录下添加文件名为codehelper.properties的文件/p></li>
+      <li><p>点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代/p></li>
       <li><p>如何配置: http://codehelper.me/generator/config</p></li>
       </ul>
-      <p>联系作者 & 加入开发</p>
+      <p>联系作者& 加入开发/p>
       <ul>
        <li><p> 添加微信zhengjun302, 邀您加入微信交流群</p></li>
        </ul>
