@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2016.12.05</version>
+  <version>2016.12.03</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
