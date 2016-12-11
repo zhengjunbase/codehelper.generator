@@ -2,6 +2,8 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.dialog.MethodExistDialog;
+import com.ccnode.codegenerator.dialog.ParseExceptionDialog;
+import com.ccnode.codegenerator.jpaparse.ParseException;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -198,8 +200,19 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         }
 
         ReturnClassInfo info = buildReturnClassInfo(returnClassName, pojoClass);
-        XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
-        //todo display a form for user to choose from. let user check and edit.
+        XmlTag sql = null;
+        try {
+            sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
+        } catch (ParseException e) {
+            if (e.getTerm() != null) {
+                ParseExceptionDialog d = new ParseExceptionDialog(project, methodName, e.getTerm().getStart(), e.getTerm().getEnd(), e.getMessage());
+                d.showAndGet();
+            } else {
+                ParseExceptionDialog d = new ParseExceptionDialog(project, methodName, null, null, e.getMessage());
+                d.showAndGet();
+            }
+            return;
+        }
 
         rootTag.addSubTag(sql, false);
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
