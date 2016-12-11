@@ -43,6 +43,7 @@ public class MethodExistDialog extends DialogWrapper {
         bag.gridx = 0;
         bag.gridy = 1;
         JTextArea comp = new JTextArea(existMethodValue);
+        comp.setEditable(false);
         jpanel.add(comp, bag);
 
         bag.fill = GridBagConstraints.HORIZONTAL;

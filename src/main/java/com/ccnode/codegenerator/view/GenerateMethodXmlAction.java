@@ -189,13 +189,11 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
         if (existTag != null) {
             MethodExistDialog exist = new MethodExistDialog(project, existTag.getText());
-            if (exist.showAndGet()) {
-                //dothings  in it.
-                if (!exist.isOverride()) {
-                    return;
-                } else {
-                    existTag.delete();
-                }
+            boolean b = exist.showAndGet();
+            if (!b) {
+                return;
+            } else {
+                existTag.delete();
             }
         }
 
