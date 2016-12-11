@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
+import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.QueryParser;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
@@ -183,10 +184,20 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             rootTag.addSubTag(sql, true);
         }
 
-        String existValues
+        XmlTag existTag
                 = methodAlreadyExist(psixml, methodName);
 
-        //todo need to tell the user the method already exist let user to choose it.
+        if (existTag != null) {
+            MethodExistDialog exist = new MethodExistDialog(project, existTag.getText());
+            if (exist.showAndGet()) {
+                //dothings  in it.
+                if (!exist.isOverride()) {
+                    return;
+                } else {
+                    existTag.delete();
+                }
+            }
+        }
 
         ReturnClassInfo info = buildReturnClassInfo(returnClassName, pojoClass);
         XmlTag sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
@@ -229,14 +240,14 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         return builder.toString();
     }
 
-    private static String methodAlreadyExist(PsiFile psixml, String methodName) {
+    private static XmlTag methodAlreadyExist(PsiFile psixml, String methodName) {
         XmlTag rootTag = ((XmlFileImpl) psixml).getRootTag();
         XmlTag[] subTags = rootTag.getSubTags();
         Set<String> existIds = new HashSet<String>();
         for (XmlTag subTag : subTags) {
             XmlAttribute id = subTag.getAttribute("id");
             if (id != null && id.getValue() != null && id.getValue().equalsIgnoreCase(methodName)) {
-                return subTag.getText();
+                return subTag;
             }
         }
 

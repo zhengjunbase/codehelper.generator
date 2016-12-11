@@ -16,7 +16,13 @@ public class MethodExistDialog extends DialogWrapper {
 
     private final String existMethodValue;
 
-    protected MethodExistDialog(@Nullable Project project, String existMethodValue) {
+    private boolean override = false;
+
+    public boolean isOverride() {
+        return override;
+    }
+
+    public MethodExistDialog(@Nullable Project project, String existMethodValue) {
         super(project, true);
         myProject = project;
         this.existMethodValue = existMethodValue;
@@ -36,12 +42,18 @@ public class MethodExistDialog extends DialogWrapper {
         jpanel.add(new JLabel("the method already exist in xml,the existed value is:"), bag);
         bag.gridx = 0;
         bag.gridy = 1;
-        jpanel.add(new JLabel(existMethodValue), bag);
+        JTextArea comp = new JTextArea(existMethodValue);
+        jpanel.add(comp, bag);
 
+        bag.fill = GridBagConstraints.HORIZONTAL;
         bag.gridy = 2;
-        jpanel.add(new JButton("ovveride them"), bag);
-        bag.gridx = 1;
-        jpanel.add(new JButton("cancel"), bag);
+        jpanel.add(new JLabel("do you want to override them?"), bag);
         return jpanel;
+    }
+
+    @Override
+    protected void doOKAction() {
+        super.doOKAction();
+        override = true;
     }
 }
