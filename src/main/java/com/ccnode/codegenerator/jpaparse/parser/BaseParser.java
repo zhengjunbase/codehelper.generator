@@ -2,8 +2,14 @@ package com.ccnode.codegenerator.jpaparse.parser;
 
 
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
+import com.ccnode.codegenerator.jpaparse.ParseException;
 import com.ccnode.codegenerator.jpaparse.Term;
+import com.ccnode.codegenerator.jpaparse.TermType;
 import com.ccnode.codegenerator.jpaparse.info.BaseInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by bruce.ge on 2016/12/5.
@@ -76,5 +82,32 @@ public  class BaseParser {
 
     public static String cdata(String s){
         return "<![CDATA["+s+"]]>";
+    }
+
+
+    protected static List<Term> buildTerms(String methodName, Map<Integer, Term> termMaps, int[] used) {
+        List<Term> terms = new ArrayList<Term>();
+        int i = 0;
+        String q = "";
+        while (i < methodName.length()) {
+            if (used[i] == 1) {
+                if (q.length() > 0) {
+                    Term term = new Term((i-q.length()), i, TermType.PROP, q);
+                    throw new ParseException(term, "can't parse the part");
+
+                }
+                terms.add(termMaps.get(i));
+                i = termMaps.get(i).getEnd();
+            } else {
+                q += methodName.charAt(i);
+                i++;
+            }
+        }
+        if (q.length() > 0) {
+            Term term = new Term((i -q.length()), i, TermType.PROP, q);
+            throw new ParseException(term, "can't parse the part");
+        }
+
+        return terms;
     }
 }

@@ -48,9 +48,9 @@ public class ParseExceptionDialog extends DialogWrapper {
             JLabel errorPart = new JLabel(methodName.substring(start, end));
             errorPart.setForeground(Color.RED);
             errorPart.setOpaque(true);
-            jPanel.add(errorPart);
+            jPanel.add(errorPart,bag);
             bag.gridx = 2;
-            jPanel.add(new JLabel(methodName.substring(end)));
+            jPanel.add(new JLabel(methodName.substring(end)),bag);
         } else {
             jPanel.add(new JLabel("methodname: "+methodName), bag);
         }

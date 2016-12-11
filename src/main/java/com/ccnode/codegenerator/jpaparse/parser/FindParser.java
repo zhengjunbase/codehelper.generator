@@ -157,7 +157,7 @@ public class FindParser extends BaseParser {
                         state = 9;
                         break;
                     } else {
-                        throw new ParseException(cur,"shall use property of bean after 'by'" );
+                        throw new ParseException(cur, "shall use property of bean after 'by'");
                     }
                 }
 
@@ -178,7 +178,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException(cur,"shall use with 'orderby' or 'compartor' or 'and/or' after property");
+                        throw new ParseException(cur, "shall use with 'orderby' or 'compartor' or 'and/or' after property");
                     }
                 }
                 case 10: {
@@ -191,7 +191,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException(cur,"shall use 'orderby' or 'and/or' after comparator");
+                        throw new ParseException(cur, "shall use 'orderby' or 'and/or' after comparator");
                     }
                 }
                 case 11: {
@@ -204,7 +204,7 @@ public class FindParser extends BaseParser {
                         state = 8;
                         break;
                     } else {
-                        throw new ParseException(cur,"shall use with 'orderby' or 'by' or empty after select distinct(property) ");
+                        throw new ParseException(cur, "shall use with 'orderby' or 'by' or empty after select distinct(property) ");
                     }
                 }
             }
@@ -344,26 +344,12 @@ public class FindParser extends BaseParser {
             }
         }
 
-        int i = 0;
-        String q = "";
-        while (i < methodName.length()) {
-            if (used[i] == 1) {
-                if (q.length() > 0) {
-                    Term term  = new Term((i-1-q.length()),i-1,TermType.PROP,q);
-                    throw new ParseException(term,"can't parse the part");
-//                    terms.add(new Term(0, 0, TermType.PROP, q));
-//                    q = "";
-                }
-                terms.add(termMaps.get(i));
-                i = termMaps.get(i).getEnd();
-            } else {
-                q += methodName.charAt(i);
-                i++;
-            }
-        }
+        return buildTerms(methodName, termMaps, used);
         // than go to create the basic term. then add them to the queud.
-        return terms;
+
     }
+
+
 
 
     public static void main(String[] args) {

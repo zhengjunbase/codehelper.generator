@@ -182,25 +182,9 @@ public class DeleteParse extends BaseParser {
             }
         }
 
-        int i = 0;
-        String q = "";
-        while (i < method.length()) {
-            if (used[i] == 1) {
-                if (q.length() > 0) {
-                    Term term = new Term((i - 1 - q.length()), i - 1, TermType.PROP, q);
-                    throw new ParseException(term, " the property can't be found in bean or comparator etc, please check it");
-//                    terms.add(new Term(0, 0, TermType.PROP, q));
-//                    q = "";
-                }
-                terms.add(termMap.get(i));
-                i = termMap.get(i).getEnd();
-            } else {
-                q += method.charAt(i);
-                i++;
-            }
-        }
+
         // than go to create the basic term. then add them to the queud.
-        return terms;
+        return buildTerms(method, termMap, used);
     }
 
     public static void main(String[] args) {

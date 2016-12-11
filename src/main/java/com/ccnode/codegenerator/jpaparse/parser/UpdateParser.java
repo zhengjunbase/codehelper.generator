@@ -117,7 +117,6 @@ public class UpdateParser extends BaseParser {
 
     private static List<Term> generateTerm(String method, List<String> props) {
         //first go to match with update.
-        List<Term> terms = new ArrayList<Term>();
         int[] used = new int[method.length()];
         Map<Integer, Term> termMap = new HashMap<Integer, Term>();
         if (method.startsWith(KeyWordConstants.UPDATE)) {
@@ -195,25 +194,9 @@ public class UpdateParser extends BaseParser {
             }
         }
 
-        int i = 0;
-        String q = "";
-        while (i < method.length()) {
-            if (used[i] == 1) {
-                if (q.length() > 0) {
-                    Term term = new Term((i-1-q.length()),(i-1),TermType.PROP,q);
-                    throw new ParseException(term,"can't parse it with known values");
-//                    terms.add(new Term(0, 0, TermType.PROP, q));
-//                    q = "";
-                }
-                terms.add(termMap.get(i));
-                i = termMap.get(i).getEnd();
-            } else {
-                q += method.charAt(i);
-                i++;
-            }
-        }
+
         // than go to create the basic term. then add them to the queud.
-        return terms;
+        return buildTerms(method,termMap,used);
     }
 
 
