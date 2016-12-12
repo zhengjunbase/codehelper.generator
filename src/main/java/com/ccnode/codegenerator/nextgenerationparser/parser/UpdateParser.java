@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedU
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdateDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdateError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class UpdateParser extends BaseParser {
 
-    private List<ParsedUpdate> parsedUpdates;
+    private List<ParsedUpdate> parsedUpdates = new ArrayList<>();
 
-    private List<ParsedUpdateError> errors;
+    private List<ParsedUpdateError> errors = new ArrayList<>();
 
     public UpdateParser(String methodName, List<String> props) {
         super(methodName, props);
@@ -139,6 +140,16 @@ public class UpdateParser extends BaseParser {
             return true;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        String methodName = "updateIdAndNameById";
+        List<String> props = new ArrayList<>();
+        props.add("Id");
+        props.add("Name");
+        props.add("username");
+        ParsedUpdateDto parse = new UpdateParser(methodName.toLowerCase(), props).parse();
+        parse.getUpdateList();
     }
 
 

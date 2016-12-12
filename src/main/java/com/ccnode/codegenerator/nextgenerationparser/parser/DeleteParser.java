@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedD
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDeleteDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDeleteError;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,9 +13,9 @@ import java.util.List;
  */
 public class DeleteParser extends BaseParser {
 
-    private List<ParsedDelete> parsedDeletes;
+    private List<ParsedDelete> parsedDeletes = new ArrayList<>();
 
-    private List<ParsedDeleteError> errors;
+    private List<ParsedDeleteError> errors = new ArrayList<>();
 
     public DeleteParser(String methodName, List<String> props) {
         super(methodName, props);

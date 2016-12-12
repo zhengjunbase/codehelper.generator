@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.nextgenerationparser.parsedresult.count;
 
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.ParsedBase;
+import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +19,18 @@ public class ParsedCount extends ParsedBase{
             fetchProps = new ArrayList<>();
         }
         fetchProps.add(props);
+    }
+
+    public ParsedCount clone() {
+        return Cloner.standard().deepClone(this);
+    }
+
+
+    public boolean isDistinct() {
+        return distinct;
+    }
+
+    public void setDistinct(boolean distinct) {
+        this.distinct = distinct;
     }
 }
