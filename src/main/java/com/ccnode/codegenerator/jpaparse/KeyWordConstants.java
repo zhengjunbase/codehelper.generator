@@ -4,6 +4,14 @@ package com.ccnode.codegenerator.jpaparse;
  * Created by bruce.ge on 2016/12/4.
  */
 public class KeyWordConstants {
+
+    public static final String FIRST = "first";
+
+    public static final String DISTINCT = "distinct";
+
+
+    public static final String COUNT = "count";
+
     public static final String FIND = "find";
 
     public static final String FINDDISTINCT = "finddistinct";
