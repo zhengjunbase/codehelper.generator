@@ -1,6 +1,6 @@
 package com.ccnode.codegenerator.nextgenerationparser.parsedresult.find;
 
-import com.ccnode.codegenerator.nextgenerationparser.parsedresult.QueryRule;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.ParsedBase;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by bruce.ge on 2016/12/12.
  */
-public class ParsedFind {
+public class ParsedFind extends ParsedBase{
     /**
      * the part after 'select' before 'by'
      */
@@ -18,7 +18,6 @@ public class ParsedFind {
     /**
      * the part after by.
      */
-    private List<QueryRule> queryRules;
 
     /**
      * the select distinct.
@@ -44,25 +43,6 @@ public class ParsedFind {
         fetchProps.add(props);
     }
 
-
-    public void addQueryProp(String queryProp) {
-        if (this.queryRules == null) {
-            this.queryRules = new ArrayList<>();
-        }
-        QueryRule rule = new QueryRule();
-        rule.setProp(queryProp);
-        this.queryRules.add(rule);
-    }
-
-    public void addQueryOperator(String operator) {
-        QueryRule rule = this.queryRules.get(this.queryRules.size() - 1);
-        rule.setOperator(operator);
-    }
-
-    public void addConnector(String connector) {
-        QueryRule rule = this.queryRules.get(this.queryRules.size() - 1);
-        rule.setConnector(connector);
-    }
 
     public void addOrderByProp(String prop) {
         if (orderByProps == null) {

@@ -1,26 +1,12 @@
 package com.ccnode.codegenerator.nextgenerationparser.parsedresult.find;
 
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.ParsedErrorBase;
+
 /**
  * Created by bruce.ge on 2016/12/12.
  */
-public class ParsedFindError {
+public class ParsedFindError extends ParsedErrorBase{
     private ParsedFind parsedFind;
-
-    private Integer lastState;
-
-    private String remaining;
-
-
-
-    public String getRemaining() {
-        return remaining;
-    }
-
-    public void setRemaining(String remaining) {
-        this.remaining = remaining;
-    }
-
-
 
     public ParsedFind getParsedFind() {
         return parsedFind;
@@ -30,12 +16,5 @@ public class ParsedFindError {
         this.parsedFind = parsedFind;
     }
 
-    public Integer getLastState() {
-        return lastState;
-    }
-
-    public void setLastState(Integer lastState) {
-        this.lastState = lastState;
-    }
 
 }

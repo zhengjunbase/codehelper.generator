@@ -17,7 +17,7 @@ public class FindParser extends BaseParser {
     private List<ParsedFindError> errors = new ArrayList<>();
 
     public FindParser(String methodName, List<String> props) {
-        super(methodName,props);
+        super(methodName, props);
     }
 
     public ParsedFindDto parse() {
@@ -265,7 +265,7 @@ public class FindParser extends BaseParser {
     }
 
     private boolean isValidEndState(int state) {
-        if (state == 2 || state == 3 || state == 5 || state == 6 || state == 9 || state == 10) {
+        if (state == 0 || state == 2 || state == 3 || state == 5 || state == 6 || state == 9 || state == 10) {
             return true;
         }
         return false;

@@ -1,4 +1,4 @@
-package com.ccnode.codegenerator.nextgenerationparser.parsedresult;
+package com.ccnode.codegenerator.nextgenerationparser.parsedresult.base;
 
 /**
  * Created by bruce.ge on 2016/12/12.
