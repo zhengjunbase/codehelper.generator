@@ -2,16 +2,15 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.dialog.MethodExistDialog;
-import com.ccnode.codegenerator.dialog.ParseExceptionDialog;
-import com.ccnode.codegenerator.jpaparse.ParseException;
-import com.ccnode.codegenerator.jpaparse.QueryParser;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
+import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.components.ServiceManager;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -52,20 +51,8 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         Module srcModule = ModuleUtilCore.findModuleForPsiElement(element);
         PsiClass srcClass = PsiElementUtil.getContainingClass(element);
-
         if (srcClass == null) return;
-        PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
-        PsiPackage srcPackage = JavaDirectoryService.getInstance().getPackage(srcDir);
-        PsiElement parent = element.getParent();
-        if (!(parent instanceof PsiMethod)) {
-            return;
-        }
-        PsiMethod method = (PsiMethod) parent;
-        String methodName = method.getName();
-        String returnClassName = method.getReturnType().getCanonicalText();
-        if (returnClassName.startsWith(JAVALIST)) {
-            returnClassName = returnClassName.substring(JAVALIST.length() + 1, returnClassName.length() - 1);
-        }
+        //go to check if the pojo class exist.
         PsiClass pojoClass = PsiClassUtil.getPojoClass(srcClass);
         String srcClassName = srcClass.getName();
         if (pojoClass == null) {
@@ -76,7 +63,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 if (classesByName.length == 1) {
                     pojoClass = classesByName[0];
                 } else {
-                    //todo say there are two class with same name. let use choose with one.
+                    //todo say there are two class with same name. let user choose with one.
                 }
             } else {
                 //todo show with error can't from the pojo class to inject.
@@ -88,6 +75,25 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             //todo say can't find with pojo class file.
             return;
         }
+
+        PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
+        PsiPackage srcPackage = JavaDirectoryService.getInstance().getPackage(srcDir);
+        PsiElement parent = element.getParent();
+
+        MethodXmlPsiInfo methodInfo = new MethodXmlPsiInfo();
+        methodInfo.setPojoClass(pojoClass);
+        if (parent instanceof PsiMethod) {
+            setMethodValue((PsiMethod) parent,methodInfo);
+        } else if (parent instanceof PsiJavaCodeReferenceElement) {
+            String text = parent.getText();
+            methodInfo.setMethodName(text);
+            Document document = PsiDocumentManager.getInstance(project).getDocument(srcClass.getContainingFile());
+            String before = "nimaya";
+            document.insertString(element.getTextOffset(), before);
+            document.insertString(element.getTextOffset() + element.getTextLength() + before.length(), "nimageji");
+            return;
+        }
+
 
         //when pojoClass is not null, then try to extract all property from it. then get the sql generated.do thing with batch.
 
@@ -128,7 +134,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                     }
                     return true;
                 }
-            }, GlobalSearchScope.moduleScope(ModuleUtilCore.findModuleForPsiElement(method)));
+            }, GlobalSearchScope.moduleScope(ModuleUtilCore.findModuleForPsiElement(element)));
             if (xmlFiles.size() == 0) {
                 //todo no corresponding xml exist. go to tell the user.
                 return;
@@ -187,7 +193,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         }
 
         XmlTag existTag
-                = methodAlreadyExist(psixml, methodName);
+                = methodAlreadyExist(psixml, methodInfo.getMethodName());
 
         if (existTag != null) {
             MethodExistDialog exist = new MethodExistDialog(project, existTag.getText());
@@ -199,23 +205,36 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
 
-        ReturnClassInfo info = buildReturnClassInfo(returnClassName, pojoClass);
-        XmlTag sql = null;
-        try {
-            sql = QueryParser.parse(rootTag, methodName, props, tableName, info);
-        } catch (ParseException e) {
-            if (e.getTerm() != null) {
-                ParseExceptionDialog d = new ParseExceptionDialog(project, methodName, e.getTerm().getStart(), e.getTerm().getEnd(), e.getMessage());
-                d.showAndGet();
-            } else {
-                ParseExceptionDialog d = new ParseExceptionDialog(project, methodName, null, null, e.getMessage());
-                d.showAndGet();
-            }
-            return;
-        }
+        // TODO: 2016/12/12 if method contain return class, we need to choose the one with right return type.
 
-        rootTag.addSubTag(sql, false);
+//
+//        ReturnClassInfo info = buildReturnClassInfo(methodInfo.getReturnClassName(), pojoClass);
+//        XmlTag sql = null;
+//        try {
+//            sql = QueryParser.parse(rootTag, methodInfo.getMethodName(), props, tableName, info);
+//        } catch (ParseException e) {
+//            if (e.getTerm() != null) {
+//                ParseExceptionDialog d = new ParseExceptionDialog(project, methodInfo.getMethodName(), e.getTerm().getStart(), e.getTerm().getEnd(), e.getMessage());
+//                d.showAndGet();
+//            } else {
+//                ParseExceptionDialog d = new ParseExceptionDialog(project, methodInfo.getMethodName(), null, null, e.getMessage());
+//                d.showAndGet();
+//            }
+//            return;
+//        }
+
+//        rootTag.addSubTag(sql, false);
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
+    }
+
+    private void setMethodValue(PsiMethod method,MethodXmlPsiInfo info) {
+        String returnClassName = method.getReturnType().getCanonicalText();
+        if (returnClassName.startsWith(JAVALIST)) {
+            returnClassName = returnClassName.substring(JAVALIST.length() + 1, returnClassName.length() - 1);
+        }
+        info.setMethod(method);
+        info.setMethodName(method.getName());
+        info.setReturnClassName(returnClassName);
     }
 
     private ReturnClassInfo buildReturnClassInfo(String returnClassName, PsiClass pojoClass) {
@@ -349,12 +368,20 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
         }
+
         PsiElement parent = element.getParent();
         if (parent instanceof PsiMethod) {
             // ok.
             PsiMethod method = (PsiMethod) parent;
             String methodName = method.getName().toLowerCase();
-            if (methodName.startsWith("find") || methodName.startsWith("update") || methodName.startsWith("delete")) {
+            if (methodName.startsWith("find") || methodName.startsWith("update") || methodName.startsWith("delete") || methodName.startsWith("count")) {
+                return true;
+            }
+        }
+        if (parent instanceof PsiJavaCodeReferenceElement) {
+            PsiJavaCodeReferenceElement referenceElement = (PsiJavaCodeReferenceElement) parent;
+            String text = referenceElement.getText().toLowerCase();
+            if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete") || text.startsWith("count")) {
                 return true;
             }
         }
