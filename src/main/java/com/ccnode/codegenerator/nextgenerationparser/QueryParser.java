@@ -1,7 +1,7 @@
 package com.ccnode.codegenerator.nextgenerationparser;
 
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
-import com.ccnode.codegenerator.nextgenerationparser.parsedresult.ParsedFindDto;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindDto;
 import com.ccnode.codegenerator.nextgenerationparser.parser.FindParser;
 import com.intellij.psi.xml.XmlTag;
 

@@ -1,4 +1,4 @@
-package com.ccnode.codegenerator.nextgenerationparser.parsedresult;
+package com.ccnode.codegenerator.nextgenerationparser.parsedresult.find;
 
 import java.util.List;
 

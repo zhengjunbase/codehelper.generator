@@ -1,5 +1,6 @@
-package com.ccnode.codegenerator.nextgenerationparser.parsedresult;
+package com.ccnode.codegenerator.nextgenerationparser.parsedresult.find;
 
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.QueryRule;
 import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;

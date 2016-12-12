@@ -1,9 +1,9 @@
 package com.ccnode.codegenerator.nextgenerationparser.parser;
 
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
-import com.ccnode.codegenerator.nextgenerationparser.parsedresult.ParsedFindError;
-import com.ccnode.codegenerator.nextgenerationparser.parsedresult.ParsedFind;
-import com.ccnode.codegenerator.nextgenerationparser.parsedresult.ParsedFindDto;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindError;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFind;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +13,11 @@ import java.util.List;
  */
 public class FindParser extends BaseParser {
 
-    private String methodName;
-
-    private String[] props;
-
-    private String[] lowerProps;
-
-    List<ParsedFind> finds = new ArrayList<>();
-    List<ParsedFindError> errors = new ArrayList<>();
+    private List<ParsedFind> finds = new ArrayList<>();
+    private List<ParsedFindError> errors = new ArrayList<>();
 
     public FindParser(String methodName, List<String> props) {
-        this.methodName = methodName;
-        this.props = new String[props.size()];
-        this.lowerProps = new String[props.size()];
-        for (int i = 0; i < props.size(); i++) {
-            this.props[i] = props.get(i);
-            this.lowerProps[i] = props.get(i).toLowerCase();
-        }
+        super(methodName,props);
     }
 
     public ParsedFindDto parse() {
