@@ -161,13 +161,19 @@ public class QueryBuilder {
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
-                        builder.append(" " + prop + "not in #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + prop + "not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                                "open=\"(\" separator=\",\" close=\")\">\n\t" +
+                                "#{item}\n\t" +
+                                "</foreach>\n");
                         break;
                     }
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
-                        builder.append(" " + prop + "in #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + prop + "in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                                "open=\"(\" separator=\",\" close=\")\">\n\t" +
+                                "#{item}\n\t" +
+                                "</foreach>\n");
                         break;
                     }
                     case KeyWordConstants.NOTLIKE: {
