@@ -1,12 +1,15 @@
 package com.ccnode.codegenerator.nextgenerationparser.buidler;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
+import com.ccnode.codegenerator.constants.QueryTypeConstants;
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.QueryRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.OrderByRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFind;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindError;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdate;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdateError;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.psi.PsiClass;
@@ -74,7 +77,7 @@ public class QueryBuilder {
 
     private static QueryInfo buildQueryInfo(ParsedFind find, Map<String, String> fieldMap, String tableName, String pojoClassName) {
         QueryInfo info = new QueryInfo();
-        info.setType("select");
+        info.setType(QueryTypeConstants.SELECT);
         boolean queryAllTable = false;
         boolean returnList = true;
         if (find.getFetchProps() != null && find.getFetchProps().size() > 0) {
@@ -137,6 +140,7 @@ public class QueryBuilder {
         }
         builder.append("\n\t from " + tableName);
         info.setSql(builder.toString());
+        info.setParamInfos(new ArrayList<>());
         if (find.getQueryRules() != null) {
             buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap);
         }
@@ -159,8 +163,8 @@ public class QueryBuilder {
     }
 
     private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap) {
+        info.setSql(info.getSql() + "\n\twhere");
         StringBuilder builder = new StringBuilder();
-        List<ParamInfo> paramInfos = new ArrayList<>();
         for (QueryRule rule : queryRules) {
             String prop = rule.getProp();
             String operator = rule.getOperator();
@@ -168,27 +172,27 @@ public class QueryBuilder {
             //mean =
             if (operator == null) {
                 ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue(prop).build();
-                paramInfos.add(paramInfo);
+                info.getParamInfos().add(paramInfo);
                 builder.append(" " + prop + "=#{" + paramInfo.getParamAnno() + "}");
             } else {
                 switch (operator) {
                     case KeyWordConstants.GREATERTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LESSTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.BETWEEN: {
                         ParamInfo min = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
                         ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
-                        paramInfos.add(min);
-                        paramInfos.add(max);
+                        info.getParamInfos().add(min);
+                        info.getParamInfos().add(max);
                         builder.append(" " + prop + cdata(">=") + " #{" + min.getParamAnno() + "} and " + prop + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
                         break;
                     }
@@ -202,13 +206,13 @@ public class QueryBuilder {
                     }
                     case KeyWordConstants.NOT: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("not" + prop).build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + "!= #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
@@ -217,7 +221,7 @@ public class QueryBuilder {
                     }
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
@@ -226,13 +230,13 @@ public class QueryBuilder {
                     }
                     case KeyWordConstants.NOTLIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("notlike" + prop).build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + "not like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("like" + prop).build();
-                        paramInfos.add(paramInfo);
+                        info.getParamInfos().add(paramInfo);
                         builder.append(" " + prop + "like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
@@ -243,7 +247,6 @@ public class QueryBuilder {
                 builder.append(" " + connector);
             }
         }
-        info.setParamInfos(paramInfos);
         info.setSql(info.getSql() + builder.toString());
     }
 
@@ -260,4 +263,51 @@ public class QueryBuilder {
     }
 
 
+    public static QueryParseDto buildUpdateResult(List<ParsedUpdate> updateList, List<ParsedUpdateError> errorList, MethodXmlPsiInfo info) {
+        if (updateList.size() == 0) {
+            QueryParseDto dto = new QueryParseDto();
+            dto.setHasMatched(false);
+            List<String> errorMsgs = new ArrayList<>();
+            for (ParsedUpdateError error : errorList) {
+                String errorMsg = error.getRemaining();
+                errorMsgs.add(errorMsg);
+            }
+            dto.setErrorMsg(errorMsgs);
+        }
+        PsiClass psiClass = info.getPojoClass();
+        Map<String, String> fieldMap = buildFieldMap(psiClass);
+        List<QueryInfo> queryInfos = new ArrayList<>();
+        for (ParsedUpdate update : updateList) {
+            queryInfos.add(buildQueryUpdateInfo(update, fieldMap, info.getTableName(), psiClass.getName()));
+        }
+        QueryParseDto dto = new QueryParseDto();
+        if (info.getMethod() == null) {
+            dto.setQueryInfos(queryInfos);
+            dto.setHasMatched(true);
+        }
+        return dto;
+    }
+
+    private static QueryInfo buildQueryUpdateInfo(ParsedUpdate update, Map<String, String> fieldMap, String tableName, String name) {
+        QueryInfo info = new QueryInfo();
+        info.setType(QueryTypeConstants.UPDATE);
+        info.setMethodReturnType("int");
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\tupdate " + tableName + "\n\tset");
+        info.setParamInfos(new ArrayList<>());
+        for (int i = 0; i < update.getUpdateProps().size(); i++) {
+            String prop = update.getUpdateProps().get(i);
+            ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + prop).
+                    withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + prop).build();
+            builder.append(" " + prop + "={" + paramInfo.getParamAnno() + "}");
+            if (i != update.getUpdateProps().size() - 1) {
+                builder.append(",");
+            }
+        }
+        info.setSql(builder.toString());
+        if (update.getQueryRules() != null) {
+            buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap);
+        }
+        return info;
+    }
 }

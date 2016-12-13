@@ -1,4 +1,4 @@
-codehelper.generator Plugin [![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Gitter][badge-gitter-img]][badge-gitter]
+codehelper.generatorPlugin [![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Gitter][badge-gitter-img]][badge-gitter]
 =================
 [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
 [![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]

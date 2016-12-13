@@ -23,4 +23,8 @@ public class ParsedUpdate extends ParsedBase {
         return Cloner.standard().deepClone(this);
     }
 
+
+    public List<String> getUpdateProps() {
+        return updateProps;
+    }
 }

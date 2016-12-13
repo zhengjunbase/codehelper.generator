@@ -25,6 +25,7 @@ public class QueryParser {
         } else if (methodLower.startsWith(KeyWordConstants.UPDATE)) {
             ParsedUpdateDto dto = new UpdateParser(methodLower, props).parse();
             //then build the result by list to control.
+            return QueryBuilder.buildUpdateResult(dto.getUpdateList(), dto.getErrorList(), info);
         } else if (methodLower.startsWith(KeyWordConstants.DELETE)) {
 
         } else if (methodLower.startsWith(KeyWordConstants.COUNT)) {
