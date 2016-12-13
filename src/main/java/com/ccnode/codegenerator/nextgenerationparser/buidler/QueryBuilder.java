@@ -102,7 +102,9 @@ public class QueryBuilder {
         }
 
         if (returnList) {
-            info.setMethodReturnType("List<" + info.getReturnClass() + ">");
+            info.setMethodReturnType("List<" + extractLast(info.getReturnClass()) + ">");
+        } else {
+            info.setMethodReturnType(extractLast(info.getReturnClass()));
         }
 
         StringBuilder builder = new StringBuilder();
@@ -132,12 +134,17 @@ public class QueryBuilder {
         }
 
         if (find.getOrderByProps() != null) {
-            info.setSql(info.getSql()+ " order by");
+            info.setSql(info.getSql() + " order by");
             for (OrderByRule rule : find.getOrderByProps()) {
                 info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
             }
         }
         return info;
+    }
+
+    private static String extractLast(String returnClass) {
+        int s = returnClass.lastIndexOf(".");
+        return returnClass.substring(s + 1);
     }
 
     private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap) {
@@ -149,26 +156,26 @@ public class QueryBuilder {
             String connector = rule.getConnector();
             //mean =
             if (operator == null) {
-                ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(fieldMap.get(prop)).withParamValue(prop).build();
+                ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue(prop).build();
                 paramInfos.add(paramInfo);
                 builder.append(" " + prop + "=#{" + paramInfo.getParamAnno() + "}");
             } else {
                 switch (operator) {
                     case KeyWordConstants.GREATERTHAN: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(fieldMap.get(prop)).withParamValue("min" + prop).build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LESSTHAN: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(fieldMap.get(prop)).withParamValue("max" + prop).build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.BETWEEN: {
-                        ParamInfo min = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(fieldMap.get(prop)).withParamValue("min" + prop).build();
-                        ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(fieldMap.get(prop)).withParamValue("max" + prop).build();
+                        ParamInfo min = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
+                        ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         paramInfos.add(min);
                         paramInfos.add(max);
                         builder.append(" " + prop + cdata(">=") + " #{" + min.getParamAnno() + "} and " + prop + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
@@ -183,13 +190,13 @@ public class QueryBuilder {
                         break;
                     }
                     case KeyWordConstants.NOT: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + prop).withParamType(fieldMap.get(prop)).withParamValue("not" + prop).build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("not" + prop).build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + "!= #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.NOTIN: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
@@ -198,7 +205,7 @@ public class QueryBuilder {
                         break;
                     }
                     case KeyWordConstants.IN: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
@@ -207,13 +214,13 @@ public class QueryBuilder {
                         break;
                     }
                     case KeyWordConstants.NOTLIKE: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + prop).withParamType(fieldMap.get(prop)).withParamValue("notlike" + prop).build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("notlike" + prop).build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + "not like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LIKE: {
-                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + prop).withParamType(fieldMap.get(prop)).withParamValue("like" + prop).build();
+                        ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("like" + prop).build();
                         paramInfos.add(paramInfo);
                         builder.append(" " + prop + "like #{" + paramInfo.getParamAnno() + "}");
                         break;
@@ -232,6 +239,13 @@ public class QueryBuilder {
 
     public static String cdata(String s) {
         return "<![CDATA[" + s + "]]>";
+    }
+
+
+    public static void main(String[] args) {
+        String propName = "java.lang.String";
+        int i = propName.lastIndexOf(".");
+        System.out.println(i);
     }
 
 
