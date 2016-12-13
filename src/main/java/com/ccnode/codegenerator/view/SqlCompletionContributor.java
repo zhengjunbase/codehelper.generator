@@ -20,6 +20,7 @@ public class SqlCompletionContributor extends CompletionContributor {
         add("update");
         add("and");
         add("by");
+        add("count");
     }};
 
 
@@ -44,7 +45,7 @@ public class SqlCompletionContributor extends CompletionContributor {
             return;
         }
         String text = originalPosition.getText();
-        if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete")) {
+        if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete")||text.startsWith("count")) {
             //go tell them to choose.
             //todo could use like when there. why after press tab can't show with more?
 //            get pojo class from it.
@@ -78,10 +79,15 @@ public class SqlCompletionContributor extends CompletionContributor {
                 afterlower.add("reaterThan");
             } else if (lower.endsWith("l")) {
                 afterlower.add("essThan");
+                afterlower.add("ike");
             } else if (lower.endsWith("b")) {
                 afterlower.add("etween");
-            } else if (lower.endsWith("d")) {
+            } else if (lower.endsWith("findd")) {
                 afterlower.add("istinct");
+            } else if (lower.endsWith("i")) {
+                afterlower.add("n");
+            } else if (lower.endsWith("n")) {
+                afterlower.add("otIn");
             }
             if (afterlower.size() > 0) {
                 for (String after : afterlower) {

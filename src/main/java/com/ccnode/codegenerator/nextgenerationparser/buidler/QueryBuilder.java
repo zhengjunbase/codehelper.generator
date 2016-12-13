@@ -101,8 +101,8 @@ public class QueryBuilder {
             info.setReturnClass(pojoClassName);
         }
 
-        if(returnList){
-            info.setMethodReturnType("List<"+info.getReturnClass()+">");
+        if (returnList) {
+            info.setMethodReturnType("List<" + info.getReturnClass() + ">");
         }
 
         StringBuilder builder = new StringBuilder();
@@ -114,13 +114,13 @@ public class QueryBuilder {
             if (find.getDistinct()) {
                 builder.append(" distinct(");
                 for (String prop : find.getFetchProps()) {
-                    builder.append(GenCodeUtil.getUnderScore(prop) + ",");
+                    builder.append(" " + GenCodeUtil.getUnderScore(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
                 builder.append(")");
             } else {
                 for (String prop : find.getFetchProps()) {
-                    builder.append(GenCodeUtil.getUnderScore(prop) + ",");
+                    builder.append(" " + GenCodeUtil.getUnderScore(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
             }
@@ -132,7 +132,7 @@ public class QueryBuilder {
         }
 
         if (find.getOrderByProps() != null) {
-            builder.append(" order by");
+            info.setSql(info.getSql()+ " order by");
             for (OrderByRule rule : find.getOrderByProps()) {
                 info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
             }
