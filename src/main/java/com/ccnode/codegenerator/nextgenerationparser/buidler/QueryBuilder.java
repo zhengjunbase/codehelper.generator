@@ -11,6 +11,7 @@ import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,21 +36,16 @@ public class QueryBuilder {
             return dto;
         }
 
-        List<QueryInfo> queryInfos = new ArrayList<>();
         //get pojo class all fields and their type do it cool.
         PsiClass pojoClass = info.getPojoClass();
-        Map<String, String> fieldMap = new HashMap<>();
-        PsiField[] allFields = pojoClass.getAllFields();
-        for (PsiField f : allFields) {
-            if (f.hasModifierProperty("private") && !f.hasModifierProperty("static")) {
-                fieldMap.put(f.getName(), f.getType().getCanonicalText());
-            }
-        }
+        Map<String, String> fieldMap = buildFieldMap(pojoClass);
+        List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedFind find : parsedFinds) {
             queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName()));
         }
         //say this is not an method.
         QueryParseDto dto = new QueryParseDto();
+        //todo if the method is not null later will do it, not now.
         if (info.getMethod() == null) {
             //return mutiple things let's user to choose the one because the sql is defferent.
             dto.setQueryInfos(queryInfos);
@@ -58,6 +54,18 @@ public class QueryBuilder {
             }
         }
         return dto;
+    }
+
+    @NotNull
+    private static Map<String, String> buildFieldMap(PsiClass pojoClass) {
+        Map<String, String> fieldMap = new HashMap<>();
+        PsiField[] allFields = pojoClass.getAllFields();
+        for (PsiField f : allFields) {
+            if (f.hasModifierProperty("private") && !f.hasModifierProperty("static")) {
+                fieldMap.put(f.getName(), f.getType().getCanonicalText());
+            }
+        }
+        return fieldMap;
     }
 
     private static String buildErrorMsg(ParsedFindError error) {
@@ -139,8 +147,8 @@ public class QueryBuilder {
                 info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
             }
         }
-        if(find.getLimit()>0){
-            info.setSql(info.getSql()+" limit "+find.getLimit());
+        if (find.getLimit() > 0) {
+            info.setSql(info.getSql() + " limit " + find.getLimit());
         }
         return info;
     }

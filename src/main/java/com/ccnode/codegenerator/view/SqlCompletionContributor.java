@@ -93,6 +93,14 @@ public class SqlCompletionContributor extends CompletionContributor {
             } else if (lower.endsWith("n")) {
                 afterlower.add("otIn");
             }
+            char u = Character.toLowerCase(text.charAt(text.length() - 1));
+
+            for (String prop : strings) {
+                if (Character.toLowerCase(prop.charAt(0)) == u && prop.length() > 1) {
+                    afterlower.add(prop.substring(1));
+                }
+            }
+
             if (afterlower.size() > 0) {
                 for (String after : afterlower) {
                     LookupElementBuilder builder = LookupElementBuilder.create(text + after);
