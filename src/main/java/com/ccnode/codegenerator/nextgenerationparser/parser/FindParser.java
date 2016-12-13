@@ -96,6 +96,12 @@ public class FindParser extends BaseParser {
                     parseMethods(4, remaining, KeyWordConstants.ORDERBY.length(), newFind);
                     newParseFind = true;
                 }
+
+                if (remaining.startsWith(KeyWordConstants.BY)) {
+                    ParsedFind newFind = createParseFind(parsedFind);
+                    parseMethods(8, remaining, KeyWordConstants.BY.length(), newFind);
+                    newParseFind = true;
+                }
                 break;
             }
             case 1: {
@@ -121,6 +127,12 @@ public class FindParser extends BaseParser {
                 if (remaining.startsWith(KeyWordConstants.ORDERBY)) {
                     ParsedFind newFind = createParseFind(parsedFind);
                     parseMethods(4, remaining, KeyWordConstants.ORDERBY.length(), newFind);
+                    newParseFind = true;
+                }
+
+                if (remaining.startsWith(KeyWordConstants.BY)) {
+                    ParsedFind newFind = createParseFind(parsedFind);
+                    parseMethods(8, remaining, KeyWordConstants.BY.length(), newFind);
                     newParseFind = true;
                 }
                 break;

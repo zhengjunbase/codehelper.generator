@@ -28,4 +28,7 @@ public class ParsedBase {
         rule.setConnector(connector);
     }
 
+    public List<QueryRule> getQueryRules() {
+        return queryRules;
+    }
 }

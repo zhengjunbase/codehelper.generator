@@ -3,6 +3,8 @@ package com.ccnode.codegenerator.view;
 import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
+import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
+import com.ccnode.codegenerator.nextgenerationparser.QueryParser;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
@@ -83,15 +85,15 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         MethodXmlPsiInfo methodInfo = new MethodXmlPsiInfo();
         methodInfo.setPojoClass(pojoClass);
         if (parent instanceof PsiMethod) {
-            setMethodValue((PsiMethod) parent,methodInfo);
+            setMethodValue((PsiMethod) parent, methodInfo);
         } else if (parent instanceof PsiJavaCodeReferenceElement) {
             String text = parent.getText();
             methodInfo.setMethodName(text);
             Document document = PsiDocumentManager.getInstance(project).getDocument(srcClass.getContainingFile());
             String before = "nimaya";
-            document.insertString(element.getTextOffset(), before);
-            document.insertString(element.getTextOffset() + element.getTextLength() + before.length(), "nimageji");
-            return;
+//            document.insertString(element.getTextOffset(), before);
+//            document.insertString(element.getTextOffset() + element.getTextLength() + before.length(), "nimageji");
+//            return;
         }
 
 
@@ -224,10 +226,18 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //        }
 
 //        rootTag.addSubTag(sql, false);
+        methodInfo.setTableName(tableName);
+        QueryParseDto parsedXmls = QueryParser.parse(props, methodInfo);
+
+        if (parsedXmls.getHasMatched()) {
+            //dothings in it.
+        }
+        //let user choose with one.
+
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
     }
 
-    private void setMethodValue(PsiMethod method,MethodXmlPsiInfo info) {
+    private void setMethodValue(PsiMethod method, MethodXmlPsiInfo info) {
         String returnClassName = method.getReturnType().getCanonicalText();
         if (returnClassName.startsWith(JAVALIST)) {
             returnClassName = returnClassName.substring(JAVALIST.length() + 1, returnClassName.length() - 1);

@@ -73,4 +73,13 @@ public class ParsedFind extends ParsedBase{
     public void setLimit(Integer limit) {
         this.limit = limit;
     }
+
+
+    public List<String> getFetchProps() {
+        return fetchProps;
+    }
+
+    public List<OrderByRule> getOrderByProps() {
+        return orderByProps;
+    }
 }
