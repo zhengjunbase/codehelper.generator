@@ -33,4 +33,40 @@ public class ParamInfo {
     public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
     }
+
+    public static final class ParamInfoBuilder {
+        private String paramType;
+        private String paramAnno;
+        private String paramValue;
+
+        private ParamInfoBuilder() {
+        }
+
+        public static ParamInfoBuilder aParamInfo() {
+            return new ParamInfoBuilder();
+        }
+
+        public ParamInfoBuilder withParamType(String paramType) {
+            this.paramType = paramType;
+            return this;
+        }
+
+        public ParamInfoBuilder withParamAnno(String paramAnno) {
+            this.paramAnno = paramAnno;
+            return this;
+        }
+
+        public ParamInfoBuilder withParamValue(String paramValue) {
+            this.paramValue = paramValue;
+            return this;
+        }
+
+        public ParamInfo build() {
+            ParamInfo paramInfo = new ParamInfo();
+            paramInfo.setParamType(paramType);
+            paramInfo.setParamAnno(paramAnno);
+            paramInfo.setParamValue(paramValue);
+            return paramInfo;
+        }
+    }
 }
