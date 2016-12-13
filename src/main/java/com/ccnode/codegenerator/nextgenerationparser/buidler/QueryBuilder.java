@@ -6,6 +6,7 @@ import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.QueryRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.OrderByRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFind;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindError;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.psi.PsiClass;
@@ -21,7 +22,19 @@ import java.util.Map;
  */
 public class QueryBuilder {
 
-    public static QueryParseDto buildFindResult(List<ParsedFind> parsedFinds, MethodXmlPsiInfo info) {
+    public static QueryParseDto buildFindResult(List<ParsedFind> parsedFinds, List<ParsedFindError> errors, MethodXmlPsiInfo info) {
+        if (parsedFinds.size() == 0) {
+            QueryParseDto dto = new QueryParseDto();
+            dto.setHasMatched(false);
+            List<String> errorMsgs = new ArrayList<>();
+            for (ParsedFindError error : errors) {
+                String errorMsg = buildErrorMsg(error);
+                errorMsgs.add(errorMsg);
+            }
+            dto.setErrorMsg(errorMsgs);
+            return dto;
+        }
+
         List<QueryInfo> queryInfos = new ArrayList<>();
         //get pojo class all fields and their type do it cool.
         PsiClass pojoClass = info.getPojoClass();
@@ -35,13 +48,25 @@ public class QueryBuilder {
         for (ParsedFind find : parsedFinds) {
             queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName()));
         }
+        //say this is not an method.
+        QueryParseDto dto = new QueryParseDto();
+        if (info.getMethod() == null) {
+            //return mutiple things let's user to choose the one because the sql is defferent.
+            dto.setQueryInfos(queryInfos);
+            if (queryInfos.size() > 0) {
+                dto.setHasMatched(true);
+            }
+        }
+        return dto;
+    }
 
-
-        return new QueryParseDto();
+    private static String buildErrorMsg(ParsedFindError error) {
+        return "the remaining " + error.getRemaining() + "can't be parsed";
     }
 
     private static QueryInfo buildQueryInfo(ParsedFind find, Map<String, String> fieldMap, String tableName, String pojoClassName) {
         QueryInfo info = new QueryInfo();
+        info.setType("select");
         boolean queryAllTable = false;
         boolean returnList = true;
         if (find.getFetchProps() != null && find.getFetchProps().size() > 0) {
@@ -97,6 +122,7 @@ public class QueryBuilder {
             }
         }
         builder.append("\n\t from " + tableName);
+        info.setSql(builder.toString());
         if (find.getQueryRules() != null) {
             buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap);
         }
@@ -104,7 +130,7 @@ public class QueryBuilder {
         if (find.getOrderByProps() != null) {
             builder.append(" order by");
             for (OrderByRule rule : find.getOrderByProps()) {
-                builder.append(" " + rule.getProp() + " " + rule.getOrder());
+                info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
             }
         }
         return info;
@@ -161,7 +187,7 @@ public class QueryBuilder {
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
-                        builder.append(" " + prop + "not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + prop + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -170,7 +196,7 @@ public class QueryBuilder {
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + fieldMap.get(prop) + ">").withParamValue(prop + "list").build();
                         paramInfos.add(paramInfo);
-                        builder.append(" " + prop + "in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + prop + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -191,10 +217,12 @@ public class QueryBuilder {
 
                 }
             }
-            builder.append(" " + connector);
+            if (connector != null) {
+                builder.append(" " + connector);
+            }
         }
         info.setParamInfos(paramInfos);
-        info.setSql(builder.toString());
+        info.setSql(info.getSql() + builder.toString());
     }
 
 

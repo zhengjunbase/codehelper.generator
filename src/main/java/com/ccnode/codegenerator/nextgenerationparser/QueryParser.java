@@ -21,11 +21,7 @@ public class QueryParser {
         if (methodLower.startsWith(KeyWordConstants.FIND)) {
             ParsedFindDto parse = new FindParser(methodLower, props).parse();
             //then build the result by it make it happen.
-            if (parse.getParsedFinds().size() > 0) {
-                return QueryBuilder.buildFindResult(parse.getParsedFinds(), info);
-            } else {
-                //todo how to handle with errors.
-            }
+            return QueryBuilder.buildFindResult(parse.getParsedFinds(), parse.getParsedFindErrors(), info);
         } else if (methodLower.startsWith(KeyWordConstants.UPDATE)) {
             ParsedUpdateDto dto = new UpdateParser(methodLower, props).parse();
             //then build the result by list to control.

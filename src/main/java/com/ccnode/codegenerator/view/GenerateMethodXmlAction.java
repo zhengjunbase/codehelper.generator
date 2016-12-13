@@ -5,6 +5,8 @@ import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParser;
+import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
+import com.ccnode.codegenerator.nextgenerationparser.tag.XmlTagAndInfo;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
@@ -227,14 +229,44 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
 //        rootTag.addSubTag(sql, false);
         methodInfo.setTableName(tableName);
-        QueryParseDto parsedXmls = QueryParser.parse(props, methodInfo);
-
-        if (parsedXmls.getHasMatched()) {
+        QueryParseDto parseDto = QueryParser.parse(props, methodInfo);
+        XmlTagAndInfo choosed = null;
+        if (parseDto.getHasMatched()) {
             //dothings in it.
+            List<QueryInfo> queryInfos = parseDto.getQueryInfos();
+            //generate tag for them
+            List<XmlTagAndInfo> tags = new ArrayList<>();
+            for (QueryInfo info : queryInfos) {
+                XmlTagAndInfo tag = generateTag(rootTag, info, methodInfo.getMethodName());
+                tags.add(tag);
+            }
+
+            if (tags.size() > 1) {
+                //let user choose with one.
+            } else {
+                choosed = tags.get(0);
+            }
         }
+
+        rootTag.addSubTag(choosed.getXmlTag(), false);
         //let user choose with one.
 
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
+    }
+
+    private XmlTagAndInfo generateTag(XmlTag rootTag, QueryInfo info, String methodName) {
+        XmlTagAndInfo xmlTagAndInfo = new XmlTagAndInfo();
+        xmlTagAndInfo.setInfo(info);
+        XmlTag select = rootTag.createChildTag(info.getType(), "", info.getSql(), false);
+        select.setAttribute("id", methodName);
+        if (info.getReturnMap() != null) {
+            select.setAttribute("resultMap", info.getReturnMap());
+        } else if (info.getReturnClass() != null) {
+            select.setAttribute("resultClass", info.getReturnClass());
+        }
+        xmlTagAndInfo.setXmlTag(select);
+        return xmlTagAndInfo;
+
     }
 
     private void setMethodValue(PsiMethod method, MethodXmlPsiInfo info) {

@@ -1,6 +1,6 @@
 package com.ccnode.codegenerator.nextgenerationparser;
 
-import com.intellij.psi.xml.XmlTag;
+import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
 
 import java.util.List;
 
@@ -8,19 +8,20 @@ import java.util.List;
  * Created by bruce.ge on 2016/12/12.
  */
 public class QueryParseDto {
-    private List<XmlTag> tagList;
+    private List<QueryInfo> queryInfos;
 
     private Boolean hasMatched = false;
 
+
+    public List<QueryInfo> getQueryInfos() {
+        return queryInfos;
+    }
+
+    public void setQueryInfos(List<QueryInfo> queryInfos) {
+        this.queryInfos = queryInfos;
+    }
+
     private List<String> errorMsg;
-
-    public List<XmlTag> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<XmlTag> tagList) {
-        this.tagList = tagList;
-    }
 
     public Boolean getHasMatched() {
         return hasMatched;
