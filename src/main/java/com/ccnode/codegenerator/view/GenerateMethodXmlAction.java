@@ -249,11 +249,13 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             //means we need to insert the text into it.
             String insertBefore = choosed.getInfo().getMethodReturnType() + " ";
             String insertNext = "(";
-            for (int i = 0; i < choosed.getInfo().getParamInfos().size(); i++) {
-                ParamInfo info = choosed.getInfo().getParamInfos().get(i);
-                insertNext += "@Param(\"" + info.getParamAnno() + "\")" + info.getParamType() + " " + info.getParamValue();
-                if (i != choosed.getInfo().getParamInfos().size() - 1) {
-                    insertNext += ",";
+            if (choosed.getInfo().getParamInfos() != null) {
+                for (int i = 0; i < choosed.getInfo().getParamInfos().size(); i++) {
+                    ParamInfo info = choosed.getInfo().getParamInfos().get(i);
+                    insertNext += "@Param(\"" + info.getParamAnno() + "\")" + info.getParamType() + " " + info.getParamValue();
+                    if (i != choosed.getInfo().getParamInfos().size() - 1) {
+                        insertNext += ",";
+                    }
                 }
             }
             insertNext += ");";

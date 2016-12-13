@@ -139,6 +139,9 @@ public class QueryBuilder {
                 info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
             }
         }
+        if(find.getLimit()>0){
+            info.setSql(info.getSql()+" limit "+find.getLimit());
+        }
         return info;
     }
 

@@ -45,7 +45,7 @@ public class SqlCompletionContributor extends CompletionContributor {
             return;
         }
         String text = originalPosition.getText();
-        if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete")||text.startsWith("count")) {
+        if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete") || text.startsWith("count")) {
             //go tell them to choose.
             //todo could use like when there. why after press tab can't show with more?
 //            get pojo class from it.
@@ -68,6 +68,10 @@ public class SqlCompletionContributor extends CompletionContributor {
                         LookupElementBuilder builder = LookupElementBuilder.create(text + prop);
                         result.addElement(builder);
                     }
+                }
+                if (lower.equals("find")) {
+                    LookupElementBuilder builder = LookupElementBuilder.create(text + "First");
+                    result.addElement(builder);
                 }
             }
             if (defaultrecommed) {
