@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParser;
+import com.ccnode.codegenerator.nextgenerationparser.buidler.ParamInfo;
 import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
 import com.ccnode.codegenerator.nextgenerationparser.tag.XmlTagAndInfo;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
@@ -91,10 +92,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         } else if (parent instanceof PsiJavaCodeReferenceElement) {
             String text = parent.getText();
             methodInfo.setMethodName(text);
-            Document document = PsiDocumentManager.getInstance(project).getDocument(srcClass.getContainingFile());
-            String before = "nimaya";
-//            document.insertString(element.getTextOffset(), before);
-//            document.insertString(element.getTextOffset() + element.getTextLength() + before.length(), "nimageji");
+//
 //            return;
         }
 
@@ -246,6 +244,24 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             } else {
                 choosed = tags.get(0);
             }
+        }
+        if (methodInfo.getMethod() == null) {
+            //means we need to insert the text into it.
+            String insertBefore = choosed.getInfo().getMethodReturnType() + " ";
+            String insertNext = "(";
+            for (int i = 0; i < choosed.getInfo().getParamInfos().size(); i++) {
+                ParamInfo info = choosed.getInfo().getParamInfos().get(i);
+                insertNext += "@Param(\"" + info.getParamAnno() + "\")" + info.getParamType() + " " + info.getParamValue();
+                if (i != choosed.getInfo().getParamInfos().size() - 1) {
+                    insertNext += ",";
+                }
+            }
+            insertNext += ");";
+            //insert text into it.
+            Document document = PsiDocumentManager.getInstance(project).getDocument(srcClass.getContainingFile());
+            document.insertString(element.getTextOffset(), insertBefore);
+
+            document.insertString(element.getTextOffset() + element.getTextLength() + insertBefore.length(), insertNext);
         }
 
         rootTag.addSubTag(choosed.getXmlTag(), false);

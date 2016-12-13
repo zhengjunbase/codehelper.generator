@@ -11,6 +11,8 @@ public class QueryInfo {
 
     private List<ParamInfo> paramInfos;
 
+    private String methodReturnType;
+
     private String sql;
 
     private String id;
@@ -25,6 +27,14 @@ public class QueryInfo {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getMethodReturnType() {
+        return methodReturnType;
+    }
+
+    public void setMethodReturnType(String methodReturnType) {
+        this.methodReturnType = methodReturnType;
     }
 
     public String getReturnClass() {

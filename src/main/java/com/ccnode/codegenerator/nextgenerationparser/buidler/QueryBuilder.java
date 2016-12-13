@@ -101,6 +101,10 @@ public class QueryBuilder {
             info.setReturnClass(pojoClassName);
         }
 
+        if(returnList){
+            info.setMethodReturnType("List<"+info.getReturnClass()+">");
+        }
+
         StringBuilder builder = new StringBuilder();
         //will notice it.
         if (queryAllTable) {
