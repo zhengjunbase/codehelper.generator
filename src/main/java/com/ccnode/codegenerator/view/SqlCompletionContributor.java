@@ -92,6 +92,10 @@ public class SqlCompletionContributor extends CompletionContributor {
                 afterlower.add("n");
             } else if (lower.endsWith("n")) {
                 afterlower.add("otIn");
+            } else if (lower.indexOf("orderby") != -1 && lower.endsWith("d")) {
+                afterlower.add("esc");
+            } else if (lower.endsWith("o")) {
+                afterlower.add("rderBy");
             }
             char u = Character.toLowerCase(text.charAt(text.length() - 1));
 
