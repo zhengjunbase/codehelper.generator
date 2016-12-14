@@ -86,7 +86,7 @@ public class SqlCompletionContributor extends CompletionContributor {
                 afterlower.add("ike");
             } else if (lower.endsWith("b")) {
                 afterlower.add("etween");
-            } else if (lower.endsWith("findd")) {
+            } else if (lower.endsWith("findd")||lower.endsWith("countd")) {
                 afterlower.add("istinct");
             } else if (lower.endsWith("i")) {
                 afterlower.add("n");

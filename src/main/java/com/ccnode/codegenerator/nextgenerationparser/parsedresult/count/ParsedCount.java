@@ -21,6 +21,14 @@ public class ParsedCount extends ParsedBase{
         fetchProps.add(props);
     }
 
+    public List<String> getFetchProps() {
+        return fetchProps;
+    }
+
+    public void setFetchProps(List<String> fetchProps) {
+        this.fetchProps = fetchProps;
+    }
+
     public ParsedCount clone() {
         return Cloner.standard().deepClone(this);
     }

@@ -5,6 +5,8 @@ import com.ccnode.codegenerator.constants.QueryTypeConstants;
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.QueryRule;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.count.ParsedCount;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.count.ParsedCountError;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDelete;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDeleteError;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.OrderByRule;
@@ -352,6 +354,70 @@ public class QueryBuilder {
         info.setSql(builder.toString());
         if (delete.getQueryRules() != null) {
             buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap);
+        }
+        return info;
+    }
+
+    public static QueryParseDto buildCountResult(List<ParsedCount> parsedCounts, List<ParsedCountError> errors, MethodXmlPsiInfo info) {
+        if (parsedCounts.size() == 0) {
+            QueryParseDto dto = new QueryParseDto();
+            dto.setHasMatched(false);
+            List<String> errorMsgs = new ArrayList<>();
+            for (ParsedCountError error : errors) {
+                String errorMsg = error.getRemaining();
+                errorMsgs.add(errorMsg);
+            }
+            dto.setErrorMsg(errorMsgs);
+            return dto;
+        }
+        PsiClass psiClass = info.getPojoClass();
+        Map<String, String> fieldMap = buildFieldMap(psiClass);
+        List<QueryInfo> queryInfos = new ArrayList<>();
+        for (ParsedCount count : parsedCounts) {
+            queryInfos.add(buildQueryCountInfo(count, fieldMap, info.getTableName(), psiClass.getName()));
+        }
+        QueryParseDto dto = new QueryParseDto();
+        if (info.getMethod() == null) {
+            dto.setQueryInfos(queryInfos);
+            dto.setHasMatched(true);
+        }
+        return dto;
+
+    }
+
+    private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name) {
+        QueryInfo info = new QueryInfo();
+        info.setType(QueryTypeConstants.SELECT);
+        info.setMethodReturnType("int");
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\tselect count(");
+        if (count.isDistinct()) {
+            builder.append("distinct(");
+            for (int i = 0; i < count.getFetchProps().size(); i++) {
+                builder.append(GenCodeUtil.getUnderScore(count.getFetchProps().get(i)));
+                if (i != count.getFetchProps().size() - 1) {
+                    builder.append(",");
+                }
+            }
+            builder.append(")");
+        } else {
+            if (count.getFetchProps() == null) {
+                builder.append("1");
+            } else {
+                for (int i = 0; i < count.getFetchProps().size(); i++) {
+                    builder.append(GenCodeUtil.getUnderScore(count.getFetchProps().get(i)));
+                    if (i != count.getFetchProps().size() - 1) {
+                        builder.append(",");
+                    }
+                }
+            }
+        }
+        builder.append(")");
+        builder.append("\n\tfrom " + tableName);
+        info.setParamInfos(new ArrayList<>());
+        info.setSql(builder.toString());
+        if (count.getQueryRules() != null) {
+            buildQuerySqlAndParam(count.getQueryRules(), info, fieldMap);
         }
         return info;
     }
