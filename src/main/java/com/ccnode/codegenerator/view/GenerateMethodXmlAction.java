@@ -251,6 +251,15 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             } else {
                 choosed = tags.get(0);
             }
+        } else {
+            //there is no match the current methodName display error msg for user.
+            String content = "";
+            List<String> errorMsg = parseDto.getErrorMsg();
+            for (int i = 0; i < errorMsg.size(); i++) {
+                content += errorMsg.get(i) + "\n";
+            }
+            Messages.showErrorDialog(content, "can't parse the methodName");
+            return;
         }
         if (methodInfo.getMethod() == null) {
             //means we need to insert the text into it.
