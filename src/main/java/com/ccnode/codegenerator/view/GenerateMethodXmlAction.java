@@ -17,6 +17,7 @@ import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
@@ -264,11 +265,13 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             document.insertString(element.getTextOffset(), insertBefore);
 
             document.insertString(element.getTextOffset() + element.getTextLength() + insertBefore.length(), insertNext);
+
         }
 
         rootTag.addSubTag(choosed.getXmlTag(), false);
         //let user choose with one.
 
+        FileDocumentManager.getInstance().saveAllDocuments();
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
     }
 
