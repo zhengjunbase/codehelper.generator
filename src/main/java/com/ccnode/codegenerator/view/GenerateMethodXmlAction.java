@@ -96,6 +96,11 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             methodInfo.setMethodName(text);
 //
 //            return;
+        } else if (element instanceof PsiWhiteSpace) {
+            PsiElement lastMatchedElement = findLastMatchedElement(element);
+            element = lastMatchedElement;
+            String text = lastMatchedElement.getText();
+            methodInfo.setMethodName(text);
         }
 
 
@@ -440,6 +445,13 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
         }
+        if (element instanceof PsiWhiteSpace) {
+            PsiElement element1 = findLastMatchedElement(element);
+            if (element1 == null) {
+                return false;
+            }
+            return true;
+        }
 
         PsiElement parent = element.getParent();
         if (parent instanceof PsiMethod) {
@@ -458,6 +470,24 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
         return false;
+    }
+
+    private PsiElement findLastMatchedElement(PsiElement element) {
+        PsiElement prevSibling = element.getPrevSibling();
+        while (prevSibling != null && isIgnoreText(prevSibling.getText())) {
+            prevSibling = prevSibling.getPrevSibling();
+        }
+        if (prevSibling != null) {
+            String lowerCase = prevSibling.getText().toLowerCase();
+            if (lowerCase.startsWith("find") || lowerCase.startsWith("update") || lowerCase.startsWith("count") || lowerCase.startsWith("delete")) {
+                return prevSibling;
+            }
+        }
+        return null;
+    }
+
+    private boolean isIgnoreText(String text) {
+        return (text.equals("")) || (text.equals("\n")) || text.equals(" ");
     }
 
     @NotNull
