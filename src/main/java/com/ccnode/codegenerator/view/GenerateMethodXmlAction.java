@@ -323,7 +323,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
     private String buildAllCoumnMap(List<String> props) {
         StringBuilder builder = new StringBuilder();
         for (String prop : props) {
-            builder.append("\n\t").append("<result column=\"").append(GenCodeUtil.getUnderScoreWithComma(prop)).append("\"")
+            builder.append("\n\t").append("<result column=\"").append(GenCodeUtil.getUnderScore(prop)).append("\"")
                     .append(" property=\"").append(prop).append("\"/>");
         }
         builder.append("\n");

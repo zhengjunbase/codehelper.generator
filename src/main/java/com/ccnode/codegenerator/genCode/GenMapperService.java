@@ -247,7 +247,7 @@ public class GenMapperService {
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             retList.add(String.format("%s<result column=\"%s\" property=\"%s\"/>",
-                    GenCodeUtil.TWO_RETRACT, GenCodeUtil.getUnderScoreWithComma(fieldName),fieldName));
+                    GenCodeUtil.TWO_RETRACT, GenCodeUtil.getUnderScore(fieldName),fieldName));
         }
         retList.add(GenCodeUtil.ONE_RETRACT+"</resultMap>");
         return retList;
