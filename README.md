@@ -1,7 +1,7 @@
 codehelper.generator 
 =================
 [![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Gitter][badge-gitter-img]][badge-gitter]
-[![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
+[![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]  
 [![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
 [![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
