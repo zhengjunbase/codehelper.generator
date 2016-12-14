@@ -24,6 +24,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
@@ -36,6 +37,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testIntegration.createTest.CreateTestDialog;
 import com.intellij.util.IncorrectOperationException;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
@@ -71,23 +73,22 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 if (classesByName.length == 1) {
                     pojoClass = classesByName[0];
                 } else {
-                    //todo say there are two class with same name. let user choose with one.
+                    // TODO: 2016/12/14 does it need to find the pojo file with name?.
                 }
-            } else {
-                //todo show with error can't from the pojo class to inject.
             }
             //then get the file of xml get table name from it cause it the most right.
         }
         //todo maybe wo can provide other method to know the real pojo class like annotation.
         if (pojoClass == null) {
-            //todo say can't find with pojo class file.
+            Messages.showErrorDialog("please provide an insert method with corresponding database class as parameter in this class" +
+                    "\n like 'insert(User user)'\n" +
+                    "we need the 'User' class to parse your method", "can't find the class for the database table");
             return;
         }
 
         PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
         PsiPackage srcPackage = JavaDirectoryService.getInstance().getPackage(srcDir);
         PsiElement parent = element.getParent();
-
         MethodXmlPsiInfo methodInfo = new MethodXmlPsiInfo();
         methodInfo.setPojoClass(pojoClass);
         if (parent instanceof PsiMethod) {
@@ -108,7 +109,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         //when pojoClass is not null, then try to extract all property from it. then get the sql generated.do thing with batch.
 
         String xmlFileName = srcClassName + ".xml";
-        String tableName = null;
         XmlFile psixml = null;
         PsiFile[] filesByName = PsiShortNamesCache.getInstance(project).getFilesByName(xmlFileName);
         if (filesByName.length > 0) {
@@ -126,7 +126,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
         if (psixml == null) {
-            //cant' find the file by name. then go to search it.
+            //cant' find the file by name. then go to search it. will only search the file once.
             PsiSearchHelper searchService = ServiceManager.getService(project, PsiSearchHelper.class);
             List<XmlFile> xmlFiles = new ArrayList<XmlFile>();
             searchService.processUsagesInNonJavaFiles("mapper", new PsiNonJavaFileReferenceProcessor() {
@@ -146,9 +146,9 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 }
             }, GlobalSearchScope.moduleScope(ModuleUtilCore.findModuleForPsiElement(element)));
             if (xmlFiles.size() == 0) {
-                //todo no corresponding xml exist. go to tell the user.
+                Messages.showErrorDialog("can't find xml file for namespace " + srcClassName, "xml file not found error");
                 return;
-            } else {
+            } else if (xmlFiles.size() == 1) {
                 psixml = xmlFiles.get(0);
             }
         }
@@ -162,6 +162,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         boolean allColumns = false;
 
         //boolean isReturnclassCurrentClass.
+        String tableName = null;
         for (XmlTag tag : subTags) {
             if (tag.getName().equalsIgnoreCase("insert")) {
                 String insertText = tag.getValue().getText();
@@ -183,6 +184,15 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
             //then go next shall be the same.
             //deal with it.
+        }
+
+        if (StringUtils.isEmpty(tableName)) {
+            Messages.showErrorDialog("can't find table name from your " + psixml.getName() + "" +
+                    "\nplease add a correct insert method into the file\n" +
+                    "like\n'<insert id=\"insert\">\n" +
+                    "        INSERT INTO user ....\n</insert>\n" +
+                    "so we can extract the table name 'user' from it", "can't extract table name");
+            return;
         }
 
         //if not exist then add it to the file.
