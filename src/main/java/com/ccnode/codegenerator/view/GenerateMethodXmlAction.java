@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
+import com.ccnode.codegenerator.dialog.ChooseXmlToUseDialog;
 import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
@@ -242,6 +243,14 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
             if (tags.size() > 1) {
                 //let user choose with one.
+                ChooseXmlToUseDialog chooseXmlToUseDialog = new ChooseXmlToUseDialog(project, tags);
+                boolean b = chooseXmlToUseDialog.showAndGet();
+                if (!b) {
+                    return;
+                } else {
+                    choosed = tags.get(chooseXmlToUseDialog.getChoosedIndex());
+                }
+
             } else {
                 choosed = tags.get(0);
             }
