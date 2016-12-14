@@ -1,5 +1,7 @@
 # codehelper.generator
 
+[![Join the chat at https://gitter.im/codehelper-generator/Lobby](https://badges.gitter.im/codehelper-generator/Lobby.svg)](https://gitter.im/codehelper-generator/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 source code of CodeHelper.generator
 
 An Generator, generate code more easily and productive.
