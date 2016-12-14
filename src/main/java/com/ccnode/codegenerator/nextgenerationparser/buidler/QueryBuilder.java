@@ -175,19 +175,19 @@ public class QueryBuilder {
             if (operator == null) {
                 ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue(prop).build();
                 info.getParamInfos().add(paramInfo);
-                builder.append(" " + prop + "=#{" + paramInfo.getParamAnno() + "}");
+                builder.append(" " + GenCodeUtil.getUnderScore(prop) + "=#{" + paramInfo.getParamAnno() + "}");
             } else {
                 switch (operator) {
                     case KeyWordConstants.GREATERTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LESSTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.BETWEEN: {
@@ -195,7 +195,7 @@ public class QueryBuilder {
                         ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         info.getParamInfos().add(min);
                         info.getParamInfos().add(max);
-                        builder.append(" " + prop + cdata(">=") + " #{" + min.getParamAnno() + "} and " + prop + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata(">=") + " #{" + min.getParamAnno() + "} and " + GenCodeUtil.getUnderScore(prop) + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
                         break;
                     }
                     case KeyWordConstants.ISNOTNULL: {
@@ -209,13 +209,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOT: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("not" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + "!= #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "!= #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -224,7 +224,7 @@ public class QueryBuilder {
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -233,13 +233,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOTLIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("notlike" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + "not like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "not like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("like" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + prop + "like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
 
@@ -303,7 +303,7 @@ public class QueryBuilder {
             ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + prop).
                     withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + prop).build();
             info.getParamInfos().add(paramInfo);
-            builder.append(" " + prop + "={" + paramInfo.getParamAnno() + "}");
+            builder.append(" " + GenCodeUtil.getUnderScore(prop) + "={" + paramInfo.getParamAnno() + "}");
             if (i != update.getUpdateProps().size() - 1) {
                 builder.append(",");
             }
