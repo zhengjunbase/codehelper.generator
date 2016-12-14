@@ -65,9 +65,9 @@ public class GenSqlService {
 
     private static List<String> genSql(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response) {
         List<String> retList = Lists.newArrayList();
-        String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
+        String tableName = GenCodeUtil.getUnderScoreWithComma(onePojoInfo.getPojoClassSimpleName());
         retList.add(String.format("-- auto Generated on %s ", DateUtil.formatLong(new Date())));
-        retList.add("-- DROP TABLE IF EXISTS `" + tableName + "`; ");
+        retList.add("-- DROP TABLE IF EXISTS " + tableName + "; ");
         retList.add("CREATE TABLE " + tableName + "(");
         for (PojoFieldInfo field : onePojoInfo.getPojoFieldInfos()) {
             String fieldSql = genfieldSql(field, response);
@@ -109,7 +109,7 @@ public class GenSqlService {
             oldIndex++;
         }
         List<String> replaceList = Lists.newArrayList();
-        String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
+        String tableName = GenCodeUtil.getUnderScoreWithComma(onePojoInfo.getPojoClassSimpleName());
         oldList = PojoUtil.avoidEmptyList(oldList);
         for (String line : oldList) {
             if(GenCodeUtil.sqlContain(line, ")ENGINE=")){
@@ -134,7 +134,7 @@ public class GenSqlService {
             if(StringUtils.isNotBlank(prefix)){
                 Boolean containField = false;
                 for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
-                    String fieldName = GenCodeUtil.getUnderScore(pojoFieldInfo.getFieldName());
+                    String fieldName = GenCodeUtil.getUnderScoreWithComma(pojoFieldInfo.getFieldName());
                     if(prefix.contains(fieldName)){
                         containField = true;
                     }
@@ -151,7 +151,7 @@ public class GenSqlService {
 
     private static List<String> updateSqlComment(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo,
             GenCodeResponse response) {
-        String keyWord = "`" + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) + "`";
+        String keyWord = "`" + GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName()) + "`";
         List<String> retList = Lists.newArrayList();
         for (String s : oldList) {
             if (s.contains(keyWord)){
@@ -175,7 +175,7 @@ public class GenSqlService {
     }
 
     private static boolean oldSqlContainField(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
-        String keyWord = "`" + GenCodeUtil.getUnderScore(fieldInfo.getFieldName()) + "`";
+        String keyWord = "`" + GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName()) + "`";
         for (String s : oldList) {
             if (s.contains(keyWord)){
                 return true;
@@ -221,18 +221,18 @@ public class GenSqlService {
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append(GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName())).append(" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
         if (fieldInfo.getFieldName().equalsIgnoreCase("updateTime")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append(GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName())).append(" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("createTime")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ").append("DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append(GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName())).append(" DATETIME NOT NULL DEFAULT '1001-01-01 00:00:00' COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
@@ -248,7 +248,7 @@ public class GenSqlService {
         }
 
         String filedClassDefault = getDefaultField(fieldInfo, response);
-        ret.append(GenCodeUtil.ONE_RETRACT).append("`").append(GenCodeUtil.getUnderScore(fieldInfo.getFieldName())).append("` ")
+        ret.append(GenCodeUtil.ONE_RETRACT).append(GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName())).append(" ")
                 .append(filedClassDefault).append(" COMMENT '").append(getFieldComment(response,fieldInfo)).append("',");
         return ret.toString();
     }

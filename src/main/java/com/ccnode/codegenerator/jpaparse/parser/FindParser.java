@@ -257,7 +257,7 @@ public class FindParser extends BaseParser {
                     for (int i = start; i < end; i++) {
                         used[i] = 1;
                     }
-                    Term e = new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScore(prop));
+                    Term e = new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScoreWithComma(prop));
                     termMaps.put(start, e);
                 }
             }

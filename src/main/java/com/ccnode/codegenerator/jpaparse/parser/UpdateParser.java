@@ -137,7 +137,7 @@ public class UpdateParser extends BaseParser {
                     for (int i = start; i < end; i++) {
                         used[i] = 1;
                     }
-                    termMap.put(start, new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScore(prop)));
+                    termMap.put(start, new Term(start, end, TermType.PROP, GenCodeUtil.getUnderScoreWithComma(prop)));
                 }
             }
         }

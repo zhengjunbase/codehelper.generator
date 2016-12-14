@@ -131,13 +131,13 @@ public class QueryBuilder {
             if (find.getDistinct()) {
                 builder.append(" distinct(");
                 for (String prop : find.getFetchProps()) {
-                    builder.append(" " + GenCodeUtil.getUnderScore(prop) + ",");
+                    builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
                 builder.append(")");
             } else {
                 for (String prop : find.getFetchProps()) {
-                    builder.append(" " + GenCodeUtil.getUnderScore(prop) + ",");
+                    builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
             }
@@ -177,19 +177,19 @@ public class QueryBuilder {
             if (operator == null) {
                 ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue(prop).build();
                 info.getParamInfos().add(paramInfo);
-                builder.append(" " + GenCodeUtil.getUnderScore(prop) + "=#{" + paramInfo.getParamAnno() + "}");
+                builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "=#{" + paramInfo.getParamAnno() + "}");
             } else {
                 switch (operator) {
                     case KeyWordConstants.GREATERTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LESSTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.BETWEEN: {
@@ -197,7 +197,7 @@ public class QueryBuilder {
                         ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + prop).build();
                         info.getParamInfos().add(min);
                         info.getParamInfos().add(max);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + cdata(">=") + " #{" + min.getParamAnno() + "} and " + GenCodeUtil.getUnderScore(prop) + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata(">=") + " #{" + min.getParamAnno() + "} and " + GenCodeUtil.getUnderScoreWithComma(prop) + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
                         break;
                     }
                     case KeyWordConstants.ISNOTNULL: {
@@ -211,13 +211,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOT: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("not" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "!= #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "!= #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -226,7 +226,7 @@ public class QueryBuilder {
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "list").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "list").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -235,13 +235,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOTLIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("notlike" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "not like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "not like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue("like" + prop).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScore(prop) + "like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
 
@@ -305,7 +305,7 @@ public class QueryBuilder {
             ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + prop).
                     withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + prop).build();
             info.getParamInfos().add(paramInfo);
-            builder.append(" " + GenCodeUtil.getUnderScore(prop) + "={" + paramInfo.getParamAnno() + "}");
+            builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "={" + paramInfo.getParamAnno() + "}");
             if (i != update.getUpdateProps().size() - 1) {
                 builder.append(",");
             }
@@ -394,7 +394,7 @@ public class QueryBuilder {
         if (count.isDistinct()) {
             builder.append("distinct(");
             for (int i = 0; i < count.getFetchProps().size(); i++) {
-                builder.append(GenCodeUtil.getUnderScore(count.getFetchProps().get(i)));
+                builder.append(GenCodeUtil.getUnderScoreWithComma(count.getFetchProps().get(i)));
                 if (i != count.getFetchProps().size() - 1) {
                     builder.append(",");
                 }
@@ -405,7 +405,7 @@ public class QueryBuilder {
                 builder.append("1");
             } else {
                 for (int i = 0; i < count.getFetchProps().size(); i++) {
-                    builder.append(GenCodeUtil.getUnderScore(count.getFetchProps().get(i)));
+                    builder.append(GenCodeUtil.getUnderScoreWithComma(count.getFetchProps().get(i)));
                     if (i != count.getFetchProps().size() - 1) {
                         builder.append(",");
                     }
