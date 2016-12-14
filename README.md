@@ -76,3 +76,12 @@ GenDaoCode 使用方法
 
 - 扫码加入 开发交流群
 - ![avatar](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/master/src/main/resources/group3.jpeg )
+
+
+
+[release-img]: https://img.shields.io/github/release/zhengjunbase/codehelper.generator.svg
+[latest-release]: https://github.com/zhengjunbase/codehelper.generator/releases/latest
+[badge-gitter-img]: https://img.shields.io/gitter/room/zhengjunbase/codehelper.generator.svg
+[badge-gitter]: https://gitter.im/codehelper-generator/Lobby
+[plugin-img]: https://img.shields.io/badge/plugin-8640-orange.svg
+[plugin]: https://plugins.jetbrains.com/plugin/8640
