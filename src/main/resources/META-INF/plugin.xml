@@ -89,7 +89,7 @@
 
         <group id="generatesqlgroup">
             <add-to-group group-id="GenerateGroup" relative-to-action="GenerateGetter" anchor="after"/>
-            <action class="com.ccnode.codegenerator.view.GenCodeActionUsingAlt" id="gencodeusingalt" text="generate sql"
+            <action class="com.ccnode.codegenerator.view.GenCodeActionUsingAlt" id="gencodeusingalt" text="generate mybatis files"
                     description="generate sql"/>
         </group>
         <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
