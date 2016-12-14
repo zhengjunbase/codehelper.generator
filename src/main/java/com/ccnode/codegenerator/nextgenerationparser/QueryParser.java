@@ -2,8 +2,10 @@ package com.ccnode.codegenerator.nextgenerationparser;
 
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
 import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryBuilder;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDeleteDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdateDto;
+import com.ccnode.codegenerator.nextgenerationparser.parser.DeleteParser;
 import com.ccnode.codegenerator.nextgenerationparser.parser.FindParser;
 import com.ccnode.codegenerator.nextgenerationparser.parser.UpdateParser;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
@@ -27,7 +29,8 @@ public class QueryParser {
             //then build the result by list to control.
             return QueryBuilder.buildUpdateResult(dto.getUpdateList(), dto.getErrorList(), info);
         } else if (methodLower.startsWith(KeyWordConstants.DELETE)) {
-
+            ParsedDeleteDto parse = new DeleteParser(methodLower, props).parse();
+            return QueryBuilder.buildDeleteResult(parse.getParsedDeletes(),parse.getErrors(),info);
         } else if (methodLower.startsWith(KeyWordConstants.COUNT)) {
             //deal with it. all are just copy with find that is ok.
         }

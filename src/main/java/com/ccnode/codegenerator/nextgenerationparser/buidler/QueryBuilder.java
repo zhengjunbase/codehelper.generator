@@ -5,6 +5,8 @@ import com.ccnode.codegenerator.constants.QueryTypeConstants;
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.QueryRule;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDelete;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.delete.ParsedDeleteError;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.OrderByRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFind;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindError;
@@ -273,6 +275,7 @@ public class QueryBuilder {
                 errorMsgs.add(errorMsg);
             }
             dto.setErrorMsg(errorMsgs);
+            return dto;
         }
         PsiClass psiClass = info.getPojoClass();
         Map<String, String> fieldMap = buildFieldMap(psiClass);
@@ -308,6 +311,47 @@ public class QueryBuilder {
         info.setSql(builder.toString());
         if (update.getQueryRules() != null) {
             buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap);
+        }
+        return info;
+    }
+
+    public static QueryParseDto buildDeleteResult(List<ParsedDelete> parsedDeletes, List<ParsedDeleteError> errors, MethodXmlPsiInfo info) {
+        if (parsedDeletes.size() == 0) {
+            QueryParseDto dto = new QueryParseDto();
+            dto.setHasMatched(false);
+            List<String> errorMsgs = new ArrayList<>();
+            for (ParsedDeleteError error : errors) {
+                String errorMsg = error.getRemaining();
+                errorMsgs.add(errorMsg);
+            }
+            dto.setErrorMsg(errorMsgs);
+        }
+
+        PsiClass psiClass = info.getPojoClass();
+        Map<String, String> fieldMap = buildFieldMap(psiClass);
+        List<QueryInfo> queryInfos = new ArrayList<>();
+        for (ParsedDelete delete : parsedDeletes) {
+            queryInfos.add(buildQueryDeleteInfo(delete, fieldMap, info.getTableName(), psiClass.getName()));
+        }
+        QueryParseDto dto = new QueryParseDto();
+        if (info.getMethod() == null) {
+            dto.setQueryInfos(queryInfos);
+            dto.setHasMatched(true);
+        }
+        return dto;
+
+    }
+
+    private static QueryInfo buildQueryDeleteInfo(ParsedDelete delete, Map<String, String> fieldMap, String tableName, String name) {
+        QueryInfo info = new QueryInfo();
+        info.setType(QueryTypeConstants.DELETE);
+        info.setMethodReturnType("int");
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\tdelete from  " + tableName);
+        info.setParamInfos(new ArrayList<>());
+        info.setSql(builder.toString());
+        if (delete.getQueryRules() != null) {
+            buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap);
         }
         return info;
     }
