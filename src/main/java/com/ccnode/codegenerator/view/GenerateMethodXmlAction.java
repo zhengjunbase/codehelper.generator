@@ -11,6 +11,7 @@ import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
 import com.ccnode.codegenerator.nextgenerationparser.tag.XmlTagAndInfo;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.MethodNameUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
@@ -214,25 +215,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
         }
 
-        // TODO: 2016/12/12 if method contain return class, we need to choose the one with right return type.
-
-//
-//        ReturnClassInfo info = buildReturnClassInfo(methodInfo.getReturnClassName(), pojoClass);
-//        XmlTag sql = null;
-//        try {
-//            sql = QueryParser.parse(rootTag, methodInfo.getMethodName(), props, tableName, info);
-//        } catch (ParseException e) {
-//            if (e.getTerm() != null) {
-//                ParseExceptionDialog d = new ParseExceptionDialog(project, methodInfo.getMethodName(), e.getTerm().getStart(), e.getTerm().getEnd(), e.getMessage());
-//                d.showAndGet();
-//            } else {
-//                ParseExceptionDialog d = new ParseExceptionDialog(project, methodInfo.getMethodName(), null, null, e.getMessage());
-//                d.showAndGet();
-//            }
-//            return;
-//        }
-
-//        rootTag.addSubTag(sql, false);
         methodInfo.setTableName(tableName);
         QueryParseDto parseDto = QueryParser.parse(props, methodInfo);
         XmlTagAndInfo choosed = null;
@@ -444,6 +426,19 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         }
         if (element instanceof PsiMethod) {
             PsiMethod method = (PsiMethod) element;
+            // TODO: 2016/12/14 now we don't support to perform on method.
+            return false;
+        }
+
+        PsiElement parent = element.getParent();
+        if (parent instanceof PsiMethod) {
+            // ok.
+            return false;
+//            PsiMethod method = (PsiMethod) parent;
+//            String methodName = method.getName().toLowerCase();
+//            if (methodName.startsWith("find") || methodName.startsWith("update") || methodName.startsWith("delete") || methodName.startsWith("count")) {
+//                return true;
+//            }
         }
         if (element instanceof PsiWhiteSpace) {
             PsiElement element1 = findLastMatchedElement(element);
@@ -452,20 +447,10 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
             return true;
         }
-
-        PsiElement parent = element.getParent();
-        if (parent instanceof PsiMethod) {
-            // ok.
-            PsiMethod method = (PsiMethod) parent;
-            String methodName = method.getName().toLowerCase();
-            if (methodName.startsWith("find") || methodName.startsWith("update") || methodName.startsWith("delete") || methodName.startsWith("count")) {
-                return true;
-            }
-        }
         if (parent instanceof PsiJavaCodeReferenceElement) {
             PsiJavaCodeReferenceElement referenceElement = (PsiJavaCodeReferenceElement) parent;
             String text = referenceElement.getText().toLowerCase();
-            if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete") || text.startsWith("count")) {
+            if (MethodNameUtil.checkValidTextStarter(text)) {
                 return true;
             }
         }
@@ -479,7 +464,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         }
         if (prevSibling != null) {
             String lowerCase = prevSibling.getText().toLowerCase();
-            if (lowerCase.startsWith("find") || lowerCase.startsWith("update") || lowerCase.startsWith("count") || lowerCase.startsWith("delete")) {
+            if (MethodNameUtil.checkValidTextStarter(lowerCase)) {
                 return prevSibling;
             }
         }

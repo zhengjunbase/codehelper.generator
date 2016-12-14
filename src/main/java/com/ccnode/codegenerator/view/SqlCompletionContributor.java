@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.view;
 
+import com.ccnode.codegenerator.util.MethodNameUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.completion.*;
@@ -45,7 +46,7 @@ public class SqlCompletionContributor extends CompletionContributor {
             return;
         }
         String text = originalPosition.getText();
-        if (text.startsWith("find") || text.startsWith("update") || text.startsWith("delete") || text.startsWith("count")) {
+        if (MethodNameUtil.checkValidTextStarter(text)) {
             //go tell them to choose.
             //todo could use like when there. why after press tab can't show with more?
 //            get pojo class from it.
@@ -86,7 +87,7 @@ public class SqlCompletionContributor extends CompletionContributor {
                 afterlower.add("ike");
             } else if (lower.endsWith("b")) {
                 afterlower.add("etween");
-            } else if (lower.endsWith("findd")||lower.endsWith("countd")) {
+            } else if (lower.endsWith("findd") || lower.endsWith("countd")) {
                 afterlower.add("istinct");
             } else if (lower.endsWith("i")) {
                 afterlower.add("n");
