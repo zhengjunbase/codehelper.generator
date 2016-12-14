@@ -299,6 +299,7 @@ public class QueryBuilder {
             String prop = update.getUpdateProps().get(i);
             ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + prop).
                     withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + prop).build();
+            info.getParamInfos().add(paramInfo);
             builder.append(" " + prop + "={" + paramInfo.getParamAnno() + "}");
             if (i != update.getUpdateProps().size() - 1) {
                 builder.append(",");
