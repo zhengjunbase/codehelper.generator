@@ -4,6 +4,7 @@ import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.constants.QueryTypeConstants;
 import com.ccnode.codegenerator.jpaparse.KeyWordConstants;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
+import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.ParsedErrorBase;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.base.QueryRule;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.count.ParsedCount;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.count.ParsedCountError;
@@ -18,6 +19,7 @@ import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -75,8 +77,12 @@ public class QueryBuilder {
         return fieldMap;
     }
 
-    private static String buildErrorMsg(ParsedFindError error) {
-        return "the remaining " + error.getRemaining() + "can't be parsed";
+    private static String buildErrorMsg(ParsedErrorBase error) {
+        if (StringUtils.isEmpty(error.getRemaining())) {
+            return "the query not end legal";
+        } else {
+            return "the remaining " + error.getRemaining() + " can't be parsed";
+        }
     }
 
     private static QueryInfo buildQueryInfo(ParsedFind find, Map<String, String> fieldMap, String tableName, String pojoClassName) {
@@ -273,8 +279,7 @@ public class QueryBuilder {
             dto.setHasMatched(false);
             List<String> errorMsgs = new ArrayList<>();
             for (ParsedUpdateError error : errorList) {
-                String errorMsg = error.getRemaining();
-                errorMsgs.add(errorMsg);
+                errorMsgs.add(buildErrorMsg(error));
             }
             dto.setErrorMsg(errorMsgs);
             return dto;
@@ -323,8 +328,7 @@ public class QueryBuilder {
             dto.setHasMatched(false);
             List<String> errorMsgs = new ArrayList<>();
             for (ParsedDeleteError error : errors) {
-                String errorMsg = error.getRemaining();
-                errorMsgs.add(errorMsg);
+                errorMsgs.add(buildErrorMsg(error));
             }
             dto.setErrorMsg(errorMsgs);
         }
@@ -364,8 +368,7 @@ public class QueryBuilder {
             dto.setHasMatched(false);
             List<String> errorMsgs = new ArrayList<>();
             for (ParsedCountError error : errors) {
-                String errorMsg = error.getRemaining();
-                errorMsgs.add(errorMsg);
+                errorMsgs.add(buildErrorMsg(error));
             }
             dto.setErrorMsg(errorMsgs);
             return dto;
