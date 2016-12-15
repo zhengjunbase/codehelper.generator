@@ -61,7 +61,7 @@ public class GenCodeAction extends AnAction {
             return;
         }
         String projectPath = parent.toString();
-        UserConfigService.loadUserConfig(projectPath);
+        UserConfigService.loadUserConfigNew(project,moduleForFile);
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
         }

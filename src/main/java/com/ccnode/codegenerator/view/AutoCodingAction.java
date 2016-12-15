@@ -2,13 +2,6 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.PojoLine;
-import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
-import com.ccnode.codegenerator.service.pojo.AutoCodingRequest;
-import com.ccnode.codegenerator.util.DocumentUtil;
-import com.ccnode.codegenerator.util.IOUtils;
-import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.genCode.UserConfigService;
-import com.ccnode.codegenerator.pojo.PojoLine;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.ProjectHelper;
 import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
@@ -24,7 +17,11 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.*;
+import com.intellij.openapi.editor.CaretModel;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.LogicalPosition;
+import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
@@ -53,7 +50,8 @@ public class AutoCodingAction extends AnAction {
         String projectPath = StringUtils.EMPTY;
         try {
             //todo need check if need module.
-            UserConfigService.loadUserConfig(ProjectHelper.getProjectPath(event));
+            PsiFile data = event.getData(PlatformDataKeys.PSI_FILE);
+            UserConfigService.loadUserConfigNew(data.getProject(), ModuleUtilCore.findModuleForPsiElement(data));
             projectPath = ProjectHelper.getProjectPath(event);
             Project project = event.getProject();
             Editor editor = event.getData(LangDataKeys.EDITOR);
@@ -72,8 +70,8 @@ public class AutoCodingAction extends AnAction {
             ServerRequestHelper.fillCommonField(request);
             if (pojo != null) {
                 request.setPojoName(pojo.getClassName());
-                LogicalPosition newStatementPos = new LogicalPosition(pojo.getLineNumber() , pojo.getLineStartPos() + 1);
-                LogicalPosition insertPos = new LogicalPosition(pojo.getLineNumber() + 1 , 0 );
+                LogicalPosition newStatementPos = new LogicalPosition(pojo.getLineNumber(), pojo.getLineStartPos() + 1);
+                LogicalPosition insertPos = new LogicalPosition(pojo.getLineNumber() + 1, 0);
                 caretModel.moveToLogicalPosition(newStatementPos);
                 PsiElement currentFileElement = event.getData(LangDataKeys.PSI_ELEMENT);
                 if (currentFileElement instanceof PsiClassImpl || currentFileElement instanceof ClsClassImpl) {
@@ -94,10 +92,10 @@ public class AutoCodingAction extends AnAction {
 //            ApplicationManager.getApplication().saveAll();
 
             caretModel.moveToLogicalPosition(oldLogicPos);
-            SendToServerService.post(project,request);
+            SendToServerService.post(project, request);
         } catch (Throwable ignored) {
             LOGGER.error("actionPerformed :{}", ignored);
-        }finally {
+        } finally {
             LoggerWrapper.saveAllLogs(projectPath);
             SettingService.updateLastRunTime();
         }
@@ -105,54 +103,54 @@ public class AutoCodingAction extends AnAction {
     }
 
     private String insertSetter(Project project, PojoLine pojo, Document document, PsiElement currentFileElement,
-            Integer offset) {
+                                Integer offset) {
         LOGGER.info("insertSetter");
         String withDefaultValue = genInsertLine(currentFileElement, pojo, true);
         String noDefaultValue = genInsertLine(currentFileElement, pojo, false);
         int endOffSet = offset + noDefaultValue.length();
-        if(endOffSet >= document.getTextLength() + 1){
+        if (endOffSet >= document.getTextLength() + 1) {
             LOGGER.info("insertSetter  insertString noDefaultValue:{},offset:{}", noDefaultValue, offset);
-            DocumentUtil.insertString(document,noDefaultValue,offset, project);
+            DocumentUtil.insertString(document, noDefaultValue, offset, project);
             return noDefaultValue;
         }
         TextRange range = new TextRange(offset, offset + noDefaultValue.length());
-        LOGGER.info("insertSetter textInRange:{}",document.getText(range));
-        if(document.getText(range).contains(withDefaultValue)
-                || withDefaultValue.contains(document.getText(range))){
+        LOGGER.info("insertSetter textInRange:{}", document.getText(range));
+        if (document.getText(range).contains(withDefaultValue)
+                || withDefaultValue.contains(document.getText(range))) {
             LOGGER.info("insertSetter replaceString withDefaultValue:{},offset:{},length:{}"
-                    ,noDefaultValue, offset,withDefaultValue.length());
-            DocumentUtil.replaceString(project,document, noDefaultValue,offset, withDefaultValue.length() );
+                    , noDefaultValue, offset, withDefaultValue.length());
+            DocumentUtil.replaceString(project, document, noDefaultValue, offset, withDefaultValue.length());
             return noDefaultValue;
         }
         range = new TextRange(offset, offset + noDefaultValue.length());
-        LOGGER.info("insertSetter textInRange:{}",document.getText(range));
-        if(document.getText(range).contains(noDefaultValue)
-                || noDefaultValue.contains(document.getText(range))){
+        LOGGER.info("insertSetter textInRange:{}", document.getText(range));
+        if (document.getText(range).contains(noDefaultValue)
+                || noDefaultValue.contains(document.getText(range))) {
             LOGGER.info("insertSetter replaceString withDefaultValue:{},offset:{},length:{}"
-                    ,withDefaultValue, offset,noDefaultValue.length());
-            DocumentUtil.replaceString(project,document, withDefaultValue,offset, noDefaultValue.length() );
+                    , withDefaultValue, offset, noDefaultValue.length());
+            DocumentUtil.replaceString(project, document, withDefaultValue, offset, noDefaultValue.length());
             return withDefaultValue;
         }
         LOGGER.info("insertSetter  insertString noDefaultValue:{},offset:{}", noDefaultValue, offset);
-        DocumentUtil.insertString(document,noDefaultValue,offset, project);
+        DocumentUtil.insertString(document, noDefaultValue, offset, project);
         return noDefaultValue;
     }
 
     private Integer getOffset(PojoLine pojo, String path) {
         File file = new File(path);
         Integer ret = 0;
-        try{
-            if(!file.exists()){
+        try {
+            if (!file.exists()) {
                 return null;
             }
             List<String> oldLine = IOUtils.readLines(file);
-            for (String line: oldLine) {
+            for (String line : oldLine) {
                 ret += line.length() + 1;
-                if(line.equals(pojo.getRawLine())){
+                if (line.equals(pojo.getRawLine())) {
                     return ret;
                 }
             }
-        }catch(Throwable ignored){
+        } catch (Throwable ignored) {
 
         }
         return 0;
@@ -164,10 +162,10 @@ public class AutoCodingAction extends AnAction {
     private String genInsertLine(PsiElement data, PojoLine pojoLine, Boolean addDefaultValue) {
         List<String> retList = Lists.newArrayList();
         PsiMethod[] allMethods = null;
-        if(data instanceof ClsClassImpl){
+        if (data instanceof ClsClassImpl) {
             ClsClassImpl clazz = (ClsClassImpl) data;
             allMethods = clazz.getAllMethods();
-        }else if(data instanceof PsiClassImpl){
+        } else if (data instanceof PsiClassImpl) {
             PsiClassImpl clazz = (PsiClassImpl) data;
             allMethods = clazz.getAllMethods();
         }
@@ -178,10 +176,10 @@ public class AutoCodingAction extends AnAction {
                     continue;
                 }
                 String lineSuffix = "();";
-                if(addDefaultValue){
+                if (addDefaultValue) {
                     lineSuffix = "(" + getDefaultValue(method) + ");";
                 }
-                if(method.getText().contains(" set")){
+                if (method.getText().contains(" set")) {
                     retList.add(linePrefix + method.getName() + lineSuffix);
                 }
             }
@@ -189,71 +187,72 @@ public class AutoCodingAction extends AnAction {
         String line = StringUtils.EMPTY;
         for (String s : retList) {
             line += s;
-            line +=  "\n";
+            line += "\n";
         }
         LOGGER.info("insert line :{}", line);
         return line;
     }
 
     private static String getDefaultValue(PsiMethod returnType) {
-        if(returnType == null){
+        if (returnType == null) {
             return StringUtils.EMPTY;
         }
         PsiParameter[] parameters = returnType.getParameterList().getParameters();
-        if(parameters.length == 0){
+        if (parameters.length == 0) {
             return StringUtils.EMPTY;
         }
-        PsiParameter psiParameter =  parameters[0];
+        PsiParameter psiParameter = parameters[0];
         String text = psiParameter.getType().getPresentableText();
-        LOGGER.info("getDefault value returnType text:{}",text);
+        LOGGER.info("getDefault value returnType text:{}", text);
 //         text = Splitter.on(" ").omitEmptyStrings().trimResults().splitToList(text).get(0);
-        text = text.replace("(","");
+        text = text.replace("(", "");
         text = StringUtils.deleteWhitespace(text);
-        if(text.startsWith("List<")){
-            text = text.replace("<","s.<");
+        if (text.startsWith("List<")) {
+            text = text.replace("<", "s.<");
             return text + "newArrayList()";
         }
-        if(text.startsWith("Map<")){
-            text = text.replace("<","s.<");
+        if (text.startsWith("Map<")) {
+            text = text.replace("<", "s.<");
             return text + "newHashMap()";
         }
 
-        if(StringUtils.equalsIgnoreCase(text, "string")){
+        if (StringUtils.equalsIgnoreCase(text, "string")) {
             return "StringUtils.EMPTY";
         }
-        if(StringUtils.equalsIgnoreCase(text, "int")
-                || StringUtils.equalsIgnoreCase(text, "Integer")){
+        if (StringUtils.equalsIgnoreCase(text, "int")
+                || StringUtils.equalsIgnoreCase(text, "Integer")) {
             return "-1";
         }
 
-        if(StringUtils.equalsIgnoreCase(text, "long")
-                || StringUtils.equalsIgnoreCase(text, "Long")){
+        if (StringUtils.equalsIgnoreCase(text, "long")
+                || StringUtils.equalsIgnoreCase(text, "Long")) {
             return "-1L";
         }
-        if(StringUtils.equalsIgnoreCase(text, "Boolean")
-                || StringUtils.equalsIgnoreCase(text, "boolean")){
+        if (StringUtils.equalsIgnoreCase(text, "Boolean")
+                || StringUtils.equalsIgnoreCase(text, "boolean")) {
             return "false";
         }
 
-        if(StringUtils.equalsIgnoreCase(text, "double")
-                || StringUtils.equalsIgnoreCase(text, "Double")){
+        if (StringUtils.equalsIgnoreCase(text, "double")
+                || StringUtils.equalsIgnoreCase(text, "Double")) {
             return "-1d";
         }
-        if(StringUtils.equalsIgnoreCase(text, "float")
-                || StringUtils.equalsIgnoreCase(text, "Float")){
+        if (StringUtils.equalsIgnoreCase(text, "float")
+                || StringUtils.equalsIgnoreCase(text, "Float")) {
             return "-1.0f";
         }
-        if(StringUtils.equalsIgnoreCase(text, "short")
-                || StringUtils.equalsIgnoreCase(text, "Short")){
+        if (StringUtils.equalsIgnoreCase(text, "short")
+                || StringUtils.equalsIgnoreCase(text, "Short")) {
             return "-1";
         }
 
-        if(StringUtils.equalsIgnoreCase(text, "BigDecimal")){
+        if (StringUtils.equalsIgnoreCase(text, "BigDecimal")) {
             return "new BigDecimal(-1)";
         }
         return "null";
 
     }
+
     @Nullable
     private PojoLine getCursorLine(List<String> lines, LogicalPosition oldLogicPos) {
         for (int i = oldLogicPos.line; i >= 0; i--) {
@@ -278,7 +277,7 @@ public class AutoCodingAction extends AnAction {
         copy = copy.replace(")", " ) ");
         copy = copy.replace(";", " ; ");
         List<String> splits = Splitter.on(SPACE).trimResults().omitEmptyStrings().splitToList(copy);
-        if(splits.size() < 8){
+        if (splits.size() < 8) {
             return null;
         }
         if (splits.get(0).equals(splits.get(4))
@@ -309,7 +308,6 @@ public class AutoCodingAction extends AnAction {
         pojoLine.setVariableName(StringUtils.EMPTY);
         pojoLine.setLineNumber(-1);
         pojoLine.setPreWhiteSpace(StringUtils.EMPTY);
-
 
 
     }

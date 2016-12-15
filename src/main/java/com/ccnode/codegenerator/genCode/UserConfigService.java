@@ -9,14 +9,20 @@ import com.ccnode.codegenerator.util.PojoUtil;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.search.FilenameIndex;
+import com.intellij.psi.search.GlobalSearchScope;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * What always stop you is what you always believe.
@@ -26,13 +32,50 @@ import java.util.Map;
 public class UserConfigService {
 
     private final static Logger LOGGER = LoggerWrapper.getLogger(UserConfigService.class);
+    public static final String CONFIG_FILE_NAME = "codehelper.properties";
 
     public static Map<String, String> userConfigMap = Maps.newHashMap();
 
+
+    public static void loadUserConfigNew(Project project, Module module) {
+        PsiFile[] filesByName = FilenameIndex.getFilesByName(project, CONFIG_FILE_NAME, GlobalSearchScope.moduleScope(module));
+        List<PsiFile> moduleFiles = new ArrayList<>();
+        if (filesByName.length > 0) {
+            for (PsiFile s : filesByName) {
+                if (s.getVirtualFile().isWritable() && ModuleUtilCore.findModuleForPsiElement(s) == module) {
+                    moduleFiles.add(s);
+                }
+            }
+        }
+        PsiFile wantedFile = null;
+        if (moduleFiles.size() == 0) {
+            return;
+        } else if (moduleFiles.size() == 1) {
+            wantedFile = moduleFiles.get(0);
+        } else {
+            //// TODO: 2016/12/15 show a dialog for user to choose.
+            wantedFile = moduleFiles.get(0);
+        }
+        String path = wantedFile.getVirtualFile().getPath();
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(new File(path)));
+            Set<String> strings = properties.stringPropertyNames();
+            for (String s : strings) {
+                //
+                userConfigMap.put(s, properties.getProperty(s));
+            }
+        } catch (Exception e) {
+            // TODO: 2016/12/15 may show something.
+            return;
+        }
+    }
+
     public static void loadUserConfig(String projectPath) {
 
+
         try {
-            File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, "codehelper.properties");
+            File propertiesFile = IOUtils.matchOnlyOneFile(projectPath, CONFIG_FILE_NAME);
             String fileName = StringUtils.EMPTY;
             if (propertiesFile != null) {
                 fileName = propertiesFile.getAbsolutePath();

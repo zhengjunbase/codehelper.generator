@@ -56,7 +56,7 @@ public class GenCodeUsingAltHandler implements CodeInsightActionHandler {
             return;
         }
         String projectPath = parent.toString();
-        UserConfigService.loadUserConfig(projectPath);
+        UserConfigService.loadUserConfigNew(project, moduleForFile);
         if (projectPath == null) {
             projectPath = StringUtils.EMPTY;
         }

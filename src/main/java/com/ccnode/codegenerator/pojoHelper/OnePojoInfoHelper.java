@@ -9,10 +9,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
@@ -41,42 +38,47 @@ public class OnePojoInfoHelper {
     private final static Logger LOGGER = LoggerWrapper.getLogger(OnePojoInfoHelper.class);
 
     @NotNull
-    public static Boolean containSplitKey(@NotNull OnePojoInfo onePojoInfo, String splitKey){
+    public static Boolean containSplitKey(@NotNull OnePojoInfo onePojoInfo, String splitKey) {
         for (PojoFieldInfo pojoFieldInfo : onePojoInfo.getPojoFieldInfos()) {
-            if(pojoFieldInfo.getFieldName().equalsIgnoreCase(splitKey)){
+            if (pojoFieldInfo.getFieldName().equalsIgnoreCase(splitKey)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response){
+    public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response) {
         String pojoName = onePojoInfo.getPojoName();
         String pojoFileShortName = pojoName + ".java";
         Project project = response.getRequest().getProject();
-        PsiFile[] psiFile = FilenameIndex
-                .getFilesByName(project, pojoFileShortName, new EverythingGlobalScope(project));
-        if(psiFile.length != 1){
-            // todo
-        }
-        PsiElement firstChild = psiFile[0].getFirstChild();
-        List<PsiElement> elements = Lists.newArrayList();
-        if(firstChild instanceof PsiClassImpl){
-            elements.add(firstChild);
-        }
-        while (firstChild.getNextSibling() != null){
-            firstChild = firstChild.getNextSibling();
-            if(firstChild instanceof PsiClassImpl){
+        PsiClass psiClass = null;
+        if (response.getRequest().getInfo() != null) {
+            psiClass = response.getRequest().getInfo().getSrcClass();
+        } else {
+            PsiFile[] psiFile = FilenameIndex
+                    .getFilesByName(project, pojoFileShortName, new EverythingGlobalScope(project));
+            if (psiFile.length != 1) {
+                // todo
+            }
+            PsiElement firstChild = psiFile[0].getFirstChild();
+            List<PsiElement> elements = Lists.newArrayList();
+            if (firstChild instanceof PsiClassImpl) {
                 elements.add(firstChild);
             }
-        }
-        if(elements.size() != 1){
-            // todo
-        }
+            while (firstChild.getNextSibling() != null) {
+                firstChild = firstChild.getNextSibling();
+                if (firstChild instanceof PsiClassImpl) {
+                    elements.add(firstChild);
+                }
+            }
+            if (elements.size() != 1) {
+                // todo
+            }
 
-        PsiClassImpl psiClass = (PsiClassImpl) elements.get(0);
+            psiClass = (PsiClassImpl) elements.get(0);
+        }
         PsiElement context = psiClass.getContext();
-        if(context == null){
+        if (context == null) {
             throw new RuntimeException("parse class error");
         }
         String text = context.getText();
@@ -85,10 +87,10 @@ public class OnePojoInfoHelper {
         List<PojoFieldInfo> fieldList = Lists.newArrayList();
 
         for (PsiField field : allFields) {
-            if(isStaticField(field)){
+            if (isStaticField(field)) {
                 continue;
             }
-            if(!isSupportType(field.getType().getPresentableText())){
+            if (!isSupportType(field.getType().getPresentableText())) {
                 continue;
             }
             parseComment(field);
@@ -103,62 +105,63 @@ public class OnePojoInfoHelper {
         onePojoInfo.setPojoFieldInfos(fieldList);
     }
 
-    private static Boolean isSupportType(String fieldType){
-        if(StringUtils.isBlank(fieldType)){
+    private static Boolean isSupportType(String fieldType) {
+        if (StringUtils.isBlank(fieldType)) {
             return false;
         }
-        List<String> supportList= ImmutableList.of("string","integer","int","short","date","long","bigdecimal","double","float");
+        List<String> supportList = ImmutableList.of("string", "integer", "int", "short", "date", "long", "bigdecimal", "double", "float");
         return supportList.contains(fieldType.toLowerCase());
     }
 
-    private static Boolean isStaticField(@NotNull PsiField field){
+    private static Boolean isStaticField(@NotNull PsiField field) {
         PsiElement[] children = field.getChildren();
         for (PsiElement child : children) {
             String text = child.getText();
-            if(text.contains(" static ")){
+            if (text.contains(" static ")) {
                 return true;
             }
         }
         return false;
     }
 
-    private static String parsePackage(String context){
+    private static String parsePackage(String context) {
         List<String> lines = Splitter.on("\n").trimResults().omitEmptyStrings().splitToList(context);
         for (String line : lines) {
             String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", line);
-            if(StringUtils.isNotBlank(match)){
+            if (StringUtils.isNotBlank(match)) {
                 String pojoPackage = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
-                pojoPackage = pojoPackage.replace(";","");
-                pojoPackage = pojoPackage.replace(" ","");
+                pojoPackage = pojoPackage.replace(";", "");
+                pojoPackage = pojoPackage.replace(" ", "");
                 return pojoPackage;
             }
         }
         return StringUtils.EMPTY;
     }
+
     private static String parseComment(PsiField field) {
-        if(field == null){
+        if (field == null) {
             return StringUtils.EMPTY;
         }
         PsiElement[] children = field.getChildren();
         for (PsiElement child : children) {
             String text1 = child.getText();
-            if(child instanceof PsiDocCommentImpl){
+            if (child instanceof PsiDocCommentImpl) {
                 String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
+                text = text.replace("/*", "");
+                text = text.replace("*/", "");
+                text = text.replace("//", "");
+                text = text.replace("\n", "");
+                text = text.replace("*", "");
                 text = text.trim();
                 return text;
             }
-            if(child instanceof  PsiCommentImpl){
+            if (child instanceof PsiCommentImpl) {
                 String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
+                text = text.replace("/*", "");
+                text = text.replace("*/", "");
+                text = text.replace("//", "");
+                text = text.replace("\n", "");
+                text = text.replace("*", "");
                 text = text.trim();
                 return text;
             }
@@ -166,10 +169,10 @@ public class OnePojoInfoHelper {
         return StringUtils.EMPTY;
     }
 
-    public static void parsePojoFieldInfo(@NotNull OnePojoInfo onePojoInfo){
+    public static void parsePojoFieldInfo(@NotNull OnePojoInfo onePojoInfo) {
         @NotNull Class pojoClass = onePojoInfo.getPojoClass();
         Field[] fields = pojoClass.getDeclaredFields();
-        if(fields == null || fields.length == 0){
+        if (fields == null || fields.length == 0) {
             return;
         }
         List<PojoFieldInfo> fieldInfoList = Lists.newArrayList();
@@ -183,14 +186,14 @@ public class OnePojoInfoHelper {
         }
     }
 
-    public static void deduceDaoPackage(OnePojoInfo onePojoInfo, GenCodeResponse response){
+    public static void deduceDaoPackage(OnePojoInfo onePojoInfo, GenCodeResponse response) {
         GeneratedFile daoFile = getFileByType(onePojoInfo, FileType.DAO);
-        if(daoFile == null){
+        if (daoFile == null) {
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath(), onePojoInfo.getPojoPackage(), onePojoInfo.getFullPojoPath());
         for (String s : daoFile.getOriginLines()) {
-            if(s.trim().contains("package ")){
+            if (s.trim().contains("package ")) {
                 deducePackage = parsePackage(s);
                 break;
             }
@@ -198,14 +201,14 @@ public class OnePojoInfoHelper {
         onePojoInfo.setDaoPackage(deducePackage);
     }
 
-    public static void deduceServicePackage(OnePojoInfo onePojoInfo, GenCodeResponse response){
+    public static void deduceServicePackage(OnePojoInfo onePojoInfo, GenCodeResponse response) {
         GeneratedFile serviceFile = getFileByType(onePojoInfo, FileType.SERVICE);
-        if(serviceFile == null){
+        if (serviceFile == null) {
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullServicePath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullServicePath(), onePojoInfo.getPojoPackage(), onePojoInfo.getFullPojoPath());
         for (String s : serviceFile.getOriginLines()) {
-            if(s.trim().contains("package ")){
+            if (s.trim().contains("package ")) {
                 deducePackage = parsePackage(s);
                 break;
             }
@@ -214,9 +217,9 @@ public class OnePojoInfoHelper {
     }
 
     @Nullable
-    public static GeneratedFile getFileByType(OnePojoInfo onePojoInfo, FileType fileType){
+    public static GeneratedFile getFileByType(OnePojoInfo onePojoInfo, FileType fileType) {
         for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
-            if(generatedFile.getFileType() == fileType){
+            if (generatedFile.getFileType() == fileType) {
                 return generatedFile;
             }
         }
@@ -226,47 +229,47 @@ public class OnePojoInfoHelper {
     public static void parseFiles(OnePojoInfo onePojoInfo, GenCodeResponse response) {
         onePojoInfo.setFiles(Lists.newArrayList());
         for (FileType fileType : FileType.values()) {
-            if(fileType == FileType.NONE){
+            if (fileType == FileType.NONE) {
                 continue;
             }
             GeneratedFile file = new GeneratedFile();
             file.setFileType(fileType);
             String filePath = StringUtils.EMPTY;
-            switch (fileType){
-             case SQL:
-                 filePath = onePojoInfo.getFullSqlPath();
-                break;
-            case MAPPER:
-                 filePath = onePojoInfo.getFullMapperPath();
-                break;
-            case SERVICE:
-                 filePath = onePojoInfo.getFullServicePath();
-                break;
-            case DAO:
-                 filePath = onePojoInfo.getFullDaoPath();
-                break;
+            switch (fileType) {
+                case SQL:
+                    filePath = onePojoInfo.getFullSqlPath();
+                    break;
+                case MAPPER:
+                    filePath = onePojoInfo.getFullMapperPath();
+                    break;
+                case SERVICE:
+                    filePath = onePojoInfo.getFullServicePath();
+                    break;
+                case DAO:
+                    filePath = onePojoInfo.getFullDaoPath();
+                    break;
             }
             file.setFilePath(filePath);
             file.setFile(new File(file.getFilePath()));
-            if(!file.getFile().exists()){
-             file.getFile().getParentFile().mkdirs();
+            if (!file.getFile().exists()) {
+                file.getFile().getParentFile().mkdirs();
                 try {
                     file.getFile().createNewFile();
                 } catch (Exception e) {
-                    response.failure("create file : " +file.getFile().getAbsolutePath() +" failure",e);
+                    response.failure("create file : " + file.getFile().getAbsolutePath() + " failure", e);
                 }
             }
-            try{
-                if(file.getFile().exists()){
+            try {
+                if (file.getFile().exists()) {
                     file.setOldLines(Lists.newArrayList(IOUtils.readLines(file.getFile())));
                     file.setOriginLines(Lists.newArrayList(IOUtils.readLines(file.getFile())));
-                }else{
+                } else {
                     file.setOldLines(Lists.newArrayList());
                     file.setOriginLines(Lists.newArrayList());
                 }
 
-            }catch(Exception e){
-                response.failure("read" + file.getFile().getAbsolutePath() +" failure",e);
+            } catch (Exception e) {
+                response.failure("read" + file.getFile().getAbsolutePath() + " failure", e);
             }
             file.setNewLines(Lists.newArrayList());
             onePojoInfo.getFiles().add(file);
@@ -274,40 +277,40 @@ public class OnePojoInfoHelper {
     }
 
     // todo
-    public static BaseResponse flushFiles(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response){
+    public static BaseResponse flushFiles(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response) {
 
-        try{
+        try {
             for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
                 List<String> lines = generatedFile.getNewLines();
-                if(lines == null || lines.isEmpty()){
+                if (lines == null || lines.isEmpty()) {
                     lines = generatedFile.getOriginLines();
                 }
                 writeLines(lines, "\n", new FileOutputStream(generatedFile.getFile()));
             }
             Pair<List<ChangeInfo>, List<ChangeInfo>> pair = statisticChange(response.getPojoInfos());
-            LOGGER.info(" flushFiles :{},pair.getRight():{}",pair.getLeft(),pair.getRight());
+            LOGGER.info(" flushFiles :{},pair.getRight():{}", pair.getLeft(), pair.getRight());
             response.setNewFiles(pair.getLeft());
             response.setUpdateFiles(pair.getRight());
             return response;
-        }catch(Exception e){
-            LOGGER.info("flush file error",e);
-            return response.failure("flush file error",e);
+        } catch (Exception e) {
+            LOGGER.info("flush file error", e);
+            return response.failure("flush file error", e);
         }
 
     }
 
-    public static Pair<List<ChangeInfo>, List<ChangeInfo>> statisticChange(List<OnePojoInfo> onePojoInfos){
+    public static Pair<List<ChangeInfo>, List<ChangeInfo>> statisticChange(List<OnePojoInfo> onePojoInfos) {
         List<ChangeInfo> newFiles = Lists.newArrayList();
         List<ChangeInfo> updatedFiles = Lists.newArrayList();
         for (OnePojoInfo onePojoInfo : onePojoInfos) {
             for (GeneratedFile file : onePojoInfo.getFiles()) {
-                if(file.getOriginLines().isEmpty()){
+                if (file.getOriginLines().isEmpty()) {
                     ChangeInfo newFile = new ChangeInfo();
                     newFile.setFileName(file.getFile().getName());
                     newFile.setAffectRow(file.getNewLines().size());
                     newFile.setChangeType("new file");
                     newFiles.add(newFile);
-                }else{
+                } else {
                     ChangeInfo updatedFile = new ChangeInfo();
                     updatedFile.setFileName(file.getFile().getName());
                     updatedFile.setAffectRow(countChangeRows(file.getNewLines(), file.getOriginLines()));
@@ -317,7 +320,7 @@ public class OnePojoInfoHelper {
             }
         }
         return Pair.of(newFiles, updatedFiles);
-        
+
     }
 
     private static Integer countChangeRows(List<String> oldLines, List<String> newLines) {
@@ -325,14 +328,14 @@ public class OnePojoInfoHelper {
         newLines = PojoUtil.avoidEmptyList(newLines);
         Integer changeCount = 0;
         for (String oldLine : oldLines) {
-            if(!newLines.contains(oldLine)){
-                changeCount ++;
+            if (!newLines.contains(oldLine)) {
+                changeCount++;
             }
         }
 
         for (String line : newLines) {
-            if(!oldLines.contains(line)){
-                changeCount ++;
+            if (!oldLines.contains(line)) {
+                changeCount++;
             }
         }
         return changeCount;
@@ -340,16 +343,16 @@ public class OnePojoInfoHelper {
 
     public static void main(String[] args) {
 
-        List<Integer> xList = Lists.newArrayList(0,1,2,3);
-        List<Integer> yList = Lists.newArrayList(2,3,4,5,6);
+        List<Integer> xList = Lists.newArrayList(0, 1, 2, 3);
+        List<Integer> yList = Lists.newArrayList(2, 3, 4, 5, 6);
         System.out.println(Sets.intersection(Sets.newHashSet(xList), Sets.newHashSet(yList)));
 
         String match = RegexUtil.getMatch("[\\s]*package[\\s]+.+[\\s]*;", "   package cox3m.qunar.Sn_+surance.service.dto  ;  \n");
-            if(StringUtils.isNotBlank(match)){
-                String pack = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
-                pack = pack.replace(";","");
-                pack = pack.replace(" ","");
-            }
+        if (StringUtils.isNotBlank(match)) {
+            String pack = Splitter.on("package").trimResults().omitEmptyStrings().splitToList(match).get(0);
+            pack = pack.replace(";", "");
+            pack = pack.replace(" ", "");
+        }
     }
 
 }
