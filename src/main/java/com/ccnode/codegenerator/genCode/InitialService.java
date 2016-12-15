@@ -118,10 +118,10 @@ public class InitialService {
 
     private static String genPath(GenCodeResponse response, String pojoDirPath, String configDir, String pojoName, String fileSuffix) {
         String projectPath = GenCodeResponseHelper.getProjectPathWithSplitter(response);
-        File file = IOUtils.matchOnlyOneFile(projectPath, pojoName + fileSuffix);
-        if (file != null) {
-            return file.getAbsolutePath();
-        }
+//        File file = IOUtils.matchOnlyOneFile(projectPath, pojoName + fileSuffix);
+//        if (file != null) {
+//            return file.getAbsolutePath();
+//        }
         if (StringUtils.isBlank(configDir)) {
             return pojoDirPath + response.getPathSplitter() + pojoName + fileSuffix;
         }
