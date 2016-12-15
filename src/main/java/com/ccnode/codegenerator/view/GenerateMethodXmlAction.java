@@ -261,6 +261,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             Messages.showErrorDialog(content, "can't parse the methodName");
             return;
         }
+        PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         if (methodInfo.getMethod() == null) {
             //means we need to insert the text into it.
             String insertBefore = choosed.getInfo().getMethodReturnType() + " ";
@@ -276,16 +277,20 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             }
             insertNext += ");";
             //insert text into it.
-            Document document = PsiDocumentManager.getInstance(project).getDocument(srcClass.getContainingFile());
+            Document document = psiDocumentManager.getDocument(srcClass.getContainingFile());
             document.insertString(element.getTextOffset(), insertBefore);
 
             document.insertString(element.getTextOffset() + element.getTextLength() + insertBefore.length(), insertNext);
 
         }
 
-        rootTag.addSubTag(choosed.getXmlTag(), false);
-        //let user choose with one.
+        psixml.getRootTag().addSubTag(choosed.getXmlTag(), false);
 
+//        Document xmlDocument = psiDocumentManager.getDocument(psixml);
+// // TODO: 2016/12/15 may be need add new line before the query. 
+//        XmlTag tag = rootTag.getSubTags()[rootTag.getSubTags().length - 1];
+//        xmlDocument.insertString(tag.getTextOffset(), "\n\n<!--auto generated Code-->\n");
+        //let user choose with one.
         FileDocumentManager.getInstance().saveAllDocuments();
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
     }
