@@ -311,7 +311,7 @@ public class QueryBuilder {
         info.setParamInfos(new ArrayList<>());
         for (int i = 0; i < update.getUpdateProps().size(); i++) {
             String prop = update.getUpdateProps().get(i);
-            ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + prop).
+            ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + firstCharUpper(prop)).
                     withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + prop).build();
             info.getParamInfos().add(paramInfo);
             builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "={" + paramInfo.getParamAnno() + "}");

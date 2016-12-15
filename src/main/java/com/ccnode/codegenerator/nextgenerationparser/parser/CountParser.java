@@ -63,6 +63,12 @@ public class CountParser extends BaseParser {
                     parseMethods(2, remaining, KeyWordConstants.DISTINCT.length(), clone);
                     newParsedCount = true;
                 }
+
+                if (remaining.startsWith(KeyWordConstants.BY)) {
+                    ParsedCount clone = count.clone();
+                    parseMethods(4, remaining, KeyWordConstants.BY.length(), clone);
+                    newParsedCount = true;
+                }
                 break;
             }
 
@@ -107,10 +113,11 @@ public class CountParser extends BaseParser {
                     if (remaining.startsWith(lowerProps[i])) {
                         ParsedCount clone = count.clone();
                         clone.addQueryProp(props[i]);
-                        parseMethods(3, remaining, props[i].length(), clone);
+                        parseMethods(5, remaining, props[i].length(), clone);
                         newParsedCount = true;
                     }
                 }
+                break;
             }
 
             case 5: {

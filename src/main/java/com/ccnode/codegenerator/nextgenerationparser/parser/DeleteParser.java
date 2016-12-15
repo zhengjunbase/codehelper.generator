@@ -99,6 +99,7 @@ public class DeleteParser extends BaseParser {
                         newParseDelete = true;
                     }
                 }
+                break;
             }
 
         }
