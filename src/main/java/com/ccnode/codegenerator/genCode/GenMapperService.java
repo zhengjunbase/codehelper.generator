@@ -231,11 +231,11 @@ public class GenMapperService {
 //        retList.add(ONE_RETRACT+ "<select id=\"queryUseStatement\" statementType=\"STATEMENT\" resultMap=\"AllColumnMap\">");
 //        retList.add(ONE_RETRACT+"</select>");
 
-        retList.add(StringUtils.EMPTY);
-        retList.add("<!--auto generated Code-->");
-        retList.add(GenCodeUtil.ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
-        retList.add(GenCodeUtil.TWO_RETRACT+ "DELETE FROM "+ GenCodeUtil.getUnderScoreWithComma(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
-        retList.add(GenCodeUtil.ONE_RETRACT+"</delete>");
+//        retList.add(StringUtils.EMPTY);
+//        retList.add("<!--auto generated Code-->");
+//        retList.add(GenCodeUtil.ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
+//        retList.add(GenCodeUtil.TWO_RETRACT+ "DELETE FROM "+ GenCodeUtil.getUnderScoreWithComma(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
+//        retList.add(GenCodeUtil.ONE_RETRACT+"</delete>");
         retList.add("</mapper>");
         return retList;
     }
