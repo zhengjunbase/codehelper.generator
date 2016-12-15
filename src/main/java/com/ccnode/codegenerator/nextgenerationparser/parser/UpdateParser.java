@@ -80,7 +80,7 @@ public class UpdateParser extends BaseParser {
                     if (remaining.startsWith(lowerProps[i])) {
                         ParsedUpdate newUpdate = parsedUpdate.clone();
                         newUpdate.addQueryProp(props[i]);
-                        parseMethods(4, remaining, props[i].length(), newUpdate);
+                        parseMethods(3, remaining, props[i].length(), newUpdate);
                         newParseUpdate = true;
                     }
                 }
