@@ -141,22 +141,22 @@ public class GenMapperService {
         });
         fileInfo.setNewLines(listInfo.getFullList());
 
-        posPair = ReplaceUtil
-                .getPos(listInfo.getFullList(), "<select id=\""+ MethodName.select.name() +"\"", "</select>", new MapperCondition());
-        listInfo.setPos(posPair);
-        listInfo.setNewSegments(genSelectMethod(response,onePojoInfo,expand));
-        ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
-            @Override
-            public boolean isEqual(String o1, String o2) {
-                String match1 = RegexUtil.getMatch("(.*)pojo.(.*)", o1);
-                String match2 = RegexUtil.getMatch("(.*)pojo.(.*)", o2);
-                if(StringUtils.isBlank(match1) ){
-                    return false;
-                }
-                return  match1.equals(match2);
-            }
-        });
-        fileInfo.setNewLines(listInfo.getFullList());
+//        posPair = ReplaceUtil
+//                .getPos(listInfo.getFullList(), "<select id=\""+ MethodName.select.name() +"\"", "</select>", new MapperCondition());
+//        listInfo.setPos(posPair);
+//        listInfo.setNewSegments(genSelectMethod(response,onePojoInfo,expand));
+//        ReplaceUtil.merge(listInfo, new EqualCondition<String>() {
+//            @Override
+//            public boolean isEqual(String o1, String o2) {
+//                String match1 = RegexUtil.getMatch("(.*)pojo.(.*)", o1);
+//                String match2 = RegexUtil.getMatch("(.*)pojo.(.*)", o2);
+//                if(StringUtils.isBlank(match1) ){
+//                    return false;
+//                }
+//                return  match1.equals(match2);
+//            }
+//        });
+//        fileInfo.setNewLines(listInfo.getFullList());
 
 //        posPair = ReplaceUtil
 //                .getPos(listInfo.getFullList(), "<select id=\"queryUseStatement\"", "</select>", new MapperCondition());
@@ -221,10 +221,10 @@ public class GenMapperService {
         retList.add(GenCodeUtil.ONE_RETRACT+ "<update id=\""+ MethodName.update.name() +"\">");
         retList.add(GenCodeUtil.ONE_RETRACT+"</update>");
 
-        retList.add(StringUtils.EMPTY);
-        retList.add("<!--auto generated Code-->");
-        retList.add(GenCodeUtil.ONE_RETRACT+ "<select id=\""+ MethodName.select.name() + "\" resultMap=\"" + MapperConstants.ALL_COLUMN_MAP + "\">");
-        retList.add(GenCodeUtil.ONE_RETRACT+"</select>");
+//        retList.add(StringUtils.EMPTY);
+//        retList.add("<!--auto generated Code-->");
+//        retList.add(GenCodeUtil.ONE_RETRACT+ "<select id=\""+ MethodName.select.name() + "\" resultMap=\"" + MapperConstants.ALL_COLUMN_MAP + "\">");
+//        retList.add(GenCodeUtil.ONE_RETRACT+"</select>");
 
 //        retList.add(StringUtils.EMPTY);
 //        retList.add("<!--auto generated Code-->");
