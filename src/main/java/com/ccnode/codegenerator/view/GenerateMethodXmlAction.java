@@ -287,7 +287,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         psixml.getRootTag().addSubTag(choosed.getXmlTag(), false);
 
 //        Document xmlDocument = psiDocumentManager.getDocument(psixml);
-// // TODO: 2016/12/15 may be need add new line before the query. 
+// // TODO: 2016/12/15 may be need add new line before the query.
 //        XmlTag tag = rootTag.getSubTags()[rootTag.getSubTags().length - 1];
 //        xmlDocument.insertString(tag.getTextOffset(), "\n\n<!--auto generated Code-->\n");
         //let user choose with one.
