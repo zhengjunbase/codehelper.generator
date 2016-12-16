@@ -395,7 +395,16 @@ public class QueryBuilder {
     private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.SELECT);
-        info.setMethodReturnType("int");
+        String idType = fieldMap.get("id");
+        if (idType != null) {
+            info.setReturnClass(idType);
+            String returnType = extractLast(idType);
+            info.setMethodReturnType(returnType);
+        } else {
+            info.setReturnClass("java.lang.Integer");
+            info.setMethodReturnType("Integer");
+        }
+
         StringBuilder builder = new StringBuilder();
         builder.append("\n\tselect count(");
         if (count.isDistinct()) {
