@@ -20,6 +20,24 @@ Intellij下代码自动生成插件 支持生成mybatis对应的dao xml, 接口�
 ![count](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/count.gif)
 ![all_1](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/all_1.gif)
 
+安装
+----
+
+支持下面产品编译号为141以上的产品。
+
+- Android Studio
+- IntelliJ IDEA
+- IntelliJ IDEA Community Edition
+
+
+**使用 IDE 内置插件系统:**
+- <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"codehelper.generator"</kbd> > <kbd>Install Plugin</kbd>
+
+**手动:**
+- 下载[`最新发布的插件包`][latest-release] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
+
+重启**IDE**.
+
 使用方法
 --------------------------------------------------------------------------
 - 在项目resources 目录中添加 codehelper.properties 如[codehelper.properties](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/codehelper.properties)设置生成文件的目录
