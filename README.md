@@ -9,27 +9,48 @@ codehelper.generator
 <a href="README-EN.md">English Documentation</a>
 </div>
 
-GenDaoCode 特性
+Intellij下代码自动生成插件 支持生成mybatis对应的dao xml等
 -----------------------------------------------------------------------
-- 根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。
-- Pojo文件更新后一键更新对应的Sql和mybatis xml文件。
-- 提供insert，insertList，update，select，delete五种方法。
-- 能够批量生成多个Pojo的对应的文件。
-- 自动将pojo的注释添加到对应的Sql文件的注释中。 
-- 丰富的配置，如果没有配置文件，则会使用默认配置。
-- 可以在Intellij Idea中快捷键配置中配置快捷键。
-- 目前支持MySQL + Java，后续会支持更多的DB。
-- 如果喜欢我们的插件，非常感谢您的分享。
+- 根据数据库对象一键生成 Dao接口，Service，Xml，数据库建表Sql文件  提供dao与xml的跳转
+![generateFile](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/generateFiles.gif)
+- 根据dao中的方法名生成对应的在xml并进行方法补全
+![find](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/find.gif)
+![update](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/update.gif)
+![delete](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/delete.gif)
+![count](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/count.gif)
+![all_1](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/all_1.gif)
 
-GenDaoCode 使用方法
+使用方法
 --------------------------------------------------------------------------
-- 主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。
-- 方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。
-- Codehelper Generator会根据默认配置为您生成代码。
-- 方法二：在resources目录下添加文件名为codehelper.properties的文件。  
-例子：[https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties](https://github.com/zhengjunbase/codehelper.generator/blob/develop/codehelper.properties)
-- 点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码
-- 如何配置: [http://codehelper.me/generator/config](http://codehelper.me/generator/config)
+- 在项目resources 目录中添加 codehelper.properties 如[codehelper.properties](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/codehelper.properties)设置生成文件的目录
+- 在数据库对象上使用alt+insert （generate mybatis files）生成对应的dao xml文件等 （mac上使用 command+N 即getter setter对应的快捷键)
+- 在mybatis的接口文件上的方法名上使用alt+enter generatedaoxml 生成对应的mybatis sql及方法的补全  
+
+需要注意的点
+-----------------------------------------------------------------------------
+- 默认生成的建表会将对应的数据库对象的字段大写转换为下划线小写格式
+
+字段名 | 表字段
+------ | -------
+username | username
+userName | user_name
+UserName | user_name
+user_name  | user_name
+userNameAndPassword | user_name_and_password  
+
+- 使用方法名生成sql 需要在接口中提供一个insert或save或add方法并以数据库对象为第一参数 (可以通过数据库对象自动生成) 
+
+- 使用方法名生成的sql的字段也会转换为 下划线小写格式
+
+例如 findUserNameAndPassWordById  
+如数据库对象中有两个字段 userName 和 password  
+则会生成  `select user_name, password from * where id = *`  
+此处 会将userName转换为user_name    
+如果是通过我们数据库对象生成的sql创建的表不需要任何修改即可正常工作   其他情况则需要检查数据库对象和表字段的对应情况.  
+
+方法名生成sql
+-----------------------------------------------------------------------------------------
+
 
 联系作者 & 加入开发
 
