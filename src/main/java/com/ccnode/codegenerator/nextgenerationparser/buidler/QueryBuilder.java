@@ -158,7 +158,7 @@ public class QueryBuilder {
         if (find.getOrderByProps() != null) {
             info.setSql(info.getSql() + " order by");
             for (OrderByRule rule : find.getOrderByProps()) {
-                info.setSql(info.getSql() + " " + rule.getProp() + " " + rule.getOrder());
+                info.setSql(info.getSql() + " " + GenCodeUtil.getUnderScoreWithComma(rule.getProp()) + " " + rule.getOrder());
             }
         }
         if (find.getLimit() > 0) {
