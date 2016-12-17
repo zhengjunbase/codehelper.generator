@@ -75,7 +75,7 @@ password | String
 
 表名为user  
 
-以下是方法名与sql的对应关系(方法名的小大写无所谓)   
+以下是方法名与sql的对应关系(方法名的大小写无所谓)   
 
 
 可以跟在字段后面的比较符有 
@@ -112,8 +112,7 @@ findDistinctUserNameByIdBetween | select distinct(user_name) from user where id 
 findFirstByIdGreaterThan | select * from user where id > {} limit 1
 findFirst20ByIdLessThan  | select * from user where id < {} limit 20  
 
-- update方法  
-by后面设置的条件同上  
+- update方法 by后面设置的条件同上  
 
 方法名     | sql
 ---------- |  -------
