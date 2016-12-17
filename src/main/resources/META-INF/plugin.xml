@@ -23,6 +23,7 @@
       <ul>
       <li><p>Generate dao, service, sql and mybatis xml file according to domain class</p></li>
       <li><p>generate mybatis sql based dao interface method name</p></li>
+      <li><p>one click jump from mybatis dao interface to mapper xml each other</p></li>
       <li><p>Update sql, mybatis xml file elegantly when the domain class updated</p></li>
       <li><p>Provide insert, insertList,update</p></li>
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
@@ -39,6 +40,7 @@
       <ul>
       <li><p>根据数据库对象一键生成Dao，Service，Xml，Sql文件</p></li>
       <li><p>根据mybatis接口中的方法名生成对应的mapper sql和方法补全</p></li>
+      <li><p>mybatis接口文件的mapper xml之间的相互跳转</p></li>
       <li><p>数据库对象更新后一键更新对应的Sql和mybatis xml文件</p></li>
       <li><p>默认提供insert，insertList，update</p></li>
       <li><p>丰富的配置，如果没有配置文件，则会使用默认配置</p></li>
