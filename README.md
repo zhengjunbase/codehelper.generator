@@ -62,14 +62,76 @@ userNameAndPassword | user_name_and_password
 
 - 使用方法名生成的sql的字段也会转换为 下划线小写格式
 
-例如 findUserNameAndPassWordById  
-如数据库对象中有两个字段 userName 和 password  
-则会生成  `select user_name, password from * where id = *`  
-此处 会将userName转换为user_name    
-如果是通过我们数据库对象生成的sql创建的表不需要任何修改即可正常工作   其他情况则需要检查数据库对象和表字段的对应情况.  
 
 方法名生成sql
 -----------------------------------------------------------------------------------------
+数据库对象User  
+字段名  | 类型
+-----   | ------
+id      | Integer
+userName | String
+password | String  
+
+表名为user
+方法名与sql的对应关系(方法名的小大写无所谓)   
+
+
+可以跟在字段后面的比较符有 
+
+比较符  | 生成sql                  
+------- | --------
+between |  prop >={} and prop <={}
+lessthan  | prop < {}
+greaterthan | prop > {}
+isnull | prop is null
+notnull | prop is not null
+like   | prop like {}
+in     | prop in {}
+notin  | prop not in {}
+not    | prop != {}
+notlike | prop not like {}
+
+- find方法  
+
+支持获取多字段，by后面可以设置多个字段的条件  
+支持orderBy,distinct, findFirst
+
+方法名       |  sql  
+-----------  |  --------------
+find         | select * from user
+findUserName | select user_name from user
+findById	| select * from user where id = {}
+findByIdGreaterThanAndUserName | select * from user where id > {} and user_name = {}
+findByIdLessThanAndUserNameIn  | select * from user where id < {} and user_name in {}
+findUserNameOrderByIdDesc   | select * from user where user_name = {} order by id desc
+findDistinctUserNameByIdBetween | select distinct(user_name) from user where id >= {} and id <={} 
+findFirstByIdGreaterThan | select * from user where id > {} limit 1
+findFirst20ByIdLessThan  | select * from user where id < {} limit 20  
+findByIdGreaterThanOrIdLessThan | select * from user where id > {} or id < {}
+
+- update方法  
+by后面设置的条件同上  
+
+方法名     | sql
+---------- |  -------
+updateUserNameById | update user set user_name = {} where id = {}
+updateUserNameAndPasswordByIdIn  | update user set user_name = {} and password = {} where id = {}
+
+- delete方法
+by后面设置的条件同上  
+
+方法名  |  sql
+------- | ---------
+deleteById | delete from user where id = {}
+deleteByUserNameIsNull  | delete from user where user_name is null
+
+- count方法
+by后面设置的条件同上 支持distinct  
+
+方法名  | sql
+count   | select count(1) from user
+countDistinctUserNameByIdGreaterThan | select count(distinct(user_name)) from user where id > {}
+
 
 
 联系作者 & 加入开发
