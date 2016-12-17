@@ -9,11 +9,13 @@ codehelper.generator
 <a href="README-EN.md">English Documentation</a>
 </div>
 
-Intellij下代码自动生成插件 支持生成mybatis对应的dao xml, 接口方法名直接生成sql.
+Intellij下代码自动生成插件 支持生成mybatis的dao接口,mapper xml,和建表sql, 支持直接从接口方法名直接生成sql.
 -----------------------------------------------------------------------
 - 根据数据库对象一键生成 Dao接口，Service，Xml，数据库建表Sql文件  提供dao与xml的跳转
-![generateFile](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/generateFiles.gif)
-- 根据dao中的方法名生成对应的在xml并进行方法补全
+![generateFile](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/generateFiles.gif)  
+
+
+- 根据dao中的方法名生成对应的在xml并进行方法补全 
 ![find](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/find.gif)
 ![update](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/update.gif)
 ![delete](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/delete.gif)

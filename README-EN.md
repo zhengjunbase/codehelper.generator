@@ -9,10 +9,11 @@ codehelper.generator
 <a href="README.md">中文文档</a>
 </div>
 
-Intellij code generate plugin. support to generate mybatis files base on domain class, use method name to generate mybatis sql.
+Intellij code generate plugin. support to generate mybatis dao interface,mapper xml and create table sql base on domain class, use method name to generate mybatis sql.
 -----------------------------------------------------------------------
 - generate mybatis dao interface, mapper xml by domain class, support dao interface jump to mybatis mapper file.
-![generateFile](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/generateFiles.gif)
+![generateFile](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/generateFiles.gif)  
+
 - generate mybatis sql base on method name.
 ![find](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/find.gif)
 ![update](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/screenshot/update.gif)
