@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.ccnode.codegenerator.mybatis.generator</id>
     <name>codehelper.generator</name>
-  <version>2016.12.05</version>
+  <version>2016.12.18</version>
     <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
     <description><![CDATA[
@@ -17,13 +17,13 @@
       <!--</ul>-->
        <!--<p>AutoCoding Usage</p>-->
       <!--<ul>-->
-      <li><p>Click main menu Tools-> Codehelper-> AutoCoding button to generate the code</p></li>
+      <!--<li><p>Click main menu Tools-> Codehelper-> AutoCoding button to generate the code</p></li>-->
       </ul>
       <p>Features</p>
       <ul>
       <li><p>Generate dao, service, sql and mybatis xml file according to domain class</p></li>
-      <li><p>generate mybatis sql based dao interface method name</p></li>
-      <li><p>one click jump from mybatis dao interface to mapper xml each other</p></li>
+      <li><p>Generate mybatis sql based dao interface method name</p></li>
+      <li><p>Jump from mybatis dao interface to mapper xml each other</p></li>
       <li><p>Update sql, mybatis xml file elegantly when the domain class updated</p></li>
       <li><p>Provide insert, insertList,update</p></li>
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
@@ -32,8 +32,10 @@
       </ul>
       <p>GenDaoCode Usages</p>
       <ul>
-      <li>alt+insert on domain class to generate mybatis files (command+N on mac)</li>
+      <li>alt+insert (generate mybatis files) on domain class to generate mybatis files (command+N on mac)</li>
+      <li>alt+insert (generate mybatis files) on domain class to update mybatis files when domain class add field (command+N on mac)</li>
       <li>alt+enter on dao interface to generate mybatis mapper sql</li>
+      <li>view more on <a href="https://github.com/zhengjunbase/codehelper.generator">https://github.com/zhengjunbase/codehelper.generator</a></li>
       </ul>
 
       <p>GenDaoCode 特性</p>
