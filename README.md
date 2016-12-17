@@ -135,6 +135,23 @@ by后面设置的条件同上 支持distinct
 count   | select count(1) from user
 countDistinctUserNameByIdGreaterThan | select count(distinct(user_name)) from user where id > {}
 
+其他
+----------------------------------
+截图中的项目来自[https://github.com/gejun123456/codehelperPluginDemo](https://github.com/gejun123456/codehelperPluginDemo)
+
+CHANGELOG
+------------------------------------------------
+*lastest*
+
+feature：
+*添加mapper与dao的相互跳转
+*使用alt+insert来生成dao xml等
+*添加方法名生成sql
+
+fixed bug:
+*文件查找时进行了module的判断
+
+
 
 
 联系作者 & 加入开发
