@@ -175,7 +175,7 @@ public class GenSqlService {
     }
 
     private static boolean oldSqlContainField(@NotNull List<String> oldList, @NotNull PojoFieldInfo fieldInfo) {
-        String keyWord = "`" + GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName()) + "`";
+        String keyWord = GenCodeUtil.getUnderScoreWithComma(fieldInfo.getFieldName());
         for (String s : oldList) {
             if (s.contains(keyWord)){
                 return true;
