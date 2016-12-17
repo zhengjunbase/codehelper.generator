@@ -36,7 +36,7 @@ support following product build version > 141
 **Manual:**
 - download[`lastest plugin zip`][latest-release] -> <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
-restart**IDE**.
+restart **IDE**.
 
 How to use
 --------------------------------------------------------------------------
@@ -72,7 +72,7 @@ id      | Integer
 userName | String
 password | String  
 
-table name为user  
+table name is user  
 
 the following is the sql for the method name (method name using upper and lower case is the same for generate)   
 
