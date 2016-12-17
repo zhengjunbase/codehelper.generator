@@ -66,14 +66,16 @@ userNameAndPassword | user_name_and_password
 方法名生成sql
 -----------------------------------------------------------------------------------------
 数据库对象User  
+
 字段名  | 类型
 -----   | ------
 id      | Integer
 userName | String
 password | String  
 
-表名为user
-方法名与sql的对应关系(方法名的小大写无所谓)   
+表名为user  
+
+以下是方法名与sql的对应关系(方法名的小大写无所谓)   
 
 
 可以跟在字段后面的比较符有 
