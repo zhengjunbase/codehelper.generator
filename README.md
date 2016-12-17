@@ -131,6 +131,7 @@ deleteByUserNameIsNull  | delete from user where user_name is null
 by后面设置的条件同上 支持distinct  
 
 方法名  | sql
+------- | ----------
 count   | select count(1) from user
 countDistinctUserNameByIdGreaterThan | select count(distinct(user_name)) from user where id > {}
 
