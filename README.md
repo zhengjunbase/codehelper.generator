@@ -103,13 +103,14 @@ notlike | prop not like {}
 find         | select * from user
 findUserName | select user_name from user
 findById	| select * from user where id = {}
-findByIdGreaterThanAndUserName | select * from user where id > {} and user_name = {}
+findByIdGreaterThanAndUserName | select * from user where id > {} and user_name = {}  
+findByIdGreaterThanOrIdLessThan | select * from user where id > {} or id < {}
 findByIdLessThanAndUserNameIn  | select * from user where id < {} and user_name in {}
-findUserNameOrderByIdDesc   | select * from user where user_name = {} order by id desc
+findByUserNameAndPassword      | select * from user where user_name = {} and password = {}
+findUserNameOrderByIdDesc   | select user_name from user order by id desc
 findDistinctUserNameByIdBetween | select distinct(user_name) from user where id >= {} and id <={} 
 findFirstByIdGreaterThan | select * from user where id > {} limit 1
 findFirst20ByIdLessThan  | select * from user where id < {} limit 20  
-findByIdGreaterThanOrIdLessThan | select * from user where id > {} or id < {}
 
 - update方法  
 by后面设置的条件同上  
