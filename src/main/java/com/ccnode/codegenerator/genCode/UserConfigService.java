@@ -61,10 +61,13 @@ public class UserConfigService {
         try {
             properties.load(new FileInputStream(new File(path)));
             Set<String> strings = properties.stringPropertyNames();
+            Map<String, String> userConfigMap = new HashMap<>();
+            //all read from user config file.
             for (String s : strings) {
                 //
                 userConfigMap.put(s, properties.getProperty(s));
             }
+            UserConfigService.userConfigMap = userConfigMap;
         } catch (Exception e) {
             // TODO: 2016/12/15 may show something.
             return;
