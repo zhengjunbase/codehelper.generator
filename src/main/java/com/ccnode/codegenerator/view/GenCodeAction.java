@@ -37,7 +37,7 @@ public class GenCodeAction extends AnAction {
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
         Messages.showMessageDialog(project, "please use alt+insert (generate mybatis files) on domain Class instead\n" +
-                "(command+N on mac. same key shortcut for generate getter setter method)", "action not supported", null);
+                "(ctrl+N on mac. same key shortcut for generate getter setter method)", "action not supported", null);
         return;
 //        VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
 //        final ProjectFileIndex index = ProjectRootManager.getInstance(project).getFileIndex();
