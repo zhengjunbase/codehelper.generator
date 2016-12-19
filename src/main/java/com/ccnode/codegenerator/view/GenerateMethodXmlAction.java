@@ -291,8 +291,21 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //        XmlTag tag = rootTag.getSubTags()[rootTag.getSubTags().length - 1];
 //        xmlDocument.insertString(tag.getTextOffset(), "\n\n<!--auto generated Code-->\n");
         //let user choose with one.
-        FileDocumentManager.getInstance().saveAllDocuments();
-        CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1].getNextSibling());
+        Document document = psiDocumentManager.getDocument(srcClass.getContainingFile());
+        if(document!=null) {
+            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
+            psiDocumentManager.commitDocument(document);
+            FileDocumentManager.getInstance().saveDocument(document);
+        }
+
+        Document xmlDocument = psiDocumentManager.getDocument(psixml);
+        if(xmlDocument!=null) {
+            psiDocumentManager.doPostponedOperationsAndUnblockDocument(xmlDocument);
+            psiDocumentManager.commitDocument(xmlDocument);
+            FileDocumentManager.getInstance().saveDocument(xmlDocument);
+        }
+
+        CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1]);
     }
 
     private XmlTagAndInfo generateTag(XmlTag rootTag, QueryInfo info, String methodName) {
