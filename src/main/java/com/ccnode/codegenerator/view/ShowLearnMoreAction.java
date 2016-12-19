@@ -14,6 +14,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 public class ShowLearnMoreAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
-        BrowserLauncher.getInstance().browse(UrlManager.getGeneratorUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
+        BrowserLauncher.getInstance().browse(UrlManager.getMainPage() , WebBrowserManager.getInstance().getFirstActiveBrowser());
     }
 }

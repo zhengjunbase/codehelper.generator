@@ -45,8 +45,7 @@ dependencies{
 }
 
 group 'org.jetbrains'
-version '2016.12.18' // Plugin version
-
+version '2016.12.19' // Plugin version
 
 
 
