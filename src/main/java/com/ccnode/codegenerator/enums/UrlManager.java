@@ -11,6 +11,7 @@ import com.ccnode.codegenerator.storage.SettingService;
 public class UrlManager {
 
     private static String GENERATOR_URL = "http://www.codehelper.me/generator/";
+    private static String MAIN_PAGE = "https://github.com/zhengjunbase/codehelper.generator";
     private static String POST_URL = "http://www.codehelper.me/generator/post";
     private static String DONATE_CLICK_URL = "http://www.codehelper.me/generator" ;
 
@@ -18,8 +19,8 @@ public class UrlManager {
         return "?id=" + SettingService.getUUID() + "&version=" + VersionManager.getCurrentVersion();
     }
 
-    public static String getGeneratorUrl() {
-        return GENERATOR_URL + getUrlSuffix();
+    public static String getMainPage() {
+        return MAIN_PAGE + getUrlSuffix();
     }
 
 
