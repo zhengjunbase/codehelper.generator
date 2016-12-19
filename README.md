@@ -44,7 +44,7 @@ Intellij下代码自动生成插件 支持生成mybatis的dao接口,mapper xml,�
 --------------------------------------------------------------------------
 - 在项目resources 目录中添加 codehelper.properties 如[codehelper.properties](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/codehelper.properties)设置生成文件的目录。
 没有提供该文件则会在数据库对象所在的文件夹生成
-- 在数据库对象上使用alt+insert （generate mybatis files）生成对应的dao xml文件等 （mac上使用 command+N 即getter setter对应的快捷键)
+- 在数据库对象上使用alt+insert （generate mybatis files）生成对应的dao xml文件等 （mac上使用 ctrl+N 即getter setter对应的快捷键)
 - 当数据库对象添加字段后也可使用alt+insert （generate mybatis files）来生成更新后的xml。（只会更新默认的insert,insertList,update方法 其他自定义的方法不会变）
 - 在mybatis的接口文件上的方法名上使用alt+enter generatedaoxml 生成对应的mybatis sql及方法的补全  
 

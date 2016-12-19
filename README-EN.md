@@ -42,7 +42,7 @@ restart **IDE**.
 How to use
 --------------------------------------------------------------------------
 - add codehelper.properties like[codehelper.properties](https://raw.githubusercontent.com/zhengjunbase/codehelper.generator/develop/codehelper.properties) to your project resources folder which config the directory to store dao interface, mapper sql ect. if not provide, will generate files in the same directory of domain class.
-- use alt+insert (generate mybatis files) on domain class to generate corresponding dao interface and mapper xml (on mac use with command+N  which is the shortcut of generate getter/setter)
+- use alt+insert (generate mybatis files) on domain class to generate corresponding dao interface and mapper xml (on mac use with ctrl+N  which is the shortcut of generate getter/setter)
 - use alt+enter on mybatis dao interface to generate mybatis sql in mapper xml. and it will also complete your method with param and returnType.  
 
 Requirement

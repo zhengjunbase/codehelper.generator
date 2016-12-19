@@ -32,7 +32,7 @@
       </ul>
       <p>GenDaoCode Usages</p>
       <ul>
-      <li>alt+insert (generate mybatis files) on domain class to generate mybatis files (command+N on mac)</li>
+      <li>alt+insert (generate mybatis files) on domain class to generate mybatis files (ctrl+N on mac)</li>
       <li>alt+insert (generate mybatis files) on domain class to update mybatis files when domain class add field (command+N on mac)</li>
       <li>alt+enter on dao interface to generate mybatis mapper sql</li>
       <li>view more on <a href="https://github.com/zhengjunbase/codehelper.generator">https://github.com/zhengjunbase/codehelper.generator</a></li>
@@ -51,7 +51,7 @@
       </ul>
       <p>GenDaoCode 使用方法</p>
       <ul>
-      <li><p>在数据库对象上使用alt+insert (generate mybatis files)来生成dao,mapper xml, service, sql (mac上使用command+N)</p></li>
+      <li><p>在数据库对象上使用alt+insert (generate mybatis files)来生成dao,mapper xml, service, sql (mac上使用ctrl+N)</p></li>
       <li><p>数据库对象添加字段后使用alt+insert (generate mybatis files) 来更新sql,mapper xml中的字段</p></li>
       <li><p>在mybatis接口的方法名上使用alt+enter来生成对应的mapper sql</p></li>
       <li><p>详细配置: <a href="https://github.com/zhengjunbase/codehelper.generator">https://github.com/zhengjunbase/codehelper.generator</a></p></li>
@@ -77,8 +77,8 @@
                     description="AutoCoding"/>
             <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode"
                     description="GenMybatisCode"/>
-            <!--<action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More"-->
-                    <!--description="Learn_More"/>-->
+            <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More"
+                    description="Learn_More"/>
             <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
 
             <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
