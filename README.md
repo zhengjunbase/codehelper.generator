@@ -64,7 +64,7 @@ userNameAndPassword | user_name_and_password
 
 - 使用方法名生成sql 需要在接口中提供一个insert或save或add方法并以数据库对象为第一参数 (可以通过数据库对象自动生成) 
 
-- 使用方法名生成的sql的字段也会转换为 下划线小写格式
+- 使用方法名生成的sql的字段会从数据库对象对应的resultMap中的数据库字段来设置.
 
 
 方法名生成sql
@@ -78,6 +78,15 @@ userName | String
 password | String  
 
 表名为user  
+
+xml中对应的resultMap为
+
+	<resultMap id="AllCoumnMap" type="com.codehelper.domain.User">
+	    <result column="id" property="id"/>
+	    <result column="user_name" property="userName"/>
+	    <result column="password" property="password"/>
+	</resultMap>
+
 
 以下是方法名与sql的对应关系(方法名的大小写无所谓)   
 
