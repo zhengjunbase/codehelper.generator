@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.constants.MapperConstants;
 import com.ccnode.codegenerator.dialog.ChooseXmlToUseDialog;
+import com.ccnode.codegenerator.dialog.GenerateResultMapDialog;
 import com.ccnode.codegenerator.dialog.MethodExistDialog;
 import com.ccnode.codegenerator.jpaparse.ReturnClassInfo;
 import com.ccnode.codegenerator.nextgenerationparser.QueryParseDto;
@@ -11,7 +12,6 @@ import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
 import com.ccnode.codegenerator.nextgenerationparser.tag.XmlTagAndInfo;
 import com.ccnode.codegenerator.pojo.FieldToColumnRelation;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
-import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.MethodNameUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
 import com.ccnode.codegenerator.util.PsiElementUtil;
@@ -213,15 +213,33 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //            rootTag.addSubTag(resultMap, true);
 //        }
 
+        PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         if (relation == null) {
             if (hasResultType) {
                 Messages.showErrorDialog("please check with your resultMap\n" +
-                        "dose it contain all the property of" + pojoClass.getQualifiedName(), "proprety in resultMap is not complete");
+                        "dose it contain all the property of " + pojoClass.getQualifiedName() + "? ", "proprety in resultMap is not complete");
+                return;
             } else {
-                Messages.showErrorDialog("please provide a resultMap the type is:" + pojoClass.getQualifiedName() + "\n" +
-                        "in xml path:" + psixml.getVirtualFile().getPath(), "can't find resultMap in your mapper xml");
+                GenerateResultMapDialog generateResultMapDialog = new GenerateResultMapDialog(project, props, pojoClass.getQualifiedName());
+                boolean b = generateResultMapDialog.showAndGet();
+                if (!b) {
+                    return;
+                }
+//                Messages.showErrorDialog("please provide a resultMap the type is:" + pojoClass.getQualifiedName() + "\n" +
+//                        "in xml path:" + psixml.getVirtualFile().getPath(), "can't find resultMap in your mapper xml");
+                //create tag into the file.
+                FieldToColumnRelation relation1 = generateResultMapDialog.getRelation();
+                //use to generate resultMap
+                String allColumnMap = buildAllCoumnMap(relation1.getFiledToColumnMap());
+                XmlTag resultMap = rootTag.createChildTag("resultMap", "", allColumnMap, false);
+                resultMap.setAttribute("id", relation1.getResultMapId());
+                resultMap.setAttribute("type", pojoClass.getQualifiedName());
+                rootTag.addSubTag(resultMap, true);
+                Document xmlDocument = psiDocumentManager.getDocument(psixml);
+                commitAndSaveDocument(psiDocumentManager, xmlDocument);
+
+                relation = convertToRelation(relation1);
             }
-            return;
         }
 
         methodInfo.setRelation(relation);
@@ -245,7 +263,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 existTag.delete();
             }
         }
-
+        rootTag = psixml.getRootTag();
         methodInfo.setTableName(tableName);
         QueryParseDto parseDto = QueryParser.parse(props, methodInfo);
         XmlTagAndInfo choosed = null;
@@ -282,7 +300,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             Messages.showErrorDialog(content, "can't parse the methodName");
             return;
         }
-        PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         if (methodInfo.getMethod() == null) {
             //means we need to insert the text into it.
             String insertBefore = choosed.getInfo().getMethodReturnType() + " ";
@@ -317,6 +334,17 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         commitAndSaveDocument(psiDocumentManager, xmlDocument);
 
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1]);
+    }
+
+    private FieldToColumnRelation convertToRelation(FieldToColumnRelation relation1) {
+        FieldToColumnRelation relation = new FieldToColumnRelation();
+        relation.setResultMapId(relation1.getResultMapId());
+        Map<String, String> fieldToColumnLower = new LinkedHashMap<>();
+        for (String prop : relation1.getFiledToColumnMap().keySet()) {
+            fieldToColumnLower.put(prop.toLowerCase(), relation1.getFiledToColumnMap().get(prop));
+        }
+        relation.setFiledToColumnMap(fieldToColumnLower);
+        return relation;
     }
 
     private FieldToColumnRelation extractFieldAndColumnRelation(XmlTag tag, List<String> props, String resultMapId) {
@@ -394,13 +422,13 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         return info;
     }
 
-    private String buildAllColumn(Map<String,String> filedToColumnMap) {
+    private String buildAllColumn(Map<String, String> filedToColumnMap) {
         StringBuilder bu = new StringBuilder();
-        int i =0;
+        int i = 0;
         for (String s : filedToColumnMap.keySet()) {
             i++;
-            bu.append("\n\t").append("`"+filedToColumnMap.get(s)+"`");
-            if (i !=filedToColumnMap.size()) {
+            bu.append("\n\t").append("`" + filedToColumnMap.get(s) + "`");
+            if (i != filedToColumnMap.size()) {
                 bu.append(",");
             }
         }
@@ -408,10 +436,10 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         return bu.toString();
     }
 
-    private String buildAllCoumnMap(List<String> props) {
+    private String buildAllCoumnMap(Map<String, String> fieldToColumnMap) {
         StringBuilder builder = new StringBuilder();
-        for (String prop : props) {
-            builder.append("\n\t").append("<result column=\"").append(GenCodeUtil.getUnderScore(prop)).append("\"")
+        for (String prop : fieldToColumnMap.keySet()) {
+            builder.append("\n\t").append("<result column=\"").append(fieldToColumnMap.get(prop)).append("\"")
                     .append(" property=\"").append(prop).append("\"/>");
         }
         builder.append("\n");
