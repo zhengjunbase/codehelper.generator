@@ -50,7 +50,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(pojoClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedFind find : parsedFinds) {
-            queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName(),info.getRelation()));
+            queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName(), info.getRelation()));
         }
         //say this is not an method.
         QueryParseDto dto = new QueryParseDto();
@@ -71,10 +71,26 @@ public class QueryBuilder {
         PsiField[] allFields = pojoClass.getAllFields();
         for (PsiField f : allFields) {
             if (f.hasModifierProperty("private") && !f.hasModifierProperty("static")) {
-                fieldMap.put(f.getName(), f.getType().getCanonicalText());
+                String canonicalText = f.getType().getCanonicalText();
+                String objectTypeText = convertToObjectText(canonicalText);
+                fieldMap.put(f.getName(), objectTypeText);
             }
         }
         return fieldMap;
+    }
+
+    private static String convertToObjectText(String canonicalText) {
+        if (canonicalText.equals("int")) {
+            return "java.lang.Integer";
+        } else if (canonicalText.equals("short")) {
+            return "java.lang.Short";
+        } else if (canonicalText.equals("long")) {
+            return "java.lang.Long";
+        } else if (canonicalText.equals("double")) {
+            return "java.lang.Double";
+        } else {
+            return canonicalText;
+        }
     }
 
     private static String buildErrorMsg(ParsedErrorBase error) {
@@ -152,7 +168,7 @@ public class QueryBuilder {
         info.setSql(builder.toString());
         info.setParamInfos(new ArrayList<>());
         if (find.getQueryRules() != null) {
-            buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap,relation);
+            buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap, relation);
         }
 
         if (find.getOrderByProps() != null) {
@@ -172,7 +188,7 @@ public class QueryBuilder {
         return returnClass.substring(s + 1);
     }
 
-    private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap,FieldToColumnRelation relation) {
+    private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap, FieldToColumnRelation relation) {
         info.setSql(info.getSql() + "\n\twhere");
         StringBuilder builder = new StringBuilder();
         for (QueryRule rule : queryRules) {
@@ -292,7 +308,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedUpdate update : updateList) {
-            queryInfos.add(buildQueryUpdateInfo(update, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
+            queryInfos.add(buildQueryUpdateInfo(update, fieldMap, info.getTableName(), psiClass.getName(), info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -302,7 +318,7 @@ public class QueryBuilder {
         return dto;
     }
 
-    private static QueryInfo buildQueryUpdateInfo(ParsedUpdate update, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
+    private static QueryInfo buildQueryUpdateInfo(ParsedUpdate update, Map<String, String> fieldMap, String tableName, String name, FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.UPDATE);
         info.setMethodReturnType("int");
@@ -321,7 +337,7 @@ public class QueryBuilder {
         }
         info.setSql(builder.toString());
         if (update.getQueryRules() != null) {
-            buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap,relation);
+            buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap, relation);
         }
         return info;
     }
@@ -341,7 +357,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedDelete delete : parsedDeletes) {
-            queryInfos.add(buildQueryDeleteInfo(delete, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
+            queryInfos.add(buildQueryDeleteInfo(delete, fieldMap, info.getTableName(), psiClass.getName(), info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -352,7 +368,7 @@ public class QueryBuilder {
 
     }
 
-    private static QueryInfo buildQueryDeleteInfo(ParsedDelete delete, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
+    private static QueryInfo buildQueryDeleteInfo(ParsedDelete delete, Map<String, String> fieldMap, String tableName, String name, FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.DELETE);
         info.setMethodReturnType("int");
@@ -361,7 +377,7 @@ public class QueryBuilder {
         info.setParamInfos(new ArrayList<>());
         info.setSql(builder.toString());
         if (delete.getQueryRules() != null) {
-            buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap,relation);
+            buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap, relation);
         }
         return info;
     }
@@ -381,7 +397,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedCount count : parsedCounts) {
-            queryInfos.add(buildQueryCountInfo(count, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
+            queryInfos.add(buildQueryCountInfo(count, fieldMap, info.getTableName(), psiClass.getName(), info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -392,7 +408,7 @@ public class QueryBuilder {
 
     }
 
-    private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
+    private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name, FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.SELECT);
         String idType = fieldMap.get("id");
@@ -433,7 +449,7 @@ public class QueryBuilder {
         info.setParamInfos(new ArrayList<>());
         info.setSql(builder.toString());
         if (count.getQueryRules() != null) {
-            buildQuerySqlAndParam(count.getQueryRules(), info, fieldMap,relation);
+            buildQuerySqlAndParam(count.getQueryRules(), info, fieldMap, relation);
         }
         return info;
     }
