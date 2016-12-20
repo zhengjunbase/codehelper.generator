@@ -337,7 +337,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             if (!propSet.contains(propertyString)) {
                 continue;
             }
-            fieldAndColumnMap.put(propertyString, columnString);
+            fieldAndColumnMap.put(propertyString.toLowerCase(), columnString);
             propSet.remove(propertyString);
         }
         //mean there are not all property in the resultMap.

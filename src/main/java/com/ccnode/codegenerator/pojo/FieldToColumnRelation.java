@@ -28,6 +28,6 @@ public class FieldToColumnRelation {
 
 
     public String getPropColumn(String prop) {
-        return "`" + filedToColumnMap.get(prop) + "`";
+        return "`" + filedToColumnMap.get(prop.toLowerCase()) + "`";
     }
 }
