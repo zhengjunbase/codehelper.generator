@@ -52,14 +52,14 @@ public class GenerateResultMapDialog extends DialogWrapper {
     protected void doOKAction() {
         Map<String, String> fieldToColumnMap = new LinkedHashMap<>();
         if (StringUtils.isBlank(columMapText.getText())) {
-            Messages.showErrorDialog("resultMapId is empety, please write things to it", "resultMapId is empty");
+            Messages.showErrorDialog("resultMapId is empty, please write things to it", "resultMapId is empty");
             return;
         }
         for (PropAndField field : jTextFields) {
             if (StringUtils.isNotBlank(field.getField().getText())) {
                 fieldToColumnMap.put(field.getProp(), field.getField().getText().trim());
             } else {
-                Messages.showErrorDialog("please write text to " + field.getField().getText(), "column is empty");
+                Messages.showErrorDialog("please write text to " + field.getProp(), "column is empty");
                 return;
             }
         }
