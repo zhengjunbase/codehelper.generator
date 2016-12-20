@@ -15,8 +15,8 @@ import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFin
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.find.ParsedFindError;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdate;
 import com.ccnode.codegenerator.nextgenerationparser.parsedresult.update.ParsedUpdateError;
+import com.ccnode.codegenerator.pojo.FieldToColumnRelation;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
-import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiField;
 import org.apache.commons.lang.StringUtils;
@@ -50,7 +50,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(pojoClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedFind find : parsedFinds) {
-            queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName()));
+            queryInfos.add(buildQueryInfo(find, fieldMap, info.getTableName(), pojoClass.getName(),info.getRelation()));
         }
         //say this is not an method.
         QueryParseDto dto = new QueryParseDto();
@@ -85,14 +85,14 @@ public class QueryBuilder {
         }
     }
 
-    private static QueryInfo buildQueryInfo(ParsedFind find, Map<String, String> fieldMap, String tableName, String pojoClassName) {
+    private static QueryInfo buildQueryInfo(ParsedFind find, Map<String, String> fieldMap, String tableName, String pojoClassName, FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.SELECT);
         boolean queryAllTable = false;
         boolean returnList = true;
         if (find.getFetchProps() != null && find.getFetchProps().size() > 0) {
             if (find.getFetchProps().size() > 1) {
-                info.setReturnMap(MapperConstants.ALL_COLUMN_MAP);
+                info.setReturnMap(relation.getResultMapId());
             } else {
                 //说明等于1
                 String s = find.getFetchProps().get(0);
@@ -100,7 +100,7 @@ public class QueryBuilder {
             }
         } else {
             queryAllTable = true;
-            info.setReturnMap(MapperConstants.ALL_COLUMN_MAP);
+            info.setReturnMap(relation.getResultMapId());
         }
 //later will check wether it is the same with method.
         if (find.getQueryRules() != null) {
@@ -137,13 +137,13 @@ public class QueryBuilder {
             if (find.getDistinct()) {
                 builder.append(" distinct(");
                 for (String prop : find.getFetchProps()) {
-                    builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + ",");
+                    builder.append(" " + relation.getPropColumn(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
                 builder.append(")");
             } else {
                 for (String prop : find.getFetchProps()) {
-                    builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + ",");
+                    builder.append(" " + relation.getPropColumn(prop) + ",");
                 }
                 builder.deleteCharAt(builder.length() - 1);
             }
@@ -152,13 +152,13 @@ public class QueryBuilder {
         info.setSql(builder.toString());
         info.setParamInfos(new ArrayList<>());
         if (find.getQueryRules() != null) {
-            buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap);
+            buildQuerySqlAndParam(find.getQueryRules(), info, fieldMap,relation);
         }
 
         if (find.getOrderByProps() != null) {
             info.setSql(info.getSql() + " order by");
             for (OrderByRule rule : find.getOrderByProps()) {
-                info.setSql(info.getSql() + " " + GenCodeUtil.getUnderScoreWithComma(rule.getProp()) + " " + rule.getOrder());
+                info.setSql(info.getSql() + " " + relation.getPropColumn(rule.getProp()) + " " + rule.getOrder());
             }
         }
         if (find.getLimit() > 0) {
@@ -172,7 +172,7 @@ public class QueryBuilder {
         return returnClass.substring(s + 1);
     }
 
-    private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap) {
+    private static void buildQuerySqlAndParam(List<QueryRule> queryRules, QueryInfo info, Map<String, String> fieldMap,FieldToColumnRelation relation) {
         info.setSql(info.getSql() + "\n\twhere");
         StringBuilder builder = new StringBuilder();
         for (QueryRule rule : queryRules) {
@@ -183,19 +183,19 @@ public class QueryBuilder {
             if (operator == null) {
                 ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop).withParamType(extractLast(fieldMap.get(prop))).withParamValue(prop).build();
                 info.getParamInfos().add(paramInfo);
-                builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "=#{" + paramInfo.getParamAnno() + "}");
+                builder.append(" " + relation.getPropColumn(prop) + "=#{" + paramInfo.getParamAnno() + "}");
             } else {
                 switch (operator) {
                     case KeyWordConstants.GREATERTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("min" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("min" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + cdata(">") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LESSTHAN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + cdata("<") + " #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.BETWEEN: {
@@ -203,7 +203,7 @@ public class QueryBuilder {
                         ParamInfo max = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("max" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("max" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(min);
                         info.getParamInfos().add(max);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + cdata(">=") + " #{" + min.getParamAnno() + "} and " + GenCodeUtil.getUnderScoreWithComma(prop) + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + cdata(">=") + " #{" + min.getParamAnno() + "} and " + relation.getPropColumn(prop) + " " + cdata("<=") + " #{" + (max.getParamAnno()) + "}");
                         break;
                     }
                     case KeyWordConstants.ISNOTNULL: {
@@ -217,13 +217,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOT: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("not" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("not" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "!= #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + "!= #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.NOTIN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "List").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "List").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + relation.getPropColumn(prop) + " not in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -232,7 +232,7 @@ public class QueryBuilder {
                     case KeyWordConstants.IN: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno(prop + "List").withParamType("List<" + extractLast(fieldMap.get(prop)) + ">").withParamValue(prop + "List").build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
+                        builder.append(" " + relation.getPropColumn(prop) + " in \n\t<foreach item=\"item\" index=\"index\" collection=\"" + paramInfo.getParamAnno() + "\"\n\t" +
                                 "open=\"(\" separator=\",\" close=\")\">\n\t" +
                                 "#{item}\n\t" +
                                 "</foreach>\n");
@@ -241,13 +241,13 @@ public class QueryBuilder {
                     case KeyWordConstants.NOTLIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("notlike" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("notlike" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "not like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + "not like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
                     case KeyWordConstants.LIKE: {
                         ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("like" + firstCharUpper(prop)).withParamType(extractLast(fieldMap.get(prop))).withParamValue("like" + firstCharUpper(prop)).build();
                         info.getParamInfos().add(paramInfo);
-                        builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "like #{" + paramInfo.getParamAnno() + "}");
+                        builder.append(" " + relation.getPropColumn(prop) + "like #{" + paramInfo.getParamAnno() + "}");
                         break;
                     }
 
@@ -292,7 +292,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedUpdate update : updateList) {
-            queryInfos.add(buildQueryUpdateInfo(update, fieldMap, info.getTableName(), psiClass.getName()));
+            queryInfos.add(buildQueryUpdateInfo(update, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -302,7 +302,7 @@ public class QueryBuilder {
         return dto;
     }
 
-    private static QueryInfo buildQueryUpdateInfo(ParsedUpdate update, Map<String, String> fieldMap, String tableName, String name) {
+    private static QueryInfo buildQueryUpdateInfo(ParsedUpdate update, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.UPDATE);
         info.setMethodReturnType("int");
@@ -314,14 +314,14 @@ public class QueryBuilder {
             ParamInfo paramInfo = ParamInfo.ParamInfoBuilder.aParamInfo().withParamAnno("updated" + firstCharUpper(prop)).
                     withParamType(extractLast(fieldMap.get(prop))).withParamValue("updated" + firstCharUpper(prop)).build();
             info.getParamInfos().add(paramInfo);
-            builder.append(" " + GenCodeUtil.getUnderScoreWithComma(prop) + "=#{" + paramInfo.getParamAnno() + "}");
+            builder.append(" " + relation.getPropColumn(prop) + "=#{" + paramInfo.getParamAnno() + "}");
             if (i != update.getUpdateProps().size() - 1) {
                 builder.append(",");
             }
         }
         info.setSql(builder.toString());
         if (update.getQueryRules() != null) {
-            buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap);
+            buildQuerySqlAndParam(update.getQueryRules(), info, fieldMap,relation);
         }
         return info;
     }
@@ -341,7 +341,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedDelete delete : parsedDeletes) {
-            queryInfos.add(buildQueryDeleteInfo(delete, fieldMap, info.getTableName(), psiClass.getName()));
+            queryInfos.add(buildQueryDeleteInfo(delete, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -352,7 +352,7 @@ public class QueryBuilder {
 
     }
 
-    private static QueryInfo buildQueryDeleteInfo(ParsedDelete delete, Map<String, String> fieldMap, String tableName, String name) {
+    private static QueryInfo buildQueryDeleteInfo(ParsedDelete delete, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.DELETE);
         info.setMethodReturnType("int");
@@ -361,7 +361,7 @@ public class QueryBuilder {
         info.setParamInfos(new ArrayList<>());
         info.setSql(builder.toString());
         if (delete.getQueryRules() != null) {
-            buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap);
+            buildQuerySqlAndParam(delete.getQueryRules(), info, fieldMap,relation);
         }
         return info;
     }
@@ -381,7 +381,7 @@ public class QueryBuilder {
         Map<String, String> fieldMap = buildFieldMap(psiClass);
         List<QueryInfo> queryInfos = new ArrayList<>();
         for (ParsedCount count : parsedCounts) {
-            queryInfos.add(buildQueryCountInfo(count, fieldMap, info.getTableName(), psiClass.getName()));
+            queryInfos.add(buildQueryCountInfo(count, fieldMap, info.getTableName(), psiClass.getName(),info.getRelation()));
         }
         QueryParseDto dto = new QueryParseDto();
         if (info.getMethod() == null) {
@@ -392,7 +392,7 @@ public class QueryBuilder {
 
     }
 
-    private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name) {
+    private static QueryInfo buildQueryCountInfo(ParsedCount count, Map<String, String> fieldMap, String tableName, String name,FieldToColumnRelation relation) {
         QueryInfo info = new QueryInfo();
         info.setType(QueryTypeConstants.SELECT);
         String idType = fieldMap.get("id");
@@ -410,7 +410,7 @@ public class QueryBuilder {
         if (count.isDistinct()) {
             builder.append("distinct(");
             for (int i = 0; i < count.getFetchProps().size(); i++) {
-                builder.append(GenCodeUtil.getUnderScoreWithComma(count.getFetchProps().get(i)));
+                builder.append(relation.getPropColumn(count.getFetchProps().get(i)));
                 if (i != count.getFetchProps().size() - 1) {
                     builder.append(",");
                 }
@@ -421,7 +421,7 @@ public class QueryBuilder {
                 builder.append("1");
             } else {
                 for (int i = 0; i < count.getFetchProps().size(); i++) {
-                    builder.append(GenCodeUtil.getUnderScoreWithComma(count.getFetchProps().get(i)));
+                    builder.append(relation.getPropColumn(count.getFetchProps().get(i)));
                     if (i != count.getFetchProps().size() - 1) {
                         builder.append(",");
                     }
@@ -433,7 +433,7 @@ public class QueryBuilder {
         info.setParamInfos(new ArrayList<>());
         info.setSql(builder.toString());
         if (count.getQueryRules() != null) {
-            buildQuerySqlAndParam(count.getQueryRules(), info, fieldMap);
+            buildQuerySqlAndParam(count.getQueryRules(), info, fieldMap,relation);
         }
         return info;
     }

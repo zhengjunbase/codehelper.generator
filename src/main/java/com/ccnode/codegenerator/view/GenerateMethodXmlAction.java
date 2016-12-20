@@ -9,6 +9,7 @@ import com.ccnode.codegenerator.nextgenerationparser.QueryParser;
 import com.ccnode.codegenerator.nextgenerationparser.buidler.ParamInfo;
 import com.ccnode.codegenerator.nextgenerationparser.buidler.QueryInfo;
 import com.ccnode.codegenerator.nextgenerationparser.tag.XmlTagAndInfo;
+import com.ccnode.codegenerator.pojo.FieldToColumnRelation;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.MethodNameUtil;
@@ -42,10 +43,7 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by bruce.ge on 2016/12/5.
@@ -163,6 +161,9 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
         //boolean isReturnclassCurrentClass.
         String tableName = null;
+
+        FieldToColumnRelation relation = null;
+        boolean hasResultType = false;
         for (XmlTag tag : subTags) {
             if (tag.getName().equalsIgnoreCase("insert")) {
                 String insertText = tag.getValue().getText();
@@ -171,10 +172,17 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 if (tableName != null) {
                     break;
                 }
-            } else if (tag.getName().equalsIgnoreCase("resultMap")) {
+            } else if (relation == null && tag.getName().equalsIgnoreCase("resultMap")) {
+                String resultMapId;
                 XmlAttribute id = tag.getAttribute("id");
-                if (id != null && id.getValue().equals(MapperConstants.ALL_COLUMN_MAP)) {
-                    allColumMapExist = true;
+                if (id != null && id.getValue() != null) {
+                    resultMapId = id.getValue();
+                    XmlAttribute typeAttribute = tag.getAttribute("type");
+                    if (typeAttribute != null && typeAttribute.getValue() != null && typeAttribute.getValue().trim().equals(pojoClass.getQualifiedName())) {
+                        //mean we find the corresponding prop.
+                        hasResultType = true;
+                        relation = extractFieldAndColumnRelation(tag, props, resultMapId);
+                    }
                 }
             } else if (tag.getName().equalsIgnoreCase("sql")) {
                 XmlAttribute id = tag.getAttribute("id");
@@ -196,17 +204,30 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         }
 
         //if not exist then add it to the file.
-        if (!allColumMapExist) {
-            String pojoFullName = pojoClass.getQualifiedName();
-            String allColumnText = buildAllCoumnMap(props);
-            XmlTag resultMap = rootTag.createChildTag("resultMap", "", allColumnText, false);
-            resultMap.setAttribute("id", MapperConstants.ALL_COLUMN_MAP);
-            resultMap.setAttribute("type", pojoFullName);
-            rootTag.addSubTag(resultMap, true);
+//        if (!allColumMapExist) {
+//            String pojoFullName = pojoClass.getQualifiedName();
+//            String allColumnText = buildAllCoumnMap(props);
+//            XmlTag resultMap = rootTag.createChildTag("resultMap", "", allColumnText, false);
+//            resultMap.setAttribute("id", MapperConstants.ALL_COLUMN_MAP);
+//            resultMap.setAttribute("type", pojoFullName);
+//            rootTag.addSubTag(resultMap, true);
+//        }
+
+        if (relation == null) {
+            if (hasResultType) {
+                Messages.showErrorDialog("please check with your resultMap\n" +
+                        "dose it contain all the property of" + pojoClass.getQualifiedName(), "proprety in resultMap is not complete");
+            } else {
+                Messages.showErrorDialog("please provide a resultMap the type is:" + pojoClass.getQualifiedName() + "\n" +
+                        "in xml path:" + psixml.getVirtualFile().getPath(), "can't find resultMap in your mapper xml");
+            }
+            return;
         }
 
+        methodInfo.setRelation(relation);
+
         if (!allColumns) {
-            String allColumn = buildAllColumn(props);
+            String allColumn = buildAllColumn(relation.getFiledToColumnMap());
             XmlTag sql = rootTag.createChildTag("sql", "", allColumn, false);
             sql.setAttribute("id", MapperConstants.ALL_COLUMN);
             rootTag.addSubTag(sql, true);
@@ -279,9 +300,8 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             //insert text into it.
             Document document = psiDocumentManager.getDocument(srcClass.getContainingFile());
             document.insertString(element.getTextOffset(), insertBefore);
-
             document.insertString(element.getTextOffset() + element.getTextLength() + insertBefore.length(), insertNext);
-
+            commitAndSaveDocument(psiDocumentManager, document);
         }
 
         psixml.getRootTag().addSubTag(choosed.getXmlTag(), false);
@@ -291,21 +311,51 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 //        XmlTag tag = rootTag.getSubTags()[rootTag.getSubTags().length - 1];
 //        xmlDocument.insertString(tag.getTextOffset(), "\n\n<!--auto generated Code-->\n");
         //let user choose with one.
-        Document document = psiDocumentManager.getDocument(srcClass.getContainingFile());
-        if(document!=null) {
+
+
+        Document xmlDocument = psiDocumentManager.getDocument(psixml);
+        commitAndSaveDocument(psiDocumentManager, xmlDocument);
+
+        CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1]);
+    }
+
+    private FieldToColumnRelation extractFieldAndColumnRelation(XmlTag tag, List<String> props, String resultMapId) {
+        Set<String> propSet = new HashSet<>(props);
+        XmlTag[] subTags = tag.getSubTags();
+        if (subTags == null || subTags.length == 0) {
+            return null;
+        }
+        Map<String, String> fieldAndColumnMap = new LinkedHashMap<>();
+        for (XmlTag propTag : subTags) {
+            XmlAttribute column = propTag.getAttribute("column");
+            XmlAttribute property = propTag.getAttribute("property");
+            if (column == null || column.getValue() == null || property == null || property.getValue() == null) {
+                continue;
+            }
+            String columnString = column.getValue().trim();
+            String propertyString = property.getValue().trim();
+            if (!propSet.contains(propertyString)) {
+                continue;
+            }
+            fieldAndColumnMap.put(propertyString, columnString);
+            propSet.remove(propertyString);
+        }
+        //mean there are not all property in the resultMap.
+        if (propSet.size() != 0) {
+            return null;
+        }
+        FieldToColumnRelation relation = new FieldToColumnRelation();
+        relation.setFiledToColumnMap(fieldAndColumnMap);
+        relation.setResultMapId(resultMapId);
+        return relation;
+    }
+
+    private void commitAndSaveDocument(PsiDocumentManager psiDocumentManager, Document document) {
+        if (document != null) {
             psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
             psiDocumentManager.commitDocument(document);
             FileDocumentManager.getInstance().saveDocument(document);
         }
-
-        Document xmlDocument = psiDocumentManager.getDocument(psixml);
-        if(xmlDocument!=null) {
-            psiDocumentManager.doPostponedOperationsAndUnblockDocument(xmlDocument);
-            psiDocumentManager.commitDocument(xmlDocument);
-            FileDocumentManager.getInstance().saveDocument(xmlDocument);
-        }
-
-        CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1]);
     }
 
     private XmlTagAndInfo generateTag(XmlTag rootTag, QueryInfo info, String methodName) {
@@ -344,11 +394,13 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         return info;
     }
 
-    private String buildAllColumn(List<String> props) {
+    private String buildAllColumn(Map<String,String> filedToColumnMap) {
         StringBuilder bu = new StringBuilder();
-        for (int i = 0; i < props.size(); i++) {
-            bu.append("\n\t").append(GenCodeUtil.getUnderScoreWithComma(props.get(i)));
-            if (i != props.size() - 1) {
+        int i =0;
+        for (String s : filedToColumnMap.keySet()) {
+            i++;
+            bu.append("\n\t").append("`"+filedToColumnMap.get(s)+"`");
+            if (i !=filedToColumnMap.size()) {
                 bu.append(",");
             }
         }

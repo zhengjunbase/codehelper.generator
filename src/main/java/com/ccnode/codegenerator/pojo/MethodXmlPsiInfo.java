@@ -13,9 +13,19 @@ public class MethodXmlPsiInfo {
 
     private String returnClassName;
 
+    private FieldToColumnRelation relation;
+
     private PsiClass pojoClass;
 
     private String tableName;
+
+    public FieldToColumnRelation getRelation() {
+        return relation;
+    }
+
+    public void setRelation(FieldToColumnRelation relation) {
+        this.relation = relation;
+    }
 
     public String getTableName() {
         return tableName;
