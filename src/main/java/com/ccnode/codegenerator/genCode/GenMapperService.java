@@ -31,12 +31,7 @@ public class GenMapperService {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
             try{
                 GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
-                String mapperExpandStr = response.getUserConfigMap().get("mapper.expand");
-                Boolean expand = false;
-                if("true".equals(mapperExpandStr)){
-                    expand = true;
-                }
-                genMapper(response,pojoInfo,fileInfo,expand);
+                genMapper(response,pojoInfo,fileInfo,false);
             }catch(Throwable e){
                 LOGGER.error("GenMapperService genMapper error", e);
                 response.failure("GenMapperService genMapper error");
