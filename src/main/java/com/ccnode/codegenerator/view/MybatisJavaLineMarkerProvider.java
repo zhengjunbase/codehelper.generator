@@ -6,6 +6,7 @@ import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
@@ -63,6 +64,9 @@ public class MybatisJavaLineMarkerProvider extends RelatedItemLineMarkerProvider
                         }
                     }
                 }
+                if(methodElement==null){
+                    methodElement = handleWithFileNotFound(method, project, qualifiedName, result);
+                }
             }
             if (methodElement != null) {
                 result.add(NavigationGutterIconBuilder.create(AllIcons.Gutter.ImplementedMethod).setAlignment(GutterIconRenderer.Alignment.CENTER)
@@ -76,6 +80,10 @@ public class MybatisJavaLineMarkerProvider extends RelatedItemLineMarkerProvider
     private PsiElement handleWithFileNotFound(@NotNull PsiMethod method, Project project, final String qualifiedName, Collection<? super RelatedItemLineMarkerInfo> result) {
         PsiSearchHelper searchService = ServiceManager.getService(project, PsiSearchHelper.class);
         List<XmlFile> xmlFiles = new ArrayList<XmlFile>();
+        Module moduleForPsiElement = ModuleUtilCore.findModuleForPsiElement(method);
+        if (moduleForPsiElement == null) {
+            return null;
+        }
         searchService.processUsagesInNonJavaFiles("mapper", new PsiNonJavaFileReferenceProcessor() {
             @Override
             public boolean process(PsiFile file, int startOffset, int endOffset) {
@@ -91,14 +99,14 @@ public class MybatisJavaLineMarkerProvider extends RelatedItemLineMarkerProvider
                 }
                 return true;
             }
-        }, GlobalSearchScope.moduleScope(ModuleUtilCore.findModuleForPsiElement(method)));
+        }, GlobalSearchScope.moduleScope(moduleForPsiElement));
         if (xmlFiles.size() == 0) {
             return null;
         }
         return extractTagFromXml(method, xmlFiles.get(0));
     }
 
-//    extract the method tag from xml.
+    //    extract the method tag from xml.
     @Nullable
     private PsiElement extractTagFromXml(@NotNull PsiMethod method, XmlFile xmlFile) {
         XmlTag[] subTags = xmlFile.getRootTag().getSubTags();
