@@ -82,20 +82,27 @@ public class SqlCompletionContributor extends CompletionContributor {
             List<String> afterlower = new ArrayList<String>();
             if (lower.endsWith("g")) {
                 afterlower.add("reaterThan");
-            } else if (lower.endsWith("l")) {
+            }
+            if (lower.endsWith("l")) {
                 afterlower.add("essThan");
                 afterlower.add("ike");
-            } else if (lower.endsWith("b")) {
+            }
+            if (lower.endsWith("b")) {
                 afterlower.add("etween");
-            } else if (lower.endsWith("findd") || lower.endsWith("countd")) {
+            }
+            if (lower.endsWith("findd") || lower.endsWith("countd")) {
                 afterlower.add("istinct");
-            } else if (lower.endsWith("i")) {
+            }
+            if (lower.endsWith("i")) {
                 afterlower.add("n");
-            } else if (lower.endsWith("n")) {
+            }
+            if (lower.endsWith("n")) {
                 afterlower.add("otIn");
-            } else if (lower.indexOf("orderby") != -1 && lower.endsWith("d")) {
+            }
+            if (lower.indexOf("orderby") != -1 && lower.endsWith("d")) {
                 afterlower.add("esc");
-            } else if (lower.endsWith("o")) {
+            }
+            if (lower.endsWith("o")) {
                 afterlower.add("rderBy");
             }
             char u = Character.toLowerCase(text.charAt(text.length() - 1));
