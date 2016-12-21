@@ -119,13 +119,15 @@ findUserNameOrderByIdDesc   | select user_name from user order by id desc
 findDistinctUserNameByIdBetween | select distinct(user_name) from user where id >= {} and id <={} 
 findFirstByIdGreaterThan | select * from user where id > {} limit 1
 findFirst20ByIdLessThan  | select * from user where id < {} limit 20  
+findFirst10ByIdGreaterThanOrderByUserName  | select * from user where id > {} order by user_name limit 10
+
 
 - update method  
 
 method name     | generated sql
 ---------- |  -------
 updateUserNameById | update user set user_name = {} where id = {}
-updateUserNameAndPasswordByIdIn  | update user set user_name = {} and password = {} where id = {}
+updateUserNameAndPasswordByIdIn  | update user set user_name = {} and password = {} where id in {}
 
 - delete method
 
