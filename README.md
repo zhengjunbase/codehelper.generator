@@ -64,9 +64,9 @@ user_name  | user_name
 userNameAndPassword | user_name_and_password  
 
 - 使用方法名生成sql 需要在接口中提供一个insert或save或add方法并以数据库对象为第一参数 (可以通过数据库对象自动生成) 
-- 使用方法名生成sql 会自动找到对应的mapper xml文件，不依赖codehelper.propertie。*任何mybatis项目都可以使用*
+- 使用方法名生成sql 会自动找到对应的mapper xml文件，不依赖codehelper.propertie。**任何mybatis项目都可以使用**
 
-- 使用方法名生成的sql的字段会从数据库对象对应的resultMap中的数据库字段来设置.
+- 使用方法名生成的sql的字段会从数据库对象对应的resultMap中的数据库字段来设置。
 
 
 方法名生成sql
