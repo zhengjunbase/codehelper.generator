@@ -6,16 +6,14 @@
 ### Example user template
 
 # IntelliJ project files
-.idea/
+/.idea/
 *.iml
-out/
-build/
-gen
+/out/
+/build/
 /MybatisGenerator.iml
 /MybatisGenerator.ipr
 /MybatisGenerator.iws
-.gradle/
-out*
+/.gradle/
 
 src/com/ccnode/codegenerator/view/EnterLicenseAction.java
 *ShowPremiumAction.java
@@ -29,10 +27,7 @@ MybatisGenerator.iml
 MybatisGenerator.ipr
 MybatisGenerator.iws
 
-classes
-plugin.zip
 ### Example user template
 
 # IntelliJ project files
-.idea
-out
+
