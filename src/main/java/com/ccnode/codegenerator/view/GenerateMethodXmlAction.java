@@ -14,13 +14,13 @@ import com.ccnode.codegenerator.pojo.FieldToColumnRelation;
 import com.ccnode.codegenerator.pojo.MethodXmlPsiInfo;
 import com.ccnode.codegenerator.util.MethodNameUtil;
 import com.ccnode.codegenerator.util.PsiClassUtil;
+import com.ccnode.codegenerator.util.PsiDocumentUtils;
 import com.ccnode.codegenerator.util.PsiElementUtil;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
@@ -236,7 +236,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
                 resultMap.setAttribute("type", pojoClass.getQualifiedName());
                 rootTag.addSubTag(resultMap, true);
                 Document xmlDocument = psiDocumentManager.getDocument(psixml);
-                commitAndSaveDocument(psiDocumentManager, xmlDocument);
+                PsiDocumentUtils.commitAndSaveDocument(psiDocumentManager, xmlDocument);
 
                 relation = convertToRelation(relation1);
             }
@@ -318,7 +318,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
             Document document = psiDocumentManager.getDocument(srcClass.getContainingFile());
             document.insertString(element.getTextOffset(), insertBefore);
             document.insertString(element.getTextOffset() + element.getTextLength() + insertBefore.length(), insertNext);
-            commitAndSaveDocument(psiDocumentManager, document);
+            PsiDocumentUtils.commitAndSaveDocument(psiDocumentManager, document);
         }
 
         psixml.getRootTag().addSubTag(choosed.getXmlTag(), false);
@@ -331,7 +331,7 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
 
 
         Document xmlDocument = psiDocumentManager.getDocument(psixml);
-        commitAndSaveDocument(psiDocumentManager, xmlDocument);
+        PsiDocumentUtils.commitAndSaveDocument(psiDocumentManager, xmlDocument);
 
         CodeInsightUtil.positionCursor(project, psixml, rootTag.getSubTags()[rootTag.getSubTags().length - 1]);
     }
@@ -376,14 +376,6 @@ public class GenerateMethodXmlAction extends PsiElementBaseIntentionAction {
         relation.setFiledToColumnMap(fieldAndColumnMap);
         relation.setResultMapId(resultMapId);
         return relation;
-    }
-
-    private void commitAndSaveDocument(PsiDocumentManager psiDocumentManager, Document document) {
-        if (document != null) {
-            psiDocumentManager.doPostponedOperationsAndUnblockDocument(document);
-            psiDocumentManager.commitDocument(document);
-            FileDocumentManager.getInstance().saveDocument(document);
-        }
     }
 
     private XmlTagAndInfo generateTag(XmlTag rootTag, QueryInfo info, String methodName) {
