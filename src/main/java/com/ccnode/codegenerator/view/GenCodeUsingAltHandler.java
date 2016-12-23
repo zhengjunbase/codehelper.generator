@@ -50,6 +50,9 @@ public class GenCodeUsingAltHandler implements CodeInsightActionHandler {
         Module moduleForFile = ModuleUtilCore.findModuleForPsiElement(aClass);
         String modulePath = moduleForFile.getModuleFilePath();
         Path parent = Paths.get(modulePath).getParent();
+        while (parent.toString().contains(".idea")) {
+            parent = parent.getParent();
+        }
         VirtualFileManager.getInstance().syncRefresh();
         ApplicationManager.getApplication().saveAll();
         if (project == null) {
