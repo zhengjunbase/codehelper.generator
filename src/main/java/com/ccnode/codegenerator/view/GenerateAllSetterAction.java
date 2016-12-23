@@ -73,7 +73,19 @@ public class GenerateAllSetterAction extends PsiElementBaseIntentionAction {
         }
         PsiClass psiClass = PsiTypesUtil.getPsiClass(localVariable.getType());
         String generateName = localVariable.getName();
-        PsiMethod[] methods = psiClass.getMethods();
+        List<PsiMethod> methodList = new ArrayList<>();
+        while (!psiClass.getQualifiedName().equals("java.lang.Object")) {
+            addSetMethodToList(psiClass, methodList);
+            psiClass = psiClass.getSuperClass();
+            if (psiClass == null) {
+                break;
+            }
+        }
+
+        if (methodList.size() == 0) {
+            return;
+        }
+
         StringBuilder builder = new StringBuilder();
         PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         Document document = psiDocumentManager.getDocument(element.getContainingFile());
@@ -81,7 +93,7 @@ public class GenerateAllSetterAction extends PsiElementBaseIntentionAction {
         String splitText = "";
         int cur = statementOffset;
         String text = document.getText(new TextRange(cur - 1, cur));
-        while (text.equals(" ")||text.equals("\t")) {
+        while (text.equals(" ") || text.equals("\t")) {
             splitText = text + splitText;
             cur--;
             if (cur < 1) {
@@ -91,32 +103,39 @@ public class GenerateAllSetterAction extends PsiElementBaseIntentionAction {
         }
         splitText = "\n" + splitText;
         builder.append(splitText);
-        for (PsiMethod method : methods) {
-            if (isValidSetMethod(method)) {
-                PsiParameter[] parameters = method.getParameterList().getParameters();
-                builder.append(generateName + "." + method.getName() + "(");
-                int u = parameters.length;
-                int h = 0;
-                for (PsiParameter parameter : parameters) {
-                    h++;
-                    String canonicalText = parameter.getType().getCanonicalText();
-                    String ss = typeGeneratedMap.get(canonicalText);
-                    if (ss != null) {
-                        builder.append(ss);
-                    } else {
-                        builder.append("new " + canonicalText + "()");
-                    }
-                    if (h != u) {
-                        builder.append(",");
-                    }
+        for (PsiMethod method : methodList) {
+            PsiParameter[] parameters = method.getParameterList().getParameters();
+            builder.append(generateName + "." + method.getName() + "(");
+            int u = parameters.length;
+            int h = 0;
+            for (PsiParameter parameter : parameters) {
+                h++;
+                String canonicalText = parameter.getType().getCanonicalText();
+                String ss = typeGeneratedMap.get(canonicalText);
+                if (ss != null) {
+                    builder.append(ss);
+                } else {
+                    builder.append("new " + canonicalText + "()");
                 }
-                builder.append(");").append(splitText);
+                if (h != u) {
+                    builder.append(",");
+                }
             }
+            builder.append(");").append(splitText);
         }
 
         document.insertString(statementOffset + parent1.getText().length(), builder.toString());
         PsiDocumentUtils.commitAndSaveDocument(psiDocumentManager, document);
         return;
+    }
+
+    private void addSetMethodToList(PsiClass psiClass, List<PsiMethod> methodList) {
+        PsiMethod[] methods = psiClass.getMethods();
+        for (PsiMethod method : methods) {
+            if (isValidSetMethod(method)) {
+                methodList.add(method);
+            }
+        }
     }
 
     private String findNextNotNull(PsiTypeElement psiType, String defaultName) {
@@ -183,11 +202,15 @@ public class GenerateAllSetterAction extends PsiElementBaseIntentionAction {
         if (psiClass == null) {
             return false;
         }
-        PsiMethod[] methods = psiClass.getMethods();
-        List<PsiMethod> ss = new ArrayList<>();
-        for (PsiMethod m : methods) {
-            if (isValidSetMethod(m)) {
-                return true;
+        while (!psiClass.getQualifiedName().equals("java.lang.Object")) {
+            for (PsiMethod m : psiClass.getMethods()) {
+                if (isValidSetMethod(m)) {
+                    return true;
+                }
+            }
+            psiClass = psiClass.getSuperClass();
+            if (psiClass == null) {
+                break;
             }
         }
         return false;
