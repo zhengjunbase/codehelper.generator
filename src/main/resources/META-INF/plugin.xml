@@ -120,8 +120,6 @@
 
         <intentionAction>
             <className>com.ccnode.codegenerator.view.GenerateMethodXmlAction</className>
-
-            <className>com.ccnode.codegenerator.view.GenerateAllSetterAction</className>
             <!--<category>Conditional Operator</category>-->
             <!--<descriptionDirectoryName>ConditionalOperatorConvertor</descriptionDirectoryName>-->
             <!--<bundleName>Generate daoxml</bundleName>-->
