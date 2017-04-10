@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
-  <name>codehelper.generator</name>
-  <version>2016.12.03</version>
+  <name>MybatisHelper</name>
+  <version>2017.04.10</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
@@ -61,7 +61,7 @@
       </ul>
       <p>联系作者 & 加入开发</p>
       <ul>
-       <li><p> 添加微信zhengjun302, 邀您加入微信交流群</p></li>
+       <li><p> QQ群: 322824200 </p></li>
        </ul>
       </div>
     ]]></description>

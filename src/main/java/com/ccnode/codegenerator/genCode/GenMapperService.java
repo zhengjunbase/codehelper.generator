@@ -344,6 +344,10 @@ public class GenMapperService {
         int index = 0;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
+            if(StringUtils.containsIgnoreCase(fieldName, "updateTime")
+                    || StringUtils.containsIgnoreCase(fieldName,"updateTime")){
+                continue;
+            }
             String testCondition = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);
             String updateField =  String.format("%s = #{pojo.%s},", GenCodeUtil.getUnderScore(fieldName), fieldName);
             if(index == onePojoInfo.getPojoFieldInfos().size() - 1){
