@@ -139,29 +139,22 @@ public class OnePojoInfoHelper {
         }
         PsiElement[] children = field.getChildren();
         for (PsiElement child : children) {
-            String text1 = child.getText();
-            if(child instanceof PsiDocCommentImpl){
-                String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
-                text = text.trim();
-                return text;
-            }
-            if(child instanceof  PsiCommentImpl){
-                String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
-                text = text.trim();
-                return text;
+            String text = child.getText();
+            if(child instanceof PsiDocCommentImpl || child instanceof PsiCommentImpl){
+                return formatText(text);
             }
         }
         return StringUtils.EMPTY;
+    }
+
+    private static String formatText(String text){
+        text = text.replace("/*","");
+        text = text.replace("*/","");
+        text = text.replace("//","");
+        text = text.replace("\n","");
+        text = text.replace("*","");
+        text = text.trim();
+        return text;
     }
 
     public static void parsePojoFieldInfo(@NotNull OnePojoInfo onePojoInfo){
