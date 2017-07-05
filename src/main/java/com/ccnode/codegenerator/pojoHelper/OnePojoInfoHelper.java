@@ -16,8 +16,8 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
-import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
+import com.intellij.psi.search.GlobalSearchScope;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +55,7 @@ public class OnePojoInfoHelper {
         String pojoFileShortName = pojoName + ".java";
         Project project = response.getRequest().getProject();
         PsiFile[] psiFile = FilenameIndex
-                .getFilesByName(project, pojoFileShortName, new EverythingGlobalScope(project));
+                .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
         if(psiFile.length != 1){
             // todo
         }
