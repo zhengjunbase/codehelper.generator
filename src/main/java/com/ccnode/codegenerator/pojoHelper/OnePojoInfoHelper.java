@@ -66,18 +66,18 @@ public class OnePojoInfoHelper {
         }
 
         List<PsiElement> elements = Lists.newArrayList();
-        if(firstChild instanceof PsiClassImpl){
-            elements.add(firstChild);
-        }
-        while (firstChild.getNextSibling() != null){
-            firstChild = firstChild.getNextSibling();
-            if(firstChild instanceof PsiClassImpl){
-                elements.add(firstChild);
+
+        i// Find Psi of class and package
+        do {
+            if (child instanceof PsiClassImpl) {
+                elements.add(child);
             }
+            if (child instanceof PsiPackageStatementImpl){
+                onePojoInfo.setPojoPackage(((PsiPackageStatementImpl) child).getPackageName());
+            }
+            child = child.getNextSibling();
         }
-        if(elements.size() != 1){
-            // todo
-        }
+        while (child != null);
 
         PsiClassImpl psiClass = (PsiClassImpl) elements.get(0);
         PsiElement context = psiClass.getContext();
