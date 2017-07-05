@@ -56,10 +56,15 @@ public class OnePojoInfoHelper {
         Project project = response.getRequest().getProject();
         PsiFile[] psiFile = FilenameIndex
                 .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
-        if(psiFile.length != 1){
-            // todo
-        }
         PsiElement firstChild = psiFile[0].getFirstChild();
+
+        for (PsiFile psiFile: psiFiles){
+            VirtualFile vf = psiFile.getVirtualFile();
+            if (vf.getPath().equals(onePojoInfo.getFullPojoPath())){
+                child = psiFile.getFirstChild();
+            }
+        }
+
         List<PsiElement> elements = Lists.newArrayList();
         if(firstChild instanceof PsiClassImpl){
             elements.add(firstChild);
