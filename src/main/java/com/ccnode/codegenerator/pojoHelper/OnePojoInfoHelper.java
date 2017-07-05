@@ -93,15 +93,14 @@ public class OnePojoInfoHelper {
             if(isStaticField(field)){
                 continue;
             }
-            if(!isSupportType(field.getType().getPresentableText())){
+            String type = field.getType().getPresentableText();
+            if(!isSupportType(type)){
                 continue;
             }
-            parseComment(field);
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
             fieldInfo.setFieldComment(parseComment(field));
-            PsiType type = field.getType();
             fieldInfo.setFieldName(field.getName());
-            fieldInfo.setFieldClass(type.getPresentableText());
+            fieldInfo.setFieldClass(type);
             fieldInfo.setAnnotations(Lists.newArrayList());
             fieldList.add(fieldInfo);
         }
