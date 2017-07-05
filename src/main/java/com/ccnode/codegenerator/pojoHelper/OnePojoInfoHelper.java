@@ -117,14 +117,7 @@ public class OnePojoInfoHelper {
     }
 
     private static Boolean isStaticField(@NotNull PsiField field){
-        PsiElement[] children = field.getChildren();
-        for (PsiElement child : children) {
-            String text = child.getText();
-            if(text.contains(" static ")){
-                return true;
-            }
-        }
-        return false;
+        field.getText().contains(" static ");
     }
 
     private static String parsePackage(String context){
