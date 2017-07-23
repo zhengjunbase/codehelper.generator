@@ -2,20 +2,30 @@
 package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
-import com.ccnode.codegenerator.pojo.*;
-import com.ccnode.codegenerator.util.*;
+import com.ccnode.codegenerator.pojo.BaseResponse;
+import com.ccnode.codegenerator.pojo.ChangeInfo;
+import com.ccnode.codegenerator.pojo.GenCodeResponse;
+import com.ccnode.codegenerator.pojo.GeneratedFile;
+import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojo.PojoFieldInfo;
+import com.ccnode.codegenerator.util.GenCodeUtil;
+import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.PojoUtil;
+import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
+import com.intellij.psi.impl.source.tree.java.PsiPackageStatementImpl;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import org.apache.commons.lang3.StringUtils;
@@ -57,17 +67,18 @@ public class OnePojoInfoHelper {
         PsiFile[] psiFile = FilenameIndex
                 .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
         PsiElement firstChild = psiFile[0].getFirstChild();
+        PsiElement child = null;
 
-        for (PsiFile psiFile: psiFiles){
-            VirtualFile vf = psiFile.getVirtualFile();
+        for (PsiFile each: psiFile){
+            VirtualFile vf = each.getVirtualFile();
             if (vf.getPath().equals(onePojoInfo.getFullPojoPath())){
-                child = psiFile.getFirstChild();
+                child = firstChild;
             }
         }
 
         List<PsiElement> elements = Lists.newArrayList();
 
-        i// Find Psi of class and package
+//        i// Find Psi of class and package
         do {
             if (child instanceof PsiClassImpl) {
                 elements.add(child);
@@ -116,7 +127,7 @@ public class OnePojoInfoHelper {
     }
 
     private static Boolean isStaticField(@NotNull PsiField field){
-        field.getText().contains(" static ");
+        return field.getText().contains(" static ");
     }
 
     private static String parsePackage(String context){
