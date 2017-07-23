@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.util;
 
 import com.ccnode.codegenerator.genCode.UserConfigService;
+import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -32,11 +33,14 @@ public class LoggerWrapper implements Logger {
 
     public static void saveAllLogs(String projectPath)  {
         try{
-            String printLog = UserConfigService.userConfigMap.get("printlog");
-            if(!Objects.equal(printLog,"true") || StringUtils.isBlank(projectPath)){
+            String firstMatch = MapHelper.getFirstMatch(UserConfigService.userConfigMap, "printLog", "printlog", "debug");
+            if(!StringUtils.endsWithIgnoreCase(firstMatch,"true") || StringUtils.isBlank(projectPath)){
                 return;
             }
             logList.add("----------------------     end     -------------------------");
+            if(!projectPath.endsWith(GenCodeResponseHelper.getPathSplitter())){
+                projectPath = projectPath + GenCodeResponseHelper.getPathSplitter();
+            }
             String path = projectPath + "codehelper.generator.log";
             File logFile = new File(path);
             List<String> allLines = Lists.newArrayList();

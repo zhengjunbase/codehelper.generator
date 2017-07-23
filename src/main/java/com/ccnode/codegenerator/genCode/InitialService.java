@@ -40,7 +40,8 @@ public class InitialService {
                 onePojoInfo.setPojoClassSimpleName(pojoName);
                 File pojoFile = IOUtils.matchOnlyOneFile(response.getRequest().getProjectPath(), pojoName + ".java");
                 if(pojoFile == null){
-                    return response.failure("", pojoName + " file not exist");
+                    LOGGER.error("file not exist, path:{}, pojoName:{}",response.getRequest().getProjectPath(), pojoName);
+                    return response.failure("", pojoName + " file not exist, path:" + response.getRequest().getProjectPath());
                 }
                 GenCodeConfig config = response.getCodeConfig();
                 String fullPojoPath = pojoFile.getAbsolutePath();

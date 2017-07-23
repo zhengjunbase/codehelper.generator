@@ -60,7 +60,7 @@ public class GenCodeAction extends AnAction {
         if(project == null){
             return;
         }
-        String projectPath = parent.toString();
+        String projectPath = project.getBasePath();
         UserConfigService.loadUserConfig(projectPath);
         if(projectPath == null){
             projectPath = StringUtils.EMPTY;
