@@ -16,8 +16,8 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
-import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
+import com.intellij.psi.search.GlobalSearchScope;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -55,24 +55,29 @@ public class OnePojoInfoHelper {
         String pojoFileShortName = pojoName + ".java";
         Project project = response.getRequest().getProject();
         PsiFile[] psiFile = FilenameIndex
-                .getFilesByName(project, pojoFileShortName, new EverythingGlobalScope(project));
-        if(psiFile.length != 1){
-            // todo
-        }
+                .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
         PsiElement firstChild = psiFile[0].getFirstChild();
-        List<PsiElement> elements = Lists.newArrayList();
-        if(firstChild instanceof PsiClassImpl){
-            elements.add(firstChild);
-        }
-        while (firstChild.getNextSibling() != null){
-            firstChild = firstChild.getNextSibling();
-            if(firstChild instanceof PsiClassImpl){
-                elements.add(firstChild);
+
+        for (PsiFile psiFile: psiFiles){
+            VirtualFile vf = psiFile.getVirtualFile();
+            if (vf.getPath().equals(onePojoInfo.getFullPojoPath())){
+                child = psiFile.getFirstChild();
             }
         }
-        if(elements.size() != 1){
-            // todo
+
+        List<PsiElement> elements = Lists.newArrayList();
+
+        i// Find Psi of class and package
+        do {
+            if (child instanceof PsiClassImpl) {
+                elements.add(child);
+            }
+            if (child instanceof PsiPackageStatementImpl){
+                onePojoInfo.setPojoPackage(((PsiPackageStatementImpl) child).getPackageName());
+            }
+            child = child.getNextSibling();
         }
+        while (child != null);
 
         PsiClassImpl psiClass = (PsiClassImpl) elements.get(0);
         PsiElement context = psiClass.getContext();
@@ -88,15 +93,14 @@ public class OnePojoInfoHelper {
             if(isStaticField(field)){
                 continue;
             }
-            if(!isSupportType(field.getType().getPresentableText())){
+            String type = field.getType().getPresentableText();
+            if(!isSupportType(type)){
                 continue;
             }
-            parseComment(field);
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
             fieldInfo.setFieldComment(parseComment(field));
-            PsiType type = field.getType();
             fieldInfo.setFieldName(field.getName());
-            fieldInfo.setFieldClass(type.getPresentableText());
+            fieldInfo.setFieldClass(type);
             fieldInfo.setAnnotations(Lists.newArrayList());
             fieldList.add(fieldInfo);
         }
@@ -112,14 +116,7 @@ public class OnePojoInfoHelper {
     }
 
     private static Boolean isStaticField(@NotNull PsiField field){
-        PsiElement[] children = field.getChildren();
-        for (PsiElement child : children) {
-            String text = child.getText();
-            if(text.contains(" static ")){
-                return true;
-            }
-        }
-        return false;
+        field.getText().contains(" static ");
     }
 
     private static String parsePackage(String context){
@@ -141,29 +138,22 @@ public class OnePojoInfoHelper {
         }
         PsiElement[] children = field.getChildren();
         for (PsiElement child : children) {
-            String text1 = child.getText();
-            if(child instanceof PsiDocCommentImpl){
-                String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
-                text = text.trim();
-                return text;
-            }
-            if(child instanceof  PsiCommentImpl){
-                String text = child.getText();
-                text = text.replace("/*","");
-                text = text.replace("*/","");
-                text = text.replace("//","");
-                text = text.replace("\n","");
-                text = text.replace("*","");
-                text = text.trim();
-                return text;
+            String text = child.getText();
+            if(child instanceof PsiDocCommentImpl || child instanceof PsiCommentImpl){
+                return formatText(text);
             }
         }
         return StringUtils.EMPTY;
+    }
+
+    private static String formatText(String text){
+        text = text.replace("/*","");
+        text = text.replace("*/","");
+        text = text.replace("//","");
+        text = text.replace("\n","");
+        text = text.replace("*","");
+        text = text.trim();
+        return text;
     }
 
     public static void parsePojoFieldInfo(@NotNull OnePojoInfo onePojoInfo){
