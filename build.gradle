@@ -25,7 +25,7 @@ apply plugin: 'java'
 intellij {
     version 'IC-14.1.4' //IntelliJ IDEA dependency
     plugins 'coverage' //Bundled plugin dependencies
-    pluginName 'MybatisHelper'
+    pluginName 'codehelper.generator'
     updateSinceUntilBuild false
 //    需要来填写publish这块 类似
 //    publish {
@@ -45,7 +45,7 @@ dependencies{
 }
 
 group 'org.jetbrains'
-version '2017.04.11' // Plugin version
+version '2017.06.24' // Plugin version
 
 
 
