@@ -67,10 +67,11 @@ public class OnePojoInfoHelper {
         PsiFile[] psiFile = FilenameIndex
                 .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
         PsiElement firstChild = psiFile[0].getFirstChild();
+        LOGGER.info("parseIdeaFieldInfo psiFile[0] path :{}", psiFile[0].getVirtualFile().getPath());
         PsiElement child = null;
-
         for (PsiFile each: psiFile){
             VirtualFile vf = each.getVirtualFile();
+            LOGGER.info("parseIdeaFieldInfo :{}, :{}", vf.getPath(), onePojoInfo.getFullPojoPath());
             if (vf.getPath().equals(onePojoInfo.getFullPojoPath())){
                 child = firstChild;
             }
