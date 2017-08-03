@@ -60,6 +60,13 @@ public class OnePojoInfoHelper {
         return false;
     }
 
+    private static String removeSplit(String s){
+        if(StringUtils.isBlank(s)){
+            return StringUtils.EMPTY;
+        }
+        return s.replace("/","").replace("\\","");
+    }
+
     public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response){
         String pojoName = onePojoInfo.getPojoName();
         String pojoFileShortName = pojoName + ".java";
@@ -72,7 +79,7 @@ public class OnePojoInfoHelper {
         for (PsiFile each: psiFile){
             VirtualFile vf = each.getVirtualFile();
             LOGGER.info("parseIdeaFieldInfo :{}, :{}", vf.getPath(), onePojoInfo.getFullPojoPath());
-            if (vf.getPath().equals(onePojoInfo.getFullPojoPath())){
+            if (removeSplit(vf.getPath()).equals(removeSplit(onePojoInfo.getFullPojoPath()))){
                 child = firstChild;
             }
         }
