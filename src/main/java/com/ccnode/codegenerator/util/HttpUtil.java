@@ -160,7 +160,6 @@ public class HttpUtil {
         int code=0;
         try {
             httpPost = new HttpPost(completeUrl(url));
-            logger.info("request is {}  url is {}", body, url);
             HttpEntity httpEntity = new StringEntity(body, APPLICATION_JSON_UTF8);
             httpPost.setEntity(httpEntity);
             httpPost.setHeader("Accept", "application/json");
@@ -169,15 +168,11 @@ public class HttpUtil {
             if (code == HttpStatus.SC_OK) {
                 HttpEntity responseEntity = response.getEntity();
                 String result = EntityUtils.toString(responseEntity, Consts.UTF_8);
-                logger.info("url is {} response is {}", url, result);
                 return new HttpResult(code, result);
             }
-            logger.error("http postJsonWithWrapperReuslt response status not 200 {}, url {}, body {}", code, url, body);
         } catch (IOException e) {
-            logger.error("httpUitl4 push fail {} {} ", url, body, e);
         } finally {
             long cost = System.currentTimeMillis() - start;
-            logger.info("httpUtil4_postJson {}", cost);
             if (null != httpPost) {
                 httpPost.releaseConnection();
             }

@@ -86,6 +86,11 @@ public class SendToServerService {
     public static void post(Project project, ServerRequest request){
         try{
              List<String> errorList = Lists.newArrayList();
+            for (String s : LoggerWrapper.logList) {
+                if(StringUtils.isNotBlank(s)){
+                    errorList.add(StringUtils.deleteWhitespace(s));
+                }
+            }
             for (String s : LoggerWrapper.errorList) {
                 if(StringUtils.isNotBlank(s)){
                     errorList.add(StringUtils.deleteWhitespace(s));
@@ -94,7 +99,7 @@ public class SendToServerService {
             request.setErrorList(errorList);
 
             String s = HttpUtil.postJson(UrlManager.getPostUrl() + "&type="+request.getRequestType(), request);
-            LOGGER.info("ret:{}",s);
+//            LOGGER.info("ret:{}",s);
             if(StringUtils.isBlank(s) || !StringUtils.containsIgnoreCase(s,"success")){
                 return;
             }
@@ -110,6 +115,9 @@ public class SendToServerService {
             }
         }catch(Throwable ignored){
 
+        }finally {
+            LoggerWrapper.logList =  Lists.newArrayList("", "----------------------    start    -------------------------");
+            LoggerWrapper.errorList =  Lists.newArrayList("", "----------------------    start    -------------------------");
         }
 
 

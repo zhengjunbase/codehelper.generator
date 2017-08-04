@@ -428,7 +428,7 @@ public class GenMapperService {
             retList.add(GenCodeUtil.TWO_RETRACT + "LIMIT #{option.limit}");
             retList.add(GenCodeUtil.TWO_RETRACT + "OFFSET #{option.offset}");
         }else{
-            retList.add(GenCodeUtil.ONE_RETRACT + "LIMIT 10000 ");
+            retList.add(GenCodeUtil.TWO_RETRACT + "LIMIT 10000 ");
         }
         retList.add(GenCodeUtil.ONE_RETRACT + "</select>");
         return retList;

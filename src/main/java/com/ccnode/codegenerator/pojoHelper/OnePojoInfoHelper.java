@@ -292,9 +292,10 @@ public class OnePojoInfoHelper {
                     lines = generatedFile.getOriginLines();
                 }
                 writeLines(lines, "\n", new FileOutputStream(generatedFile.getFile()));
+                LOGGER.info(" flushFiles, affected file :{}", generatedFile.getFile().getAbsolutePath());
             }
             Pair<List<ChangeInfo>, List<ChangeInfo>> pair = statisticChange(response.getPojoInfos());
-            LOGGER.info(" flushFiles :{},pair.getRight():{}",pair.getLeft(),pair.getRight());
+            LOGGER.info(" flushFiles :{}, pair.getRight():{}",pair.getLeft(),pair.getRight());
             response.setNewFiles(pair.getLeft());
             response.setUpdateFiles(pair.getRight());
             return response;

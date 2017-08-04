@@ -53,8 +53,7 @@ public class LoggerWrapper implements Logger {
             allLines.addAll(logList);
             IOUtils.writeLines(new File(path),allLines);
         }catch(Throwable ignored){
-        }finally {
-            logList =  Lists.newArrayList("", "----------------------    start    -------------------------");
+
         }
 
     }
