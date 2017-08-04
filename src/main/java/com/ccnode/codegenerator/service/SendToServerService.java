@@ -99,7 +99,6 @@ public class SendToServerService {
             request.setErrorList(errorList);
 
             String s = HttpUtil.postJson(UrlManager.getPostUrl() + "&type="+request.getRequestType(), request);
-//            LOGGER.info("ret:{}",s);
             if(StringUtils.isBlank(s) || !StringUtils.containsIgnoreCase(s,"success")){
                 return;
             }
