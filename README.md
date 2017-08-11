@@ -1,11 +1,7 @@
 codehelper.generator
 =================
-[![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
-[![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
-[![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
-<div align="right">
-<a href="README-EN.md">English Documentation</a>
-</div>
+[![Downloads](http://phpstorm.espend.de/badge/9445/downloads)][plugin]
+[![Downloads last month](http://phpstorm.espend.de/badge/9445/last-month)][plugin]
 
 source code of CodeHelper.generator
 
@@ -63,3 +59,4 @@ GenDaoCode 使用方法
 
 联系作者 & 加入开发
 QQ 群: 322824200
+
