@@ -1,7 +1,7 @@
 codehelper.generator
-=================
-![Downloads](http://phpstorm.espend.de/badge/8640/downloads)
-![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)
+[![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
+[![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
+[![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 
 source code of CodeHelper.generator
 
@@ -60,3 +60,9 @@ GenDaoCode 使用方法
 联系作者 & 加入开发
 QQ 群: 322824200
 
+[release-img]: https://img.shields.io/github/release/gejun123456/MyBatisCodeHelper.svg
+[latest-release]: https://github.com/gejun123456/MyBatisCodeHelper/releases/latest
+[badge-gitter-img]: https://img.shields.io/gitter/room/gejun123456/MyBatisCodeHelper.svg
+[badge-gitter]: https://gitter.im/codehelper-generator/Lobby
+[plugin-img]: https://img.shields.io/badge/plugin-8640-orange.svg
+[plugin]: https://plugins.jetbrains.com/plugin/8640
