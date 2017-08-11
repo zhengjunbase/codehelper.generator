@@ -1,5 +1,4 @@
-# codehelper.generator
-
+codehelper.generator
 =================
 [![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
 [![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
