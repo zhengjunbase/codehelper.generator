@@ -4,8 +4,6 @@ codehelper.generator
 [![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
 [![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 
-source code of CodeHelper.generator
-
 <a href="README-EN.md">English Documentation</a>
 
 GenDaoCode 特性
