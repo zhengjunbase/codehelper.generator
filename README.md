@@ -1,7 +1,7 @@
 codehelper.generator
 =================
-[![Downloads](http://phpstorm.espend.de/badge/8640/downloads)
-[![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)
+![Downloads](http://phpstorm.espend.de/badge/8640/downloads)
+![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)
 
 source code of CodeHelper.generator
 
