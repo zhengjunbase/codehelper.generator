@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * What always stop you is what you always believe.
- * <p>
  * Created by zhengjun.du on 2016/07/26 16:38
  */
 public class LoggerWrapper implements Logger {

@@ -50,11 +50,6 @@ public class GenCodeAction extends AnAction {
 
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
-        VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);
-        final ProjectFileIndex index = ProjectRootManager.getInstance(project).getFileIndex();
-        Module moduleForFile = index.getModuleForFile(file);
-        String modulePath = moduleForFile.getModuleFilePath();
-        Path parent = Paths.get(modulePath).getParent();
         VirtualFileManager.getInstance().syncRefresh();
         ApplicationManager.getApplication().saveAll();
         if(project == null){
@@ -74,15 +69,7 @@ public class GenCodeAction extends AnAction {
             genCodeResponse = GenCodeService.genCode(request);
             VirtualFileManager.getInstance().syncRefresh();
             LoggerWrapper.saveAllLogs(projectPath);
-//            if(!SettingService.showDonateBtn()){
             Messages.showMessageDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus(), null);
-//            }else{
-//                int result = Messages.showOkCancelDialog(project, buildEffectRowMsg(genCodeResponse), genCodeResponse.getStatus() ,"Donate", "OK", null);
-//                if(result != 2){
-//                    BrowserLauncher.getInstance().browse(UrlManager.getDonateClickUrl() , WebBrowserManager.getInstance().getFirstActiveBrowser());
-//                    SettingService.setDonated();
-//                }
-//            }
         }catch(Throwable e){
             LOGGER.error("actionPerformed error",e);
             genCodeResponse.setThrowable(e);

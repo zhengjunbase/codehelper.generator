@@ -137,10 +137,8 @@ public class GenCodeUtil {
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL,value);
     }
 
-    public static void main(String[] args) {
-//        System.out.println(deducePackage("src/main/java/com/qunar/insurance","com.qunar.insurance.annotion"));
-//        System.out.println(deducePackage("src/com/java/com/qunar/insurance","com.com.com.annotion"));
-//        System.out.println(deducePackage("src/com/java/com/qunar/insurance","xxx.com.com.annotion"));
+    public static String getUpperCamel(String value){
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,value);
     }
 
 }
