@@ -1,10 +1,9 @@
 # codehelper.generator
 
-source code of CodeHelper.generator
-=================
 [![GitHub release][release-img]][latest-release] [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
-[![Downloads](http://phpstorm.espend.de/badge/8650/downloads)][plugin]
+[![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
 [![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
+source code of CodeHelper.generator
 
 An Generator, generate code more easily and productive.
 
