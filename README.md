@@ -28,7 +28,7 @@ GenDaoCode 使用方法
 - 如何配置: [http://codehelper.me/generator/config](http://codehelper.me/generator/config)
 
 联系作者 & 加入开发
-QQ 群: 322824200
+- QQ 群: 322824200
 
 [badge-gitter-img]: https://img.shields.io/gitter/room/gejun123456/MyBatisCodeHelper.svg
 [badge-gitter]: https://gitter.im/codehelper-generator/Lobby
