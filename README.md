@@ -34,3 +34,6 @@ GenDaoCode 使用方法
 [badge-gitter]: https://gitter.im/codehelper-generator/Lobby
 [plugin-img]: https://img.shields.io/badge/plugin-8640-orange.svg
 [plugin]: https://plugins.jetbrains.com/plugin/8640
+
+使用示例
+![generateMultiple](http://codehelper.me/images/large_long.gif)
