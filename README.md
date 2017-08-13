@@ -26,8 +26,10 @@ GenDaoCode 使用方法
 - 方法二：在工程目录下添加文件名为codehelper.properties的文件。
 - 点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码
 - 如何配置: [http://codehelper.me/generator/config](http://codehelper.me/generator/config)
+
 使用示例
-![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/large_long.gif)
+
+- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/large_long.gif)
 
 联系作者 & 加入开发
 - QQ 群: 322824200
