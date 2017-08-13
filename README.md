@@ -1,8 +1,8 @@
 codehelper.generator
 =================
 [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
-[![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
-[![Downloads last month](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
+[![下载量](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
+[![一个月下载量](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 
 <a href="README-EN.md">English Documentation</a>
 
