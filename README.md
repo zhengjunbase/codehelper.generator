@@ -30,10 +30,11 @@ GenDaoCode 使用方法
 联系作者 & 加入开发
 - QQ 群: 322824200
 
+使用示例
+![generateMultiple](http://codehelper.me/images/large_long.gif)
+
 [badge-gitter-img]: https://img.shields.io/gitter/room/gejun123456/MyBatisCodeHelper.svg
 [badge-gitter]: https://gitter.im/codehelper-generator/Lobby
 [plugin-img]: https://img.shields.io/badge/plugin-8640-orange.svg
 [plugin]: https://plugins.jetbrains.com/plugin/8640
 
-使用示例
-![generateMultiple](http://codehelper.me/images/large_long.gif)
