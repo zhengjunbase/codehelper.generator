@@ -39,7 +39,10 @@ GenDaoCode Usages
   multiple Pojo separated by | , CodeHelper will generate code use default config.
 - Method two: Add a codehelper.properties in you project directory.
   Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.
+  
+GenDaoCode Usages Sample
 
+- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/large_long.gif)
 Contact Author
 - Gmail: zhengjunbase@gmail.com
 
