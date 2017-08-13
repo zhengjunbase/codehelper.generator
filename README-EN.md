@@ -43,6 +43,7 @@ GenDaoCode Usages
 GenDaoCode Usages Sample
 
 - ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/large_long.gif)
+
 Contact Author
 - Gmail: zhengjunbase@gmail.com
 
