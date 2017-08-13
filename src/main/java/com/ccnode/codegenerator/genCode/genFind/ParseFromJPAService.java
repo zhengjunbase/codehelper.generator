@@ -4,12 +4,10 @@ import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.ListHelper;
 import com.google.common.base.Splitter;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,18 +17,23 @@ import java.util.List;
  */
 public class ParseFromJPAService {
 
-    public static Splitter COMMA_SPLITER = Splitter.on(",").omitEmptyStrings().trimResults();
+    public static Splitter COMMA_SPLITTER = Splitter.on(",").omitEmptyStrings().trimResults();
 
-    public static void parse(String s, String... fieldList) {
+    public static void parse(String s, String fieldClass, String... fieldList) {
         List<SqlWord> wordList = Lists.newArrayList();
         List<SqlWord> fieldFragmentList = Lists.newArrayList();
         for (String each : fieldList) {
             SqlWord word = new SqlWord();
             word.setValue(each);
+            PojoFieldInfo pojoFieldInfo = new PojoFieldInfo();
+            pojoFieldInfo.setFieldName(each);
+            pojoFieldInfo.setFieldClass(fieldClass);
+            word.setFieldInfo(pojoFieldInfo);
             word.setSqlWordType(SqlWordType.Field);
             fieldFragmentList.add(word);
         }
         String remainStr = s.toLowerCase();
+
         while (StringUtils.isNotBlank(remainStr)) {
             SqlWord preWord = ListHelper.nullOrLastElement(wordList);
             Pair<String, SqlWord> pair = parseOneSqlWord(remainStr, fieldFragmentList, preWord);
@@ -44,79 +47,123 @@ public class ParseFromJPAService {
         for (SqlWord sqlWord : wordList) {
             System.out.println(sqlWord.getValue() + "——" + sqlWord.getSqlWordType());
         }
-        BuildSqlContext context = new BuildSqlContext();
-
+        ParseJpaRequest context = new ParseJpaRequest();
+        context.setBuilder(new StringBuilder());
+        context.setHasBuilds(Lists.newArrayList());
+        context.setUnBuilds(wordList);
+        context.setTableName(GenCodeUtil.getUnderScore(fieldClass));
         buildSelectPart(context);
         buildAllCondition(context);
+        buildOrderByPart(context);
+        System.out.println(context.getBuilder().toString());
 
     }
 
-    public static void buildAllCondition(BuildSqlContext context){
-        while(!context.getSqlWordList().isEmpty()){
+    private static void buildOrderByPart(ParseJpaRequest context) {
+        StringBuilder builder = context.getBuilder();
+        if(!context.getUnBuilds().isEmpty() &&
+                context.getUnBuilds().get(0).getSqlWordType() != SqlWordType.OrderBy){
+            return;
+        }
+        for (SqlWord sqlWord : context.getUnBuilds()) {
+            if(Lists.newArrayList(
+                    SqlWordType.Desc,
+                    SqlWordType.Asc,
+                    SqlWordType.Limit
+            ).contains(sqlWord.getSqlWordType())){
+                builder.append(sqlWord.getSqlWordType().name().toUpperCase());
+                builder.append(" ");
+            }else if(sqlWord.getSqlWordType() == SqlWordType.OrderBy){
+                 builder.append("ORDER BY ");
+            }else if(sqlWord.getSqlWordType() == SqlWordType.Or
+                    || sqlWord.getSqlWordType() == SqlWordType.And){
+                builder.append(", ");
+            }else if(sqlWord.getSqlWordType() == SqlWordType.Field){
+                builder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
+                builder.append(" ");
+            }else if(sqlWord.getSqlWordType() == SqlWordType.Number){
+                builder.append(sqlWord.getValue());
+                builder.append(" ");
+            }
+            context.getHasBuilds().add(sqlWord);
+        }
+    }
+
+    public static void buildAllCondition(ParseJpaRequest context){
+        while(!context.getUnBuilds().isEmpty()
+                && context.getUnBuilds().get(0).getSqlWordType() != SqlWordType.OrderBy){
             buildCondition(context);
         }
     }
 
-    public static void buildSelectPart(BuildSqlContext context) {
+    public static void buildSelectPart(ParseJpaRequest context) {
         StringBuilder builder = context.getBuilder();
-        List<SqlWord> wordList = context.getSqlWordList();
-        List<SqlWord> remainWordList = Lists.newArrayList();
+        List<SqlWord> unBuilds = Lists.newArrayList();
         List<SqlWord> beforeByList = Lists.newArrayList();
         boolean beforeBy = true;
-        for (SqlWord sqlWord : wordList) {
+        for (SqlWord sqlWord : context.getUnBuilds()) {
+            if(sqlWord.getSqlWordType() == SqlWordType.By){
+                beforeBy = false;
+            }
             if(beforeBy){
                 beforeByList.add(sqlWord);
-                if(sqlWord.getSqlWordType() == SqlWordType.By){
-                    beforeBy = false;
-                }
-            }
-            if(!beforeBy){
-                remainWordList.add(sqlWord);
+            }else{
+                unBuilds.add(sqlWord);
             }
         }
         if(beforeByList.size() == 1){
-            builder.append("SELECT <include refid=\"all_column\"/>\n" + "        FROM " + context.getTableName());
+            SqlWord first = beforeByList.get(0);
+            if( first.getSqlWordType() == SqlWordType.Count){
+                builder.append("SELECT COUNT(1) FROM " + context.getTableName() + " ");
+            }else{
+                builder.append("SELECT <include refid=\"all_column\"/> FROM " + context.getTableName() + " ");
+            }
         }else{
             builder.append("SELECT ");
             for (SqlWord sqlWord : beforeByList) {
                 if(sqlWord.getSqlWordType() == SqlWordType.Field){
-                    builder.append(sqlWord.getValue());
+                    builder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
                 }else if(sqlWord.getSqlWordType() == SqlWordType.And){
-                    builder.append(",");
+                    builder.append(", ");
                 }
             }
-            builder.append(" FROM " + context.getTableName());
+            builder.append(" FROM " + context.getTableName() + " ");
         }
-        context.setSqlWordList(remainWordList);
+        builder.append("\n");
+        context.getHasBuilds().addAll(beforeByList);
+        context.setUnBuilds(unBuilds);
+        System.out.println(context.getBuilder().toString());
     }
 
     /**
      * condition sample: ByUserName, ByCountBetween,ByBookIn,ByUserNameLike,ByUserNameNotLike,
      * @param context
      */
-    public static void buildCondition(BuildSqlContext context){
+    public static void buildCondition(ParseJpaRequest context){
         StringBuilder builder = context.getBuilder();
-        List<SqlWord> wordList = context.getSqlWordList();
-        List<SqlWord> remainWordList = Lists.newArrayList();
+        List<SqlWord> unBuilds = Lists.newArrayList();
         List<SqlWord> oneConditionList = Lists.newArrayList();
-        boolean conditionComplete = false;
-        for (SqlWord sqlWord : wordList) {
-            if(conditionComplete){
-                oneConditionList.add(sqlWord);
-                if(SqlWordType.CONDITION_JOINER_SET.contains(sqlWord.getSqlWordType())){
-                    conditionComplete = true;
-                }
+        Integer joinerCount = 0;
+        for (SqlWord sqlWord : context.getUnBuilds()) {
+            if(SqlWordType.CONDITION_JOINER_SET.contains(sqlWord.getSqlWordType())){
+                joinerCount ++;
             }
-            if(!conditionComplete){
-                remainWordList.add(sqlWord);
+            if(joinerCount <= 1){
+                oneConditionList.add(sqlWord);
+            }else{
+                unBuilds.add(sqlWord);
             }
         }
         SqlWord joiner = oneConditionList.get(0);
         SqlWord field = oneConditionList.get(1);
-        SqlWord operator = ListHelper.nullOrLastElement(oneConditionList);
+        SqlWord operator = null;
         SqlWord notOperator = null;
         if(oneConditionList.size() == 4){
-            notOperator = oneConditionList.get(3);
+            notOperator = oneConditionList.get(2);
+            operator = oneConditionList.get(3);
+        }
+        if(oneConditionList.size() == 3){
+            operator = oneConditionList.get(2);
         }
         if(joiner.getSqlWordType() == SqlWordType.By){
             builder.append("WHERE ");
@@ -124,10 +171,12 @@ public class ParseFromJPAService {
             builder.append(joiner.getSqlWordType().name().toUpperCase()).append(" ");
         }
         String condition = buildByOperator(context, notOperator, operator, field);
-        context.getBuilder().append(condition);
-        context.setSqlWordList(remainWordList);
-        System.out.println(builder.toString());
 
+        context.getBuilder().append(condition);
+        context.getBuilder().append("\n");
+        context.setUnBuilds(unBuilds);
+        context.getHasBuilds().addAll(oneConditionList);
+        System.out.println(builder.toString());
     }
 
     public static String buildNotWord(SqlWord not){
@@ -138,26 +187,26 @@ public class ParseFromJPAService {
         }
     }
 
-    private static String buildByOperator(BuildSqlContext context, SqlWord notOperator, SqlWord joiner, SqlWord field) {
+    private static String buildByOperator(ParseJpaRequest context, SqlWord notOperator, SqlWord joiner, SqlWord field) {
         PojoFieldInfo fieldInfo = field.getFieldInfo();
         String underScore = GenCodeUtil.getUnderScore(fieldInfo.getFieldName());
         String lowerCamel = GenCodeUtil.getLowerCamel(fieldInfo.getFieldName());
         String upperCamel = GenCodeUtil.getUpperCamel(fieldInfo.getFieldName());
         List<String> parameterList = context.getJavaMethodParameterList();
-        if(joiner == null){
+        if(joiner == null || joiner.getSqlWordType() == SqlWordType.By){
             parameterList.add(fieldInfo.getFieldClass() + " " + lowerCamel);
-            return underScore + " = "+ "#{" + underScore + "} ";
+            return underScore + " = "+ "#{" + lowerCamel + "} ";
         }
         SqlWordType sqlWordType = joiner.getSqlWordType();
         if(sqlWordType == SqlWordType.Like) {
             parameterList.add(fieldInfo.getFieldClass() + " " + lowerCamel);
-            return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " CONCAT('%', #{" + lowerCamel + "}, '%')";
+            return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " CONCAT('%', #{" + lowerCamel + "}, '%') ";
         }else if(sqlWordType == SqlWordType.EndWith){
             parameterList.add(fieldInfo.getFieldClass() + " " + lowerCamel);
-            return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " CONCAT('%', #{" + lowerCamel + "})";
+            return underScore + buildNotWord(notOperator) + "LIKE" + " CONCAT('%', #{" + lowerCamel + "}) ";
         }else if(sqlWordType == SqlWordType.StartWith){
             parameterList.add(fieldInfo.getFieldClass() + " " + lowerCamel);
-            return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " CONCAT( #{" + lowerCamel + "}, '%')";
+            return underScore + buildNotWord(notOperator) + "LIKE" + " CONCAT(#{" + lowerCamel + "}, '%') ";
         }else if(sqlWordType == SqlWordType.In){
             parameterList.add("List<" + fieldInfo.getFieldClass() + "> " + lowerCamel + "s");
             return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " " + "#{" + lowerCamel + "s} ";
@@ -191,7 +240,7 @@ public class ParseFromJPAService {
             canMatchGroup.add(SqlWordType.Update.name());
         } else {
             String desc = preWord.getSqlWordType().getDesc();
-            canMatchGroup = COMMA_SPLITER.splitToList(desc);
+            canMatchGroup = COMMA_SPLITTER.splitToList(desc);
         }
         List<SqlWord> canMatchList = Lists.newArrayList();
         if (StringUtils.isNumeric(s.substring(0, 1))) {
@@ -224,7 +273,9 @@ public class ParseFromJPAService {
     }
 
     public static void main(String[] args) {
-        parse("findTop300ByUserNameAndTypeBetweenAndFuckInAndShaBiAndFUCKNotLikeOrIdIn", "userName", "type", "FUCK",
+//        parse("CountByUserNameOrTypeBetweenOrFuckInOrShaBiOrFuckNotLikeOrIdInOrIdNotStartWith", "CarInfo","userName", "type", "fuck",
+//                "ShaBi", "Id");
+         parse("findUserNameAndIdByUserNameOrTypeBetweenOrFuckInOrShaBiOrFuckNotLikeOrIdInOrIdNotStartWithOrderByUserNameAndIdDescLimit10", "CarInfo","userName", "type", "fuck",
                 "ShaBi", "Id");
     }
 

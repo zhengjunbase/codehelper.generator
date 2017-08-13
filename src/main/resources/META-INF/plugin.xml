@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2017.08.11</version>
+  <version>2017.08.12</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
@@ -67,7 +67,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      use gradle, fix bugs.
+      Stability improvements and bug fixes.
     ]]>
   </change-notes>
 
@@ -104,6 +104,8 @@
     <!-- Add your extensions here -->
       <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
+      <completion.contributor language="JAVA"
+                            implementationClass="com.ccnode.codegenerator.view.MethodNameCompletionContributor"/>
   </extensions>
 
   <actions>

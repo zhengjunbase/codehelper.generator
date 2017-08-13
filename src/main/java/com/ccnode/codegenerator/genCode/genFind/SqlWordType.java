@@ -20,29 +20,31 @@ public enum SqlWordType {
     By(0, "field"),
     And(0, "field"),
     Or(0, "field"),
-    Field(0, "between,by,or,and,like,StartWith,EndWith,not,in,greaterThan,greaterThanEqual,lessThan,lessThanEqual"),
-    Number(0, "By"),
-    Not(0, "like,in"),
-    Between(0, "by,or,and"),
-    In(0, "by,or,and"),
-    Like(0, "by,or,and"),
-    StartWith(0, "by,or,and"),
-    EndWith(0, "by,or,and"),
-    GreaterThanEqual(0, "by,or,and"),
-    GreaterThan(0, "by,or,and"),
-    LessThanEqual(0, "by,or,and"),
-    LessThan(0, "by,or,and"),
-    Before(0, "by,or,and"),
-    After(0, "by,or,and"),
-    Limit(0, "number"),
     OrderBy(0, "field"),
-    Desc(0, ""),
+    Field(0, "between,by,orderBy,or,and,like,StartWith,EndWith,not,in,Exists,greaterThan,greaterThanEqual,lessThan,lessThanEqual,Desc,Asc,Limit"),
+    Number(0, "By"),
+    Not(0, "like,in,StartWith,EndWith,Exists"),
+    Between(0, "by,orderBy,or,and"),
+    In(0, "by,orderBy,or,and"),
+    Exists(0, "by,orderBy,or,and"),
+    Like(0, "by,orderBy,or,and"),
+    StartWith(0, "by,orderBy,or,and"),
+    EndWith(0, "by,orderBy,or,and"),
+    GreaterThanEqual(0, "by,orderBy,or,and"),
+    GreaterThan(0, "by,orderBy,or,and"),
+    LessThanEqual(0, "by,orderBy,or,and"),
+    LessThan(0, "by,orderBy,or,and"),
+    Before(0, "by,orderBy,or,and"),
+    After(0, "by,orderBy,or,and"),
+    Limit(0, "number"),
+    Desc(0, "Limit"),
+    Asc(0, "Limit"),
     None(-1, "none");
 
     private Integer code;
     private String desc;
 
-    public static Set<SqlWordType> CONDITION_JOINER_SET = ImmutableSet.of(Or, And, By, OrderBy);
+    public static Set<SqlWordType> CONDITION_JOINER_SET = ImmutableSet.of(By, Or, And, OrderBy);
     public static Set<SqlWordType> KEY_WORD_WITH_NUMBER_SET = ImmutableSet.of(Limit);
     public static Set<SqlWordType> KEY_WORD_WITH_FIELD_SET = ImmutableSet
             .of(By, And, Or, Between, In, GreaterThan, LessThan, Like, OrderBy);
