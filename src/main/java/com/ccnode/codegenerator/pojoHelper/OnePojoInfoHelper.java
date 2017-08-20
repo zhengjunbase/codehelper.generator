@@ -118,6 +118,27 @@ public class OnePojoInfoHelper {
             ret.setPojoDirPath(pojoFile.getParentFile().getAbsolutePath());
             parseIdeaFieldInfo(ret, project);
         }
+        File daoFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Dao.java");
+        if (daoFile == null){
+            daoFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Mapper.java");
+        }
+        if(daoFile != null){
+            ret.setFullDaoPath(daoFile.getAbsolutePath());
+        }
+        File serviceFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Service.java");
+        if (serviceFile == null){
+            serviceFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Mapper.java");
+        }
+        if(serviceFile != null){
+            ret.setFullServicePath(serviceFile.getAbsolutePath());
+        }
+        File xmlFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Dao.xml");
+        if (xmlFile == null){
+            xmlFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Mapper.xml");
+        }
+        if(xmlFile != null){
+            ret.setFullMapperPath(xmlFile.getAbsolutePath());
+        }
         return ret;
     }
 

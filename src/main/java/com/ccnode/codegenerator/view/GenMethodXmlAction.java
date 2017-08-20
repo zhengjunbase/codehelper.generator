@@ -53,12 +53,15 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
         }
 
         PsiClass containingClass = PsiElementUtil.getContainingClass(element);
+        if(containingClass == null){
+            return;
+        }
         OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
         PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         Document document = psiDocumentManager.getDocument(containingClass.getContainingFile());
         ParseJpaResponse response = ParseJpaStrService.parse(methodName, onePojoInfo);
         String replace = response.getXmlMethodText();
-        replace += "\n";
+        replace += "\n" + onePojoInfo.getFullMapperPath();
         replace +=  response.getDaoMethodText();
         replace += "\n";
         replace +=  response.getServiceMethodText();
