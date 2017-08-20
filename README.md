@@ -1,6 +1,6 @@
 codehelper.generator
 =================
--[![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]		
+[![Jetbrains Plugins][badge-paypal-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]		
 [![下载量](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
 [![一个月下载量](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 
