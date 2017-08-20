@@ -16,9 +16,11 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2017/08/04 22:46
  */
-public class ParseFromJpaService {
+public class ParseJpaStrService {
 
     public static Splitter COMMA_SPLITTER = Splitter.on(",").omitEmptyStrings().trimResults();
+
+    public static String XML_EMPTY_PREFIX = "        ";
 
     public static ParseJpaResponse parse(String methodName, OnePojoInfo pojoInfo) {
         List<SqlWord> wordList = Lists.newArrayList();
@@ -47,6 +49,7 @@ public class ParseFromJpaService {
         }
         ParseJpaResponse response = new ParseJpaResponse();
         response.setInputMethodName(methodName);
+        response.setOnePojoInfo(pojoInfo);
         response.setBuilder(new StringBuilder());
         response.setHasBuilds(Lists.newArrayList());
         response.setUnBuilds(wordList);
@@ -61,25 +64,31 @@ public class ParseFromJpaService {
 
     private static void buildServiceText(ParseJpaResponse response) {
         StringBuilder builder = new StringBuilder();
+        builder.append("public ");
         builder.append(response.getJavaReturnType());
         builder.append(" ");
         builder.append(response.getInputMethodName());
         builder.append("(");
 
+        Integer parameterCount = 0;
         for (MethodParameter each : response.getJavaMethodParameterList()) {
-            builder.append(each.getParameterType() + " " + each.getParameterName() + ",");
+            builder.append(each.getParameterType() + " " + each.getParameterName() + ", ");
+            parameterCount ++;
         }
-        builder.deleteCharAt(builder.length() - 1);
+        if(parameterCount > 0){
+            builder.deleteCharAt(builder.length() - 1);
+            builder.deleteCharAt(builder.length() - 1);
+        }
         builder.append("){\n        return ");
         builder.append(GenCodeUtil.getLowerCamel(response.getOnePojoInfo().getPojoName()) + "Dao.");
-        builder.append(response.getInputMethodName());
+        builder.append(response.getInputMethodName() + "(");
         for (MethodParameter each : response.getJavaMethodParameterList()) {
             builder.append(each.getParameterName() + ", ");
         }
         builder.deleteCharAt(builder.length() - 1);
         builder.deleteCharAt(builder.length() - 1);
         builder.append(");\n    }");
-        response.setServiceText(builder.toString());
+        response.setServiceMethodText(builder.toString());
         System.out.println(builder.toString());
     }
 
@@ -89,35 +98,38 @@ public class ParseFromJpaService {
         builder.append(" ");
         builder.append(response.getInputMethodName());
         builder.append("(");
-
+        Integer parameterCount = 0;
         for (MethodParameter each : response.getJavaMethodParameterList()) {
             builder.append("@Param(\"" + each.getParameterName() + "\") ");
-            builder.append(each.getParameterType() + " " + each.getParameterName() + ",");
+            builder.append(each.getParameterType() + " " + each.getParameterName() + ", ");
+            parameterCount ++ ;
         }
-        builder.deleteCharAt(builder.length() - 1);
+        if(parameterCount > 0){
+            builder.deleteCharAt(builder.length() - 1);
+            builder.deleteCharAt(builder.length() - 1);
+        }
         builder.append(");");
         System.out.println(builder.toString());
-        response.setDaoText(builder.toString());
+        response.setDaoMethodText(builder.toString());
     }
 
 
 
     private static void buildXmlText(ParseJpaResponse response) {
-        buildXmlText(response);
         buildSelectPart(response);
         buildAllCondition(response);
         buildOrderByPart(response);
         System.out.println(response.getBuilder().toString());
-        response.setXmlText(response.getBuilder().toString());
+        response.setXmlMethodText(response.getBuilder().toString());
     }
 
-    private static void buildOrderByPart(ParseJpaResponse request) {
-        StringBuilder builder = request.getBuilder();
-        if(!request.getUnBuilds().isEmpty() &&
-                request.getUnBuilds().get(0).getSqlWordType() != SqlWordType.OrderBy){
+    private static void buildOrderByPart(ParseJpaResponse response) {
+        StringBuilder builder = new StringBuilder();
+        if(!response.getUnBuilds().isEmpty() &&
+                response.getUnBuilds().get(0).getSqlWordType() != SqlWordType.OrderBy){
             return;
         }
-        for (SqlWord sqlWord : request.getUnBuilds()) {
+        for (SqlWord sqlWord : response.getUnBuilds()) {
             if(Lists.newArrayList(
                     SqlWordType.Desc,
                     SqlWordType.Asc,
@@ -137,8 +149,11 @@ public class ParseFromJpaService {
                 builder.append(sqlWord.getValue());
                 builder.append(" ");
             }
-            request.getHasBuilds().add(sqlWord);
+            response.getHasBuilds().add(sqlWord);
         }
+        response.getBuilder().append("\n");
+        response.getBuilder().append(XML_EMPTY_PREFIX + builder);
+
     }
 
     public static void buildAllCondition(ParseJpaResponse request){
@@ -149,7 +164,7 @@ public class ParseFromJpaService {
     }
 
     public static void buildSelectPart(ParseJpaResponse response) {
-        StringBuilder builder = response.getBuilder();
+        StringBuilder builder = new StringBuilder();
         List<SqlWord> unBuilds = Lists.newArrayList();
         List<SqlWord> beforeByList = Lists.newArrayList();
         boolean beforeBy = true;
@@ -193,9 +208,9 @@ public class ParseFromJpaService {
                 response.setXmlReturnType("resultMap=\"AllColumnMap\"");
                 response.setJavaReturnType(GenCodeUtil.getUpperCamel(response.getOnePojoInfo().getPojoName()));
             }
-            builder.append(" FROM " + response.getTableName() + " ");
+            builder.append("FROM " + response.getTableName() + " ");
         }
-        builder.append("\n");
+        response.getBuilder().append(XML_EMPTY_PREFIX + builder);
         response.getHasBuilds().addAll(beforeByList);
         response.setUnBuilds(unBuilds);
         System.out.println(response.getBuilder().toString());
@@ -237,12 +252,11 @@ public class ParseFromJpaService {
             builder.append(joiner.getSqlWordType().name().toUpperCase()).append(" ");
         }
         String condition = buildByOperator(context, notOperator, operator, field);
-
-        context.getBuilder().append(condition);
         context.getBuilder().append("\n");
+        context.getBuilder().append(XML_EMPTY_PREFIX + condition);
         context.setUnBuilds(unBuilds);
         context.getHasBuilds().addAll(oneConditionList);
-        System.out.println(builder.toString());
+        System.out.println(XML_EMPTY_PREFIX + builder.toString());
     }
 
     public static String buildNotWord(SqlWord not){
@@ -291,8 +305,8 @@ public class ParseFromJpaService {
         }else if( sqlWordType == SqlWordType.Between){
             response.addMethodParameter(fieldInfo.getFieldClass(), " min" + upperCamel);
             response.addMethodParameter(fieldInfo.getFieldClass(), " max" + upperCamel);
-            return underScore + " " + "<![CDATA[ >= ]]> " + "#{min" + upperCamel + "} "
-                    + "AND " + underScore + " " + "<![CDATA[ < ]]> " + "#{max" + upperCamel + "} " ;
+            return underScore + " " + "<![CDATA[ >= ]]> " + "#{min" + upperCamel + "}\n"
+                    +XML_EMPTY_PREFIX + "AND " + underScore + " " + "<![CDATA[ < ]]> " + "#{max" + upperCamel + "} " ;
         }
         return null;
     }

@@ -1,15 +1,13 @@
 package com.ccnode.codegenerator.view;
 
-import com.ccnode.codegenerator.genCode.genFind.ParseFromJpaService;
+import com.ccnode.codegenerator.genCode.genFind.ParseJpaStrService;
 import com.ccnode.codegenerator.genCode.genFind.ParseJpaResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PsiDocumentUtils;
 import com.ccnode.codegenerator.util.PsiElementUtil;
-import com.google.common.base.Stopwatch;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
@@ -58,12 +56,12 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
         OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
         PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         Document document = psiDocumentManager.getDocument(containingClass.getContainingFile());
-        ParseJpaResponse response = ParseFromJpaService.parse(methodName, onePojoInfo);
-        String replace = response.getXmlText();
+        ParseJpaResponse response = ParseJpaStrService.parse(methodName, onePojoInfo);
+        String replace = response.getXmlMethodText();
         replace += "\n";
-        replace +=  response.getDaoText();
+        replace +=  response.getDaoMethodText();
         replace += "\n";
-        replace +=  response.getServiceText();
+        replace +=  response.getServiceMethodText();
         PsiDocumentUtils.commitAndSaveDocument(project, document, textRange, replace);
 
 

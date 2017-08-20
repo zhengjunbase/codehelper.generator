@@ -32,8 +32,7 @@ public class JSONUtil {
                 mapper.setDateFormat(format);
             }
             s = mapper.writeValueAsString(o);
-        } catch (Throwable e) {
-            logger.error("JSON反序列化失败.",e);
+        } catch (Throwable ignored) {
         }
         return s;
     }

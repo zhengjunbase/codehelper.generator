@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.genCode.genFind;
 
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -21,14 +22,14 @@ public class ParseJpaResponse {
     String javaReturnType;
     String xmlReturnType;
     List<MethodParameter> javaMethodParameterList = Lists.newArrayList();
-    String daoText;
-    String serviceText;
-    String xmlText;
+    String daoMethodText;
+    String serviceMethodText;
+    String xmlMethodText;
 
     public void addMethodParameter(String parameterType, String parameterName){
         MethodParameter methodParameter = new MethodParameter();
-        methodParameter.setParameterName(parameterName);
-        methodParameter.setParameterType(parameterType);
+        methodParameter.setParameterName(Strings.nullToEmpty(parameterName).trim());
+        methodParameter.setParameterType(Strings.nullToEmpty(parameterType).trim());
         javaMethodParameterList.add(methodParameter);
     }
 
@@ -48,28 +49,28 @@ public class ParseJpaResponse {
         this.onePojoInfo = onePojoInfo;
     }
 
-    public String getDaoText() {
-        return daoText;
+    public String getDaoMethodText() {
+        return daoMethodText;
     }
 
-    public void setDaoText(String daoText) {
-        this.daoText = daoText;
+    public void setDaoMethodText(String daoMethodText) {
+        this.daoMethodText = daoMethodText;
     }
 
-    public String getServiceText() {
-        return serviceText;
+    public String getServiceMethodText() {
+        return serviceMethodText;
     }
 
-    public void setServiceText(String serviceText) {
-        this.serviceText = serviceText;
+    public void setServiceMethodText(String serviceMethodText) {
+        this.serviceMethodText = serviceMethodText;
     }
 
-    public String getXmlText() {
-        return xmlText;
+    public String getXmlMethodText() {
+        return xmlMethodText;
     }
 
-    public void setXmlText(String xmlText) {
-        this.xmlText = xmlText;
+    public void setXmlMethodText(String xmlMethodText) {
+        this.xmlMethodText = xmlMethodText;
     }
 
     public String getXmlReturnType() {
