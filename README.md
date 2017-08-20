@@ -1,6 +1,6 @@
 codehelper.generator
 =================
-[![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
+ [![Donate][badge-paypal-img]][badge-paypal][![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
 [![下载量](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
 [![一个月下载量](http://phpstorm.espend.de/badge/8640/last-month)][plugin]
 
@@ -38,4 +38,6 @@ GenDaoCode 使用示例
 [badge-gitter]: https://gitter.im/codehelper-generator/Lobby
 [plugin-img]: https://img.shields.io/badge/plugin-8640-orange.svg
 [plugin]: https://plugins.jetbrains.com/plugin/8640
+[badge-paypal-img]: https://img.shields.io/badge/donate-paypal-yellow.svg
+[badge-paypal]:https://www.paypal.me/hsz
 
