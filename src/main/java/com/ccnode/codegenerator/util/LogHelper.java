@@ -35,7 +35,6 @@ public class LogHelper {
             }
             return JSONUtil.toJSONString(o);
         } catch (Exception e) {
-            LOGGER.error("LogHelper writeValueAsString exception {}", o, e);
             return o.toString();
         }
     }
@@ -45,7 +44,7 @@ public class LogHelper {
             if(o instanceof Throwable){
                 retList.add(Throwables.getStackTraceAsString((Throwable) o));
             }else{
-                retList.add(LogHelper.toString(o));
+                retList.add(JSONUtil.toJSONString(o));
 
             }
         }

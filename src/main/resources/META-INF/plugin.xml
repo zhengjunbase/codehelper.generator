@@ -106,6 +106,10 @@
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
       <completion.contributor language="JAVA"
                             implementationClass="com.ccnode.codegenerator.view.MethodNameCompletionContributor"/>
+
+    <intentionAction>
+            <className>com.ccnode.codegenerator.view.GenMethodXmlAction</className>
+        </intentionAction>
   </extensions>
 
   <actions>

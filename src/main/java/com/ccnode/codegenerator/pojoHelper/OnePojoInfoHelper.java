@@ -10,6 +10,7 @@ import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.LogHelper;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.ccnode.codegenerator.util.RegexUtil;
@@ -19,9 +20,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiParameter;
 import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.impl.source.tree.PsiCommentImpl;
@@ -67,10 +71,59 @@ public class OnePojoInfoHelper {
         return s.replace("/","").replace("\\","");
     }
 
-    public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, GenCodeResponse response){
+    public static OnePojoInfo parseOnePojoInfoFromClass(PsiClass daoClass, Project project) {
+        PsiMethod[] allMethods = daoClass.getAllMethods();
+        LOGGER.info(" parseOnePojoInfoFromClass :{}" );
+        String pojoName = null;
+        for (PsiMethod each : allMethods) {
+            String methodName = each.getName();
+            if (StringUtils.equalsIgnoreCase(methodName, "insert") || StringUtils
+                    .equalsIgnoreCase(methodName, "insertSelective") || StringUtils
+                    .equalsIgnoreCase(methodName, "save")) {
+                PsiParameter[] parameters = each.getParameterList().getParameters();
+                LOGGER.info(" parseOnePojoInfoFromClass parameterType "+ methodName + LogHelper.toString(parameters[0]));
+                if (parameters.length < 1) {
+                    return null;
+                }
+                PsiParameter parameter = parameters[0];
+                String parameterType = parameter.getType().getPresentableText();
+                LOGGER.info(" parseOnePojoInfoFromClass parameterType " + parameterType);
+                LoggerWrapper.saveAllLogs(project.getBasePath());
+                List<String> split = Splitter.onPattern("<|>|\\s").trimResults().omitEmptyStrings()
+                        .splitToList(parameterType);
+                if (split.size() == 1) {
+                    pojoName = split.get(0);
+                    break;
+                } else if (split.size() == 2) {
+                    pojoName = split.get(1);
+                    break;
+                }
+            }
+        }
+        LOGGER.info(" parseOnePojoInfoFromClass pojoName "+ pojoName);
+        LoggerWrapper.saveAllLogs(project.getBasePath());
+        if(StringUtils.isNotBlank(pojoName)){
+            return buildOnePojoInfo(pojoName, project);
+        }
+        return null;
+    }
+
+        public static OnePojoInfo buildOnePojoInfo(String pojoName, Project project){
+        OnePojoInfo ret = new OnePojoInfo();
+        ret.setFiles(Lists.newArrayList());
+        ret.setPojoName(pojoName);
+        File pojoFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + ".java");
+        if(pojoFile != null){
+            ret.setFullPojoPath(pojoFile.getAbsolutePath());
+            ret.setPojoDirPath(pojoFile.getParentFile().getAbsolutePath());
+            parseIdeaFieldInfo(ret, project);
+        }
+        return ret;
+    }
+
+    public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, Project project){
         String pojoName = onePojoInfo.getPojoName();
         String pojoFileShortName = pojoName + ".java";
-        Project project = response.getRequest().getProject();
         PsiFile[] psiFile = FilenameIndex
                 .getFilesByName(project, pojoFileShortName, GlobalSearchScope.projectScope(project));
         PsiElement firstChild = psiFile[0].getFirstChild();

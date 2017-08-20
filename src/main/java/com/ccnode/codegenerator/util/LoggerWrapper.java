@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -32,6 +33,7 @@ public class LoggerWrapper implements Logger {
 
     public static void saveAllLogs(String projectPath)  {
         try{
+            VirtualFileManager.getInstance().syncRefresh();
             String firstMatch = MapHelper.getFirstMatch(UserConfigService.userConfigMap, "printLog", "printlog", "debug");
             if(!StringUtils.endsWithIgnoreCase(firstMatch,"true") || StringUtils.isBlank(projectPath)){
                 return;
@@ -51,6 +53,7 @@ public class LoggerWrapper implements Logger {
             }
             allLines.addAll(logList);
             IOUtils.writeLines(new File(path),allLines);
+            VirtualFileManager.getInstance().syncRefresh();
         }catch(Throwable ignored){
 
         }
@@ -70,28 +73,22 @@ public class LoggerWrapper implements Logger {
     public void trace(String msg) {
     }
 
-    private String format(String format, Object... objects) {
+    private String format(String toFormat, Object... objects) {
         StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[3];
         List<String> splits = Splitter.on(".").splitToList(stackTraceElement.getClassName());
         String className = splits.get(splits.size() - 1);
         String methodName = stackTraceElement.getMethodName();
+        int lineNumber = stackTraceElement.getLineNumber();
         String logLevel = Thread.currentThread().getStackTrace()[2].getMethodName().toUpperCase();
-        format = format.replace("{}", "%s");
-        format = format.replace("{ }", "%s");
         for (Object object : objects) {
-            if (format.contains("%s")) {
-                format = StringUtils.replaceOnce(format, "%s", " " + LogHelper.toString(object) + " ");
-            } else {
-                format += format + " " + LogHelper.toString(object);
-            }
+            toFormat += "," + LogHelper.toString(object);
         }
-        // TODO: 7/26/16  add dateUtil
-        String logContent = DateUtil.formatLong(new Date()) + " [" + className + "." + methodName + "] " + "[" + logLevel + "] " + format;
+        String logContent = DateUtil.formatLong(new Date()) + " [" + className + "." + methodName + "] " + "["+ lineNumber + "]" + "[" + logLevel + "] " + toFormat;
         logList.add(logContent);
         if("error".equalsIgnoreCase(logLevel)){
             errorList.add(logContent);
         }
-        return format;
+        return toFormat;
     }
 
     @Override

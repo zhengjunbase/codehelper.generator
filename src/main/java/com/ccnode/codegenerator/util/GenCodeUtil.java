@@ -134,10 +134,16 @@ public class GenCodeUtil {
     }
 
     public static String getLowerCamel(String value){
+        if(StringUtils.isBlank(value)){
+            return StringUtils.EMPTY;
+        }
         return CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL,value);
     }
 
     public static String getUpperCamel(String value){
+        if(StringUtils.isBlank(value)){
+            return StringUtils.EMPTY;
+        }
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,value);
     }
 

@@ -34,7 +34,6 @@ public class JSONUtil {
             s = mapper.writeValueAsString(o);
         } catch (Throwable e) {
             logger.error("JSON反序列化失败.",e);
-            throw new RuntimeException(e);
         }
         return s;
     }

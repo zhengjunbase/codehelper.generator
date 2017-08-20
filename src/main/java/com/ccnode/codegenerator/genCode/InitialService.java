@@ -52,7 +52,7 @@ public class InitialService {
                 onePojoInfo.setFullSqlPath(genPath(response, pojoDirPath, config.getSqlDir(), pojoName,".sql"));
                 onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,"Dao.xml"));
                 onePojoInfo.setFullPojoPath(fullPojoPath);
-                OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
+                OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response.getRequest().getProject());
                 // todo fix daoPackage Bug
 //                onePojoInfo.setDaoPackage(GenCodeUtil
 //                        .deducePackage(StringUtils.defaultIfEmpty(config.getDaoDir(),pojoDirPath) ,onePojoInfo.getPojoPackage()));

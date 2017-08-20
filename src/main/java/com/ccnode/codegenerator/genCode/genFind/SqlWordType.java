@@ -1,8 +1,11 @@
 package com.ccnode.codegenerator.genCode.genFind;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,25 +45,40 @@ public enum SqlWordType {
     None(-1, "none");
 
     private Integer code;
-    private String desc;
+    private String canFollowStr;
 
     public static Set<SqlWordType> CONDITION_JOINER_SET = ImmutableSet.of(By, Or, And, OrderBy);
+    public static Set<SqlWordType> START_WORD_SET = ImmutableSet.of(Select, Count, Find, Update);
     public static Set<SqlWordType> KEY_WORD_WITH_NUMBER_SET = ImmutableSet.of(Limit);
     public static Set<SqlWordType> KEY_WORD_WITH_FIELD_SET = ImmutableSet
             .of(By, And, Or, Between, In, GreaterThan, LessThan, Like, OrderBy);
 
-    private SqlWordType(Integer code, String desc) {
+    private SqlWordType(Integer code, String canFlowList) {
         this.code = code;
-        this.desc = desc;
+        this.canFollowStr = canFlowList;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getCanFollowStr() {
+        return canFollowStr;
     }
+
+    public List<SqlWordType> getCanFollowList(){
+        if(StringUtils.isBlank(this.canFollowStr) || this == None){
+            return Lists.newArrayList();
+        }
+        List<String> splits = Splitter.on(",").trimResults().omitEmptyStrings().splitToList(canFollowStr);
+        List<SqlWordType> retList = Lists.newArrayList();
+
+        for (String split : splits) {
+            retList.add(fromNameIgnoreCase(split));
+        }
+        return retList;
+    }
+
 
     public static SqlWordType fromNameIgnoreCase(String name) {
         if (StringUtils.isBlank(name)) {
@@ -86,7 +104,7 @@ public enum SqlWordType {
 
     public static SqlWordType fromDesc(String desc) {
         for (SqlWordType e : SqlWordType.values()) {
-            if (e.getDesc().equals(desc)) {
+            if (e.getCanFollowStr().equals(desc)) {
                 return e;
             }
         }
