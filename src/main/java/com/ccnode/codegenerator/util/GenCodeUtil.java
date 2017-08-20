@@ -24,6 +24,9 @@ public class GenCodeUtil {
     public static final String TWO_RETRACT = "        ";
     public static final String THREE_RETRACT = "            ";
     public static final String FOUR_RETRACT = "                ";
+    public static final String ONE_SPACE = " ";
+    public static final String ONE_COMMA = ",";
+    public static final String FIELD_SPLITTER = ", ";
     public static String MYSQL_TYPE = StringUtils.EMPTY;
     public static String PACKAGE_LINE = StringUtils.EMPTY;
 
@@ -147,4 +150,26 @@ public class GenCodeUtil {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,value);
     }
 
+    public static void recursiveRemoveEnd(StringBuilder builder, String compare){
+        if(builder == null || compare == null
+                || compare.length() < 1 || builder.length() < 1){
+            return;
+        }
+        int remindLength = builder.length() - compare.length();
+        while (remindLength >= 0 && StringUtils.equals(compare,
+                builder.substring(remindLength, builder.length()))){
+            builder.delete(remindLength, builder.length());
+            remindLength = builder.length() - compare.length();
+        }
+    }
+
+    public static void main(String[] args) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("fsfasdfffdf");
+        Integer length = builder.length();
+        recursiveRemoveEnd(builder, "xdf");
+        builder= new StringBuilder("b");
+        recursiveRemoveEnd(builder, "");
+        System.out.println(builder);
+    }
 }

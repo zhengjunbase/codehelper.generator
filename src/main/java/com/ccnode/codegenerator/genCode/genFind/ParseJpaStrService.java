@@ -11,6 +11,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
+import static com.ccnode.codegenerator.util.GenCodeUtil.FIELD_SPLITTER;
+import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_COMMA;
+import static com.ccnode.codegenerator.util.GenCodeUtil.ONE_SPACE;
+
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -72,45 +76,43 @@ public class ParseJpaStrService {
 
         Integer parameterCount = 0;
         for (MethodParameter each : response.getJavaMethodParameterList()) {
-            builder.append(each.getParameterType() + " " + each.getParameterName() + ", ");
+            builder.append(each.getParameterType() + " " + each.getParameterName() + FIELD_SPLITTER);
             parameterCount ++;
         }
         if(parameterCount > 0){
-            builder.deleteCharAt(builder.length() - 1);
-            builder.deleteCharAt(builder.length() - 1);
+            GenCodeUtil.recursiveRemoveEnd(builder, FIELD_SPLITTER);
         }
-        builder.append("){\n        return ");
+        builder.append(") {\n        return" + ONE_COMMA);
         builder.append(GenCodeUtil.getLowerCamel(response.getOnePojoInfo().getPojoName()) + "Dao.");
         builder.append(response.getInputMethodName() + "(");
         for (MethodParameter each : response.getJavaMethodParameterList()) {
-            builder.append(each.getParameterName() + ", ");
+            builder.append(each.getParameterName() + FIELD_SPLITTER);
         }
-        builder.deleteCharAt(builder.length() - 1);
-        builder.deleteCharAt(builder.length() - 1);
-        builder.append(");\n    }");
+        if(parameterCount > 0){
+            GenCodeUtil.recursiveRemoveEnd(builder, FIELD_SPLITTER);
+        }
         response.setServiceMethodText(builder.toString());
         System.out.println(builder.toString());
     }
 
     private static void buildDaoText(ParseJpaResponse response) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(response.getJavaReturnType());
-        builder.append(" ");
-        builder.append(response.getInputMethodName());
-        builder.append("(");
+        StringBuilder daoBuilder = new StringBuilder();
+        daoBuilder.append(response.getJavaReturnType());
+        daoBuilder.append(ONE_SPACE);
+        daoBuilder.append(response.getInputMethodName());
+        daoBuilder.append("(");
         Integer parameterCount = 0;
         for (MethodParameter each : response.getJavaMethodParameterList()) {
-            builder.append("@Param(\"" + each.getParameterName() + "\") ");
-            builder.append(each.getParameterType() + " " + each.getParameterName() + ", ");
+            daoBuilder.append("@Param(\"" + each.getParameterName() + "\") ");
+            daoBuilder.append(each.getParameterType() + " " + each.getParameterName()  + FIELD_SPLITTER);
             parameterCount ++ ;
         }
         if(parameterCount > 0){
-            builder.deleteCharAt(builder.length() - 1);
-            builder.deleteCharAt(builder.length() - 1);
+            GenCodeUtil.recursiveRemoveEnd(daoBuilder, FIELD_SPLITTER);
         }
-        builder.append(");");
-        System.out.println(builder.toString());
-        response.setDaoMethodText(builder.toString());
+        daoBuilder.append(");");
+        System.out.println(daoBuilder.toString());
+        response.setDaoMethodText(daoBuilder.toString());
     }
 
 
@@ -136,18 +138,18 @@ public class ParseJpaStrService {
                     SqlWordType.Limit
             ).contains(sqlWord.getSqlWordType())){
                 builder.append(sqlWord.getSqlWordType().name().toUpperCase());
-                builder.append(" ");
+                builder.append(ONE_SPACE);
             }else if(sqlWord.getSqlWordType() == SqlWordType.OrderBy){
-                 builder.append("ORDER BY ");
+                 builder.append("ORDER BY" + ONE_SPACE);
             }else if(sqlWord.getSqlWordType() == SqlWordType.Or
                     || sqlWord.getSqlWordType() == SqlWordType.And){
-                builder.append(", ");
+                builder.append(FIELD_SPLITTER);
             }else if(sqlWord.getSqlWordType() == SqlWordType.Field){
                 builder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
-                builder.append(" ");
+                builder.append(ONE_SPACE);
             }else if(sqlWord.getSqlWordType() == SqlWordType.Number){
                 builder.append(sqlWord.getValue());
-                builder.append(" ");
+                builder.append(ONE_SPACE);
             }
             response.getHasBuilds().add(sqlWord);
         }
@@ -164,12 +166,13 @@ public class ParseJpaStrService {
     }
 
     public static void buildSelectPart(ParseJpaResponse response) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder sqlBuilder = new StringBuilder();
         List<SqlWord> unBuilds = Lists.newArrayList();
         List<SqlWord> beforeByList = Lists.newArrayList();
         boolean beforeBy = true;
         for (SqlWord sqlWord : response.getUnBuilds()) {
-            if(sqlWord.getSqlWordType() == SqlWordType.By){
+            if(sqlWord.getSqlWordType() == SqlWordType.By
+                    || sqlWord.getSqlWordType() == SqlWordType.OrderBy){
                 beforeBy = false;
             }
             if(beforeBy){
@@ -181,36 +184,37 @@ public class ParseJpaStrService {
         if(beforeByList.size() == 1){
             SqlWord first = beforeByList.get(0);
             if( first.getSqlWordType() == SqlWordType.Count){
-                builder.append("SELECT COUNT(1) FROM " + response.getTableName() + " ");
+                sqlBuilder.append("SELECT COUNT(1) FROM " + response.getTableName() + ONE_SPACE);
                 response.setXmlReturnType("resultMap=\"java.lang.Integer\"");
                 response.setJavaReturnType("Integer");
 
             }else{
-                builder.append("SELECT <include refid=\"all_column\"/> FROM " + response.getTableName() + " ");
+                sqlBuilder.append("SELECT <include refid=\"all_column\"/> FROM " + response.getTableName() + ONE_SPACE);
                 response.setXmlReturnType("resultMap=\"AllColumnMap\"");
                 response.setJavaReturnType(GenCodeUtil.getUpperCamel(response.getOnePojoInfo().getPojoName()));
 
             }
         }else{
-            builder.append("SELECT ");
+            sqlBuilder.append("SELECT" + ONE_SPACE);
             Integer fieldCount = 0;
             for (SqlWord sqlWord : beforeByList) {
                 if(sqlWord.getSqlWordType() == SqlWordType.Field){
-                    builder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
+                    sqlBuilder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
                     response.setXmlReturnType("resultMap=\"java.lang." + sqlWord.getFieldInfo().getFieldClass() + "\"");
                     response.setJavaReturnType(sqlWord.getFieldInfo().getFieldClass());
                     fieldCount ++;
                 }else if(sqlWord.getSqlWordType() == SqlWordType.And){
-                    builder.append(", ");
+                    sqlBuilder.append(FIELD_SPLITTER);
                 }
             }
             if(fieldCount > 1){
                 response.setXmlReturnType("resultMap=\"AllColumnMap\"");
                 response.setJavaReturnType(GenCodeUtil.getUpperCamel(response.getOnePojoInfo().getPojoName()));
             }
-            builder.append("FROM " + response.getTableName() + " ");
+            GenCodeUtil.recursiveRemoveEnd(sqlBuilder, FIELD_SPLITTER);
+            sqlBuilder.append(ONE_SPACE + "FROM " + response.getTableName() + ONE_SPACE);
         }
-        response.getBuilder().append(XML_EMPTY_PREFIX + builder);
+        response.getBuilder().append(XML_EMPTY_PREFIX + sqlBuilder);
         response.getHasBuilds().addAll(beforeByList);
         response.setUnBuilds(unBuilds);
         System.out.println(response.getBuilder().toString());
@@ -261,7 +265,7 @@ public class ParseJpaStrService {
 
     public static String buildNotWord(SqlWord not){
         if(not == null){
-            return " ";
+            return ONE_SPACE;
         }else{
             return  " NOT ";
         }
@@ -353,15 +357,16 @@ public class ParseJpaStrService {
     }
 
     public static void main(String[] args) {
-//        parse("CountByUserNameOrTypeBetweenOrFuckInOrShaBiOrFuckNotLikeOrIdInOrIdNotStartWith", "CarInfo","userName", "type", "fuck",
-//                "ShaBi", "Id");
         OnePojoInfo pojoInfo = new OnePojoInfo();
         pojoInfo.setPojoFieldInfos(Lists.newArrayList());
         PojoFieldInfo fieldInfo = new PojoFieldInfo();
-        fieldInfo.setFieldName("userName");
+        fieldInfo.setFieldName("Ape");
         pojoInfo.getPojoFieldInfos().add(fieldInfo);
+        PojoFieldInfo fieldInfo1 = new PojoFieldInfo();
+        fieldInfo1.setFieldName("Id");
+        pojoInfo.getPojoFieldInfos().add(fieldInfo1);
         pojoInfo.setPojoName("carInfo");
-//         parse("findByUserNameAndUserNameInAndUserNameExists", pojoInfo);
+         parse("findApeOrderById", pojoInfo);
     }
 
 }
