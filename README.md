@@ -18,6 +18,10 @@ GenDaoCode 特性
 - 目前支持MySQL + Java，后续会支持更多的DB。
 - 如果喜欢我们的插件，非常感谢您的分享。
 
+GenDaoCode 使用示例
+
+- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/genDaoCode.gif)
+
 GenDaoCode 使用方法
 
 - 主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。
@@ -25,13 +29,12 @@ GenDaoCode 使用方法
 - Codehelper Generator会根据默认配置为您生成代码。
 - 方法二：在工程目录下添加文件名为`codehelper.properties`的文件。
 - 点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码
-- 如何配置: [http://codehelper.me/generator/config](http://codehelper.me/generator/config)
 
 
 GenDaoCode 使用必读
 
-- java pojo中必须包含 `id` 属性, 类型可以是 int, long, Integer, Long。
-- java pojo中建议用 `createTime`表示 创建时间, updateTime表示更新时间。
+- java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
+- java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
 - `select`查询的xml语句中, 默认添加`limit 1000`, 使用的时候注意。
 - update操作的xml语句中, 没有`update_time`, 默认依赖`update_time`的`ON UPDATE CURRENT_TIMESTAMP`来更新.
 (注意`mysql`中`UPDATE CURRENT_TIMESTAMP` 在更新的时候, 如果数据没有改变, `update_time` 不会更新 )
@@ -63,19 +66,14 @@ java.lang.String=VARCHAR(50) NOT NULL DEFAULT ''
 java.lang.Integer=INTEGER(12) NOT NULL DEFAULT -1
 ```
 
-GenDaoCode 使用示例
-
-- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/genDaoCode.gif)
-
-
 GenAllSetter 特性
 
 - 在Java方法中, 根据 `new` 关键词, 为Java Bean 生成所有Setter方法。
 - 按GenAllSetter键两次, 会为Setter方法生成默认值。
-- 如何使用:
-  1 将光标移动到 `new` 语句的下一行。
-  2,点击主菜单Tools-> Codehelper-> GenAllSetter, 或者按下`GenAllSetter`快捷键。
 - 可在`Intellij Idea`中为`GenAllSetter`设置快捷键。
+- 如何使用:
+  * 将光标移动到 `new` 语句的下一行。
+  * 点击主菜单Tools-> Codehelper-> GenAllSetter, 或者按下`GenAllSetter`快捷键。
 
 GenAllSetter 使用示例
 - ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/setter.gif)
