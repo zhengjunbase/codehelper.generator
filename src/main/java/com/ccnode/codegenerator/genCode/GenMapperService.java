@@ -328,7 +328,7 @@ public class GenMapperService {
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             String fieldName = fieldInfo.getFieldName();
             if(StringUtils.containsIgnoreCase(fieldName, "updateTime")
-                    || StringUtils.containsIgnoreCase(fieldName,"updateTime")){
+                    || StringUtils.containsIgnoreCase(fieldName,"lastUpdate")){
                 continue;
             }
             String testCondition = GenCodeUtil.THREE_RETRACT +  String.format("<if test=\"pojo.%s != null\">",fieldName);

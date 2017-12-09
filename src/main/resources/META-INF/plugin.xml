@@ -67,7 +67,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      use gradle, fix bugs.
+       improve stability.
     ]]>
   </change-notes>
 
