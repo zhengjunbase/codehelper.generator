@@ -1,8 +1,9 @@
 package com.ccnode.codegenerator.pojo;
 
 import com.ccnode.codegenerator.util.GenCodeConfig;
-import com.ccnode.codegenerator.util.GenCodeConfig;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.impl.source.PsiClassImpl;
+import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -19,6 +20,9 @@ public class OnePojoInfo {
     GenCodeConfig genCodeConfig;
     DirectoryConfig directoryConfig;
     PsiClassImpl psiClass;
+    PsiClass daoClass;
+    PsiClass serviceClass;
+    XmlFile xmlFile;
     Class pojoClass;
     String pojoName;
     String pojoPackage;
@@ -31,6 +35,30 @@ public class OnePojoInfo {
     String fullSqlPath;
     String fullMapperPath;
     String pojoClassSimpleName;
+
+    public XmlFile getXmlFile() {
+        return xmlFile;
+    }
+
+    public void setXmlFile(XmlFile xmlFile) {
+        this.xmlFile = xmlFile;
+    }
+
+    public PsiClass getDaoClass() {
+        return daoClass;
+    }
+
+    public void setDaoClass(PsiClass daoClass) {
+        this.daoClass = daoClass;
+    }
+
+    public PsiClass getServiceClass() {
+        return serviceClass;
+    }
+
+    public void setServiceClass(PsiClass serviceClass) {
+        this.serviceClass = serviceClass;
+    }
 
     public String getPojoName() {
         return pojoName;

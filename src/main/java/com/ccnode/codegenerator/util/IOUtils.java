@@ -1,7 +1,6 @@
 package com.ccnode.codegenerator.util;
 
 import com.ccnode.codegenerator.exception.BizException;
-import com.ccnode.codegenerator.exception.BizException;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
@@ -114,6 +113,15 @@ public class IOUtils {
     }
 
 
+    public static File matchByFileName(List<File> fileList, String fileName){
+        fileList = ListHelper.avoidNullList(fileList);
+        for (File file : fileList) {
+            if(StringUtils.endsWithIgnoreCase(file.getAbsolutePath(), fileName)){
+                return file;
+            }
+        }
+        return null;
+    }
 
     @Nullable
     public static File matchOnlyOneFile(String directory, String subFileName){

@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ListHelper {
 
-    public static <T> List<T> avoidEmptyList(List<T> oldList) {
+    public static <T> List<T> avoidNullList(List<T> oldList) {
         if (oldList == null) {
             return Lists.newArrayList();
         }

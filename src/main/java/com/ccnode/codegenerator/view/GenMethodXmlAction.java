@@ -66,6 +66,10 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
         replace += "\n";
         replace +=  response.getServiceMethodText();
         PsiDocumentUtils.commitAndSaveDocument(project, document, textRange, replace);
+        PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), response.getXmlMethodText());
+        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getDaoClass(), response.getDaoMethodText());
+        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), response.getServiceMethodText());
+
 
 
     }

@@ -13,9 +13,18 @@ import java.util.List;
 public class PojoFieldInfo {
 
     String fieldName;
+    String resultMapStr;
     String fieldClass;
     String fieldComment;
     List<Annotation> annotations;
+
+    public String getResultMapStr() {
+        return resultMapStr;
+    }
+
+    public void setResultMapStr(String resultMapStr) {
+        this.resultMapStr = resultMapStr;
+    }
 
     public String getFieldName() {
         return fieldName;

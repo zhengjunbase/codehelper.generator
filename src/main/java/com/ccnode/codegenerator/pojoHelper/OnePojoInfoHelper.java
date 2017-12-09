@@ -10,11 +10,13 @@ import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.util.GenCodeUtil;
 import com.ccnode.codegenerator.util.IOUtils;
+import com.ccnode.codegenerator.util.ListHelper;
 import com.ccnode.codegenerator.util.LogHelper;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PojoUtil;
 import com.ccnode.codegenerator.util.RegexUtil;
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -32,6 +34,7 @@ import com.intellij.psi.impl.source.tree.PsiCommentImpl;
 import com.intellij.psi.impl.source.tree.java.PsiPackageStatementImpl;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.xml.XmlFile;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -71,6 +74,63 @@ public class OnePojoInfoHelper {
         return s.replace("/","").replace("\\","");
     }
 
+
+    public static String parsePojoNameFromDaoClass(PsiClass daoClass){
+        if(daoClass == null){
+            return StringUtils.EMPTY;
+        }
+        PsiMethod[] allMethods = daoClass.getAllMethods();
+        if(allMethods == null || allMethods.length < 1){
+            return null;
+        }
+        LOGGER.info("parseOnePojoInfoFromClass ");
+        String pojoName = StringUtils.EMPTY;
+        for (PsiMethod each : allMethods) {
+            String methodName = each.getName();
+            if (StringUtils.equalsIgnoreCase(methodName, "insert") || StringUtils
+                    .equalsIgnoreCase(methodName, "insertSelective") || StringUtils
+                    .equalsIgnoreCase(methodName, "save")) {
+                PsiParameter[] parameters = each.getParameterList().getParameters();
+                LOGGER.info(" parseOnePojoInfoFromClass parameterType "+ methodName + LogHelper.toString(parameters[0]));
+                if (parameters.length < 1) {
+                    continue;
+                }
+                PsiParameter parameter = parameters[0];
+                String parameterType = parameter.getType().getPresentableText();
+                LOGGER.info(" parseOnePojoInfoFromClass parameterType " + parameterType);
+                List<String> split = Splitter.onPattern("<|>|\\s").trimResults().omitEmptyStrings()
+                        .splitToList(parameterType);
+                if (split.size() == 1) {
+                    pojoName = split.get(0);
+                } else if (split.size() == 2) {
+                    pojoName = split.get(1);
+                }
+            }
+        }
+        return pojoName;
+    }
+
+    public static XmlFile findXmlFileByDaoQualifiedClassName(Project project, String qualifiedName){
+        List<File> allSubFiles = IOUtils.getAllSubFiles(project.getBasePath(), new String[]{"xml"});
+        for (File each : allSubFiles) {
+            try{
+                List<String> list = ListHelper.avoidNullList(IOUtils.readLines(each));
+                for (String line : list) {
+                    if(StringUtils.contains(line, qualifiedName)
+                            && StringUtils.contains(line,"namespace")
+                            && StringUtils.startsWithIgnoreCase(Strings.nullToEmpty(line), "<mapper")){
+                        PsiFile[] array = FilenameIndex.getFilesByName(
+                                project, each.getName(), GlobalSearchScope.projectScope(project));
+                        if(array != null &&  array.length < 1){
+                            return (XmlFile)array[0];
+                        }
+                    }
+                }
+            }catch(Throwable ignored){
+            }
+        }
+        return null;
+    }
     public static OnePojoInfo parseOnePojoInfoFromClass(PsiClass daoClass, Project project) {
         PsiMethod[] allMethods = daoClass.getAllMethods();
         LOGGER.info(" parseOnePojoInfoFromClass :{}" );
@@ -83,7 +143,7 @@ public class OnePojoInfoHelper {
                 PsiParameter[] parameters = each.getParameterList().getParameters();
                 LOGGER.info(" parseOnePojoInfoFromClass parameterType "+ methodName + LogHelper.toString(parameters[0]));
                 if (parameters.length < 1) {
-                    return null;
+                    continue;
                 }
                 PsiParameter parameter = parameters[0];
                 String parameterType = parameter.getType().getPresentableText();
@@ -93,10 +153,10 @@ public class OnePojoInfoHelper {
                         .splitToList(parameterType);
                 if (split.size() == 1) {
                     pojoName = split.get(0);
-                    break;
+                    continue;
                 } else if (split.size() == 2) {
                     pojoName = split.get(1);
-                    break;
+                    continue;
                 }
             }
         }
