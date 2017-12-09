@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.pojo;
 
+import com.ccnode.codegenerator.enums.SupportFieldClass;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.annotation.Annotation;
@@ -13,7 +14,7 @@ import java.util.List;
 public class PojoFieldInfo {
 
     String fieldName;
-    String fieldClass;
+    SupportFieldClass fieldClass;
     String fieldComment;
     List<Annotation> annotations;
 
@@ -25,11 +26,11 @@ public class PojoFieldInfo {
         this.fieldName = fieldName;
     }
 
-    public String getFieldClass() {
+    public SupportFieldClass getFieldClass() {
         return fieldClass;
     }
 
-    public void setFieldClass(String fieldClass) {
+    public void setFieldClass(SupportFieldClass fieldClass) {
         this.fieldClass = fieldClass;
     }
 

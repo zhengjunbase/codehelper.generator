@@ -2,6 +2,7 @@
 package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.SupportFieldClass;
 import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -112,26 +113,18 @@ public class OnePojoInfoHelper {
             if(isStaticField(field)){
                 continue;
             }
-            String type = field.getType().getPresentableText();
-            if(!isSupportType(type)){
+            SupportFieldClass fieldClass = SupportFieldClass.fromDesc(field.getType().getCanonicalText());
+            if(fieldClass == SupportFieldClass.NONE){
                 continue;
             }
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
             fieldInfo.setFieldComment(parseComment(field));
             fieldInfo.setFieldName(field.getName());
-            fieldInfo.setFieldClass(type);
+            fieldInfo.setFieldClass(fieldClass);
             fieldInfo.setAnnotations(Lists.newArrayList());
             fieldList.add(fieldInfo);
         }
         onePojoInfo.setPojoFieldInfos(fieldList);
-    }
-
-    private static Boolean isSupportType(String fieldType){
-        if(StringUtils.isBlank(fieldType)){
-            return false;
-        }
-        List<String> supportList= ImmutableList.of("string","integer","int","short","date","long","bigdecimal","double","float");
-        return supportList.contains(fieldType.toLowerCase());
     }
 
     private static Boolean isStaticField(@NotNull PsiField field){
@@ -185,7 +178,7 @@ public class OnePojoInfoHelper {
         onePojoInfo.setPojoFieldInfos(fieldInfoList);
         for (Field field : fields) {
             PojoFieldInfo fieldInfo = new PojoFieldInfo();
-            fieldInfo.setFieldClass(StringUtils.EMPTY);
+            fieldInfo.setFieldClass(SupportFieldClass.NONE);
             fieldInfo.setFieldName(field.getName());
             fieldInfo.setAnnotations(Lists.newArrayList(field.getDeclaredAnnotations()));
             fieldInfoList.add(fieldInfo);
