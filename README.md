@@ -6,7 +6,7 @@ codehelper.generator
 
 <a href="README-EN.md">English Documentation</a>
 
-GenDaoCode 特性
+**GenDaoCode 特性**
 
 - 根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。
 - Pojo文件更新后一键更新对应的Sql和mybatis xml文件。
@@ -18,11 +18,11 @@ GenDaoCode 特性
 - 目前支持MySQL + Java，后续会支持更多的DB。
 - 如果喜欢我们的插件，非常感谢您的分享。
 
-GenDaoCode 使用示例
+**GenDaoCode 使用示例**
 
 - ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/genDaoCode.gif)
 
-GenDaoCode 使用方法
+**GenDaoCode 使用方法**
 
 - 主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。
 - 方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。
@@ -31,7 +31,7 @@ GenDaoCode 使用方法
 - 点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码
 
 
-GenDaoCode 使用必读
+**GenDaoCode 使用必读**
 
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
 - java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
@@ -42,7 +42,7 @@ GenDaoCode 使用必读
 `DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` 关键字。
 - 如果java class文件中包含`createTime`字段, sql中的`create_time`中会加上 `NOT NULL DEFAULT CURRENT_TIMESTAMP` 关键字。
 
-GenDaoCode 个性化配置
+**GenDaoCode 个性化配置**
 - 在工程目录下添加`codehelper.properties`文件。
 - 配置示例如下:
 ```
@@ -66,7 +66,7 @@ java.lang.String=VARCHAR(50) NOT NULL DEFAULT ''
 java.lang.Integer=INTEGER(12) NOT NULL DEFAULT -1
 ```
 
-GenAllSetter 特性
+**GenAllSetter 特性**
 
 - 在Java方法中, 根据 `new` 关键词, 为Java Bean 生成所有Setter方法。
 - 按GenAllSetter键两次, 会为Setter方法生成默认值。
@@ -75,7 +75,7 @@ GenAllSetter 特性
   * 将光标移动到 `new` 语句的下一行。
   * 点击主菜单Tools-> Codehelper-> GenAllSetter, 或者按下`GenAllSetter`快捷键。
 
-GenAllSetter 使用示例
+**GenAllSetter 使用示例**
 - ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/setter.gif)
 
 联系作者 & 加入开发

@@ -29,7 +29,7 @@
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
       <li><p>Shortcut for generate.</p></li>
       <li><p>Support java + MySQL and later will support more DB.</p></li>
-      <li><a href="http://www.codehelper.me/generator?from=jetbrains">www.codehelper.me</a> to learn more.</li>
+      <li><a href="https://github.com/zhengjunbase/codehelper.generator">code at GitHub</a> to learn more.</li>
       </ul>
       <p>GenDaoCode Usages</p>
       <ul>
@@ -57,7 +57,7 @@
       <li><p>Codehelper Generator会根据默认配置为您生成代码。</p></li>
       <li><p>方法二：在工程目录下添加文件名为codehelper.properties的文件。</p></li>
       <li><p>点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码</p></li>
-      <li><p>如何配置: http://codehelper.me/generator/config</p></li>
+      <li><p>如何配置: https://github.com/zhengjunbase/codehelper.generator</p></li>
       </ul>
       <p>联系作者 & 加入开发</p>
       <ul>
