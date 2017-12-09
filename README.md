@@ -20,7 +20,7 @@ codehelper.generator
 
 **GenDaoCode 使用示例**
 
-- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/genDaoCode.gif)
+- ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/genCodeDao.gif)
 
 **GenDaoCode 使用方法**
 
