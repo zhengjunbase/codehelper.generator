@@ -34,29 +34,33 @@ codehelper.generator
 **GenDaoCode 使用必读**
 
 - 支持的java field类型如下:
-`
-java.lang.String
-java.lang.Integer
-java.lang.int
-java.lang.Long
-java.lang.long
-java.lang.Short
-java.lang.short
-java.lang.Double
-java.lang.double
-java.lang.Float
-java.lang.float
-java.math.BigDecimal
-java.util.Date
-java.sql.Timestamp
-java.sql.Date`。
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+| java.lang.String |
+| --- |
+| java.lang.Integer |
+| java.lang.int |
+| java.lang.Long |
+| java.lang.long |
+| java.lang.Short |
+| java.lang.short |
+| java.lang.Double |
+| java.lang.double |
+| java.lang.Float |
+| java.lang.float |
+| java.math.BigDecimal |
+| java.util.Date |
+| java.sql.Timestamp |
+| java.sql.Date |
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
 - java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
 - `select`查询的xml语句中, 默认添加`limit 1000`, 使用的时候注意。
 - update操作的xml语句中, 没有`update_time`, 默认依赖`update_time`的`ON UPDATE CURRENT_TIMESTAMP`来更新.
 (注意`mysql`中`UPDATE CURRENT_TIMESTAMP` 在更新的时候, 如果数据没有改变, `update_time` 不会更新 )
 - 如果java class文件中包含`updateTime`字段, sql中`update_time` column会加上
-`DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` 关键字。
+`NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` 关键字。
 - 如果java class文件中包含`createTime`字段, sql中的`create_time`中会加上 `NOT NULL DEFAULT CURRENT_TIMESTAMP` 关键字。
 
 **GenDaoCode 个性化配置**
