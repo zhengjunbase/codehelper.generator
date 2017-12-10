@@ -10,14 +10,14 @@
       |&nbsp<a href="https://github.com/zhengjunbase/codehelper.generator/issues">Issues</a></p>
 
       <p>An Generator, generate code more easily and productive.</p>
-      <p>AutoCoding Features</p>
+      <p>GenAllSetter Features</p>
       <ul>
       <li><p>Auto gen all Setter method(method start with set) when you click AutoCoding btn(support shortcut).</p></li>
       <li><p>Auto gen all Setter method with default value when you click AutoCoding btn twice.</p></li>
       </ul>
-       <p>AutoCoding Usage</p>
+       <p>GenAllSetter Usage</p>
       <ul>
-      <li><p>Click main menu Tools-> Codehelper-> AutoCoding button to generate the code</p></li>
+      <li><p>Click main menu Tools-> Codehelper-> GenAllSetter button to generate the code</p></li>
       </ul>
       <p>GenDaoCode Features</p>
       <ul>
@@ -37,6 +37,16 @@
       <li>Method One: Click GenDaoCode, and then enter the Pojo name in prompt box,</br> multiple Pojo separated by | ,
       CodeHelper will generate code use default config.</li>
       <li>Method two: Add a codehelper.properties in you project directory.</br>Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.</li>
+      </ul>
+      <p><strong>GenAllSetter 特性</strong></p>
+      <ul>
+      <li>在Java方法中, 根据 <code>new</code> 关键词, 为Java Bean 生成所有Setter方法。</li>
+      <li>按GenAllSetter键两次, 会为Setter方法生成默认值。</li>
+      <li>可在<code>Intellij Idea</code>中为<code>GenAllSetter</code>设置快捷键。</li>
+      <li>如何使用:
+      <ul>
+      <li>将光标移动到 <code>new</code> 语句的下一行。</li>
+      <li>点击主菜单Tools-&gt; Codehelper-&gt; GenAllSetter, 或者按下<code>GenAllSetter</code>快捷键。</li>
       </ul>
       <p>GenDaoCode 特性</p>
       <ul>
