@@ -114,6 +114,7 @@ public class OnePojoInfoHelper {
                 continue;
             }
             SupportFieldClass fieldClass = SupportFieldClass.fromDesc(field.getType().getCanonicalText());
+            LOGGER.info("parseIdeaFieldInfo  canonicalText :{}", field.getType().getCanonicalText());
             if(fieldClass == SupportFieldClass.NONE){
                 continue;
             }
