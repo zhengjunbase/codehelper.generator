@@ -35,7 +35,7 @@ codehelper.generator
 
 - 支持的java field类型如下:
 
-|  |  |
+| []()  | |
 | :--- | :--- |
 | java.lang.Integer | java.lang.int |
 | java.lang.Long | java.lang.long |
