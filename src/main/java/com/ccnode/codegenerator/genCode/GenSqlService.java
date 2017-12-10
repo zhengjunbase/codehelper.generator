@@ -278,10 +278,11 @@ public class GenSqlService {
     }
 
     private static String getDefaultField(PojoFieldInfo fieldInfo, GenCodeResponse response) {
-        Map<String, String> userConfigMap = response.getUserConfigMap();
+        Map<String, String> userConfigMap = UserConfigService.userConfigMap;
 //        String key = fieldInfo.getFieldClass().toLowerCase();
         SupportFieldClass fieldClass = fieldInfo.getFieldClass();
         String value = userConfigMap.get(fieldClass.getDesc());
+        LOGGER.info("getDefaultField  userConfigMap:{},:{}, value:{}",JSONUtil.toJSONString(userConfigMap), fieldClass, value);
         if (StringUtils.isBlank(value)) {
             if(fieldClass == SupportFieldClass.STRING){
                 return "VARCHAR(50) NOT NULL DEFAULT ''";
