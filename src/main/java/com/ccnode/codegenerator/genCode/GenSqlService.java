@@ -241,7 +241,7 @@ public class GenSqlService {
             String append = new StringBuilder().append(GenCodeUtil.ONE_RETRACT).
                     append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',").toString();
             if(fieldInfo.getFieldClass() == SupportFieldClass.INTEGER
-                    || fieldInfo.getFieldClass() == SupportFieldClass.INT){
+                    || fieldInfo.getFieldClass() == SupportFieldClass.BASIC_INT) {
                 append = append.replace("BIGINT(20)","INTEGER(20)");
             }
             ret.append(append);
@@ -286,22 +286,27 @@ public class GenSqlService {
         if (StringUtils.isBlank(value)) {
             if(fieldClass == SupportFieldClass.STRING){
                 return "VARCHAR(50) NOT NULL DEFAULT ''";
-            }else if(fieldClass == SupportFieldClass.INT
+            }else if(fieldClass == SupportFieldClass.BASIC_INT
                     || fieldClass == SupportFieldClass.INTEGER){
                 return "INTEGER(12) NOT NULL DEFAULT -1";
-            }else if(fieldClass == SupportFieldClass.SHORT){
+            }else if(fieldClass == SupportFieldClass.SHORT
+                    || fieldClass == SupportFieldClass.BASIC_SHORT){
                 return "TINYINT NOT NULL DEFAULT -1";
             }else if(fieldClass == SupportFieldClass.DATE
                     || fieldClass == SupportFieldClass.JAVA_SQL_Date
                     || fieldClass == SupportFieldClass.JAVA_SQL_TIMESTAMP){
                 return "DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00'";
-            }else if(fieldClass == SupportFieldClass.LONG){
+            }else if(fieldClass == SupportFieldClass.LONG
+                    || fieldClass == SupportFieldClass.BASIC_LONG){
                 return "BIGINT NOT NULL DEFAULT -1";
             }else if(fieldClass == SupportFieldClass.BIG_DECIMAL){
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
-            }else if(fieldClass == SupportFieldClass.DOUBLE){
+            }else if(fieldClass == SupportFieldClass.DOUBLE
+                    || fieldClass == SupportFieldClass.BASIC_DOUBLE){
+
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
-            }else if(fieldClass == SupportFieldClass.FLOAT){
+            }else if(fieldClass == SupportFieldClass.FLOAT
+                    || fieldClass == SupportFieldClass.BASIC_FLOAT){
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
             }else {
                 throw new RuntimeException("unSupport field type :" + fieldInfo.getFieldClass());
