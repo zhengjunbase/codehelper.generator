@@ -36,19 +36,10 @@ codehelper.generator
 - 支持的java field类型如下:
  * 基本类型:`short, int, long, float, double`
  * 对象类型:
-
-| |
-| :--- |
-| java.lang.Integer |
-| java.lang.Long |
-| java.lang.Short |
-| java.lang.Double |
-| java.lang.Float |
-| java.lang.String |
-|java.math.BigDecimal |
-| java.util.Date |
-| java.sql.Date |
-| java.sql.Timestamp |
+   * `java.lang.Integer, java.lang.Long, java.lang.Short`
+   * `java.lang.Double, java.lang.Float, java.lang.String `
+   * `java.sql.Date, java.util.Date, java.sql.Timestamp`
+   * `java.math.BigDecimal`
 
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
 - java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
