@@ -40,23 +40,18 @@ codehelper.generator
 | git status   | git status     | git status    |
 | git diff     | git diff       | git diff      |
 
-
-| java.lang.String |
-| --- |
-| java.lang.Integer |
-| java.lang.int |
-| java.lang.Long |
-| java.lang.long |
-| java.lang.Short |
-| java.lang.short |
-| java.lang.Double |
-| java.lang.double |
-| java.lang.Float |
-| java.lang.float |
-| java.math.BigDecimal |
-| java.util.Date |
-| java.sql.Timestamp |
-| java.sql.Date |
+| 对象类型 | 基本类型 |
+|:---  | :--- |
+| java.lang.Integer | java.lang.int |
+| java.lang.Long | java.lang.long |
+| java.lang.Short | java.lang.short |
+| java.lang.Double | java.lang.double |
+| java.lang.Float | java.lang.float |
+| java.lang.String | |
+| java.math.BigDecimal | |
+| java.util.Date | |
+| java.sql.Timestamp | |
+| java.sql.Date | |
 
 
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
