@@ -10,13 +10,17 @@ public enum SupportFieldClass {
     DATE(1,"java.util.Date"),
     BIG_DECIMAL(2,"java.math.BigDecimal"),
     INTEGER(3,"java.lang.Integer"),
-    INT(4,"java.lang.int"),
-    LONG(5,"java.lang.Long"),
+    LONG(4,"java.lang.Long"),
     SHORT(5,"java.lang.Short"),
-    DOUBLE(7,"java.lang.Double"),
-    FLOAT(8,"java.lang.Float"),
-    JAVA_SQL_TIMESTAMP(9,"java.sql.Timestamp"),
+    DOUBLE(6,"java.lang.Double"),
+    FLOAT(7,"java.lang.Float"),
+    JAVA_SQL_TIMESTAMP(8,"java.sql.Timestamp"),
     JAVA_SQL_Date(9,"java.sql.Date"),
+    BASIC_INT(10,"int"),
+    BASIC_LONG(11,"long"),
+    BASIC_SHORT(12,"short"),
+    BASIC_DOUBLE(13,"double"),
+    BASIC_FLOAT(14,"float"),
     NONE(-1,"none");
 
     private Integer code;

@@ -34,17 +34,21 @@ codehelper.generator
 **GenDaoCode 使用必读**
 
 - 支持的java field类型如下:
+ * 基本类型:`short, int, long, float, double`
+ * 对象类型:
 
-| []()  | |
-| :--- | :--- |
-| java.lang.Integer | java.lang.int |
-| java.lang.Long | java.lang.long |
-| java.lang.Short | java.lang.short |
-| java.lang.Double | java.lang.double |
-| java.lang.Float | java.lang.float |
-| java.lang.String | java.sql.Timestamp |
-| java.util.Date |java.math.BigDecimal |
-| java.sql.Date | |
+| |
+| :--- |
+| java.lang.Integer |
+| java.lang.Long |
+| java.lang.Short |
+| java.lang.Double |
+| java.lang.Float |
+| java.lang.String |
+|java.math.BigDecimal |
+| java.util.Date |
+| java.sql.Date |
+| java.sql.Timestamp |
 
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
 - java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
@@ -77,6 +81,8 @@ sql.path=doc/sql/generator
 ### 配置各个java类型的sql生成语句
 java.lang.String=VARCHAR(50) NOT NULL DEFAULT ''
 java.lang.Integer=INTEGER(12) NOT NULL DEFAULT -1
+int=INTEGER(12) NOT NULL DEFAULT -1
+double=DECIMAL(14,4) NOT NULL DEFAULT -1
 ```
 
 **GenAllSetter 特性**
