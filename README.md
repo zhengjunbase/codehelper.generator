@@ -33,6 +33,23 @@ codehelper.generator
 
 **GenDaoCode 使用必读**
 
+- 支持的java field类型如下:
+`
+java.lang.String
+java.lang.Integer
+java.lang.int
+java.lang.Long
+java.lang.long
+java.lang.Short
+java.lang.short
+java.lang.Double
+java.lang.double
+java.lang.Float
+java.lang.float
+java.math.BigDecimal
+java.util.Date
+java.sql.Timestamp
+java.sql.Date`。
 - java pojo中必须包含 `id` 属性, 类型可以是 `int, long, Integer, Long`。
 - java pojo中建议用 `createTime`表示 创建时间, `updateTime`表示更新时间。
 - `select`查询的xml语句中, 默认添加`limit 1000`, 使用的时候注意。
