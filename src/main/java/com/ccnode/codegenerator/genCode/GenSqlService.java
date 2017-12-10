@@ -83,7 +83,7 @@ public class GenSqlService {
     private static String getSqlCharSet(GenCodeResponse response) {
         String charset = response.getUserConfigMap().get("charset");
         if (StringUtils.isBlank(charset)) {
-            return "utf8";
+            return "utf8mb4";
         }
         return charset;
     }
