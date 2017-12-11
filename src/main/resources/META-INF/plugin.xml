@@ -12,8 +12,8 @@
       <p>An Generator, generate code more easily and productive.</p>
       <p>GenAllSetter Features</p>
       <ul>
-      <li><p>Auto gen all Setter method(method start with set) when you click AutoCoding btn(support shortcut).</p></li>
-      <li><p>Auto gen all Setter method with default value when you click AutoCoding btn twice.</p></li>
+      <li><p>Auto gen all Setter method(method start with set) when you click GenAllSetter btn(support shortcut).</p></li>
+      <li><p>Auto gen all Setter method with default value when you click GenAllSetter btn twice.</p></li>
       </ul>
        <p>GenAllSetter Usage</p>
       <ul>
@@ -43,12 +43,11 @@
       <li>在Java方法中, 根据 <code>new</code> 关键词, 为Java Bean 生成所有Setter方法。</li>
       <li>按GenAllSetter键两次, 会为Setter方法生成默认值。</li>
       <li>可在<code>Intellij Idea</code>中为<code>GenAllSetter</code>设置快捷键。</li>
-      <li>如何使用:
-      <ul>
+      <li>如何使用:</li>
       <li>将光标移动到 <code>new</code> 语句的下一行。</li>
       <li>点击主菜单Tools-&gt; Codehelper-&gt; GenAllSetter, 或者按下<code>GenAllSetter</code>快捷键。</li>
       </ul>
-      <p>GenDaoCode 特性</p>
+      <p><strong>GenDaoCode 特性</strong></p>
       <ul>
       <li><p>根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。</p></li>
       <li><p>Pojo文件更新后一键更新对应的Sql和mybatis xml文件。</p></li>
@@ -60,7 +59,7 @@
       <li><p>目前支持MySQL + Java，后续会支持更多的DB。</p></li>
       <li><p>如果喜欢我们的插件，非常感谢您的分享。</p></li>
       </ul>
-      <p>GenDaoCode 使用方法</p>
+      <p><strong>GenDaoCode 使用方法</strong></p>
       <ul>
       <li><p>主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。</p></li>
       <li><p>方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。</p></li>
