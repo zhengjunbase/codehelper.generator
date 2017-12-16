@@ -201,7 +201,7 @@ public class ParseJpaStrService {
                 if(sqlWord.getSqlWordType() == SqlWordType.Field){
                     sqlBuilder.append(GenCodeUtil.getUnderScore(sqlWord.getFieldInfo().getFieldName()));
                     response.setXmlReturnType("resultMap=\"java.lang." + sqlWord.getFieldInfo().getFieldClass() + "\"");
-                    response.setJavaReturnType(sqlWord.getFieldInfo().getFieldClass());
+                    response.setJavaReturnType(sqlWord.getFieldInfo().getFieldClass().getPresentableText());
                     fieldCount ++;
                 }else if(sqlWord.getSqlWordType() == SqlWordType.And){
                     sqlBuilder.append(FIELD_SPLITTER);
@@ -278,37 +278,37 @@ public class ParseJpaStrService {
         String upperCamel = GenCodeUtil.getUpperCamel(fieldInfo.getFieldName());
         List<MethodParameter> parameterList = response.getJavaMethodParameterList();
         if(joiner == null || joiner.getSqlWordType() == SqlWordType.By){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + " = "+ "#{" + lowerCamel + "} ";
         }
         SqlWordType sqlWordType = joiner.getSqlWordType();
         if(sqlWordType == SqlWordType.Like) {
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " CONCAT('%', #{" + lowerCamel + "}, '%') ";
         }else if(sqlWordType == SqlWordType.EndWith){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + buildNotWord(notOperator) + "LIKE" + " CONCAT('%', #{" + lowerCamel + "}) ";
         }else if(sqlWordType == SqlWordType.StartWith){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + buildNotWord(notOperator) + "LIKE" + " CONCAT(#{" + lowerCamel + "}, '%') ";
         }else if(sqlWordType == SqlWordType.In || sqlWordType == SqlWordType.Exists){
             response.addMethodParameter("List<" + fieldInfo.getFieldClass() + ">", lowerCamel + "s");
             return underScore + buildNotWord(notOperator) + sqlWordType.name().toUpperCase() + " " + "#{" + lowerCamel + "s} ";
         }else if(sqlWordType == SqlWordType.Before || sqlWordType == SqlWordType.LessThan){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + " " + "<![CDATA[ < ]]> " + "#{" + lowerCamel + "} ";
         }else if(sqlWordType == SqlWordType.After || sqlWordType == SqlWordType.GreaterThan){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + " " + "<![CDATA[ > ]]> " + "#{" + lowerCamel + "} ";
         }else if(sqlWordType == SqlWordType.GreaterThanEqual){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + " " + "<![CDATA[ >= ]]> " + "#{" + lowerCamel + "} ";
         }else if( sqlWordType == SqlWordType.LessThanEqual){
-            response.addMethodParameter(fieldInfo.getFieldClass(), lowerCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), lowerCamel);
             return underScore + " " + "<![CDATA[ <= ]]> " + "#{" + lowerCamel + "} ";
         }else if( sqlWordType == SqlWordType.Between){
-            response.addMethodParameter(fieldInfo.getFieldClass(), " min" + upperCamel);
-            response.addMethodParameter(fieldInfo.getFieldClass(), " max" + upperCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), " min" + upperCamel);
+            response.addMethodParameter(fieldInfo.getFieldClass().getPresentableText(), " max" + upperCamel);
             return underScore + " " + "<![CDATA[ >= ]]> " + "#{min" + upperCamel + "}\n"
                     +XML_EMPTY_PREFIX + "AND " + underScore + " " + "<![CDATA[ < ]]> " + "#{max" + upperCamel + "} " ;
         }

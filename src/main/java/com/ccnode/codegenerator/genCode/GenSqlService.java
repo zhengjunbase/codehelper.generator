@@ -281,7 +281,7 @@ public class GenSqlService {
         Map<String, String> userConfigMap = UserConfigService.userConfigMap;
 //        String key = fieldInfo.getFieldClass().toLowerCase();
         SupportFieldClass fieldClass = fieldInfo.getFieldClass();
-        String value = userConfigMap.get(fieldClass.getDesc().toLowerCase());
+        String value = userConfigMap.get(fieldClass.getCanonicalText().toLowerCase());
         LOGGER.info("getDefaultField  userConfigMap:{},:{}, value:{}",JSONUtil.toJSONString(userConfigMap), fieldClass, value);
         if (StringUtils.isBlank(value)) {
             if(fieldClass == SupportFieldClass.STRING){
