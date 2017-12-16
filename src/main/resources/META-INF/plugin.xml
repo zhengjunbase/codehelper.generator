@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2017.08.12</version>
+  <version>2017.12.09</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
@@ -10,14 +10,14 @@
       |&nbsp<a href="https://github.com/zhengjunbase/codehelper.generator/issues">Issues</a></p>
 
       <p>An Generator, generate code more easily and productive.</p>
-      <p>AutoCoding Features</p>
+      <p>GenAllSetter Features</p>
       <ul>
-      <li><p>Auto gen all Setter method(method start with set) when you click AutoCoding btn(support shortcut).</p></li>
-      <li><p>Auto gen all Setter method with default value when you click AutoCoding btn twice.</p></li>
+      <li><p>Auto gen all Setter method(method start with set) when you click GenAllSetter btn(support shortcut).</p></li>
+      <li><p>Auto gen all Setter method with default value when you click GenAllSetter btn twice.</p></li>
       </ul>
-       <p>AutoCoding Usage</p>
+       <p>GenAllSetter Usage</p>
       <ul>
-      <li><p>Click main menu Tools-> Codehelper-> AutoCoding button to generate the code</p></li>
+      <li><p>Click main menu Tools-> Codehelper-> GenAllSetter button to generate the code</p></li>
       </ul>
       <p>GenDaoCode Features</p>
       <ul>
@@ -29,7 +29,7 @@
       <li><p>Support rich config by config file, and use default config for no config file.</p></li>
       <li><p>Shortcut for generate.</p></li>
       <li><p>Support java + MySQL and later will support more DB.</p></li>
-      <li><a href="http://www.codehelper.me/generator?from=jetbrains">www.codehelper.me</a> to learn more.</li>
+      <li><a href="https://github.com/zhengjunbase/codehelper.generator">code at GitHub</a> to learn more.</li>
       </ul>
       <p>GenDaoCode Usages</p>
       <ul>
@@ -38,7 +38,16 @@
       CodeHelper will generate code use default config.</li>
       <li>Method two: Add a codehelper.properties in you project directory.</br>Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.</li>
       </ul>
-      <p>GenDaoCode 特性</p>
+      <p><strong>GenAllSetter 特性</strong></p>
+      <ul>
+      <li>在Java方法中, 根据 <code>new</code> 关键词, 为Java Bean 生成所有Setter方法。</li>
+      <li>按GenAllSetter键两次, 会为Setter方法生成默认值。</li>
+      <li>可在<code>Intellij Idea</code>中为<code>GenAllSetter</code>设置快捷键。</li>
+      <li>如何使用:</li>
+      <li>将光标移动到 <code>new</code> 语句的下一行。</li>
+      <li>点击主菜单Tools-&gt; Codehelper-&gt; GenAllSetter, 或者按下<code>GenAllSetter</code>快捷键。</li>
+      </ul>
+      <p><strong>GenDaoCode 特性</strong></p>
       <ul>
       <li><p>根据Pojo 文件一键生成 Dao，Service，Xml，Sql文件。</p></li>
       <li><p>Pojo文件更新后一键更新对应的Sql和mybatis xml文件。</p></li>
@@ -50,14 +59,14 @@
       <li><p>目前支持MySQL + Java，后续会支持更多的DB。</p></li>
       <li><p>如果喜欢我们的插件，非常感谢您的分享。</p></li>
       </ul>
-      <p>GenDaoCode 使用方法</p>
+      <p><strong>GenDaoCode 使用方法</strong></p>
       <ul>
       <li><p>主菜单Tools-> Codehelper-> GenDaoCode 按键便可生成代码。</p></li>
       <li><p>方法一：点击GenDaoCode，然后根据提示框输入Pojo名字，多个Pojo以 | 分隔。</p></li>
       <li><p>Codehelper Generator会根据默认配置为您生成代码。</p></li>
       <li><p>方法二：在工程目录下添加文件名为codehelper.properties的文件。</p></li>
       <li><p>点击GenDaoCode，Codehelper Generator会根据您的配置文件为您生成代码</p></li>
-      <li><p>如何配置: http://codehelper.me/generator/config</p></li>
+      <li><p>如何配置: https://github.com/zhengjunbase/codehelper.generator</p></li>
       </ul>
       <p>联系作者 & 加入开发</p>
       <ul>
@@ -67,7 +76,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      Stability improvements and bug fixes.
+       improve stability.
     ]]>
   </change-notes>
 
@@ -76,7 +85,7 @@
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
-    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="AutoCoding" description="AutoCoding"/>
+    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="GenAllSetter" description="GenAllSetter"/>
     <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
     <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
     <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->

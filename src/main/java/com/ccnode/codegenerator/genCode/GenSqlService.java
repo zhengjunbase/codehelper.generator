@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.genCode;
 
 import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.enums.SupportFieldClass;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
@@ -82,7 +83,7 @@ public class GenSqlService {
     private static String getSqlCharSet(GenCodeResponse response) {
         String charset = response.getUserConfigMap().get("charset");
         if (StringUtils.isBlank(charset)) {
-            return "utf8";
+            return "utf8mb4";
         }
         return charset;
     }
@@ -221,12 +222,12 @@ public class GenSqlService {
 
         if (fieldInfo.getFieldName().equalsIgnoreCase("lastUpdate")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`last_update` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append("`last_update` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
         if (fieldInfo.getFieldName().equalsIgnoreCase("updateTime")) {
             ret.append(GenCodeUtil.ONE_RETRACT)
-                    .append("`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
+                    .append("`update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '"+getFieldComment(response,fieldInfo)+"',");
             return ret.toString();
         }
 
@@ -239,8 +240,8 @@ public class GenSqlService {
         if (fieldInfo.getFieldName().equals("id")) {
             String append = new StringBuilder().append(GenCodeUtil.ONE_RETRACT).
                     append("`id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '"+getFieldComment(response,fieldInfo)+"',").toString();
-            if(fieldInfo.getFieldClass().equals("Integer")
-                    || fieldInfo.getFieldClass().equals("int")){
+            if(fieldInfo.getFieldClass() == SupportFieldClass.INTEGER
+                    || fieldInfo.getFieldClass() == SupportFieldClass.BASIC_INT) {
                 append = append.replace("BIGINT(20)","INTEGER(20)");
             }
             ret.append(append);
@@ -277,26 +278,35 @@ public class GenSqlService {
     }
 
     private static String getDefaultField(PojoFieldInfo fieldInfo, GenCodeResponse response) {
-        Map<String, String> userConfigMap = response.getUserConfigMap();
-        String key = fieldInfo.getFieldClass().toLowerCase();
-        String value = userConfigMap.get(key);
+        Map<String, String> userConfigMap = UserConfigService.userConfigMap;
+//        String key = fieldInfo.getFieldClass().toLowerCase();
+        SupportFieldClass fieldClass = fieldInfo.getFieldClass();
+        String value = userConfigMap.get(fieldClass.getDesc().toLowerCase());
+        LOGGER.info("getDefaultField  userConfigMap:{},:{}, value:{}",JSONUtil.toJSONString(userConfigMap), fieldClass, value);
         if (StringUtils.isBlank(value)) {
-            if(StringUtils.equalsIgnoreCase(key,"String")){
+            if(fieldClass == SupportFieldClass.STRING){
                 return "VARCHAR(50) NOT NULL DEFAULT ''";
-            }else if(StringUtils.equalsIgnoreCase(key,"Integer")
-                    || StringUtils.equalsIgnoreCase(key,"int")){
+            }else if(fieldClass == SupportFieldClass.BASIC_INT
+                    || fieldClass == SupportFieldClass.INTEGER){
                 return "INTEGER(12) NOT NULL DEFAULT -1";
-            }else if(StringUtils.equalsIgnoreCase(key,"short")){
+            }else if(fieldClass == SupportFieldClass.SHORT
+                    || fieldClass == SupportFieldClass.BASIC_SHORT){
                 return "TINYINT NOT NULL DEFAULT -1";
-            }else if(StringUtils.equalsIgnoreCase(key,"date")){
+            }else if(fieldClass == SupportFieldClass.DATE
+                    || fieldClass == SupportFieldClass.JAVA_SQL_Date
+                    || fieldClass == SupportFieldClass.JAVA_SQL_TIMESTAMP){
                 return "DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00'";
-            }else if(StringUtils.equalsIgnoreCase(key,"Long")){
+            }else if(fieldClass == SupportFieldClass.LONG
+                    || fieldClass == SupportFieldClass.BASIC_LONG){
                 return "BIGINT NOT NULL DEFAULT -1";
-            }else if(StringUtils.equalsIgnoreCase(key,"BigDecimal")){
+            }else if(fieldClass == SupportFieldClass.BIG_DECIMAL){
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
-            }else if(StringUtils.equalsIgnoreCase(key,"double")){
+            }else if(fieldClass == SupportFieldClass.DOUBLE
+                    || fieldClass == SupportFieldClass.BASIC_DOUBLE){
+
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
-            }else if(StringUtils.equalsIgnoreCase(key,"float")){
+            }else if(fieldClass == SupportFieldClass.FLOAT
+                    || fieldClass == SupportFieldClass.BASIC_FLOAT){
                 return "DECIMAL(14,4) NOT NULL DEFAULT 0";
             }else {
                 throw new RuntimeException("unSupport field type :" + fieldInfo.getFieldClass());
