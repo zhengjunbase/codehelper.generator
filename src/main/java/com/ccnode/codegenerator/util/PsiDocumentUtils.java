@@ -1,7 +1,5 @@
 package com.ccnode.codegenerator.util;
 
-import com.ccnode.codegenerator.genCode.genFind.ParseJpaResponse;
-import com.ccnode.codegenerator.genCode.genFind.ParseJpaStrService;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.view.MethodNameCompletionContributor;
@@ -14,20 +12,11 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiImportStatement;
-import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiPackageStatement;
-import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.impl.compiled.ClsFieldImpl;
 import com.intellij.psi.xml.XmlFile;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 /**
  */

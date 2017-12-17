@@ -1,7 +1,7 @@
 package com.ccnode.codegenerator.view;
 
 import com.ccnode.codegenerator.genCode.genFind.ParseJpaStrService;
-import com.ccnode.codegenerator.genCode.genFind.ParseJpaResponse;
+import com.ccnode.codegenerator.genCode.genFind.ParseJpaContext;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.DocumentUtil;
@@ -23,7 +23,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiWhiteSpace;
-import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.IncorrectOperationException;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;
@@ -61,8 +60,8 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
         OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
         PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
         Document javaDocument = psiDocumentManager.getDocument(containingClass.getContainingFile());
-        ParseJpaResponse response = ParseJpaStrService.parse(methodName, onePojoInfo);
-        PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, response.getDaoMethodText());
+        ParseJpaContext context = ParseJpaStrService.parse(methodName, onePojoInfo);
+        PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, context.getDaoMethodText());
         try {
             Thread.sleep(1000);
         } catch (Exception ignored) {
@@ -70,19 +69,19 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
         Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
         Integer line = DocumentUtil.locateLineNumber(xmlDocument, "</mapper>");
         LOGGER.info("invoke line :{}", line);
-        LOGGER.info("invoke response.getXmlMethodText() :{}", response.getXmlMethodText());
+        LOGGER.info("invoke context.getXmlMethodText() :{}", context.getXmlMethodText());
         if(line > 0) {
             TextRange range = new TextRange(xmlDocument.getLineStartOffset(line), xmlDocument.getLineStartOffset(line));
-            String insertText = response.getXmlMethodText();
+            String insertText = context.getXmlMethodText();
             if(StringUtils.isNotBlank(DocumentUtil.getTextByLine(xmlDocument, line -1))){
                 insertText = "\n" + insertText;
             }
             PsiDocumentUtils.commitAndSaveDocument(project, xmlDocument, range, insertText);
             CodeInsightUtil.positionCursor(project, onePojoInfo.getXmlFile(), onePojoInfo.getXmlFile().findElementAt(xmlDocument.getLineStartOffset(line)));
         }
-        PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), response.getXmlMethodText());
-        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getDaoClass(), response.getDaoMethodText());
-        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), response.getServiceMethodText());
+        PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), context.getXmlMethodText());
+        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getDaoClass(), context.getDaoMethodText());
+        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), context.getServiceMethodText());
 
 
 

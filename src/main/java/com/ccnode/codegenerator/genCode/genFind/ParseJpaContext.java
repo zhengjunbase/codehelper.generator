@@ -12,7 +12,7 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2017/08/05 12:39
  */
-public class ParseJpaResponse {
+public class ParseJpaContext {
     OnePojoInfo onePojoInfo;
     String inputMethodName;
     String tableName;
