@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.google.common.base.Objects;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class LoggerWrapper implements Logger {
 
     public static void saveAllLogs(String projectPath)  {
         try{
+            ApplicationManager.getApplication().saveAll();
             VirtualFileManager.getInstance().syncRefresh();
             String firstMatch = MapHelper.getFirstMatch(UserConfigService.userConfigMap, "printLog", "printlog", "debug");
             if(!StringUtils.endsWithIgnoreCase(firstMatch,"true") || StringUtils.isBlank(projectPath)){
@@ -53,6 +55,7 @@ public class LoggerWrapper implements Logger {
             }
             allLines.addAll(logList);
             IOUtils.writeLines(new File(path),allLines);
+            ApplicationManager.getApplication().saveAll();
             VirtualFileManager.getInstance().syncRefresh();
         }catch(Throwable ignored){
 

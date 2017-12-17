@@ -112,7 +112,7 @@
                             implementationClass="com.ccnode.codegenerator.view.MethodNameCompletionContributor"/>
 
     <intentionAction>
-            <className>com.ccnode.codegenerator.view.GenMethodXmlAction</className>
+            <className>com.ccnode.codegenerator.view.CompleteMethodAction</className>
         </intentionAction>
   </extensions>
 

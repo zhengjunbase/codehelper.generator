@@ -35,14 +35,15 @@ import org.slf4j.Logger;
  * <p>
  * Created by zhengjun.du on 2017/08/13 20:36
  */
-public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
-    private final static Logger LOGGER = LoggerWrapper.getLogger(GenMethodXmlAction.class);
+public class CompleteMethodAction extends PsiElementBaseIntentionAction {
+    private final static Logger LOGGER = LoggerWrapper.getLogger(CompleteMethodAction.class);
 
     public static final String COMPLETE_METHOD = "Complete Method";
     @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         long startTime = System.currentTimeMillis();
         try {
+            LOGGER.info("invoke start ");
             PsiElement parent = element.getParent();
             TextRange textRange = null;
             String methodName = StringUtils.EMPTY;
@@ -69,7 +70,8 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
                 return;
             }
             PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, context.getDaoMethodText());
-            Thread.sleep(1000);
+            LOGGER.info("CompleteMethodAction save dao cost :{}", System.currentTimeMillis() - startTime);
+//            Thread.sleep(1000);
             Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
             Integer line = DocumentUtil.locateLineNumber(xmlDocument, "</mapper>");
             LOGGER.info("invoke line :{}", line);
@@ -81,6 +83,7 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
                     insertText = "\n" + insertText;
                 }
                 PsiDocumentUtils.commitAndSaveDocument(project, xmlDocument, range, insertText);
+                LOGGER.info("CompleteMethodAction save xml cost :{}", System.currentTimeMillis() - startTime);
                 CodeInsightUtil.positionCursor(project, onePojoInfo.getXmlFile(), onePojoInfo.getXmlFile().findElementAt(xmlDocument.getLineStartOffset(line)));
             }
             PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), context.getXmlMethodText());
@@ -88,10 +91,11 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
             PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), context.getServiceMethodText());
 
         } catch (Throwable e) {
-            LOGGER.error("GenMethodXmlAction invoke error, {}", e);
-            Messages.showMessageDialog(project, e.getMessage(), "Failure", null);
+            LOGGER.error("CompleteMethodAction invoke error, {}", e);
+            Messages.showMessageDialog(project, e.getMessage(), "Plugin Crash", null);
         } finally {
-            LOGGER.info("GenMethodXmlAction invoke cost :{}", System.currentTimeMillis() - startTime);
+            LOGGER.info("CompleteMethodAction invoke cost :{}", System.currentTimeMillis() - startTime);
+            LoggerWrapper.saveAllLogs(project.getBasePath());
         }
     }
 
