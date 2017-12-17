@@ -194,13 +194,24 @@ public class OnePojoInfoHelper {
             ret.setFullServicePath(serviceFile.getAbsolutePath());
         }
         File xmlFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Dao.xml");
+        PsiFile xmlPsiFile = getPsiFileByName(project, pojoName + "Dao.xml");
         if (xmlFile == null){
             xmlFile = IOUtils.matchOnlyOneFile(project.getBasePath(), pojoName + "Mapper.xml");
+            xmlPsiFile = getPsiFileByName(project, pojoName + "Mapper.xml");
         }
         if(xmlFile != null){
             ret.setFullMapperPath(xmlFile.getAbsolutePath());
+            ret.setXmlFile((XmlFile) xmlPsiFile);
         }
         return ret;
+    }
+
+    public static PsiFile getPsiFileByName(Project project, String name){
+        PsiFile[] files = FilenameIndex.getFilesByName(project, name, GlobalSearchScope.projectScope(project));
+        if(files.length == 0 ){
+            return null;
+        }
+        return files[0];
     }
 
     public static void parseIdeaFieldInfo(@NotNull OnePojoInfo onePojoInfo, Project project){

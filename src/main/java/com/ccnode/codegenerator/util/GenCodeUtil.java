@@ -3,7 +3,9 @@ package com.ccnode.codegenerator.util;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.intellij.util.text.ReverseCharSequence;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.groovy.runtime.powerassert.SourceText;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -129,6 +131,12 @@ public class GenCodeUtil {
                 StringUtils.deleteWhitespace(word));
     }
 
+    public static String upperStartChar(String value){
+        if(StringUtils.isBlank(value)){
+            return StringUtils.EMPTY;
+        }
+        return value.substring(0,1).toUpperCase() + value.substring(1);
+    }
     public static String getUnderScore(String value) {
         if(value == null){
             return StringUtils.EMPTY;
@@ -150,16 +158,22 @@ public class GenCodeUtil {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL,value);
     }
 
-    public static void recursiveRemoveEnd(StringBuilder builder, String compare){
-        if(builder == null || compare == null
-                || compare.length() < 1 || builder.length() < 1){
+    /**
+     * e.g: builder: helloJackJack, toRemove:Jack return : hello
+     *
+     * @param builder
+     * @param toRemove
+     */
+    public static void recursiveRemoveEnd(StringBuilder builder, String toRemove){
+        if(builder == null || toRemove == null
+                || toRemove.length() < 1 || builder.length() < 1){
             return;
         }
-        int remindLength = builder.length() - compare.length();
-        while (remindLength >= 0 && StringUtils.equals(compare,
+        int remindLength = builder.length() - toRemove.length();
+        while (remindLength >= 0 && StringUtils.equals(toRemove,
                 builder.substring(remindLength, builder.length()))){
             builder.delete(remindLength, builder.length());
-            remindLength = builder.length() - compare.length();
+            remindLength = builder.length() - toRemove.length();
         }
     }
 
@@ -167,9 +181,13 @@ public class GenCodeUtil {
         StringBuilder builder = new StringBuilder();
         builder.append("fsfasdfffdf");
         Integer length = builder.length();
-        recursiveRemoveEnd(builder, "xdf");
+        recursiveRemoveEnd(builder, "fdf");
+        System.out.println(builder);
         builder= new StringBuilder("b");
         recursiveRemoveEnd(builder, "");
         System.out.println(builder);
+        System.out.println(upperStartChar("dfs"));
+        System.out.println(upperStartChar("d"));
+        System.out.println(upperStartChar(""));
     }
 }

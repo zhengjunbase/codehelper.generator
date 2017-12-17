@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.ccnode.codegenerator.mybatis.generator</id>
   <name>codehelper.generator</name>
-  <version>2017.12.09</version>
+  <version>2017.12.16</version>
   <vendor email="zhengjunbase@gmail.com" url="http://www.codehelper.me/generator">CodeHelper</vendor>
 
   <description><![CDATA[
@@ -111,6 +111,10 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
+     <codeInsight.lineMarkerProvider language="JAVA"
+                          implementationClass="com.ccnode.codegenerator.view.MybatisJavaLineMarkerProvider"/>
+        <codeInsight.lineMarkerProvider language="XML"
+                          implementationClass="com.ccnode.codegenerator.view.MybatisXmlLineMarkerProvider"/>
       <applicationService serviceInterface="com.ccnode.codegenerator.storage.SettingService"
                           serviceImplementation="com.ccnode.codegenerator.storage.SettingService" />
       <completion.contributor language="JAVA"

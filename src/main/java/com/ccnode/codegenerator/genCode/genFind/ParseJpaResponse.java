@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.genCode.genFind;
 
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojo.TextBuilder;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
@@ -19,12 +20,21 @@ public class ParseJpaResponse {
     List<SqlWord> hasBuilds;
     List<SqlWord> unBuilds;
     StringBuilder builder;
+    TextBuilder textBuilder;
     String javaReturnType;
     String xmlReturnType;
     List<MethodParameter> javaMethodParameterList = Lists.newArrayList();
     String daoMethodText;
     String serviceMethodText;
     String xmlMethodText;
+
+    public TextBuilder getTextBuilder() {
+        return textBuilder;
+    }
+
+    public void setTextBuilder(TextBuilder textBuilder) {
+        this.textBuilder = textBuilder;
+    }
 
     public void addMethodParameter(String parameterType, String parameterName){
         MethodParameter methodParameter = new MethodParameter();
