@@ -107,7 +107,7 @@ public class GenCodeResponse extends BaseResponse {
 
     public void setThrowable(Throwable throwable) {
         this.throwable = throwable;
-        this.setMsg(throwable.getMessage());
+        this.setErrorMessage(throwable.getMessage());
     }
 
     public ServerMsg getServerMsg() {

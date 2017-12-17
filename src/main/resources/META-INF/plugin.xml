@@ -85,19 +85,10 @@
       <separator/>
       <group id="TestActionSubGroup"/>
       <add-to-group group-id="ToolsMenu" relative-to-action="GenerateJavadoc" anchor="before"/>
-    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.AutoCodingAction" text="GenAllSetter" description="GenAllSetter"/>
-    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
+    <action id="mybatis.AutoCoding" class="com.ccnode.codegenerator.view.GenAllSettersAction" text="GenAllSetter" description="GenAllSetter"/>
+    <action id="mybatis.genMybatisCode" class="com.ccnode.codegenerator.view.GenDaoCodeAction" text="GenDaoCode" description="GenMybatisCode"/>
     <action id="mybatis.LearnMore" class="com.ccnode.codegenerator.view.ShowLearnMoreAction" text="Learn More" description="Learn_More"/>
-    <!--<action id="mybatis.enterLicense" class="com.ccnode.codegenerator.view.EnterLicenseAction" text="Register" description="License"/>-->
-
-      <!--<action id="mybatis.generator" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode" description="A test menu item"/>-->
   </group>
-    <!--<group id="com.ccnode.codegenerator.mybatis.generator" text="Gen" description="CodeGenerator">-->
-      <!--<add-to-group group-id="TestActionSubGroup" />-->
-            <!--<action id="mybatis.generator_1" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode1" description="A test menu item1"/>-->
-            <!--<action id="mybatis.generator_2" class="com.ccnode.codegenerator.view.GenCodeAction" text="genCode2" description="A test menu item2"/>-->
-
-    <!--</group>-->
 </actions>
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->

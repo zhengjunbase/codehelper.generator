@@ -7,23 +7,15 @@ import com.ccnode.codegenerator.service.pojo.AutoCodingRequest;
 import com.ccnode.codegenerator.util.DocumentUtil;
 import com.ccnode.codegenerator.util.IOUtils;
 import com.ccnode.codegenerator.util.LoggerWrapper;
-import com.ccnode.codegenerator.genCode.UserConfigService;
-import com.ccnode.codegenerator.pojo.PojoLine;
 import com.ccnode.codegenerator.pojoHelper.GenCodeResponseHelper;
 import com.ccnode.codegenerator.pojoHelper.ProjectHelper;
-import com.ccnode.codegenerator.pojoHelper.ServerRequestHelper;
 import com.ccnode.codegenerator.service.SendToServerService;
-import com.ccnode.codegenerator.service.pojo.AutoCodingRequest;
 import com.ccnode.codegenerator.storage.SettingService;
-import com.ccnode.codegenerator.util.DocumentUtil;
-import com.ccnode.codegenerator.util.IOUtils;
-import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
@@ -42,11 +34,11 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2016/04/16 21:30
  */
-public class AutoCodingAction extends AnAction {
+public class GenAllSettersAction extends AnAction {
 
     public final static String SPACE = " ";
 
-    private final static Logger LOGGER = LoggerWrapper.getLogger(AutoCodingAction.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenAllSettersAction.class);
 
 
     public void actionPerformed(AnActionEvent event) {

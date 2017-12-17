@@ -2,12 +2,10 @@ package com.ccnode.codegenerator.pojo;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.Serializable;
-
 /**
  * Created on 4/1/16.
  */
-public class BaseResponse implements Serializable {
+public class BaseResponse  {
     /**
      * 0 - 只接受请求，为处理中
      */
@@ -20,8 +18,6 @@ public class BaseResponse implements Serializable {
      * 2 - 处理失败
      */
     public static final String FAILURE = "FAILURE";
-
-    private static final long serialVersionUID = -3041437055079912036L;
 
     /**
      * 状态
@@ -36,7 +32,7 @@ public class BaseResponse implements Serializable {
     /**
      * 错误信息
      */
-    private String msg;
+    private String errorMessage;
 
     private Throwable throwable;
 
@@ -59,53 +55,53 @@ public class BaseResponse implements Serializable {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public <T extends BaseResponse> T success() {
         this.status = SUCCESS;
         this.code = "";
-        this.msg = "SUCCESS";
+        this.errorMessage = "SUCCESS";
         return (T) this;
     }
 
     public <T extends BaseResponse> T accept() {
         this.status = ACCEPT;
         this.code = "";
-        this.msg = "请求处理中";
+        this.errorMessage = "请求处理中";
         return (T) this;
     }
 
     public <T extends BaseResponse> T accept(String msg) {
         this.status = ACCEPT;
         this.code = "";
-        this.msg = msg;
+        this.errorMessage = msg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String code, String errMsg) {
         this.status = FAILURE;
         this.code = code;
-        this.msg = errMsg;
+        this.errorMessage = errMsg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String errMsg) {
         this.status = FAILURE;
         this.code = StringUtils.EMPTY;
-        this.msg = errMsg;
+        this.errorMessage = errMsg;
         return (T) this;
     }
 
     public <T extends BaseResponse> T failure(String errMsg,Throwable throwable) {
         this.status = FAILURE;
         this.code = StringUtils.EMPTY;
-        this.msg = errMsg;
+        this.errorMessage = errMsg;
         this.throwable = throwable;
         return (T) this;
     }
@@ -113,7 +109,7 @@ public class BaseResponse implements Serializable {
     public <T extends BaseResponse> T failure(RetStatus retStatus) {
         this.status = FAILURE;
         this.code = retStatus.getCode().toString();
-        this.msg = retStatus.getDesc();
+        this.errorMessage = retStatus.getDesc();
         return (T) this;
 //        throw new BizException();
     }
@@ -121,19 +117,19 @@ public class BaseResponse implements Serializable {
     public <T extends BaseResponse> T failure(RetStatus retStatus, String errorMsg) {
         this.status = FAILURE;
         this.code = retStatus.getCode().toString();
-        this.msg = errorMsg;
+        this.errorMessage = errorMsg;
         return (T) this;
     }
 
-    public boolean checkSuccess() {
+    public boolean isSuccess() {
         return SUCCESS.equalsIgnoreCase(status);
     }
 
-    public boolean checkAccept() {
+    public boolean isAccepted() {
         return ACCEPT.equals(status);
     }
 
-    public boolean checkFailure() {
+    public boolean isFailure() {
         return FAILURE.equals(status);
     }
 }

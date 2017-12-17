@@ -15,6 +15,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiAnonymousClass;
 import com.intellij.psi.PsiClass;
@@ -40,51 +41,58 @@ public class GenMethodXmlAction extends PsiElementBaseIntentionAction {
     public static final String COMPLETE_METHOD = "Complete Method";
     @Override
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
-        PsiElement parent = element.getParent();
-        TextRange textRange = null;
-        String methodName = StringUtils.EMPTY;
-        if (parent instanceof PsiMethod) {
-            return;
-        } else if (parent instanceof PsiJavaCodeReferenceElement) {
-            methodName = parent.getText();
-            textRange = parent.getTextRange();
-        } else if (element instanceof PsiWhiteSpace) {
-            PsiElement lastMatchedElement = findLastMatchedElement(element);
-            methodName = lastMatchedElement.getText();
-            textRange = lastMatchedElement.getTextRange();
-        }
-        PsiClass containingClass = PsiElementUtil.getContainingClass(element);
-        if(containingClass == null){
-            return;
-        }
-        OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
-        PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
-        Document javaDocument = psiDocumentManager.getDocument(containingClass.getContainingFile());
-        ParseJpaContext context = ParseJpaStrService.parse(methodName, onePojoInfo);
-        PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, context.getDaoMethodText());
+        long startTime = System.currentTimeMillis();
         try {
-            Thread.sleep(1000);
-        } catch (Exception ignored) {
-        }
-        Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
-        Integer line = DocumentUtil.locateLineNumber(xmlDocument, "</mapper>");
-        LOGGER.info("invoke line :{}", line);
-        LOGGER.info("invoke context.getXmlMethodText() :{}", context.getXmlMethodText());
-        if(line > 0) {
-            TextRange range = new TextRange(xmlDocument.getLineStartOffset(line), xmlDocument.getLineStartOffset(line));
-            String insertText = context.getXmlMethodText();
-            if(StringUtils.isNotBlank(DocumentUtil.getTextByLine(xmlDocument, line -1))){
-                insertText = "\n" + insertText;
+            PsiElement parent = element.getParent();
+            TextRange textRange = null;
+            String methodName = StringUtils.EMPTY;
+            if (parent instanceof PsiMethod) {
+                return;
+            } else if (parent instanceof PsiJavaCodeReferenceElement) {
+                methodName = parent.getText();
+                textRange = parent.getTextRange();
+            } else if (element instanceof PsiWhiteSpace) {
+                PsiElement lastMatchedElement = findLastMatchedElement(element);
+                methodName = lastMatchedElement.getText();
+                textRange = lastMatchedElement.getTextRange();
             }
-            PsiDocumentUtils.commitAndSaveDocument(project, xmlDocument, range, insertText);
-            CodeInsightUtil.positionCursor(project, onePojoInfo.getXmlFile(), onePojoInfo.getXmlFile().findElementAt(xmlDocument.getLineStartOffset(line)));
+            PsiClass containingClass = PsiElementUtil.getContainingClass(element);
+            if(containingClass == null){
+                return;
+            }
+            OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
+            PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
+            Document javaDocument = psiDocumentManager.getDocument(containingClass.getContainingFile());
+            ParseJpaContext context = ParseJpaStrService.parse(methodName, onePojoInfo);
+            if(!context.isSuccess()){
+                Messages.showMessageDialog(project, context.getErrorMessage(), "Failure", null);
+                return;
+            }
+            PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, context.getDaoMethodText());
+            Thread.sleep(1000);
+            Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
+            Integer line = DocumentUtil.locateLineNumber(xmlDocument, "</mapper>");
+            LOGGER.info("invoke line :{}", line);
+            LOGGER.info("invoke context.getXmlMethodText() :{}", context.getXmlMethodText());
+            if(line > 0) {
+                TextRange range = new TextRange(xmlDocument.getLineStartOffset(line), xmlDocument.getLineStartOffset(line));
+                String insertText = context.getXmlMethodText();
+                if(StringUtils.isNotBlank(DocumentUtil.getTextByLine(xmlDocument, line -1))){
+                    insertText = "\n" + insertText;
+                }
+                PsiDocumentUtils.commitAndSaveDocument(project, xmlDocument, range, insertText);
+                CodeInsightUtil.positionCursor(project, onePojoInfo.getXmlFile(), onePojoInfo.getXmlFile().findElementAt(xmlDocument.getLineStartOffset(line)));
+            }
+            PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), context.getXmlMethodText());
+            PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getDaoClass(), context.getDaoMethodText());
+            PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), context.getServiceMethodText());
+
+        } catch (Throwable e) {
+            LOGGER.error("GenMethodXmlAction invoke error, {}", e);
+            Messages.showMessageDialog(project, e.getMessage(), "Failure", null);
+        } finally {
+            LOGGER.info("GenMethodXmlAction invoke cost :{}", System.currentTimeMillis() - startTime);
         }
-        PsiDocumentUtils.appendMethodToXml(project, onePojoInfo.getDaoClass(), context.getXmlMethodText());
-        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getDaoClass(), context.getDaoMethodText());
-        PsiDocumentUtils.appendMethodToClass(project, onePojoInfo.getServiceClass(), context.getServiceMethodText());
-
-
-
     }
 
 

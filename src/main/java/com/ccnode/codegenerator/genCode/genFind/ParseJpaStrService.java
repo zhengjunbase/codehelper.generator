@@ -32,6 +32,7 @@ public class ParseJpaStrService {
 
     public static ParseJpaContext parse(String methodName, OnePojoInfo pojoInfo) {
         long startTime = System.currentTimeMillis();
+        ParseJpaContext context = new ParseJpaContext();
         try {
             List<SqlWord> wordList = Lists.newArrayList();
             List<SqlWord> fieldFragmentList = Lists.newArrayList();
@@ -46,6 +47,9 @@ public class ParseJpaStrService {
             while (StringUtils.isNotBlank(remainStr)) {
                 SqlWord preWord = ListHelper.nullOrLastElement(wordList);
                 Pair<String, SqlWord> pair = parseOneSqlWord(remainStr, fieldFragmentList, preWord);
+                if(pair == null){
+                    return context.failure("Failure: Invalid Input Method Name");
+                }
                 remainStr = pair.getLeft(); // todo bug
                 if (preWord != null) {
                     preWord.setNextWord(pair.getRight());
@@ -54,9 +58,8 @@ public class ParseJpaStrService {
                 wordList.add(pair.getRight());
             }
             for (SqlWord sqlWord : wordList) {
-                System.out.println(sqlWord.getValue() + "——" + sqlWord.getSqlWordType());
+                LOGGER.info(sqlWord.getValue() + "——" + sqlWord.getSqlWordType());
             }
-            ParseJpaContext context = new ParseJpaContext();
             context.setInputMethodName(methodName);
             context.setOnePojoInfo(pojoInfo);
             context.setBuilder(new StringBuilder());
@@ -69,7 +72,7 @@ public class ParseJpaStrService {
             return context;
         } catch (Throwable e) {
             LOGGER.error("ParseJpaStrService parse error, {}", methodName, e);
-            return null;
+            return context.failure(e.getMessage());
         } finally {
             LOGGER.info("ParseJpaStrService parse cost :{}", System.currentTimeMillis() - startTime);
         }

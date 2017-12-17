@@ -15,18 +15,12 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -34,14 +28,14 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2016/04/16 21:30
  */
-public class GenCodeAction extends AnAction {
+public class GenDaoCodeAction extends AnAction {
 
-    private final static Logger LOGGER = LoggerWrapper.getLogger(GenCodeAction.class);
+    private final static Logger LOGGER = LoggerWrapper.getLogger(GenDaoCodeAction.class);
 
     // If you register the action from Java code, this constructor is used to set the menu item name
     // (optionally, you can specify the menu description and an icon to display next to the menu item).
     // You can omit this constructor when registering the action in the plugin.xml file.
-    public GenCodeAction() {
+    public GenDaoCodeAction() {
         // Set the menu item name.
         super("Text _Boxes");
         // Set the menu item name, description and icon.
@@ -84,7 +78,7 @@ public class GenCodeAction extends AnAction {
         List<ChangeInfo> newFiles = response.getNewFiles();
         List<ChangeInfo> updateFiles = response.getUpdateFiles();
         List<String> msgList = Lists.newArrayList();
-        if(response.checkSuccess()){
+        if(response.isSuccess()){
             Integer affectRows = getAffectRows(newFiles);
             affectRows += getAffectRows(updateFiles);
             if(newFiles.isEmpty() && affectRows.equals(0)){
@@ -105,7 +99,7 @@ public class GenCodeAction extends AnAction {
                 }
             }
         }else{
-            msgList.add(response.getMsg());
+            msgList.add(response.getErrorMessage());
         }
         String ret = StringUtils.EMPTY;
         for (String msg : msgList) {

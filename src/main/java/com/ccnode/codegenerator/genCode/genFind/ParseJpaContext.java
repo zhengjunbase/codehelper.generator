@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.genCode.genFind;
 
+import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojo.TextBuilder;
 import com.google.common.base.Strings;
@@ -12,7 +13,7 @@ import java.util.List;
  * <p>
  * Created by zhengjun.du on 2017/08/05 12:39
  */
-public class ParseJpaContext {
+public class ParseJpaContext extends BaseResponse{
     OnePojoInfo onePojoInfo;
     String inputMethodName;
     String tableName;

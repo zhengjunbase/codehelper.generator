@@ -25,56 +25,56 @@ public class GenCodeService {
             response.setUserConfigMap(UserConfigService.userConfigMap);
 //            response = UserConfigService.readConfigFile(request.getProjectPath());
             LOGGER.info("UserConfigService.readConfigFile done");
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
 
             response.setRequest(request);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             response.setPathSplitter(request.getPathSplitter());
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
 
             //get pojos and init location
             response = UserConfigService.initConfig(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.initConfig done");
 
             response = InitialService.initPojos(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.initPojos done");
 
             GenSqlService.genSQL(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.genSQL done");
             GenDaoService.genDAO(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.genDao done");
             GenServiceService.genService(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.genService done");
             GenMapperService.genMapper(response);
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.genMapper done");
             for (OnePojoInfo onePojoInfo : response.getPojoInfos()) {
                 OnePojoInfoHelper.flushFiles(onePojoInfo,response);
             }
-            if(response.checkFailure()){
+            if(response.isFailure()){
                 return response;
             }
             LOGGER.info("UserConfigService.flushFiles done");

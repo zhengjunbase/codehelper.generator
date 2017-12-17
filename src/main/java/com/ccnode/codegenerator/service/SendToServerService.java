@@ -42,8 +42,8 @@ public class SendToServerService {
 //        long startTime = System.currentTimeMillis();
 //        try{
 //
-//            Boolean checkSuccess = RegisterCheckService.checkAll();
-//            if(!checkSuccess && RegisterCheckService.checkFromLocal()){
+//            Boolean isSuccess = RegisterCheckService.checkAll();
+//            if(!isSuccess && RegisterCheckService.checkFromLocal()){
 //                String tipMsg = "Licence Check Register Failure.\n Please Entry a New License:";
 //                SettingService.getInstance().getState().setRegisterTipMsg(tipMsg);
 ////                EnterLicenseAction.ShowRegisterDialog(project, tipMsg);
