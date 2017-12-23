@@ -12,10 +12,19 @@ import java.util.List;
  */
 public class SqlWord {
     String value;
+    String sqlFieldValue;
     PojoFieldInfo fieldInfo;
     SqlWordType sqlWordType;
     SqlWord preWord;
     SqlWord nextWord;
+
+    public String getSqlFieldValue() {
+        return sqlFieldValue;
+    }
+
+    public void setSqlFieldValue(String sqlFieldValue) {
+        this.sqlFieldValue = sqlFieldValue;
+    }
 
     public PojoFieldInfo getFieldInfo() {
         return fieldInfo;

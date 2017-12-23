@@ -64,7 +64,8 @@ public class CompleteMethodAction extends PsiElementBaseIntentionAction {
             OnePojoInfo onePojoInfo = OnePojoInfoHelper.parseOnePojoInfoFromClass(containingClass, project);
             PsiDocumentManager psiDocumentManager = PsiDocumentManager.getInstance(project);
             Document javaDocument = psiDocumentManager.getDocument(containingClass.getContainingFile());
-            ParseJpaContext context = ParseJpaStrService.parse(methodName, onePojoInfo);
+            Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
+            ParseJpaContext context = ParseJpaStrService.parse(methodName, xmlDocument, onePojoInfo);
             if(!context.isSuccess()){
                 Messages.showMessageDialog(project, context.getErrorMessage(), "Failure", null);
                 return;
@@ -72,7 +73,6 @@ public class CompleteMethodAction extends PsiElementBaseIntentionAction {
             PsiDocumentUtils.commitAndSaveDocument(project, javaDocument, textRange, context.getDaoMethodText());
             LOGGER.info("CompleteMethodAction save dao cost :{}", System.currentTimeMillis() - startTime);
 //            Thread.sleep(1000);
-            Document xmlDocument = psiDocumentManager.getDocument(onePojoInfo.getXmlFile());
             Integer line = DocumentUtil.locateLineNumber(xmlDocument, "</mapper>");
             LOGGER.info("invoke line :{}", line);
             LOGGER.info("invoke context.getXmlMethodText() :{}", context.getXmlMethodText());

@@ -2,6 +2,7 @@ package com.ccnode.codegenerator.genCode.genFind;
 
 import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojo.ResultMapRow;
 import com.ccnode.codegenerator.pojo.TextBuilder;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -17,6 +18,7 @@ public class ParseJpaContext extends BaseResponse{
     OnePojoInfo onePojoInfo;
     String inputMethodName;
     String tableName;
+    List<ResultMapRow> resultMapRowList = Lists.newArrayList();
     List<SqlWord> sqlWordList;
     List<SqlWord> hasBuilds;
     List<SqlWord> unBuilds;
@@ -28,6 +30,14 @@ public class ParseJpaContext extends BaseResponse{
     String daoMethodText;
     String serviceMethodText;
     String xmlMethodText;
+
+    public List<ResultMapRow> getResultMapRowList() {
+        return resultMapRowList;
+    }
+
+    public void setResultMapRowList(List<ResultMapRow> resultMapRowList) {
+        this.resultMapRowList = resultMapRowList;
+    }
 
     public TextBuilder getTextBuilder() {
         return textBuilder;

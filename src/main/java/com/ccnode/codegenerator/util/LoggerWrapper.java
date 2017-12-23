@@ -34,8 +34,8 @@ public class LoggerWrapper implements Logger {
 
     public static void saveAllLogs(String projectPath)  {
         try{
-            ApplicationManager.getApplication().saveAll();
             VirtualFileManager.getInstance().syncRefresh();
+            ApplicationManager.getApplication().saveAll();
             String firstMatch = MapHelper.getFirstMatch(UserConfigService.userConfigMap, "printLog", "printlog", "debug");
             if(!StringUtils.endsWithIgnoreCase(firstMatch,"true") || StringUtils.isBlank(projectPath)){
                 return;
