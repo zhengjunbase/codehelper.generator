@@ -3,8 +3,7 @@ package com.ccnode.codegenerator.genCode;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
-import com.ccnode.codegenerator.util.GenCodeUtil;
-import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.*;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -31,9 +30,9 @@ public class GenServiceService {
     public static void genService( GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
             try{
-                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.SERVICE);
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.SERVICE, response);
                 Boolean useGenericDao = Objects.equal(response.getUserConfigMap().get("usegenericdao"),"true");
-                genDaoFile(pojoInfo,fileInfo,useGenericDao);
+                genDaoFile(pojoInfo,fileInfo,useGenericDao, response);
 
             }catch(Throwable e){
                 LOGGER.error("GenServiceService genService error", e);
@@ -42,9 +41,10 @@ public class GenServiceService {
         }
     }
 
-    private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao) {
+    private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao, GenCodeResponse response) {
         String pojoName = onePojoInfo.getPojoName();
-        String pojoNameDao = pojoName + "Dao";
+        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
+        String pojoNameDao = pojoName + (serviceSuffix == null ? GenCodeConfig.SERVICE_SUFFIX:serviceSuffix);
         if (!fileInfo.getOldLines().isEmpty()) {
             fileInfo.setNewLines(fileInfo.getOldLines());
             return;

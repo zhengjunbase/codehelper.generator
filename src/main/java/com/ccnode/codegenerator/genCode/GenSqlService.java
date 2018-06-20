@@ -42,7 +42,7 @@ public class GenSqlService {
 
     private static void genSQLFile(OnePojoInfo onePojoInfo, GenCodeResponse response) {
         LOGGER.info("genSQLFile :{}", onePojoInfo.getPojoName());
-        GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(onePojoInfo, FileType.SQL);
+        GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(onePojoInfo, FileType.SQL, response);
         Boolean canReplace = canReplace(fileInfo, response);
         if (fileInfo.getOldLines().isEmpty()) {
             List<String> newLines = genSql(onePojoInfo, response);

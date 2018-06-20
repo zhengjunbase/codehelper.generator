@@ -3,8 +3,7 @@ package com.ccnode.codegenerator.genCode;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
-import com.ccnode.codegenerator.util.GenCodeUtil;
-import com.ccnode.codegenerator.util.LoggerWrapper;
+import com.ccnode.codegenerator.util.*;
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.MethodName;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -30,8 +29,8 @@ public class GenDaoService {
     public static void genDAO(GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
             try{
-                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.DAO);
-                genDaoFile(pojoInfo,fileInfo,GenCodeResponseHelper.isUseGenericDao(response));
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.DAO ,response);
+                genDaoFile(pojoInfo,fileInfo,GenCodeResponseHelper.isUseGenericDao(response), response);
             }catch(Throwable e){
                 LOGGER.error("GenDaoService genDAO error", e);
                 response.failure("GenDaoService genDAO error");
@@ -39,9 +38,10 @@ public class GenDaoService {
         }
     }
 
-    private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao) {
+    private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao, GenCodeResponse response) {
         String pojoName = onePojoInfo.getPojoName();
-        String pojoNameDao = pojoName+"Dao";
+        String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
+        String pojoNameDao = pojoName+(daoSuffix == null ? GenCodeConfig.DAO_SUFFIX:daoSuffix);
         if(!fileInfo.getOldLines().isEmpty()){
             fileInfo.setNewLines(fileInfo.getOldLines());
             return;
