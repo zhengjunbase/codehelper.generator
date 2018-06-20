@@ -7,9 +7,9 @@ package com.ccnode.codegenerator.enums;
  */
 public enum FileType {
     SQL(0,".sql"),
-    MAPPER(1,"Dao.xml"),
-    SERVICE(2,"Service.java"),
-    DAO(3,"Dao.java"),
+    MAPPER(1,".xml"),
+    SERVICE(2,".java"),
+    DAO(3,".java"),
     NONE(-1,"none");
 
     private Integer code;

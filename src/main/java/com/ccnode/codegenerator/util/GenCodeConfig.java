@@ -18,6 +18,9 @@ public class GenCodeConfig {
     String sqlDir = StringUtils.EMPTY;
     String daoDir = StringUtils.EMPTY;
     String pojoName;
+    String mapperSuffix = "Dao";
+    String daoSuffix = "Dao";
+    String serviceSuffix = "Service";
     Map<String,String> configMap = Maps.newHashMap();
 
     public Map<String, String> getConfigMap() {
@@ -74,5 +77,29 @@ public class GenCodeConfig {
 
     public void setDaoDir(String daoDir) {
         this.daoDir = daoDir;
+    }
+
+    public String getMapperSuffix() {
+        return mapperSuffix;
+    }
+
+    public void setMapperSuffix(String mapperSuffix) {
+        this.mapperSuffix = mapperSuffix;
+    }
+
+    public String getDaoSuffix() {
+        return daoSuffix;
+    }
+
+    public void setDaoSuffix(String daoSuffix) {
+        this.daoSuffix = daoSuffix;
+    }
+
+    public String getServiceSuffix() {
+        return serviceSuffix;
+    }
+
+    public void setServiceSuffix(String serviceSuffix) {
+        this.serviceSuffix = serviceSuffix;
     }
 }

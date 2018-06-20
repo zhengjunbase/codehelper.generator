@@ -108,6 +108,9 @@ public class UserConfigService {
             config.setSqlDir(removeStartAndEndSplitter(userConfigMap.get("sql.path")));
             config.setMapperDir(removeStartAndEndSplitter(userConfigMap.get("mapper.path")));
             config.setServiceDir(removeStartAndEndSplitter(userConfigMap.get("service.path")));
+            config.setMapperSuffix(removeStartAndEndSplitter(userConfigMap.get("mapper.suffix")));
+            config.setDaoSuffix(removeStartAndEndSplitter(userConfigMap.get("dao.suffix")));
+            config.setServiceSuffix(removeStartAndEndSplitter(userConfigMap.get("service.suffix")));
         }catch(Exception e){
             LOGGER.error(" status error occurred :{}",response,e);
             return response.failure(" status error occurred");

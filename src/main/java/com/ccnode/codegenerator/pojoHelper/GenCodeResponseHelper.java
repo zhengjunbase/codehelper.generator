@@ -1,9 +1,7 @@
 package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
-import com.ccnode.codegenerator.pojo.GenCodeResponse;
-import com.ccnode.codegenerator.pojo.OnePojoInfo;
-import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
@@ -30,8 +28,26 @@ public class GenCodeResponseHelper {
     }
 
     public static GeneratedFile getByFileType(@NotNull OnePojoInfo onePojoInfo, FileType type){
+        String mapperSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("mapper.suffix"));
+        String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
+        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("service.suffix"));
+        String suffix = StringUtils.EMPTY;
+        switch (type){
+            case MAPPER:
+                suffix = mapperSuffix;
+                break;
+            case DAO:
+                suffix = daoSuffix;
+                break;
+            case SERVICE:
+                suffix = serviceSuffix;
+                break;
+        }
         for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
-            if(generatedFile.getFileType() == type){
+            if(type == FileType.NONE){
+                continue;
+            }
+            if((suffix+generatedFile.getFileType().getSuffix()).equals(suffix+ type.getSuffix())){
                 return generatedFile;
             }
         }
