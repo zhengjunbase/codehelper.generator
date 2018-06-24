@@ -1,15 +1,17 @@
 package com.ccnode.codegenerator.view;
 
-import com.ccnode.codegenerator.genCode.genFind.ParseJpaStrService;
 import com.ccnode.codegenerator.genCode.genFind.ParseJpaContext;
+import com.ccnode.codegenerator.genCode.genFind.ParseJpaStrService;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
 import com.ccnode.codegenerator.pojoHelper.OnePojoInfoHelper;
 import com.ccnode.codegenerator.util.DocumentUtil;
 import com.ccnode.codegenerator.util.LoggerWrapper;
 import com.ccnode.codegenerator.util.PsiDocumentUtils;
 import com.ccnode.codegenerator.util.PsiElementUtil;
+import com.google.common.base.Throwables;
 import com.intellij.codeInsight.CodeInsightUtil;
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
+import com.intellij.ide.projectView.ProjectView;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
@@ -17,6 +19,7 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiAnonymousClass;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDocumentManager;
@@ -43,6 +46,7 @@ public class CompleteMethodAction extends PsiElementBaseIntentionAction {
     public void invoke(@NotNull Project project, Editor editor, @NotNull PsiElement element) throws IncorrectOperationException {
         long startTime = System.currentTimeMillis();
         try {
+            VirtualFileManager.getInstance().syncRefresh();
             LOGGER.info("invoke start ");
             PsiElement parent = element.getParent();
             TextRange textRange = null;
@@ -92,10 +96,11 @@ public class CompleteMethodAction extends PsiElementBaseIntentionAction {
 
         } catch (Throwable e) {
             LOGGER.error("CompleteMethodAction invoke error, {}", e);
-            Messages.showMessageDialog(project, e.getMessage(), "Plugin Crash", null);
+            Messages.showMessageDialog(project, Throwables.getStackTraceAsString(e), "Plugin Crash", null);
         } finally {
             LOGGER.info("CompleteMethodAction invoke cost :{}", System.currentTimeMillis() - startTime);
             LoggerWrapper.saveAllLogs(project.getBasePath());
+            VirtualFileManager.getInstance().syncRefresh();
         }
     }
 

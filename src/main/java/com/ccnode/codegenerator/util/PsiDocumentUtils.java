@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
@@ -35,6 +36,13 @@ public class PsiDocumentUtils {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                while (document.getTextLength() < textRange.getEndOffset()){
+                    try {
+                        VirtualFileManager.getInstance().syncRefresh();
+                        Thread.sleep(50);
+                    } catch (Throwable ignored) {
+                    }
+                }
                 document.replaceString(textRange.getStartOffset(), textRange.getEndOffset(), newText);
                 commitAndSaveDocument(psiDocumentManager, document);
             }
