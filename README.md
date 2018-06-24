@@ -64,6 +64,11 @@ charset=utf8
 #mysql Engine
 sqlEngine=InnoDB
 
+#生成service、dao接口、mapper文件后綴
+mapper.suffix=Mapper
+dao.suffix=Mapper
+service.suffix=Service
+
 #配置各个文件的路径
 mapper.path=src/main/resources/mapper
 dao.path=src/main/java/com/codehelper/sample/dao

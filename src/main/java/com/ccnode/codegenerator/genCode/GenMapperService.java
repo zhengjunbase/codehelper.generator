@@ -30,7 +30,7 @@ public class GenMapperService {
     public static void genMapper(GenCodeResponse response) {
         for (OnePojoInfo pojoInfo : response.getPojoInfos()) {
             try{
-                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER);
+                GeneratedFile fileInfo = GenCodeResponseHelper.getByFileType(pojoInfo, FileType.MAPPER, response);
                 genMapper(response,pojoInfo,fileInfo);
             }catch(Throwable e){
                 LOGGER.error("GenMapperService genMapper error", e);

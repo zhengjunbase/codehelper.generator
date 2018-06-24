@@ -1,12 +1,11 @@
 package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
-import com.ccnode.codegenerator.pojo.GenCodeResponse;
-import com.ccnode.codegenerator.pojo.OnePojoInfo;
-import com.ccnode.codegenerator.enums.FileType;
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -29,9 +28,28 @@ public class GenCodeResponseHelper {
         return response;
     }
 
-    public static GeneratedFile getByFileType(@NotNull OnePojoInfo onePojoInfo, FileType type){
+    public static GeneratedFile getByFileType(@NotNull OnePojoInfo onePojoInfo, FileType type, GenCodeResponse genCodeResponse){
+        String mapperSuffix = UserConfigService.removeStartAndEndSplitter(genCodeResponse.getUserConfigMap().get("mapper.suffix"));
+        String daoSuffix = UserConfigService.removeStartAndEndSplitter(genCodeResponse.getUserConfigMap().get("dao.suffix"));
+        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(genCodeResponse.getUserConfigMap().get("service.suffix"));
+        String suffix = StringUtils.EMPTY;
+        switch (type){
+            case MAPPER:
+                suffix = mapperSuffix == null ? GenCodeConfig.MAPPER_SUFFIX:mapperSuffix;
+                break;
+            case DAO:
+                suffix = daoSuffix == null ? GenCodeConfig.DAO_SUFFIX:daoSuffix;
+                break;
+            case SERVICE:
+                suffix = serviceSuffix == null ? GenCodeConfig.SERVICE_SUFFIX:serviceSuffix;
+                break;
+        }
         for (GeneratedFile generatedFile : onePojoInfo.getFiles()) {
-            if(generatedFile.getFileType() == type){
+            if(type == FileType.NONE){
+                continue;
+            }
+            if(generatedFile.getFileType().getCode().intValue() == type.getCode().intValue()
+                    && (suffix+generatedFile.getFileType().getSuffix()).equals(suffix+ type.getSuffix())){
                 return generatedFile;
             }
         }

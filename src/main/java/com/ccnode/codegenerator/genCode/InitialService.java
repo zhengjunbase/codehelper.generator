@@ -47,10 +47,10 @@ public class InitialService {
                 String fullPojoPath = pojoFile.getAbsolutePath();
                 String pojoDirPath = pojoFile.getParentFile().getAbsolutePath();
                 onePojoInfo.setPojoDirPath(pojoDirPath);
-                onePojoInfo.setFullDaoPath(genPath(response, pojoDirPath, config.getDaoDir(), pojoName,"Dao.java"));
-                onePojoInfo.setFullServicePath(genPath(response, pojoDirPath, config.getServiceDir(), pojoName,"Service.java"));
+                onePojoInfo.setFullDaoPath(genPath(response, pojoDirPath, config.getDaoDir(), pojoName,(config.getDaoSuffix() == null ? GenCodeConfig.DAO_SUFFIX:config.getDaoSuffix()) + ".java"));
+                onePojoInfo.setFullServicePath(genPath(response, pojoDirPath, config.getServiceDir(), pojoName,(config.getServiceSuffix() == null ? GenCodeConfig.SERVICE_SUFFIX:config.getServiceSuffix()) + ".java"));
                 onePojoInfo.setFullSqlPath(genPath(response, pojoDirPath, config.getSqlDir(), pojoName,".sql"));
-                onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,"Dao.xml"));
+                onePojoInfo.setFullMapperPath(genPath(response, pojoDirPath, config.getMapperDir(), pojoName,(config.getMapperSuffix() == null ? GenCodeConfig.MAPPER_SUFFIX:config.getMapperSuffix()) + ".xml"));
                 onePojoInfo.setFullPojoPath(fullPojoPath);
                 OnePojoInfoHelper.parseIdeaFieldInfo(onePojoInfo, response);
                 // todo fix daoPackage Bug
