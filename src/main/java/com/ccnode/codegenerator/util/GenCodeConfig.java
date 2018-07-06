@@ -23,6 +23,9 @@ public class GenCodeConfig {
     String daoSuffix;
     String mapperSuffix;
     String serviceSuffix;
+    String daoModulePath;
+    String serviceModulePath;
+    String mapperModulePath;
 
     Map<String,String> configMap = Maps.newHashMap();
 
@@ -104,5 +107,29 @@ public class GenCodeConfig {
 
     public void setServiceSuffix(String serviceSuffix) {
         this.serviceSuffix = serviceSuffix;
+    }
+
+    public String getDaoModulePath() {
+        return daoModulePath;
+    }
+
+    public void setDaoModulePath(String daoModulePath) {
+        this.daoModulePath = daoModulePath;
+    }
+
+    public String getServiceModulePath() {
+        return serviceModulePath;
+    }
+
+    public void setServiceModulePath(String serviceModulePath) {
+        this.serviceModulePath = serviceModulePath;
+    }
+
+    public String getMapperModulePath() {
+        return mapperModulePath;
+    }
+
+    public void setMapperModulePath(String mapperModulePath) {
+        this.mapperModulePath = mapperModulePath;
     }
 }

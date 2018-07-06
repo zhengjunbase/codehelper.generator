@@ -48,6 +48,7 @@ public class GenCodeAction extends AnAction {
         // super("Text _Boxes","Item description",IconLoader.getIcon("/Mypackage/icon.png"));
     }
 
+    @Override
     public void actionPerformed(AnActionEvent event) {
         Project project = event.getData(PlatformDataKeys.PROJECT);
         VirtualFile file = event.getData(PlatformDataKeys.VIRTUAL_FILE);

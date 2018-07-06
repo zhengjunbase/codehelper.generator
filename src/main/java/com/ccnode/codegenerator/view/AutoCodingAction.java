@@ -49,6 +49,7 @@ public class AutoCodingAction extends AnAction {
     private final static Logger LOGGER = LoggerWrapper.getLogger(AutoCodingAction.class);
 
 
+    @Override
     public void actionPerformed(AnActionEvent event) {
         String projectPath = StringUtils.EMPTY;
         try {

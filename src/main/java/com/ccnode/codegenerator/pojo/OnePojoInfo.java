@@ -31,6 +31,8 @@ public class OnePojoInfo {
     String fullSqlPath;
     String fullMapperPath;
     String pojoClassSimpleName;
+    String suffix;
+    String idType;
 
     public String getPojoName() {
         return pojoName;
@@ -166,5 +168,21 @@ public class OnePojoInfo {
 
     public void setPojoDirPath(String pojoDirPath) {
         this.pojoDirPath = pojoDirPath;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public String getIdType() {
+        return idType;
+    }
+
+    public void setIdType(String idType) {
+        this.idType = idType;
     }
 }

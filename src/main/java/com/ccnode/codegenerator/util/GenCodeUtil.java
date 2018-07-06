@@ -1,5 +1,6 @@
 package com.ccnode.codegenerator.util;
 
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -76,7 +77,7 @@ public class GenCodeUtil {
         return false;
     }
 
-    public static String deducePackage(String daoFilePathString, String pojoPackage,String pojoPathString){
+    public static String deducePackage(String daoFilePathString, String pojoPackage,String pojoPathString, String modulePathStr){
         //get the path by
         LOGGER.info("path:{}, pojoPackage:{}",daoFilePathString,pojoPackage);
         Path realpojoPath = Paths.get(pojoPathString);
@@ -92,6 +93,11 @@ public class GenCodeUtil {
         //shall combine two path
         Path relativeToSouce = sourcePath.relativize(daoFolder);
         String relate = relativeToSouce.toString();
+        if(!StringUtils.isEmpty(modulePathStr)) {
+            Path modulePath = Paths.get(modulePathStr);
+            String modulePathString = modulePath.toString();
+            relate = relate.substring(relate.indexOf(modulePathString) + modulePathString.length() + 1);
+        }
         relate = relate.replace("\\", ".");
         relate = relate.replace("/",".");
         return relate;

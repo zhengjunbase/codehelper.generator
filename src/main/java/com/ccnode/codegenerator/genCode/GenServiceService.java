@@ -43,8 +43,12 @@ public class GenServiceService {
 
     private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao, GenCodeResponse response) {
         String pojoName = onePojoInfo.getPojoName();
-        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
-        String pojoNameDao = pojoName + (serviceSuffix == null ? GenCodeConfig.SERVICE_SUFFIX:serviceSuffix);
+        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("service.suffix"));
+        String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
+        String pojoNameService = pojoName + serviceSuffix;
+        String pojoNameDao = pojoName + daoSuffix;
+        String daoName = GenCodeUtil.getLowerCamel(pojoNameDao);
+        String idType = onePojoInfo.getIdType();
         if (!fileInfo.getOldLines().isEmpty()) {
             fileInfo.setNewLines(fileInfo.getOldLines());
             return;
@@ -57,37 +61,36 @@ public class GenServiceService {
             newLines.add("import javax.annotation.Resource;");
             newLines.add("import java.util.List;");
             newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
-            newLines.add("import "+ onePojoInfo.getDaoPackage() + "." +onePojoInfo.getPojoName() + "Dao;");
+            newLines.add("import "+ onePojoInfo.getDaoPackage() + "." + pojoNameDao +";");
             newLines.add("");
             newLines.add("@Service");
             newLines.add("public class " + pojoName + "Service extends GenericService<" + pojoName + "> {");
             newLines.add("");
             newLines.add("    @Resource");
             newLines.add(
-                    GenCodeUtil.ONE_RETRACT + "private " + pojoName + "Dao " + GenCodeUtil.getLowerCamel(pojoName) + "Dao;");
+                    GenCodeUtil.ONE_RETRACT + "private " + pojoNameDao + " " + daoName + ";");
             newLines.add("");
             newLines.add("    @Override");
             newLines.add(GenCodeUtil.ONE_RETRACT + "public GenericDao<" + pojoName + "> getGenericDao() {");
-            newLines.add(GenCodeUtil.TWO_RETRACT + "return " + GenCodeUtil.getLowerCamel(pojoNameDao) + ";");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return " + daoName + ";");
             newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("}");
             fileInfo.setNewLines(newLines);
         }else{
             List<String> newLines = Lists.newArrayList();
-            String daoName = GenCodeUtil.getLowerCamel(pojoName) + "Dao";
             newLines.add("package "+ onePojoInfo.getServicePackage() + ";");
             newLines.add("");
             newLines.add("import org.springframework.stereotype.Service;");
             newLines.add("import javax.annotation.Resource;");
             newLines.add("import java.util.List;");
             newLines.add("import "+ onePojoInfo.getPojoPackage() + "." +onePojoInfo.getPojoName() + ";");
-            newLines.add("import "+ onePojoInfo.getDaoPackage() + "." +onePojoInfo.getPojoName() + "Dao;");
+            newLines.add("import "+ onePojoInfo.getDaoPackage() + "." + pojoNameDao + ";");
             newLines.add("");
             newLines.add("@Service");
-            newLines.add("public class " + pojoName + "Service {");
+            newLines.add("public class " +  pojoNameService + " {");
             newLines.add("");
             newLines.add("    @Resource");
-            newLines.add(GenCodeUtil.ONE_RETRACT + "private " + pojoName + "Dao " + daoName + ";");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "private " + pojoNameDao + " " + daoName + ";");
             newLines.add("");
             newLines.add(GenCodeUtil.ONE_RETRACT + "public int "+ MethodName.insert.name() +"("+pojoName +" pojo){");
             newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.insert.name() +"(pojo);");
@@ -104,6 +107,10 @@ public class GenServiceService {
             newLines.add("");
             newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.update.name() +"("+pojoName +" pojo){");
             newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
+            newLines.add("");
+            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.delete.name() +"("+ idType +" id){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.delete.name() +"(id);");
             newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
             newLines.add("}");

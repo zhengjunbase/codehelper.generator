@@ -5,6 +5,7 @@ import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
 import com.ccnode.codegenerator.pojo.GeneratedFile;
 import com.ccnode.codegenerator.pojo.OnePojoInfo;
+import com.ccnode.codegenerator.pojo.PojoFieldInfo;
 import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.google.common.base.Objects;
 import org.apache.commons.lang3.StringUtils;
@@ -50,6 +51,13 @@ public class GenCodeResponseHelper {
             }
             if(generatedFile.getFileType().getCode().intValue() == type.getCode().intValue()
                     && (suffix+generatedFile.getFileType().getSuffix()).equals(suffix+ type.getSuffix())){
+                generatedFile.setSuffix(suffix);
+                for (PojoFieldInfo fieldInfo:onePojoInfo.getPojoFieldInfos()) {
+                    if("id".equalsIgnoreCase(fieldInfo.getFieldName())){
+                        onePojoInfo.setIdType(fieldInfo.getFieldClass().getDesc());
+                        break;
+                    }
+                }
                 return generatedFile;
             }
         }

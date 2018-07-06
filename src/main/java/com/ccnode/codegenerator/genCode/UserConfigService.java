@@ -111,6 +111,9 @@ public class UserConfigService {
             config.setMapperSuffix(removeStartAndEndSplitter(userConfigMap.get("mapper.suffix")));
             config.setDaoSuffix(removeStartAndEndSplitter(userConfigMap.get("dao.suffix")));
             config.setServiceSuffix(removeStartAndEndSplitter(userConfigMap.get("service.suffix")));
+            config.setMapperModulePath(removeStartAndEndSplitter(userConfigMap.get("mapper.module.path")));
+            config.setDaoModulePath(removeStartAndEndSplitter(userConfigMap.get("dao.module.path")));
+            config.setServiceModulePath(removeStartAndEndSplitter(userConfigMap.get("service.module.path")));
         }catch(Exception e){
             LOGGER.error(" status error occurred :{}",response,e);
             return response.failure(" status error occurred");
