@@ -61,6 +61,9 @@ pojos=SamplePojo|AccountPojo
 #Sql文件的charset配置
 charset=utf8
 
+#文件语言，有中文注释的设置为CN
+language=CN
+
 #mysql Engine
 sqlEngine=InnoDB
 
@@ -74,6 +77,10 @@ mapper.path=src/main/resources/mapper
 dao.path=src/main/java/com/codehelper/sample/dao
 service.path=src/main/java/com/codehelper/sample/service
 sql.path=doc/sql/generator
+
+#module路径,如果“dao.path”、“service.path”包含了module目录，即并非从package根目录开始，请配置下面的项目。
+dao.module.path=src/main/java
+service.module.path=src/main/java
 
 ### 配置各个java类型的sql关键字
 int=INTEGER(12) NOT NULL DEFAULT -1
