@@ -7,7 +7,7 @@ package com.ccnode.codegenerator.common;
  */
 public class VersionManager {
 
-    public static String CURRENT_VERSION = "2017-08-04";
+    public static String CURRENT_VERSION = "2018-06-24";
 
     public static String getCurrentVersion() {
         return CURRENT_VERSION;

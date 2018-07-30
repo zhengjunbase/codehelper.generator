@@ -3,6 +3,7 @@ package com.ccnode.codegenerator.pojoHelper;
 
 import com.ccnode.codegenerator.enums.FileType;
 import com.ccnode.codegenerator.enums.SupportFieldClass;
+import com.ccnode.codegenerator.genCode.UserConfigService;
 import com.ccnode.codegenerator.pojo.BaseResponse;
 import com.ccnode.codegenerator.pojo.ChangeInfo;
 import com.ccnode.codegenerator.pojo.GenCodeResponse;
@@ -191,7 +192,8 @@ public class OnePojoInfoHelper {
         if(daoFile == null){
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
+        String daoModulePath = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.module.path"));
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullDaoPath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath(),daoModulePath);
         for (String s : daoFile.getOriginLines()) {
             if(s.trim().contains("package ")){
                 deducePackage = parsePackage(s);
@@ -206,7 +208,8 @@ public class OnePojoInfoHelper {
         if(serviceFile == null){
             return;
         }
-        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullServicePath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath());
+        String serviceModulePath = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("service.module.path"));
+        String deducePackage = GenCodeUtil.deducePackage(onePojoInfo.getFullServicePath() ,onePojoInfo.getPojoPackage(),onePojoInfo.getFullPojoPath(), serviceModulePath);
         for (String s : serviceFile.getOriginLines()) {
             if(s.trim().contains("package ")){
                 deducePackage = parsePackage(s);

@@ -45,6 +45,7 @@ public class GenMapperService {
         List<String> oldLines = fileInfo.getOldLines();
         ListInfo<String> listInfo = new ListInfo<String>();
         if(oldLines.isEmpty()){
+            onePojoInfo.setSuffix(fileInfo.getSuffix());
             listInfo.setFullList(getMapperHeader(onePojoInfo));
         }else{
             listInfo.setFullList(oldLines);
@@ -189,7 +190,7 @@ public class GenMapperService {
         List<String> retList = Lists.newArrayList();
         retList.add( "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
         retList.add( "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\" >") ;
-        retList.add("<mapper namespace=\"" + onePojoInfo.getDaoPackage() +"."+ onePojoInfo.getPojoName() + "Dao\">");
+        retList.add("<mapper namespace=\"" + onePojoInfo.getDaoPackage() +"."+ onePojoInfo.getPojoName() + onePojoInfo.getSuffix() + "\">");
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
         retList.add(
@@ -229,7 +230,7 @@ public class GenMapperService {
         retList.add(StringUtils.EMPTY);
         retList.add("<!--auto generated Code-->");
         retList.add(GenCodeUtil.ONE_RETRACT+ "<delete id=\""+ MethodName.delete.name() +"\">");
-        retList.add(GenCodeUtil.TWO_RETRACT+ "DELETE FROM "+ GenCodeUtil.getUnderScore(onePojoInfo.getPojoName()) +" where id = #{pojo.id}");
+        retList.add(GenCodeUtil.TWO_RETRACT+ "DELETE FROM "+ GenCodeUtil.getUnderScore(onePojoInfo.getPojoName()) +" where id = #{id}");
         retList.add(GenCodeUtil.ONE_RETRACT+"</delete>");
         retList.add("</mapper>");
         return retList;

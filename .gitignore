@@ -36,3 +36,4 @@ plugin.zip
 # IntelliJ project files
 .idea
 out
+/codehelper.generator.jar

@@ -1,6 +1,7 @@
 package com.ccnode.codegenerator.utils;
 
 import com.ccnode.codegenerator.util.GenCodeUtil;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.nio.file.Path;
@@ -12,7 +13,8 @@ import java.nio.file.Paths;
 public class GenCodeUtilTest {
     @Test
     public void test(){
-        GenCodeUtil.deducePackage("src/main/java/com/rest/mapper","com.rest.domain","D:\\code\\coding.net\\upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java");
+        String packageStr = GenCodeUtil.deducePackage("down\\src\\main\\java\\com\\rest\\mapper","com.rest.domain","upworkattachment\\src\\main\\java\\com\\rest\\domain\\PeoplePO.java","down/src/main/java");
+        Assert.assertEquals("com.rest", packageStr);;
     }
 
 
@@ -37,7 +39,7 @@ public class GenCodeUtilTest {
 
 
 
-        //a 不为空的情况 可以这么�
+        //a 不为空的情况 可以这么�
         System.out.println(path.toString());
 
         Path  mapper = Paths.get(a);

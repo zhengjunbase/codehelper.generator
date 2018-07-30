@@ -19,6 +19,7 @@ public class GeneratedFile {
     List<String> oldLines;
     List<String> originLines;
     FileType fileType;
+    String suffix;
 
     public File getFile() {
         return file;
@@ -66,5 +67,13 @@ public class GeneratedFile {
 
     public void setOriginLines(List<String> originLines) {
         this.originLines = originLines;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
     }
 }

@@ -42,6 +42,7 @@ public class GenDaoService {
         String pojoName = onePojoInfo.getPojoName();
         String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
         String pojoNameDao = pojoName+(daoSuffix == null ? GenCodeConfig.DAO_SUFFIX:daoSuffix);
+        String idType = onePojoInfo.getIdType();
         if(!fileInfo.getOldLines().isEmpty()){
             fileInfo.setNewLines(fileInfo.getOldLines());
             return;
@@ -78,6 +79,8 @@ public class GenDaoService {
                     GenCodeUtil.ONE_RETRACT + "List<"+pojoName+"> "+ MethodName.select.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
             newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.update.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
+            newLines.add("");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.delete.name() +"(@Param(\"id\") "+ idType +" id);");
             newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);
