@@ -54,6 +54,11 @@ codehelper.generator
 
 **GenDaoCode 个性化配置**
 - 在工程目录下添加`codehelper.properties`文件。
+- 忽略某个字段（注释中包含 IgnoreAutoGenerate 关键字）
+示例如下：
+//IgnoreAutoGenerate
+private String userName;
+
 - 配置示例如下:
 ```
 #配置多个pojos,以 | 分隔
@@ -67,11 +72,6 @@ language=CN
 
 #mysql Engine
 sqlEngine=InnoDB
-
-# 忽略某个字段（注释中包含 IgnoreAutoGenerate 关键字）
-示例如下：
-//IgnoreAutoGenerate
-private String userName;
 
 #生成service、dao接口、mapper文件后綴
 mapper.suffix=Mapper
