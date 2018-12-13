@@ -125,7 +125,9 @@ public class OnePojoInfoHelper {
             fieldInfo.setFieldName(field.getName());
             fieldInfo.setFieldClass(fieldClass);
             fieldInfo.setAnnotations(Lists.newArrayList());
-            fieldList.add(fieldInfo);
+            if(!StringUtils.containsIgnoreCase(fieldInfo.getFieldComment(), "IgnoreField")) {
+                fieldList.add(fieldInfo);
+            }
         }
         onePojoInfo.setPojoFieldInfos(fieldList);
     }
