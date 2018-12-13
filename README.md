@@ -68,7 +68,7 @@ language=CN
 #mysql Engine
 sqlEngine=InnoDB
 
-#忽略某个字段（注释中包含 IgnoreAutoGenerate 关键字）
+# 忽略某个字段（注释中包含 IgnoreAutoGenerate 关键字）
 示例如下：
 //IgnoreAutoGenerate
 private String userName;
