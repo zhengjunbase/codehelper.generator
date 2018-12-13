@@ -56,8 +56,10 @@ codehelper.generator
 - 在工程目录下添加`codehelper.properties`文件。
 - 忽略某个字段（注释中包含 IgnoreAutoGenerate 关键字）
 示例如下：
+```
 //IgnoreAutoGenerate
 private String userName;
+```
 
 - 配置示例如下:
 ```
