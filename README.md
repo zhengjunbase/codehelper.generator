@@ -67,6 +67,10 @@ language=CN
 #mysql Engine
 sqlEngine=InnoDB
 
+#加上注释忽略某个字段
+//IgnoreAutoGenerate
+private String userName;
+
 #生成service、dao接口、mapper文件后綴
 mapper.suffix=Mapper
 dao.suffix=Mapper
