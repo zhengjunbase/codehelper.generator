@@ -12,6 +12,7 @@ codehelper.generator
 - Pojo文件更新后一键更新对应的Sql和mybatis xml文件。
 - 提供insert，insertList，update，select，delete五种方法。
 - 能够批量生成多个Pojo的对应的文件。
+- Pojo文件新增字段后，同时生成添加字段的sql语句。
 - 自动将pojo的注释添加到对应的Sql文件的注释中。 
 - 丰富的配置，如果没有配置文件，则会使用默认配置。
 - 可以在Intellij Idea中快捷键配置中配置快捷键。
