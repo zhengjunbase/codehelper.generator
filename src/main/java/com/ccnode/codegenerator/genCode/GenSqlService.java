@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.ccnode.codegenerator.genCode.UserConfigService.removeEndCharacter;
+
 /**
  * What always stop you is what you always believe.
  * <p>
@@ -99,15 +101,33 @@ public class GenSqlService {
     private static List<String> replaceSql(@NotNull OnePojoInfo onePojoInfo, GeneratedFile fileInfo, GenCodeResponse response) {
         List<String> oldList = fileInfo.getOldLines();
         int oldIndex = findFirstFieldPos(oldList);
+        List<String> appendFieldList = Lists.newArrayList();
+        String prevFieldName = StringUtils.EMPTY;
         for (PojoFieldInfo fieldInfo : onePojoInfo.getPojoFieldInfos()) {
             if (oldSqlContainField(oldList, fieldInfo)) {
+                prevFieldName = GenCodeUtil.getUnderScore(fieldInfo.getFieldName());
                 oldList = updateSqlComment(oldList, fieldInfo,response);
                 oldIndex++;
                 continue;
             }
             String fieldSql = genfieldSql(fieldInfo, response);
             oldList.add(oldIndex, fieldSql);
+            if(appendFieldList.isEmpty()) {
+               appendFieldList.add( "ALTER TABLE " + GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName()));
+            }
+            String append ="ADD COLUMN " + removeEndCharacter(fieldSql,",");
+            if(StringUtils.isNotBlank(prevFieldName)){
+                append += " AFTER `" + prevFieldName + "`";
+            }
+            append += ",";
+            appendFieldList.add(append);
             oldIndex++;
+            prevFieldName = GenCodeUtil.getUnderScore(fieldInfo.getFieldName());
+        }
+        if(appendFieldList.size() >= 2) {
+            String last = appendFieldList.remove(appendFieldList.size() - 1);
+            String replace  = removeEndCharacter(last,",") + ";";
+            appendFieldList.add(replace);
         }
         List<String> replaceList = Lists.newArrayList();
         String tableName = GenCodeUtil.getUnderScore(onePojoInfo.getPojoClassSimpleName());
@@ -118,10 +138,10 @@ public class GenSqlService {
             }else{
                 replaceList.add(line);
             }
-
         }
         oldList = removeDeleteField(onePojoInfo.getPojoFieldInfos(),replaceList);
-
+        oldList.add("\n");
+        oldList.addAll(appendFieldList);
         return Lists.newArrayList(oldList);
 
     }
@@ -133,15 +153,12 @@ public class GenSqlService {
         for (String line : oldList) {
             String prefix = RegexUtil.getMatch("^[\\s]*`.+`",line);
             if(StringUtils.isNotBlank(prefix)){
-                Boolean containField = false;
                 for (PojoFieldInfo pojoFieldInfo : pojoFieldInfos) {
                     String fieldName = GenCodeUtil.getUnderScore(pojoFieldInfo.getFieldName());
-                    if(prefix.contains(fieldName)){
-                        containField = true;
+                    if(prefix.contains("`" + fieldName + "`")){
+                        retList.add(line);
+                        break;
                     }
-                }
-                if(containField){
-                    retList.add(line);
                 }
             }else{
                 retList.add(line);

@@ -137,6 +137,17 @@ public class UserConfigService {
         return ret;
     }
 
+    public static String removeEndCharacter(String s, String character) {
+        if(StringUtils.isBlank(s)){
+            return s;
+        }
+        String ret = s.trim();
+        if(s.endsWith(character)){
+            ret = ret.substring(0, ret.length() -1);
+        }
+        return ret;
+    }
+
 
     public static GenCodeResponse readConfigFile(String projectPath){
         LOGGER.info("readConfigFile");

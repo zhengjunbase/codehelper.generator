@@ -3,9 +3,11 @@ package com.ccnode.codegenerator.util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -79,6 +81,26 @@ public class PojoUtil {
             return DateUtil.convertYYYYMMDD("1001-01-01");
         }
         return null;
+    }
+
+    public static <T> boolean isEmpty(Collection<T> list) {
+        return list == null || list.isEmpty();
+    }
+
+     @Nullable
+    public static <T> T nullOrFirstElement(List<T> list){
+        if(isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
+
+     @Nullable
+    public static <T> T nullOrLastElement(List<T> list){
+        if(isEmpty(list)){
+            return null;
+        }
+        return list.get(list.size() - 1);
     }
 
 }
