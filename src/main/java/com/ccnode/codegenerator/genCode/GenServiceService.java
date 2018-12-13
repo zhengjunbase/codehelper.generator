@@ -43,8 +43,8 @@ public class GenServiceService {
 
     private static void genDaoFile(OnePojoInfo onePojoInfo, GeneratedFile fileInfo, Boolean useGenericDao, GenCodeResponse response) {
         String pojoName = onePojoInfo.getPojoName();
-        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("service.suffix"));
-        String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getUserConfigMap().get("dao.suffix"));
+        String serviceSuffix = UserConfigService.removeStartAndEndSplitter(response.getConfig("service.suffix","Service"));
+        String daoSuffix = UserConfigService.removeStartAndEndSplitter(response.getConfig("dao.suffix", "Dao"));
         String pojoNameService = pojoName + serviceSuffix;
         String pojoNameDao = pojoName + daoSuffix;
         String daoName = GenCodeUtil.getLowerCamel(pojoNameDao);
@@ -109,10 +109,10 @@ public class GenServiceService {
             newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
             newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.delete.name() +"("+ idType +" id){");
-            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.delete.name() +"(id);");
-            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
-            newLines.add("");
+//            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.delete.name() +"("+ idType +" id){");
+//            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.delete.name() +"(id);");
+//            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
+//            newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);
         }

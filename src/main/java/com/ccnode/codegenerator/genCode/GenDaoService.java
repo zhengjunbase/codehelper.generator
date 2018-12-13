@@ -80,8 +80,8 @@ public class GenDaoService {
             newLines.add("");
             newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.update.name() +"(@Param(\"pojo\") "+pojoName +" pojo);");
             newLines.add("");
-            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.delete.name() +"(@Param(\"id\") "+ idType +" id);");
-            newLines.add("");
+//            newLines.add(GenCodeUtil.ONE_RETRACT + "int "+ MethodName.delete.name() +"(@Param(\"id\") "+ idType +" id);");
+//            newLines.add("");
             newLines.add("}");
             fileInfo.setNewLines(newLines);
         }

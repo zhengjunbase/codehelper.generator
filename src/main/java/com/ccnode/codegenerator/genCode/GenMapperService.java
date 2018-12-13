@@ -36,8 +36,6 @@ public class GenMapperService {
                 LOGGER.error("GenMapperService genMapper error", e);
                 response.failure("GenMapperService genMapper error");
             }
-
-
         }
     }
 

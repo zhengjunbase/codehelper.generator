@@ -3,6 +3,7 @@ package com.ccnode.codegenerator.pojo;
 import com.ccnode.codegenerator.util.GenCodeConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,18 @@ public class GenCodeResponse extends BaseResponse {
     Throwable throwable;
 
     ServerMsg serverMsg;
+
+    public String getConfig(String key, String defaultValue) {
+        if(StringUtils.isBlank(key) || userConfigMap == null){
+            return defaultValue;
+        }
+        String value = userConfigMap.get(key);
+        if(StringUtils.isBlank(value)){
+            return defaultValue;
+        }else{
+            return value;
+        }
+    }
 
     public GenCodeResponse() {
     }

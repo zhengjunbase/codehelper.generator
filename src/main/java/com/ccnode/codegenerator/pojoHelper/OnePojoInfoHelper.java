@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import static org.apache.commons.io.IOUtils.writeLines;
@@ -288,7 +289,7 @@ public class OnePojoInfoHelper {
                 if(lines == null || lines.isEmpty()){
                     lines = generatedFile.getOriginLines();
                 }
-                writeLines(lines, "\n", new FileOutputStream(generatedFile.getFile()));
+                writeLines(lines, "\n", new FileOutputStream(generatedFile.getFile()), Charset.forName(response.getConfig("fileCharset", "UTF-8")));
                 LOGGER.info(" flushFiles, affected file :{}", generatedFile.getFile().getAbsolutePath());
             }
             Pair<List<ChangeInfo>, List<ChangeInfo>> pair = statisticChange(response.getPojoInfos());
