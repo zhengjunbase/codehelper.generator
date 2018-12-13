@@ -178,7 +178,7 @@ public class AutoCodingAction extends AnAction {
                 if (method.getText().contains(" static ")) {
                     continue;
                 }
-                String lineSuffix = "();";
+                String lineSuffix = "(copy." + method.getName().replace("set","get") +"());";
                 if(addDefaultValue){
                     lineSuffix = "(" + getDefaultValue(method) + ");";
                 }
