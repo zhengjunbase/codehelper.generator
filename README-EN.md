@@ -1,5 +1,5 @@
 
-codehelper.generator
+GodeHelper.Generator
 =================
 [![Jetbrains Plugins][plugin-img]][plugin] [![Version](http://phpstorm.espend.de/badge/8640/version)][plugin]
 [![Downloads](http://phpstorm.espend.de/badge/8640/downloads)][plugin]
@@ -40,7 +40,7 @@ GenDaoCode Usages
 - Method two: Add a codehelper.properties in you project directory.
   Click GenDaoCode and Codehelper Generator will generates code for you based on codehelper.properties file.
   
-GenDaoCode Usages Sample
+GenDao Code Usages Sample
 
 - ![generateMultiple](https://github.com/zhengjunbase/codehelper.generator/blob/master/large_long.gif)
 
