@@ -1,13 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service'}
-    }
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.1.2'
 }
 
-plugins {
-    id "org.jetbrains.intellij" version "0.1.10"
-}
 
 repositories {
     mavenCentral()
@@ -18,20 +13,30 @@ tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 
+apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'java'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 
 intellij {
-    version 'IC-14.1.4' //IntelliJ IDEA dependency
-    plugins 'coverage' //Bundled plugin dependencies
-    pluginName 'codehelper.generator'
-    updateSinceUntilBuild false
-//    需要来填写publish这块 类似
-//    publish {
-//        username 'AmailP'
-//        pluginId '7415'
-//    }
+//    IC-2016.1
+//    version 'IU-2018.3' //IntelliJ IDEA dependency
+
+    pluginName.set('codehelper.generator')
+    version.set('2018.3')
+    type.set('IC')
+    downloadSources.set(true)
+    updateSinceUntilBuild.set(false)
+//    plugins.set('coverage') //Bundled plugin dependencies
+//    sandboxDirectory.set('sandbox')
+//
+    plugins = ['Kotlin', 'org.nik.presentation-assistant:1.0.1', 'Lombook Plugin:0.31-2018.3', 'Groovy']
+//
+//    sandboxDirectory.set('sandbox')
 }
 
 dependencies{
@@ -45,7 +50,7 @@ dependencies{
 }
 
 group 'org.jetbrains'
-version '2018.12.14' // Plugin version
+version '2024.12.14' // Plugin version
 
 
 
