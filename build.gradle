@@ -50,7 +50,7 @@ dependencies{
 }
 
 group 'org.jetbrains'
-version '2024.12.14' // Plugin version
+version '2024.02.03' // Plugin version
 
 
-
+//./gradlew build -x test -Dorg.gradle.java.home=/Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home

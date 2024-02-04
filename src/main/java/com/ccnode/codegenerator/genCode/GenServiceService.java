@@ -100,13 +100,18 @@ public class GenServiceService {
             newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.insertList.name() +"(pojos);");
             newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
-            newLines.add(
-                    GenCodeUtil.ONE_RETRACT + "public List<"+pojoName+"> "+ MethodName.select.name() +"("+pojoName +" pojo){");
-            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.select.name() +"(pojo);");
-            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
-            newLines.add("");
             newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.update.name() +"("+pojoName +" pojo){");
             newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.update.name() +"(pojo);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
+            newLines.add("");
+            newLines.add(
+                    GenCodeUtil.ONE_RETRACT + "public List<"+pojoName+"> "+ MethodName.select.name() +"("+pojoName +" pojo, Integer limit){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return "+daoName + "."+ MethodName.select.name() +"(pojo, limit);");
+            newLines.add(GenCodeUtil.ONE_RETRACT + "}");
+            newLines.add("");
+            newLines.add(
+                    GenCodeUtil.ONE_RETRACT + "public "+pojoName+" "+ MethodName.select.name() +"One("+pojoName +" pojo){");
+            newLines.add(GenCodeUtil.TWO_RETRACT + "return ListHelper.nullOrFirstElement(select(pojo, 1));");
             newLines.add(GenCodeUtil.ONE_RETRACT + "}");
             newLines.add("");
 //            newLines.add(GenCodeUtil.ONE_RETRACT +"public int "+ MethodName.delete.name() +"("+ idType +" id){");
